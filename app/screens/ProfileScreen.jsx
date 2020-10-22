@@ -91,16 +91,16 @@ export default function ProfileScreen({ navigation }) {
         }}
       >
         <Image source={require('../../assets/person-drawer.png')} />
-        <TouchableOpacity
+       {/*  <TouchableOpacity
           // onPress={() => pickImage()}
           onPress={() => setChooseImageModalVisible(true)}
           style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
-        >
+        > */}
           <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8 }}>
             تغيير الصورة الشخصية
           </Text>
-          <Camera />
-        </TouchableOpacity>
+          {/* <Camera />
+        </TouchableOpacity> */}
 
         <Field title='اسم المستخدم' onPress={() => setVisible(true)} />
         <Field title='الايميل' />
@@ -172,7 +172,9 @@ export function ChooseImageModal({ title, visible, setVisible, setImage }) {
       quality: 1,
     });  
 
-    console.log(result);
+  //  let temp = await fetch('file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540shareef.dweikat%252Falaqsa/ImagePicker/232ae695-7e9c-4307-8242-6a6a4e88af3a.jpg')
+  //  console.log("tempaaaaaa", temp);
+
     setVisible(false)
 
     if (!result.cancelled) {

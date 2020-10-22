@@ -224,8 +224,12 @@ const RootStackScreen = () => {
           },
         }}
       />
-          <RootStack.Screen name='PasswordResetScreen' component={PasswordResetScreen} />
+      <RootStack.Screen name='FavScreen' component={FavScreen} />
 
+      <RootStack.Screen
+        name='PasswordResetScreen'
+        component={PasswordResetScreen}
+      />
     </RootStack.Navigator>
   );
 };
