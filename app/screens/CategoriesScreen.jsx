@@ -21,6 +21,7 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from '../constants/colors';
 import SearchBox from '../components/SearchBox';
 import HorizontalItemCard from '../components/HorizontalItemCard';
+import { useSelector } from 'react-redux';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -29,7 +30,11 @@ const styles = StyleSheet.create({
 });
 export default function CategoriesScreen() {
   // const image = { uri: '../../assets/signin-screen/background.png' };
-
+  const category = useSelector((state) => state.product.products);
+  console.log("aadsd",category)
+  useEffect(() => {
+    // dispatch()
+  }, []);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <View

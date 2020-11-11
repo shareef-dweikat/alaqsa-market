@@ -50,7 +50,6 @@ export default function ProfileScreen({ navigation }) {
     })();
   }, []);
 
-
   // const [assets] = useAssets([
   //   require('file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540shareef.dweikat%252Falaqsa/ImagePicker/982b6615-0f0c-4283-b284-70bed1bf96d8.jpg'),
   // ]);
@@ -91,15 +90,15 @@ export default function ProfileScreen({ navigation }) {
         }}
       >
         <Image source={require('../../assets/person-drawer.png')} />
-       {/*  <TouchableOpacity
+        {/*  <TouchableOpacity
           // onPress={() => pickImage()}
           onPress={() => setChooseImageModalVisible(true)}
           style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
         > */}
-          <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8 }}>
-            تغيير الصورة الشخصية
-          </Text>
-          {/* <Camera />
+        <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8 }}>
+          تغيير الصورة الشخصية
+        </Text>
+        {/* <Camera />
         </TouchableOpacity> */}
 
         <Field title='اسم المستخدم' onPress={() => setVisible(true)} />
@@ -170,12 +169,12 @@ export function ChooseImageModal({ title, visible, setVisible, setImage }) {
       allowsEditing: true,
       // aspect: [4, 3],
       quality: 1,
-    });  
+    });
 
-  //  let temp = await fetch('file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540shareef.dweikat%252Falaqsa/ImagePicker/232ae695-7e9c-4307-8242-6a6a4e88af3a.jpg')
-  //  console.log("tempaaaaaa", temp);
+    //  let temp = await fetch('file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540shareef.dweikat%252Falaqsa/ImagePicker/232ae695-7e9c-4307-8242-6a6a4e88af3a.jpg')
+    //  console.log("tempaaaaaa", temp);
 
-    setVisible(false)
+    setVisible(false);
 
     if (!result.cancelled) {
       setImage(result.uri);
@@ -183,7 +182,6 @@ export function ChooseImageModal({ title, visible, setVisible, setImage }) {
   };
 
   const takePicture = async () => {
-    
     let resultCamera = await ImagePicker.launchCameraAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
@@ -191,14 +189,12 @@ export function ChooseImageModal({ title, visible, setVisible, setImage }) {
       quality: 1,
     });
     console.log(resultCamera);
-    setVisible(false)
+    setVisible(false);
 
     if (!resultCamera.cancelled) {
       setImage(resultCamera.uri);
     }
-    
   };
-   
 
   return (
     <Modal visible={visible} transparent>
@@ -242,12 +238,18 @@ export function ChooseImageModal({ title, visible, setVisible, setImage }) {
               تغيير الصورة الشخصية
             </Text>
           </View>
-          <TouchableOpacity onPress={()=>pickImage()} style={{ marginTop: 18 }}>
+          <TouchableOpacity
+            onPress={() => pickImage()}
+            style={{ marginTop: 18 }}
+          >
             <Text style={{ fontFamily: 'Tajawal-Regular' }}>
               استيراد من معرض الصور
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity  onPress={()=>takePicture()} style={{ marginTop: 18 }}>
+          <TouchableOpacity
+            onPress={() => takePicture()}
+            style={{ marginTop: 18 }}
+          >
             <Text style={{ fontFamily: 'Tajawal-Regular' }}>التقاط صورة</Text>
           </TouchableOpacity>
           <TouchableOpacity style={{ marginTop: 18 }}>

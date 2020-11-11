@@ -10,14 +10,26 @@ import {
 import Icon from '../../../assets/cart/cart-item.png';
 import Pen from '../../../assets/cart/pen.svg';
 import X from '../../../assets/cart/x.svg';
+import navigation from '../../config/navigation';
 
 const styles = StyleSheet.create({});
-export default function Card() {
+export default function Card({ setDeleteModalVisible, navigation }) {
   return (
-    <View style={{marginBottom: 16}}>
-      <View style={{ flexDirection: 'row', position: 'relative', bottom: -8, zIndex: 1 }}>
-        <X  style={{marginRight: 16}}/>
-        <Pen />
+    <View style={{ marginBottom: 16 }}>
+      <View
+        style={{
+          flexDirection: 'row',
+          position: 'relative',
+          bottom: -8,
+          zIndex: 1,
+        }}
+      >
+        <TouchableOpacity onPress={() => setDeleteModalVisible()}>
+          <X style={{ marginRight: 16 }} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation()}>
+          <Pen />
+        </TouchableOpacity>
       </View>
       <View
         style={{

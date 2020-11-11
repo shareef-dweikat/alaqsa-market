@@ -27,6 +27,14 @@ import ItemDetailsScreen from '../screens/ItemDetailsScreen';
 import DrawerContent from '../components/drawer/DrawerContent';
 import FavScreen from '../screens/FavScreen';
 import PasswordResetScreen from '../screens/PasswordResetScreen';
+import ChangeQuantityScreen from '../screens/ChangeQuantityScreen';
+import DashboardDrawerContent from '../components/drawer/DashboardDrawerContent';
+import DashboardHome from '../screens/dashboard/DashboardHome';
+import DashboardProductsScreen from '../screens/dashboard/DashboardProductsScreen';
+import AddProductScreen from '../screens/dashboard/AddProductScreen';
+import DashboardCategoriesScreen from '../screens/dashboard/DashboardCategoriesScreen';
+import AddCategoryScreen from '../screens/dashboard/AddCategoryScreen';
+
 const ContactsStack = createStackNavigator();
 const ContactsStackScreen = ({ navigation }) => (
   <ContactsStack.Navigator headerMode='none'>
@@ -155,6 +163,25 @@ const DrawerStackScreen = () => (
   </DrawerStack.Navigator>
 );
 
+const DashboardDrawerStack = createDrawerNavigator();
+const DashboardDrawerStackScreen = () => (
+  <DashboardDrawerStack.Navigator
+    drawerType='slide'
+    drawerContent={({ navigation }) => (
+      <DashboardDrawerContent navigation={navigation} />
+    )}
+    //  drawerPosition= "right"
+    // drawerType="back"
+  >
+    <DashboardDrawerStack.Screen
+      name='DashboardHome'
+      component={DashboardHome}
+    />
+
+    {/* <ContactsStack.Screen name="ContactDetails" component={ContactDetails} /> */}
+  </DashboardDrawerStack.Navigator>
+);
+
 const AuthStack = createStackNavigator();
 const AuthStackScreen = () => (
   <AuthStack.Navigator headerMode='none'>
@@ -168,7 +195,7 @@ const AuthStackScreen = () => (
 const RootStack = createStackNavigator();
 const RootStackScreen = () => {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [user, setUser] = React.useState({});
+  const [user, setUser] = React.useState({ userType: '' });
 
   React.useEffect(() => {
     // setTimeout(() => {
@@ -185,13 +212,18 @@ const RootStackScreen = () => {
     >
       {isLoading ? (
         <RootStack.Screen name='Loading' component={ActivityIndicator} />
-      ) : user ? (
+      ) : user == null ? (
+        <RootStack.Screen name='AuthStackScreen' component={AuthStackScreen} />
+      ) : user.userType === 'admin' || user.userType === 'seller' ? (
+        <RootStack.Screen
+          name='DashboardDrawerStackScreen'
+          component={DashboardDrawerStackScreen}
+        />
+      ) : (
         <RootStack.Screen
           name='DrawerStackScreen'
           component={DrawerStackScreen}
         />
-      ) : (
-        <RootStack.Screen name='AuthStackScreen' component={AuthStackScreen} />
       )}
       <RootStack.Screen
         name='Modal'
@@ -225,10 +257,30 @@ const RootStackScreen = () => {
         }}
       />
       <RootStack.Screen name='FavScreen' component={FavScreen} />
+      <RootStack.Screen
+        name='ChangeQuantityScreen'
+        component={ChangeQuantityScreen}
+      />
 
       <RootStack.Screen
         name='PasswordResetScreen'
         component={PasswordResetScreen}
+      />
+      <DashboardDrawerStack.Screen
+        name='DashboardProductsScreen'
+        component={DashboardProductsScreen}
+      />
+      <DashboardDrawerStack.Screen
+        name='AddProductScreen'
+        component={AddProductScreen}
+      />
+      <DashboardDrawerStack.Screen
+        name='DashboardCategoriesScreen'
+        component={DashboardCategoriesScreen}
+      />
+      <DashboardDrawerStack.Screen
+        name='AddCategoryScreen'
+        component={AddCategoryScreen}
       />
     </RootStack.Navigator>
   );
