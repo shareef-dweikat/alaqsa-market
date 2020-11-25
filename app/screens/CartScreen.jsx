@@ -19,6 +19,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Card from '../components/cart-screen/Card';
 import Tick from '../../assets/tick-confirmation.svg';
 import { CustomPicker } from 'react-native-custom-picker';
+import BottomNav from '../components/BottomNav';
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
@@ -220,6 +221,7 @@ export default function CartScreen({ navigation }) {
         visible={orderModalVisible}
         setVisible={setOrderConfirmationModalVisible}
       />
+      <BottomNav navigation={navigation}/>
     </View>
   );
 }

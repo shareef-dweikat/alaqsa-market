@@ -10,13 +10,12 @@ import {
   StyleSheet,
   Dimensions,
   Keyboard,
-  TouchableOpacity,
-  ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import SignForm, { MyInputText } from '../components/SignForm';
 import BB from '../../assets/signin-screen/background.svg';
 import image from '../../assets/signin-screen/background-overlay.png';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import firebase from '../config/firebase';
 const styles = StyleSheet.create({
   container: {
@@ -97,23 +96,31 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
-export default function SignInScreen({ navigation, setUser }) {
-
+export default function SignInAdminScreen({ navigation, setUser }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+
   const [logoVisible, setLogoVisible] = useState(true);
-  const submit = async () => {
-    // firebase.auth().onAuthStateChanged(({email: 'aa@gmail.com', password: '1234'})=> {
-    // })
+  const login = () => {
+    console.log('username', username);
     firebase
-      .auth()
-      .signInWithEmailAndPassword('alaqsamart2020@gmail.com', 'husam1994S')
-      .then((e) => {
-         setUser({userType: 'customer'})
-        console.log('adsd', e);
+      .database()
+      .ref(`admins/${username.trim()}`)
+      .once('value', (user) => {
+        const userObj = user.val();
+        if (userObj) {
+          if (userObj.password == password.trim()) {
+            setUser({userType: 'admin'});
+          } else {
+            alert('كلمة مرور خاطئة');
+          }
+        } else {
+          alert('لا يوجد مستخدم بهذا الاسم');
+        }
+        // console.log('adsda', userObj.password === password.trim());
       })
-      .catch(function (error) {
-        console.log(error);
-      });
+      .catch((e) => console.log('SignInAdminScreen', e));
   };
   let [bachgroundHeight, setBachgroundHeight] = useState(
     Dimensions.get('window').height * 0.5
@@ -147,26 +154,24 @@ export default function SignInScreen({ navigation, setUser }) {
             }}
           >
             {logoVisible ? (
-              <TouchableOpacity
-                onPress={() => navigation.push('SignInAdminScreen')}
-                style={{ alignItems: 'center', justifyContent: 'center' }}
-              >
+              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
                 <Image source={require('../../assets/logo.png')} />
-                <Text style={styles.slogon}>كل ما تحتاجه في تطبيق</Text>
-              </TouchableOpacity>
+                <Text style={styles.slogon}>لوحة التحكم</Text>
+              </View>
             ) : null}
             <SignForm
               forgotPassBtnShown={true}
+              isSignUpActive={false}
               submitText='دخول'
-              onPress={() => submit()}
+              onPress={() => login()}
               inputs={
                 <>
                   <MyInputText
-                    onChangeText={(d) => console.log(d)}
+                    onChangeText={(d) => setUsername(d)}
                     placeholder='الإيميل'
                   />
                   <MyInputText
-                    onChangeText={(d) => console.log(d)}
+                    onChangeText={(d) => setPassword(d)}
                     placeholder='كلمة المرور'
                   />
                 </>

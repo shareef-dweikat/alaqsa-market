@@ -15,7 +15,6 @@ const addProductAPI = async (product, url, catFirebaseId) => {
 };
 
 export function addProduct(product, navigation, categories) {
-  console.log('adasdasd', categories);
   let catFirebaseId;
   for(let index in categories) {
     if (categories[index].category_name === product.productCat )
@@ -29,6 +28,7 @@ export function addProduct(product, navigation, categories) {
       async (snapshot) => {
         let url = await snapshot.ref.getDownloadURL();
         addProductAPI(product, url, catFirebaseId).then(() => {
+          dispatch(fetchProducts())
           navigation.goBack()
           dispatch({
             type: 'PRODUCT_ADD_SUCCESS',
@@ -91,10 +91,11 @@ const uploadProductImageAPI = async (productName, uri) => {
   console.log('productName', productName);
   const response = await fetch(uri);
   const blob = await response.blob();
-  var ref = firebase.storage().ref(`/images/`).child(productName);
+  var ref = firebase.storage().ref(`/images/products`).child(productName);
 
   return ref.put(blob);
 };
+
 
 export function uploadProductImage(productName, uri) {
   return (dispatch) => {

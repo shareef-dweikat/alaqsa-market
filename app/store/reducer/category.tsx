@@ -5,7 +5,7 @@ const initialState = {
   categories: [],
   // user: {},
   // existingNumber: null,
-  // isLoading: false,
+   isLoading: false,
 };
 
 export default (state = initialState, action: AnyAction) => {
@@ -13,7 +13,12 @@ export default (state = initialState, action: AnyAction) => {
     case 'CATEGORY_CREATE_SUCCESS':
       return {
         ...state,
-        // isLoading: true,
+         isLoading: false,
+      };
+    case 'CATEGORY_CREATE':
+      return {
+        ...state,
+        isLoading: true,
       };
     case 'CATEGORY_FETCH_SUCCESS':
       return {
@@ -21,13 +26,12 @@ export default (state = initialState, action: AnyAction) => {
         categories: action.payload,
         // isLoading: true,
       };
-      case 'CATEGORY_DELETED_SUCCESS':
-        let c = state.categories
-        c.splice(action.payload, 1)
-        console.log("caasd",c)
+    case 'CATEGORY_DELETED_SUCCESS':
+      // let c = state.categories.splice(0, 1);
+      // console.log('vvvvvvv', c.length);
       return {
         ...state,
-         categories: c,
+        categories: state.categories,
         // isLoading: true,
       };
     default:

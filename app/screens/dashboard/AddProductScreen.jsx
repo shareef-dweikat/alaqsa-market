@@ -100,7 +100,7 @@ export default function AddProductScreen({ navigation }) {
   const handleSubmit = () => {
     if (
       productName !== '' &&
-      productDesc !== '' &&
+      // productDesc !== '' &&
       productCat !== '' &&
       price !== ''
     )

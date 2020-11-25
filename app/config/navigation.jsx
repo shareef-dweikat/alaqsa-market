@@ -34,109 +34,121 @@ import DashboardProductsScreen from '../screens/dashboard/DashboardProductsScree
 import AddProductScreen from '../screens/dashboard/AddProductScreen';
 import DashboardCategoriesScreen from '../screens/dashboard/DashboardCategoriesScreen';
 import AddCategoryScreen from '../screens/dashboard/AddCategoryScreen';
-
+import SignInAdminScreen from '../screens/SignInAdminScreen';
+import DashboardItemDetailsScreen from '../screens/dashboard/DashboardItemDetailsScreen';
 const ContactsStack = createStackNavigator();
 const ContactsStackScreen = ({ navigation }) => (
   <ContactsStack.Navigator headerMode='none'>
-    <ContactsStack.Screen name='HomeScreen' component={HomeScreen} />
+    {/* <ContactsStack.Screen name='HomeScreen' component={HomeScreen} /> */}
     <ContactsStack.Screen name='SearchScreen' component={SearchScreen} />
-    <ContactsStack.Screen
-      name='ItemDetailsScreen'
-      component={ItemDetailsScreen}
-    />
     <ContactsStack.Screen name='FavScreen' component={FavScreen} />
 
     {/* <ContactsStack.Screen name="ContactDetails" component={ContactDetails} /> */}
   </ContactsStack.Navigator>
 );
 
-const TabsStack = createBottomTabNavigator();
+const TabStack = createStackNavigator();
 const TabsStackScreen = ({ navigation }) => (
-  <TabsStack.Navigator
-    tabBarOptions={{
-      // activeTintColor: GOLDEN,
-      showLabel: false,
-      // activeBackgroundColor:  'blue'
-    }}
-  >
-    <ContactsStack.Screen
-      name='ProfileScreen'
-      component={ProfileScreen}
-      options={{
-        tabBarLabel: '',
-        tabBarIcon: (props) => (
-          <ProfileIcon
-            size={props.size}
-            color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
-          />
-        ),
-      }}
-    />
-    <ContactsStack.Screen
+  <TabStack.Navigator headerMode='none'>
+    <RootStack.Screen name='HomeScreen' component={HomeScreen} />
+
+    <RootStack.Screen name='FavScreen' component={FavScreen} />
+    <RootStack.Screen name='ProfileScreen' component={ProfileScreen} />
+    <RootStack.Screen
       name='NotificationsScreen'
       component={NotificationsScreen}
-      options={{
-        tabBarLabel: '',
-        tabBarIcon: (props) => (
-          //props.foucused
-          <AntDesign
-            name='notification'
-            size={props.size}
-            color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
-          />
-        ),
-      }}
     />
-    <TabsStack.Screen
-      name='ContactsList'
-      component={ContactsStackScreen}
-      options={{
-        tabBarLabel: '',
-        tabBarIcon: (props) => (
-          //props.foucused
-          <View style={{ position: 'relative', bottom: 20 }}>
-            <HomeIcon
-              size={props.size}
-              color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
-            />
-          </View>
-        ),
-      }}
-    />
-
-    <ContactsStack.Screen
-      name='CartScreen'
-      component={CartScreen}
-      options={{
-        tabBarIcon: (props) => (
-          //props.foucused
-          <AntDesign
-            name='shoppingcart'
-            size={props.size}
-            color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
-          />
-        ),
-      }}
-    />
-
-    <ContactsStack.Screen
-      name='CategoriesScreen'
-      component={CategoriesScreen}
-      options={{
-        tabBarLabel: '',
-        tabBarIcon: (props) => (
-          //props.foucused
-          <CategoriesIcon
-            size={props.size}
-            color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
-          />
-        ),
-      }}
-    />
-
-    {/* <ContactsStack.Screen name="ContactDetails" component={ContactDetails} /> */}
-  </TabsStack.Navigator>
+    <RootStack.Screen name='CartScreen' component={CartScreen} />
+    <RootStack.Screen name='CategoriesScreen' component={CategoriesScreen} />
+  </TabStack.Navigator>
 );
+// const TabsStack = createBottomTabNavigator();
+// const TabsStackScreen = ({ navigation }) => (
+//   <TabsStack.Navigator
+//     tabBarOptions={{
+//       // activeTintColor: GOLDEN,
+//       showLabel: false,
+//       // activeBackgroundColor:  'blue'
+//     }}
+//   >
+//     <TabsStack.Screen
+//       name='ProfileScreen'
+//       component={ProfileScreen}
+//       options={{
+//         tabBarLabel: '',
+//         tabBarIcon: (props) => (
+//           <ProfileIcon
+//             size={props.size}
+//             color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
+//           />
+//         ),
+//       }}
+//     />
+//     <TabsStack.Screen
+//       name='NotificationsScreen'
+//       component={NotificationsScreen}
+//       options={{
+//         tabBarLabel: '',
+//         tabBarIcon: (props) => (
+//           //props.foucused
+//           <AntDesign
+//             name='notification'
+//             size={props.size}
+//             color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
+//           />
+//         ),
+//       }}
+//     />
+//     <TabsStack.Screen
+//       name='ContactsList'
+//       component={ContactsStackScreen}
+//       options={{
+//         tabBarLabel: '',
+//         tabBarIcon: (props) => (
+//           //props.foucused
+//           <View style={{ position: 'relative', bottom: 20 }}>
+//             <HomeIcon
+//               size={props.size}
+//               color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
+//             />
+//           </View>
+//         ),
+//       }}
+//     />
+
+//     <TabsStack.Screen
+//       name='CartScreen'
+//       component={CartScreen}
+//       options={{
+//         tabBarIcon: (props) => (
+//           //props.foucused
+//           <AntDesign
+//             name='shoppingcart'
+//             size={props.size}
+//             color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
+//           />
+//         ),
+//       }}
+//     />
+
+//     <TabsStack.Screen
+//       name='CategoriesScreen'
+//       component={CategoriesScreen}
+//       options={{
+//         tabBarLabel: '',
+//         tabBarIcon: (props) => (
+//           //props.foucused
+//           <CategoriesIcon
+//             size={props.size}
+//             color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
+//           />
+//         ),
+//       }}
+//     />
+
+//     {/* <ContactsStack.Screen name="ContactDetails" component={ContactDetails} /> */}
+//   </TabsStack.Navigator>
+// );
 
 const DrawerStack = createDrawerNavigator();
 const DrawerStackScreen = () => (
@@ -183,10 +195,21 @@ const DashboardDrawerStackScreen = () => (
 );
 
 const AuthStack = createStackNavigator();
-const AuthStackScreen = () => (
+const AuthStackScreen = ({ setUser }) => (
   <AuthStack.Navigator headerMode='none'>
-    <AuthStack.Screen name='SignInScreen' component={SignInScreen} />
+    <AuthStack.Screen
+      name='SignInScreen'
+      component={(header) => (
+        <SignInScreen setUser={setUser} navigation={header.navigation} />
+      )}
+    />
     <AuthStack.Screen name='SignUpScreen' component={SignUpScreen} />
+    <AuthStack.Screen
+      name='SignInAdminScreen'
+      component={(header) => (
+        <SignInAdminScreen setUser={setUser} navigation={header.navigation} />
+      )}
+    />
 
     {/* <ContactsStack.Screen name="ContactDetails" component={ContactDetails} /> */}
   </AuthStack.Navigator>
@@ -195,7 +218,8 @@ const AuthStackScreen = () => (
 const RootStack = createStackNavigator();
 const RootStackScreen = () => {
   const [isLoading, setIsLoading] = React.useState(false);
-  const [user, setUser] = React.useState({ userType: '' });
+  // const [user, setUser] = React.useState({ userType: '' });
+  const [user, setUser] = React.useState(null);
 
   React.useEffect(() => {
     // setTimeout(() => {
@@ -213,7 +237,10 @@ const RootStackScreen = () => {
       {isLoading ? (
         <RootStack.Screen name='Loading' component={ActivityIndicator} />
       ) : user == null ? (
-        <RootStack.Screen name='AuthStackScreen' component={AuthStackScreen} />
+        <RootStack.Screen
+          name='AuthStackScreen'
+          component={() => <AuthStackScreen setUser={setUser} />}
+        />
       ) : user.userType === 'admin' || user.userType === 'seller' ? (
         <RootStack.Screen
           name='DashboardDrawerStackScreen'
@@ -256,12 +283,19 @@ const RootStackScreen = () => {
           },
         }}
       />
-      <RootStack.Screen name='FavScreen' component={FavScreen} />
+
       <RootStack.Screen
         name='ChangeQuantityScreen'
         component={ChangeQuantityScreen}
       />
-
+      <ContactsStack.Screen
+        name='ItemDetailsScreen'
+        component={ItemDetailsScreen}
+      />
+      <ContactsStack.Screen
+        name='DashboardItemDetailsScreen'
+        component={DashboardItemDetailsScreen}
+      />
       <RootStack.Screen
         name='PasswordResetScreen'
         component={PasswordResetScreen}

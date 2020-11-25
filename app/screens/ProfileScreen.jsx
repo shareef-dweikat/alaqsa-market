@@ -21,6 +21,7 @@ import navigation from '../config/navigation';
 import Alert from './Alert';
 import * as ImagePicker from 'expo-image-picker';
 import Camera from '../../assets/photo-camera.svg';
+import BottomNav from '../components/BottomNav';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -59,65 +60,68 @@ export default function ProfileScreen({ navigation }) {
   // }
   // console.log("adddd", assets)
   return (
-    <ScrollView
-      style={{ padding: 16, backgroundColor: Colors.WHITE, height: '100%' }}
-    >
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'flex-end',
-          marginTop: 8,
-        }}
+    <View style={{ flex: 1, backgroundColor: Colors.WHITE }}>
+      <ScrollView
+        style={{ padding: 16, backgroundColor: Colors.WHITE, height: '100%' }}
       >
-        <Text
+        <View
           style={{
-            fontFamily: 'Tajawal-Medium',
-            marginRight: 16,
-            fontSize: 20,
+            flexDirection: 'row',
+            justifyContent: 'flex-end',
+            marginTop: 8,
           }}
         >
-          الملف الشخصي
-        </Text>
-        <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-          <DrawerIcon />
-        </TouchableOpacity>
-      </View>
-      <View
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: 16,
-        }}
-      >
-        <Image source={require('../../assets/person-drawer.png')} />
-        {/*  <TouchableOpacity
+          <Text
+            style={{
+              fontFamily: 'Tajawal-Medium',
+              marginRight: 16,
+              fontSize: 20,
+            }}
+          >
+            الملف الشخصي
+          </Text>
+          <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+            <DrawerIcon />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: 16,
+          }}
+        >
+          <Image source={require('../../assets/person-drawer.png')} />
+          {/*  <TouchableOpacity
           // onPress={() => pickImage()}
           onPress={() => setChooseImageModalVisible(true)}
           style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
         > */}
-        <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8 }}>
-          تغيير الصورة الشخصية
-        </Text>
-        {/* <Camera />
+          <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8 }}>
+            تغيير الصورة الشخصية
+          </Text>
+          {/* <Camera />
         </TouchableOpacity> */}
 
-        <Field title='اسم المستخدم' onPress={() => setVisible(true)} />
-        <Field title='الايميل' />
-        <Field title='رقم الجوال' />
-        <Field
-          title='كلمة المرور'
-          onPress={() => navigation.push('PasswordResetScreen')}
-        />
-        <Field title='العنوان' />
-      </View>
+          <Field title='اسم المستخدم' onPress={() => setVisible(true)} />
+          <Field title='الايميل' />
+          <Field title='رقم الجوال' />
+          <Field
+            title='كلمة المرور'
+            onPress={() => navigation.push('PasswordResetScreen')}
+          />
+          <Field title='العنوان' />
+        </View>
 
-      <Alert visible={alertVisibility} setVisible={setVisible} />
-      <ChooseImageModal
-        visible={chooseImageModalVisible}
-        setVisible={setChooseImageModalVisible}
-        setImage={setImage}
-      />
-    </ScrollView>
+        <Alert visible={alertVisibility} setVisible={setVisible} />
+        <ChooseImageModal
+          visible={chooseImageModalVisible}
+          setVisible={setChooseImageModalVisible}
+          setImage={setImage}
+        />
+      </ScrollView>
+      <BottomNav navigation={navigation} />
+    </View>
   );
 }
 

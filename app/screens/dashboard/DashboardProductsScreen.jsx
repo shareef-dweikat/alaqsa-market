@@ -117,12 +117,12 @@ export default function DashboardHome({ navigation }) {
             >
               المنتجات
             </Text>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               // style={{ marginLeft: 8, flex: 1 }}
               onPress={() => navigation.toggleDrawer()}
             >
               <DrawerIcon />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </SafeAreaView>
@@ -137,6 +137,7 @@ export default function DashboardHome({ navigation }) {
             isFav={item.isFav}
             image={item.image}
             isVisible={item.isVisible}
+            navigation={navigation}
           />
         ))}
         <View style={{ height: 100 }}></View>
@@ -160,11 +161,13 @@ function VerticalItemCard({
   onPress,
   image,
   isVisible,
+  navigation,
 }) {
   console.log(isVisible);
   const [productAvailability, setProductAvailability] = useState(isVisible);
   return (
-    <View
+    <TouchableOpacity
+      onPress={() => navigation.push('DashboardItemDetailsScreen')}
       style={{
         height: 120,
         borderWidth: 1,
@@ -189,13 +192,14 @@ function VerticalItemCard({
           }}
         >
           {/* <HeartIcon color='red'/> */}
-          <Switch
+          {/* <Switch
             trackColor={{ false: '#767577', true: '#22C993' }}
             thumbColor={productAvailability ? Colors.WHITE : '#f4f3f4'}
             ios_backgroundColor='#3e3e3e'
             onValueChange={(e) => setProductAvailability(e)}
             value={productAvailability}
-          />
+          /> */}
+          <View />
           <Text style={{ textAlign: 'right', fontFamily: 'Tajawal-Medium' }}>
             {name}
           </Text>
@@ -217,35 +221,24 @@ function VerticalItemCard({
             {desc}
           </Text>
         </View>
-        {/* <View
+        <Text
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '100%',
-            paddingHorizontal: 16,
-            marginTop: 8,
+            textAlign: 'left',
+            fontFamily: 'Tajawal-Bold',
+            color: '#515462',
+            marginLeft: 16,
           }}
         >
-          <TouchableOpacity onPress={onPress}>
-            <PlusIcon />
-          </TouchableOpacity>
-          <Text
-            style={{
-              textAlign: 'right',
-              fontFamily: 'Tajawal-Bold',
-              color: '#515462',
-            }}
-          >
-            $2 22
-          </Text>
-        </View> */}
+          ${price} شيكل
+        </Text>
       </View>
       <Image
-        resizeMode='contain'
-        style={{ height: 100 }}
-        // source={{ uri: image }}
-        source={pImage}
+      style={{ height: 100, width: 100, marginRight: 8, borderRadius: 10}}
+        source={{
+          uri:
+            'https://firebasestorage.googleapis.com/v0/b/alaqsamart-9e68e.appspot.com/o/images%2Fproducts%2F%D9%84%D8%A8%D9%86%D8%A9?alt=media&token=71219dce-1a81-467d-b9cf-cca6356bc57b'
+        }}
       />
-    </View>
+    </TouchableOpacity>
   );
 }

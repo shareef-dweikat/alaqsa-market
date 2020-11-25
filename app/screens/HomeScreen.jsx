@@ -16,6 +16,7 @@ import SearchIcon from '../../assets/search-icon.svg';
 
 import HorizontalItemCard from '../components/HorizontalItemCard';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import BottomNav from '../components/BottomNav';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -164,6 +165,7 @@ export default function HomeScreen({ navigation }) {
         <HorizontalItemCard name='a' price={2} desc='1' isFav={true} />
         <View style={{ height: 32 }}></View>
       </ScrollView>
+      <BottomNav navigation={navigation} />
       {/* <Button title="Alert" onPress={()=>navigation.push('Alert')}/> */}
     </View>
   );

@@ -1,4 +1,3 @@
-import IntroductionSlider from './introductionSlider/IntroductionSlider';
 import React from 'react';
 import {
   Text,

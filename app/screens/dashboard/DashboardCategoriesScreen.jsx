@@ -142,7 +142,7 @@ const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId }) => {
 export default function DashboardCategoriesScreen({ navigation }) {
   const categories = useSelector((state) => state.category.categories);
   const dispatch = useDispatch();
-
+  console.log('categoriesadasdasdsd', categories);
   const CONTENT = [];
 
   categories.map((cat, id) =>
@@ -227,12 +227,12 @@ export default function DashboardCategoriesScreen({ navigation }) {
             >
               التصنيفات
             </Text>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               // style={{ marginLeft: 8, flex: 1 }}
               onPress={() => navigation.toggleDrawer()}
             >
               <DrawerIcon />
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         </View>
       </SafeAreaView>
@@ -268,7 +268,6 @@ export function DeleteConfirmation({
   handleDelete,
   setDeleteDialogVisible,
 }) {
-
   return (
     <Modal visible={visible}>
       <TouchableOpacity

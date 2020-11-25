@@ -48,7 +48,7 @@ export default function HorizontalItemCard({
       >
         <HeartIcon />
         <Text style={{ textAlign: 'right', fontFamily: 'Tajawal-Medium' }}>
-          اسم المنتج
+          {name}
         </Text>
       </View>
       <View
@@ -58,8 +58,8 @@ export default function HorizontalItemCard({
           paddingHorizontal: 16,
         }}
       >
-        <Text style={{ color: '#B8B8CD', fontFamily: 'Tajawal-Regular' }}>
-          الوصف
+        <Text style={{ color: '#B8B8CD', fontFamily: 'Tajawal-Regular', textAlign: 'right' }}>
+          {desc}
         </Text>
       </View>
       <View
@@ -81,7 +81,7 @@ export default function HorizontalItemCard({
             color: '#515462',
           }}
         >
-          $2 22
+          {price} شيكل
         </Text>
       </View>
     </View>

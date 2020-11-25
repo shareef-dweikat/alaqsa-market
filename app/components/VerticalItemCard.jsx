@@ -51,7 +51,7 @@ export default function VerticalItemCard({
         >
           <HeartIcon color='red'/>
           <Text style={{ textAlign: 'right', fontFamily: 'Tajawal-Medium' }}>
-            اسم المنتج
+            {name}
           </Text>
         </View>
         <View
@@ -68,7 +68,7 @@ export default function VerticalItemCard({
               height: 50,
             }}
           >
-            الوصف الوصف الوصف الوصف الوصف الوصفالوصف الوصف الوصفالوصف
+            {desc}
           </Text>
         </View>
         <View
@@ -90,7 +90,7 @@ export default function VerticalItemCard({
               color: '#515462',
             }}
           >
-            $2 22
+            {price} شيكل
           </Text>
         </View>
       </View>

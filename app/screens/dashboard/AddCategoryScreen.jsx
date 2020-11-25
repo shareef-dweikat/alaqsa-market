@@ -3,13 +3,13 @@ import {
   Text,
   View,
   Image,
-  KeyboardAvoidingView,
+  Modal,
   TextInput,
-  ImageBackground,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
   Switch,
+  ActivityIndicator,
 } from 'react-native';
 import { CustomPicker } from 'react-native-custom-picker';
 import { SafeAreaView } from 'react-navigation';
@@ -23,6 +23,7 @@ import { Checkbox } from 'react-native-paper';
 import VerticalItemDetailsCard from '../../components/VerticalItemDetailsCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCategory } from '../../store/action/category';
+import * as ImagePicker from 'expo-image-picker';
 
 const styles = StyleSheet.create({
   container: {
@@ -62,7 +63,27 @@ export default function AddCategoryScreen({ navigation }) {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
-  console.log(name, desc);
+  const [image, setImage] = useState('https://via.placeholder.com/125');
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      // aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (name != '') dispatch(createCategory(name, desc, image,navigation));
+    else alert('حقل الاسم إجباري');
+  };
+  const isLoading = useSelector((state) => state.category.isLoading);
+
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
@@ -79,8 +100,8 @@ export default function AddCategoryScreen({ navigation }) {
           }}
         >
           <TouchableOpacity
-            onPress={() => dispatch(createCategory(name, desc))}
-            style={{width: 20, height: 20}}
+            onPress={() => handleSubmit()}
+            style={{ width: 20, height: 20 }}
           >
             <TickIcon />
           </TouchableOpacity>
@@ -112,7 +133,14 @@ export default function AddCategoryScreen({ navigation }) {
           style={styles.inputDesc}
           placeholder='الوصف'
         />
+        <TouchableOpacity style={{flex: 1}} onPress={() => pickImage()}>
+          <Image
+            source={{ uri: image }}
+            style={{ flex: 1, height: 200, marginTop: 16 }}
+          />
+        </TouchableOpacity>
       </View>
+      <LoadingModal visible={isLoading} />
     </SafeAreaView>
   );
 }
@@ -196,5 +224,37 @@ export function MyCustomPicker({ navigation }) {
         // Alert.alert('Selected Item', value || 'No item were selected!');
       }}
     />
+  );
+}
+
+export function LoadingModal({ title, visible, setVisible, setImage }) {
+  return (
+    <Modal visible={visible} transparent>
+      <View
+        style={{
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'white',
+            width: '80%',
+            height: 200,
+            padding: 16,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ActivityIndicator color={Colors.GOLDEN} size='large' />
+          <Text style={{ marginTop: 32, fontFamily: 'Tajawal-Medium' }}>
+            جار إضافة التصنيف
+          </Text>
+        </View>
+      </View>
+    </Modal>
   );
 }

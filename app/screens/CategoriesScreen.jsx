@@ -21,19 +21,48 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from '../constants/colors';
 import SearchBox from '../components/SearchBox';
 import HorizontalItemCard from '../components/HorizontalItemCard';
-import { useSelector } from 'react-redux';
+import { fetchCategories } from '../store/action/category';
+import { useDispatch, useSelector } from 'react-redux';
+import BottomNav from '../components/BottomNav';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.WHITE,
   },
 });
-export default function CategoriesScreen() {
+export default function CategoriesScreen({navigation}) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
-  const category = useSelector((state) => state.product.products);
-  console.log("aadsd",category)
+  const dispatch = useDispatch();
+  const categories = useSelector((state) => state.category.categories);
+  const [products, setProducts] = useState([]);
+  const [isVertical, setIsVertical] = useState(true);
+
+  const allProducts = () => {
+    let products = [];
+    for (let index in categories) {
+      for (let i in categories[index]['products']) {
+        products.push(categories[index]['products'][i]);
+      }
+    }
+    console.log(products);
+
+    setProducts(products);
+  };
+  const parseCategpry = (name) => {
+    for (let index in categories) {
+      if (categories[index].category_name === name) {
+        // console.log(Object.values(categories[index]['products']))
+        setProducts(Object.values(categories[index]['products']));
+      }
+    }
+  };
+  const names = [];
+  for (let index in categories) {
+    names.push(categories[index].category_name);
+  }
+  // console.log('aadsd', categories);
   useEffect(() => {
-    // dispatch()
+    dispatch(fetchCategories());
   }, []);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
@@ -55,11 +84,21 @@ export default function CategoriesScreen() {
             alignItems: 'center',
           }}
         >
-          <ListViewIcon
-            color={Colors.ACTIVE_VIEW_TAP}
-            style={{ marginRight: 8 }}
-          />
-          <GridViewIcon color={Colors.INACTIVE_VIEW_TAP} />
+          <TouchableOpacity onPress={() => setIsVertical(true)}>
+            <ListViewIcon
+              color={
+                isVertical ? Colors.ACTIVE_VIEW_TAP : Colors.INACTIVE_VIEW_TAP
+              }
+              style={{ marginRight: 8 }}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => setIsVertical(false)}>
+            <GridViewIcon
+              color={
+                isVertical ? Colors.INACTIVE_VIEW_TAP : Colors.ACTIVE_VIEW_TAP
+              }
+            />
+          </TouchableOpacity>
         </View>
         <View
           style={{
@@ -85,42 +124,59 @@ export default function CategoriesScreen() {
         </TouchableOpacity>
       </View>
       <ScrollView style={{ maxHeight: 60, marginRight: 16 }} horizontal>
-        <Card backgroundColor={Colors.LIGTH_BACKGROUND_COLOR} name='لحم' />
-        <Card backgroundColor={Colors.LIGTH_BACKGROUND_COLOR} name='لحم' />
-        <Card backgroundColor={Colors.LIGTH_BACKGROUND_COLOR} name='لحم' />
-        <Card backgroundColor={Colors.LIGTH_BACKGROUND_COLOR} name='لحم' />
+        {names.map((name) => (
+          <Card
+            backgroundColor={Colors.LIGTH_BACKGROUND_COLOR}
+            name={name}
+            onPress={() => parseCategpry(name)}
+          />
+        ))}
+
         <Card
           backgroundColor={Colors.GOLDEN}
           color={Colors.WHITE}
           name='الكل'
+          onPress={() => allProducts()}
         />
       </ScrollView>
       <ScrollView style={{ paddingHorizontal: 16 }}>
-        <VerticalItemCard />
-        {/* <View
-          style={{
-            flexWrap: 'wrap',
-            flexDirection: 'row',
-            justifyContent: 'space-around',
-          }}
-        >
-          <HorizontalItemCard />
-          <HorizontalItemCard />
-          <HorizontalItemCard />
-          <HorizontalItemCard />
-          <HorizontalItemCard />
-          <HorizontalItemCard />
-        </View> */}
+        {isVertical ? (
+          products.map((product) => (
+            <VerticalItemCard
+              name={product.product_name}
+              desc={product.product_desc}
+              price={product.price}
+            />
+          ))
+        ) : (
+          <View
+            style={{
+              flexWrap: 'wrap',
+              flexDirection: 'row',
+              justifyContent: 'space-around',
+            }}
+          >
+            {products.map((product) => (
+              <HorizontalItemCard
+                name={product.product_name}
+                desc={product.product_desc}
+                price={product.price}
+              />
+            ))}
+          </View>
+        )}
       </ScrollView>
+      <BottomNav navigation={navigation} />
     </SafeAreaView>
   );
 }
 
-export function Card({ name, backgroundColor, color = 'black' }) {
+export function Card({ name, backgroundColor, color = 'black', onPress }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
 
   return (
-    <View
+    <TouchableOpacity
+      onPress={onPress}
       style={{
         backgroundColor: backgroundColor,
         width: 100,
@@ -130,9 +186,10 @@ export function Card({ name, backgroundColor, color = 'black' }) {
         alignItems: 'center',
         marginTop: 16,
         marginHorizontal: 4,
+        marginBottom: 32,
       }}
     >
       <Text style={{ color: color, fontFamily: 'Tajawal-Medium' }}>{name}</Text>
-    </View>
+    </TouchableOpacity>
   );
 }

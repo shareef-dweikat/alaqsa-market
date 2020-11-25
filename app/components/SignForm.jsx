@@ -99,6 +99,8 @@ export default function SignForm({
   forgotPassBtnShown,
   agreeOnConditionsBoxShown,
   submitText,
+  onPress,
+  isSignUpActive,
 }) {
   return (
     <View style={styles.formContainer}>
@@ -107,10 +109,12 @@ export default function SignForm({
           <Text style={styles.formContainerHeaderTap}>دخول</Text>
           <View style={styles.formContainerHeaderTapActiveLine}></View>
         </TouchableOpacity>
-        <TouchableOpacity style={{ alignItems: 'center' }}>
-          <Text style={styles.formContainerHeaderTap}>إنشاء حساب</Text>
-          <View style={styles.formContainerHeaderTapLine}></View>
-        </TouchableOpacity>
+        {isSignUpActive && (
+          <TouchableOpacity style={{ alignItems: 'center' }}>
+            <Text style={styles.formContainerHeaderTap}>إنشاء حساب</Text>
+            <View style={styles.formContainerHeaderTapLine}></View>
+          </TouchableOpacity>
+        )}
       </View>
 
       {inputs}
@@ -122,7 +126,7 @@ export default function SignForm({
           أوافق على الشروط والأحكام
         </Text>
       )}
-      <TouchableOpacity style={styles.btn}>
+      <TouchableOpacity onPress={onPress} style={styles.btn}>
         <Text style={styles.btnText}>{submitText}</Text>
       </TouchableOpacity>
     </View>

@@ -1,4 +1,3 @@
-import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
 import React, { useEffect, useState } from 'react';
 import {
   Text,
@@ -14,12 +13,14 @@ import {
 import { SafeAreaView } from 'react-navigation';
 
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import BottomNav from '../components/BottomNav';
+import navigation from '../config/navigation';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
 });
-export default function NotificationsScreen() {
+export default function NotificationsScreen({navigation}) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
 
   return (
@@ -27,6 +28,7 @@ export default function NotificationsScreen() {
       <ScrollView>
         <Text>NotificationsScreen</Text>
       </ScrollView>
+      <BottomNav navigation={navigation} />
     </SafeAreaView>
   );
 }
