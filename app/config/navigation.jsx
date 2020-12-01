@@ -36,6 +36,7 @@ import DashboardCategoriesScreen from '../screens/dashboard/DashboardCategoriesS
 import AddCategoryScreen from '../screens/dashboard/AddCategoryScreen';
 import SignInAdminScreen from '../screens/SignInAdminScreen';
 import DashboardItemDetailsScreen from '../screens/dashboard/DashboardItemDetailsScreen';
+import OrdersPage from '../screens/OrdersPage';
 const ContactsStack = createStackNavigator();
 const ContactsStackScreen = ({ navigation }) => (
   <ContactsStack.Navigator headerMode='none'>
@@ -60,6 +61,7 @@ const TabsStackScreen = ({ navigation }) => (
     />
     <RootStack.Screen name='CartScreen' component={CartScreen} />
     <RootStack.Screen name='CategoriesScreen' component={CategoriesScreen} />
+    <RootStack.Screen name='OrdersPage' component={OrdersPage} />
   </TabStack.Navigator>
 );
 // const TabsStack = createBottomTabNavigator();

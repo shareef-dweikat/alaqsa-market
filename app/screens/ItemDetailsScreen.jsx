@@ -34,9 +34,9 @@ const styles = StyleSheet.create({
     // width: Dimensions.get('window').width,
   },
 });
-export default function ItemDetailsScreen({ navigation }) {
+export default function ItemDetailsScreen({ route, navigation }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
-
+   const product = route.params.product
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
@@ -56,8 +56,7 @@ export default function ItemDetailsScreen({ navigation }) {
           </Text>
         </View>
       </View>
-        <VerticalItemDetailsCard />
-        
+      <VerticalItemDetailsCard product={product} />
     </SafeAreaView>
   );
 }

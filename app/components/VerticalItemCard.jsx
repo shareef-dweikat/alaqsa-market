@@ -22,9 +22,11 @@ export default function VerticalItemCard({
   desc,
   isFav,
   onPress,
+  add
 }) {
   return (
-    <View
+    <TouchableOpacity
+      onPress={onPress}
       style={{
         flex: 1,
         height: 140,
@@ -49,7 +51,7 @@ export default function VerticalItemCard({
             justifyContent: 'space-between',
           }}
         >
-          <HeartIcon color='red'/>
+          <HeartIcon color='red' />
           <Text style={{ textAlign: 'right', fontFamily: 'Tajawal-Medium' }}>
             {name}
           </Text>
@@ -80,7 +82,7 @@ export default function VerticalItemCard({
             marginTop: 8,
           }}
         >
-          <TouchableOpacity onPress={onPress}>
+          <TouchableOpacity onPress={add}>
             <PlusIcon />
           </TouchableOpacity>
           <Text
@@ -95,6 +97,6 @@ export default function VerticalItemCard({
         </View>
       </View>
       <Image resizeMode='contain' style={{ height: 100 }} source={pImage} />
-    </View>
+    </TouchableOpacity>
   );
 }

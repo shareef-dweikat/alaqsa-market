@@ -22,9 +22,11 @@ export default function HorizontalItemCard({
   desc,
   isFav,
   onPress,
+  add
 }) {
   return (
-    <View
+    <TouchableOpacity
+      onPress={onPress}
       style={{
         width: 150,
         height: 230,
@@ -58,7 +60,13 @@ export default function HorizontalItemCard({
           paddingHorizontal: 16,
         }}
       >
-        <Text style={{ color: '#B8B8CD', fontFamily: 'Tajawal-Regular', textAlign: 'right' }}>
+        <Text
+          style={{
+            color: '#B8B8CD',
+            fontFamily: 'Tajawal-Regular',
+            textAlign: 'right',
+          }}
+        >
           {desc}
         </Text>
       </View>
@@ -71,7 +79,7 @@ export default function HorizontalItemCard({
           marginTop: 8,
         }}
       >
-        <TouchableOpacity onPress={onPress}>
+        <TouchableOpacity onPress={add}>
           <PlusIcon />
         </TouchableOpacity>
         <Text
@@ -84,6 +92,6 @@ export default function HorizontalItemCard({
           {price} شيكل
         </Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }

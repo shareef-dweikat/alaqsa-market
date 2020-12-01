@@ -74,6 +74,10 @@ export default function DrawerContent({ value, navigation }) {
       />
       <Tap
         title='سجل المشتريات'
+        onPress={() => {
+          navigation.push('OrdersPage');
+          navigation.toggleDrawer();
+        }}
         tapIcon={
           <BuyHistory
             // color={Colors.BACKGROUND}

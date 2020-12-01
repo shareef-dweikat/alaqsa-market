@@ -11,7 +11,13 @@ import pImage from '../../assets/meat.png';
 import HeartIcon from '../../assets/small-heart-icon.svg';
 import PlusIcon from '../../assets/plus-icon.svg';
 import { ScrollView } from 'react-native-gesture-handler';
-import {Picker} from '@react-native-community/picker' 
+import { Picker } from '@react-native-community/picker';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  addProductToCart,
+  // searchAction
+} from '../store/action/cart';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -32,28 +38,28 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
 });
-export default function VerticalItemDetailsCard({
-  name,
-  price,
-  desc,
-  isFav,
-  onPress,
-  btn,
-}) {
+export default function VerticalItemDetailsCard({ product,navigation }) {
+  const height = Dimensions.get('window').height * 0.4;
+  const width = Dimensions.get('window').width - 40;
+  console.log(product.image, 'o[[[[[');
+  const dispatch = useDispatch();
+
   return (
     <ScrollView
       contentContainerStyle={{
         marginTop: 16,
-        paddingHorizontal: 32,
+        paddingHorizontal: 24,
         // flexDirection: 'row',
       }}
     >
       <Image
         style={{
-          width: '100%',
+          width: width,
+          height: height,
+          alignSelf: 'center',
           borderRadius: 10,
         }}
-        source={pImage}
+        source={{ uri: product.image }}
       />
 
       {/* <View
@@ -73,7 +79,7 @@ export default function VerticalItemDetailsCard({
           color: '#515462',
         }}
       >
-        اسسسس
+        {product.product_name}
       </Text>
 
       <Text
@@ -85,9 +91,9 @@ export default function VerticalItemDetailsCard({
           color: '#515462',
         }}
       >
-        desssss
+        {product.product_desc}{' '}
       </Text>
-      <View
+      {/* <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
@@ -115,8 +121,11 @@ export default function VerticalItemDetailsCard({
         >
           قم بتحديد الكمية
         </Text>
-      </View>
-      <TouchableOpacity style={styles.btn}>
+      </View> */}
+      <TouchableOpacity
+        onPress={() => dispatch(addProductToCart(product, navigation))}
+        style={styles.btn}
+      >
         <Text style={styles.btnText}>أضف إلى السلة</Text>
       </TouchableOpacity>
     </ScrollView>

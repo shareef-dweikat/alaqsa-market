@@ -22,6 +22,10 @@ import Colors from '../constants/colors';
 import SearchBox from '../components/SearchBox';
 import HorizontalItemCard from '../components/HorizontalItemCard';
 import { fetchCategories } from '../store/action/category';
+import {
+  addProductToCart,
+  // searchAction
+} from '../store/action/cart';
 import { useDispatch, useSelector } from 'react-redux';
 import BottomNav from '../components/BottomNav';
 const styles = StyleSheet.create({
@@ -30,23 +34,27 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
   },
 });
-export default function CategoriesScreen({navigation}) {
+export default function CategoriesScreen({ navigation }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.category.categories);
   const [products, setProducts] = useState([]);
   const [isVertical, setIsVertical] = useState(true);
+  // const [searchValue, setSearchValue] = useState('');
 
-  const allProducts = () => {
-    let products = [];
-    for (let index in categories) {
-      for (let i in categories[index]['products']) {
-        products.push(categories[index]['products'][i]);
-      }
-    }
-    console.log(products);
+  // const allProducts = () => {
+  //   let products = [];
+  //   for (let index in categories) {
+  //     for (let i in categories[index]['products']) {
+  //       products.push(categories[index]['products'][i]);
+  //     }
+  //   }
+  //   console.log(products, 'all-productssssss');
 
-    setProducts(products);
+  //   setProducts(products);
+  // };
+  const search = (txt) => {
+    // dispatch(searchAction(txt))
   };
   const parseCategpry = (name) => {
     for (let index in categories) {
@@ -63,7 +71,9 @@ export default function CategoriesScreen({navigation}) {
   // console.log('aadsd', categories);
   useEffect(() => {
     dispatch(fetchCategories());
-  }, []);
+    // allProducts()
+    parseCategpry(names[0]);
+  }, [names[0]]);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <View
@@ -106,14 +116,18 @@ export default function CategoriesScreen({navigation}) {
             justifyContent: 'flex-end',
             alignItems: 'center',
             borderColor: Colors.BORDER_COLOR,
-            borderWidth: 1,
+             borderWidth: 1,
             flex: 3,
             paddingHorizontal: 8,
             borderRadius: 10,
             height: 35,
           }}
         >
-          <TextInput style={{ marginRight: 8 }} placeholder='بحث' />
+          <TextInput
+            style={{ marginRight: 8 }}
+            onChangeText={(txt) => search(txt)}
+            placeholder='بحث'
+          />
           <SIcon />
         </View>
         <TouchableOpacity
@@ -132,20 +146,22 @@ export default function CategoriesScreen({navigation}) {
           />
         ))}
 
-        <Card
+        {/* <Card
           backgroundColor={Colors.GOLDEN}
           color={Colors.WHITE}
           name='الكل'
           onPress={() => allProducts()}
-        />
+        /> */}
       </ScrollView>
       <ScrollView style={{ paddingHorizontal: 16 }}>
         {isVertical ? (
           products.map((product) => (
             <VerticalItemCard
+              add={() => dispatch(addProductToCart(product, navigation))}
               name={product.product_name}
               desc={product.product_desc}
               price={product.price}
+              onPress={() => navigation.push('ItemDetailsScreen', { product })}
             />
           ))
         ) : (
@@ -158,9 +174,13 @@ export default function CategoriesScreen({navigation}) {
           >
             {products.map((product) => (
               <HorizontalItemCard
+                add={() => dispatch(addProductToCart(product, navigation))}
                 name={product.product_name}
                 desc={product.product_desc}
                 price={product.price}
+                onPress={() =>
+                  navigation.push('ItemDetailsScreen', { product })
+                }
               />
             ))}
           </View>

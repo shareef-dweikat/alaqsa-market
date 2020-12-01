@@ -7,13 +7,22 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from '../../../assets/cart/cart-item.png';
 import Pen from '../../../assets/cart/pen.svg';
 import X from '../../../assets/cart/x.svg';
 import navigation from '../../config/navigation';
-
+import { storeItemToDelete } from '../../store/action/cart';
 const styles = StyleSheet.create({});
-export default function Card({ setDeleteModalVisible, navigation }) {
+export default function Card({
+  setDeleteModalVisible,
+  navigation,
+  price,
+  name,
+  image,
+  firebaseId,
+}) {
+  const dispatch = useDispatch();
   return (
     <View style={{ marginBottom: 16 }}>
       <View
@@ -24,12 +33,16 @@ export default function Card({ setDeleteModalVisible, navigation }) {
           zIndex: 1,
         }}
       >
-        <TouchableOpacity onPress={() => setDeleteModalVisible()}>
+        <TouchableOpacity
+          onPress={() => {
+            dispatch(storeItemToDelete(firebaseId))
+            setDeleteModalVisible()}}
+        >
           <X style={{ marginRight: 16 }} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation()}>
+        {/* <TouchableOpacity onPress={() => navigation()}>
           <Pen />
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <View
         style={{
@@ -48,7 +61,7 @@ export default function Card({ setDeleteModalVisible, navigation }) {
           }}
         >
           <Text style={{ fontSize: 15, fontFamily: 'Tajawal-Medium' }}>
-            20${' '}
+            {price} شيكل
           </Text>
           <Text style={{ fontSize: 15, fontFamily: 'Tajawal-Regular' }}>
             2 كيلو
@@ -59,14 +72,17 @@ export default function Card({ setDeleteModalVisible, navigation }) {
         >
           <Text
             style={{
-              marginRight: 8,
+              marginRight: 16,
               fontFamily: 'Tajawal-Regular',
               fontSize: 17,
             }}
           >
-            اسم المنتج
+            {name}
           </Text>
-          <Image source={Icon} />
+          <Image
+            style={{ height: 100, width: 100, borderRadius: 10 }}
+            source={{ uri: image }}
+          />
         </View>
       </View>
     </View>
