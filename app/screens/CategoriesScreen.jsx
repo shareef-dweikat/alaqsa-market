@@ -8,8 +8,8 @@ import {
   TextInput,
   ImageBackground,
   StyleSheet,
-  Dimensions,
-  Keyboard,
+  Modal,
+  ActivityIndicator,
 } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import DrawerIcon from '../../assets/drawer-icon.svg';
@@ -26,6 +26,11 @@ import {
   addProductToCart,
   // searchAction
 } from '../store/action/cart';
+import {
+  setFav,
+  deleteFav
+} from '../store/action/product';
+
 import { useDispatch, useSelector } from 'react-redux';
 import BottomNav from '../components/BottomNav';
 const styles = StyleSheet.create({
@@ -40,6 +45,8 @@ export default function CategoriesScreen({ navigation }) {
   const categories = useSelector((state) => state.category.categories);
   const [products, setProducts] = useState([]);
   const [isVertical, setIsVertical] = useState(true);
+  const isLoading = useSelector((state) => state.cart.isLoading);
+
   // const [searchValue, setSearchValue] = useState('');
 
   // const allProducts = () => {
@@ -116,19 +123,27 @@ export default function CategoriesScreen({ navigation }) {
             justifyContent: 'flex-end',
             alignItems: 'center',
             borderColor: Colors.BORDER_COLOR,
-             borderWidth: 1,
+            borderWidth: 1,
             flex: 3,
             paddingHorizontal: 8,
             borderRadius: 10,
             height: 35,
           }}
         >
-          <TextInput
+          {/* <TextInput
             style={{ marginRight: 8 }}
             onChangeText={(txt) => search(txt)}
             placeholder='بحث'
-          />
-          <SIcon />
+          /> */}
+          <TouchableOpacity
+            onPress={() => navigation.push('SearchScreen')}
+            style={{ flexDirection: 'row' }}
+          >
+            <Text style={{ marginRight: 8, color: Colors.PLACEHOLDER }}>
+              بحث
+            </Text>
+            <SIcon />
+          </TouchableOpacity>
         </View>
         <TouchableOpacity
           style={{ marginLeft: 8, flex: 1 }}
@@ -160,7 +175,11 @@ export default function CategoriesScreen({ navigation }) {
               add={() => dispatch(addProductToCart(product, navigation))}
               name={product.product_name}
               desc={product.product_desc}
+              isFav={product.isVisible}
               price={product.price}
+              product={product}
+              addToFav={() => dispatch(setFav())}
+              deleteFromFav={() => dispatch(deleteFav())}
               onPress={() => navigation.push('ItemDetailsScreen', { product })}
             />
           ))
@@ -177,6 +196,10 @@ export default function CategoriesScreen({ navigation }) {
                 add={() => dispatch(addProductToCart(product, navigation))}
                 name={product.product_name}
                 desc={product.product_desc}
+                isFav={true}
+                product={product}
+                addToFav={() => dispatch(setFav())}
+                deleteFromFav={() => dispatch(deleteFav())}
                 price={product.price}
                 onPress={() =>
                   navigation.push('ItemDetailsScreen', { product })
@@ -186,6 +209,7 @@ export default function CategoriesScreen({ navigation }) {
           </View>
         )}
       </ScrollView>
+      <LoadingModal visible={isLoading} />
       <BottomNav navigation={navigation} />
     </SafeAreaView>
   );
@@ -211,5 +235,37 @@ export function Card({ name, backgroundColor, color = 'black', onPress }) {
     >
       <Text style={{ color: color, fontFamily: 'Tajawal-Medium' }}>{name}</Text>
     </TouchableOpacity>
+  );
+}
+
+export function LoadingModal({ title, visible, setVisible, setImage }) {
+  return (
+    <Modal visible={visible} transparent>
+      <View
+        style={{
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'white',
+            width: '80%',
+            height: 200,
+            padding: 16,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ActivityIndicator color={Colors.GOLDEN} size='large' />
+          <Text style={{ marginTop: 32, fontFamily: 'Tajawal-Medium' }}>
+            جار إضافة التصنيف
+          </Text>
+        </View>
+      </View>
+    </Modal>
   );
 }

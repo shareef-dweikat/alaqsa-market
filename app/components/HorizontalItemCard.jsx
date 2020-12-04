@@ -22,7 +22,7 @@ export default function HorizontalItemCard({
   desc,
   isFav,
   onPress,
-  add
+  add,
 }) {
   return (
     <TouchableOpacity
@@ -48,7 +48,11 @@ export default function HorizontalItemCard({
           marginTop: 8,
         }}
       >
-        <HeartIcon />
+        {true && (
+          <TouchableOpacity>
+            <HeartIcon />
+          </TouchableOpacity>
+        )}
         <Text style={{ textAlign: 'right', fontFamily: 'Tajawal-Medium' }}>
           {name}
         </Text>

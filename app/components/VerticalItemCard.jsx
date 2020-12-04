@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 import pImage from '../../assets/home/product.png';
 import HeartIcon from '../../assets/small-heart-icon.svg';
+import HeartEmptyIcon from '../../assets/small-heart-empty-icon.svg';
 import PlusIcon from '../../assets/plus-icon.svg';
 const styles = StyleSheet.create({
   container: {
@@ -22,7 +23,10 @@ export default function VerticalItemCard({
   desc,
   isFav,
   onPress,
-  add
+  add,
+  addToFav,
+  deleteFromFav,
+  product,
 }) {
   return (
     <TouchableOpacity
@@ -51,7 +55,19 @@ export default function VerticalItemCard({
             justifyContent: 'space-between',
           }}
         >
-          <HeartIcon color='red' />
+          {isFav ? (
+            <TouchableOpacity 
+            // onPress={() => addToFav(product)}
+            >
+              <HeartIcon color='red' />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+            //  onPress={() => deleteFromFav(name)}
+             >
+              <HeartEmptyIcon />
+            </TouchableOpacity>
+          )}
           <Text style={{ textAlign: 'right', fontFamily: 'Tajawal-Medium' }}>
             {name}
           </Text>

@@ -33,9 +33,9 @@ export function addProductToCart(product) {
     addProductToCartAPI(product).then(() => {
       console.log('addProductToCartAPI');
       //   // dispatch(fetchProducts());
-      //   dispatch({
-      //     type: 'PRODUCT_ADD_TO_CART_SUCCESS',
-      //   });
+        dispatch({
+          type: 'PRODUCT_ADD_TO_CART_SUCCESS',
+        });
     });
   };
 }

@@ -11,7 +11,7 @@ const initialState = {
 export default (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case 'PRODUCT_ADD_SUCCESS':
-      console.log('PRODUCT_ADD_SUCCESS', action);
+      console.log('PRODUCT_ADD_SUCCESSsssssssssssss', action);
       return {
         ...state,
         isLoading: false,
@@ -24,6 +24,13 @@ export default (state = initialState, action: AnyAction) => {
       };
       case 'FETCH_PRODUCTS':
         console.log('FETCH_PRODUCTS', action);
+        return {
+          ...state,
+          // isLoading: true,
+          products: action.payload
+        };
+        case 'FETCH_PRODUCTS_SEARCH':
+        console.log('FETCH_PRODUCTS_SEARCH');
         return {
           ...state,
           // isLoading: true,

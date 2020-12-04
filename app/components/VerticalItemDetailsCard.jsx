@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
 });
-export default function VerticalItemDetailsCard({ product,navigation }) {
+export default function VerticalItemDetailsCard({ product, navigation }) {
   const height = Dimensions.get('window').height * 0.4;
   const width = Dimensions.get('window').width - 40;
   console.log(product.image, 'o[[[[[');

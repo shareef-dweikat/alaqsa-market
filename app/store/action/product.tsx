@@ -70,7 +70,7 @@ export function fetchProducts() {
             products.push(categories[index]['products'][i])
           }
         }
-        console.log(products)
+        console.log(products, "fetchProducts")
         dispatch({
           type: 'FETCH_PRODUCTS',
           payload: products
@@ -112,3 +112,59 @@ export function uploadProductImage(productName, uri) {
     // });
   };
 }
+
+export function fetchSearchProducts(text) {
+
+  return (dispatch) => {
+    
+    firebase.database().ref('category')
+    .once('value', function(snapshot) {
+      let products = []
+        let categories = snapshot.val()
+        for(let index in categories) {
+          
+          for(let i in categories[index]['products']) {
+          //  if(categories[index]['products'][i].product_name.search(text) != -1)
+                products.push(categories[index]['products'][i])
+          }
+        }
+        // console.log(products, "fetchProducts")
+        dispatch({
+          type: 'FETCH_PRODUCTS_SEARCH',
+          payload: products
+        });
+})
+  
+  };
+}
+
+
+const setFav = async (product, catFirebaseId) => {
+
+  console.log(product, catFirebaseId)
+  // return firebase
+  //   .database()
+  //   .ref(`category/${catFirebaseId}/products`)
+  //   .set({
+  //     product_name: product.productName,
+  //     product_desc: product.productDesc,
+  //     isVisible: product.productAvailability,
+  //     price: product.price,
+  //   })
+  //   .catch((e) => console.log('addProductAPI', e));
+};
+
+const deleteFav = async (product, catFirebaseId) => {
+
+  console.log(product, catFirebaseId)
+  // return firebase
+  //   .database()
+  //   .ref(`category/${catFirebaseId}/products`)
+  //   .set({
+  //     product_name: product.productName,
+  //     product_desc: product.productDesc,
+  //     isVisible: product.productAvailability,
+  //     price: product.price,
+  //   })
+  //   .catch((e) => console.log('addProductAPI', e));
+};

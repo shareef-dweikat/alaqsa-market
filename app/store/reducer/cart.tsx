@@ -13,7 +13,7 @@ const initialState = {
 export default (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case 'PRODUCT_ADD_TO_CART':
-      console.log('PRODUCT_ADD_TO_CART_SUCCESS');
+      console.log('PRODUCT_ADD_TO_CART');
       return {
         ...state,
         isLoading: true,

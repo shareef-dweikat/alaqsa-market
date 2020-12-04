@@ -18,7 +18,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 8,
-    flex: 3
+    flex: 3,
   },
   input: {
     backgroundColor: 'white',
@@ -27,10 +27,21 @@ const styles = StyleSheet.create({
     marginRight: 8,
   },
 });
-export default function SearchBox({ value, width="100%", borderWidth=0, borderColor='white', placeholder='' }) {
+export default function SearchBox({
+  value,
+  width = '100%',
+  borderWidth = 1,
+  borderColor = 'white',
+  placeholder = 'بحث',
+  search,
+}) {
   return (
-    <View style={{...styles.container, borderWidth, borderColor}}>
-      <TextInput style={styles.input} placeholder={placeholder} />
+    <View style={{ ...styles.container, borderWidth, borderColor }}>
+      <TextInput
+        onChangeText={(txt) => search(txt)}
+        style={styles.input}
+        placeholder={placeholder}
+      />
       <SIcon />
     </View>
   );

@@ -52,7 +52,7 @@ const TabStack = createStackNavigator();
 const TabsStackScreen = ({ navigation }) => (
   <TabStack.Navigator headerMode='none'>
     <RootStack.Screen name='HomeScreen' component={HomeScreen} />
-
+    <ContactsStack.Screen name='SearchScreen' component={SearchScreen} />
     <RootStack.Screen name='FavScreen' component={FavScreen} />
     <RootStack.Screen name='ProfileScreen' component={ProfileScreen} />
     <RootStack.Screen
