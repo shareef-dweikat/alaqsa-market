@@ -26,10 +26,7 @@ import {
   addProductToCart,
   // searchAction
 } from '../store/action/cart';
-import {
-  setFav,
-  deleteFav
-} from '../store/action/product';
+import { setFav, deleteFav } from '../store/action/product';
 
 import { useDispatch, useSelector } from 'react-redux';
 import BottomNav from '../components/BottomNav';
@@ -153,13 +150,15 @@ export default function CategoriesScreen({ navigation }) {
         </TouchableOpacity>
       </View>
       <ScrollView style={{ maxHeight: 60, marginRight: 16 }} horizontal>
-        {names.map((name) => (
-          <Card
-            backgroundColor={Colors.LIGTH_BACKGROUND_COLOR}
-            name={name}
-            onPress={() => parseCategpry(name)}
-          />
-        ))}
+        {names &&
+          names.map((name) => (
+            <Card
+              key={name}
+              backgroundColor={Colors.LIGTH_BACKGROUND_COLOR}
+              name={name}
+              onPress={() => parseCategpry(name)}
+            />
+          ))}
 
         {/* <Card
           backgroundColor={Colors.GOLDEN}
@@ -170,8 +169,10 @@ export default function CategoriesScreen({ navigation }) {
       </ScrollView>
       <ScrollView style={{ paddingHorizontal: 16 }}>
         {isVertical ? (
+          products &&
           products.map((product) => (
             <VerticalItemCard
+              key={product.product_name}
               add={() => dispatch(addProductToCart(product, navigation))}
               name={product.product_name}
               desc={product.product_desc}
@@ -191,21 +192,23 @@ export default function CategoriesScreen({ navigation }) {
               justifyContent: 'space-around',
             }}
           >
-            {products.map((product) => (
-              <HorizontalItemCard
-                add={() => dispatch(addProductToCart(product, navigation))}
-                name={product.product_name}
-                desc={product.product_desc}
-                isFav={true}
-                product={product}
-                addToFav={() => dispatch(setFav())}
-                deleteFromFav={() => dispatch(deleteFav())}
-                price={product.price}
-                onPress={() =>
-                  navigation.push('ItemDetailsScreen', { product })
-                }
-              />
-            ))}
+            {products &&
+              products.map((product) => (
+                <HorizontalItemCard
+                  key={product.product_name}
+                  add={() => dispatch(addProductToCart(product, navigation))}
+                  name={product.product_name}
+                  desc={product.product_desc}
+                  isFav={true}
+                  product={product}
+                  addToFav={() => dispatch(setFav())}
+                  deleteFromFav={() => dispatch(deleteFav())}
+                  price={product.price}
+                  onPress={() =>
+                    navigation.push('ItemDetailsScreen', { product })
+                  }
+                />
+              ))}
           </View>
         )}
       </ScrollView>

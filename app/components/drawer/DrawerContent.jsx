@@ -21,6 +21,7 @@ import FbIcon from '../../../assets/drawer/fb.svg';
 import InstaIcon from '../../../assets/drawer/insta.svg';
 import SignOut from '../../../assets/drawer/logout.svg';
 import navigation from '../../config/navigation';
+import { AsyncStorage } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -131,6 +132,10 @@ export default function DrawerContent({ value, navigation }) {
         }
       />
       <Tap
+        onPress={() => {
+          AsyncStorage.clear()
+          navigation.push('AuthStackScreen')
+        }}
         title='تسجيل خروج'
         tapIcon={
           <SignOut

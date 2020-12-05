@@ -1,5 +1,7 @@
 import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import {
   Text,
   View,
@@ -100,6 +102,7 @@ export default function SignInAdminScreen({ navigation, setUser }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useDispatch();
 
   const [logoVisible, setLogoVisible] = useState(true);
   const login = () => {
@@ -111,7 +114,13 @@ export default function SignInAdminScreen({ navigation, setUser }) {
         const userObj = user.val();
         if (userObj) {
           if (userObj.password == password.trim()) {
-            setUser({userType: 'admin'});
+            // setUser({userType: 'admin'});
+            dispatch({
+              type: 'LOGIN_ADMIN_SUCCESS',
+              payload: {
+                username,
+              },
+            });
           } else {
             alert('كلمة مرور خاطئة');
           }

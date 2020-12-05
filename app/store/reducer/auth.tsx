@@ -1,4 +1,4 @@
-import {AnyAction} from 'redux';
+import { AnyAction } from 'redux';
 // import AsyncStorage from '@react-native-community/async-storage';
 
 const initialState = {
@@ -6,6 +6,8 @@ const initialState = {
   existingNumber: null,
   isLoading: false,
   token: null,
+  userType: null,
+  phone: null,
 };
 
 export default (state = initialState, action: AnyAction) => {
@@ -17,24 +19,25 @@ export default (state = initialState, action: AnyAction) => {
       };
     case 'SIGNUP_SUCCESS':
       // alert(action?.payload?.data?.message);
-      alert("SIGNUP_SUCCESS")
+      alert('SIGNUP_SUCCESS');
       return {
         ...state,
         isLoading: false,
         error: null,
       };
     case 'SIGNUP_FAILURE':
-      console.log("SIGNUP_FAILURE",action)
+      console.log('SIGNUP_FAILURE', action);
       return {
         ...state,
         isLoading: false,
         error: action.errors,
       };
-    case 'SET_TOKENS':
-      console.log(action.payload, 'tokrnnn');
+    case 'SET_USER_TYPE':
+      console.log(action.payload, 'SET_USER_TYPE');
       return {
         ...state,
-        token: action.payload,
+        userType: action.payload.userType,
+        phone: action.payload.phone,
       };
     case 'LOGIN':
       return {
@@ -43,20 +46,29 @@ export default (state = initialState, action: AnyAction) => {
       };
     case 'LOGIN_SUCCESS':
       // AsyncStorage.setItem('token', JSON.stringify(action.payload));
-      console.log( 'LOGIN_SUCCESS');
+      console.log('LOGIN_SUCCESS');
       return {
         ...state,
-        isLoading: false,
+        userType: 'customer',
+        phone: action.payload,
       };
     case 'LOGIN_FAILURE':
-      console.log("LOGIN_FAILURE", action)
+      console.log('LOGIN_FAILURE', action);
       return {
         ...state,
         isLoading: false,
         error: action.errors,
       };
-    
-    case 'SET_CURRENT_NUMBER': 
+      case 'LOGIN_ADMIN_SUCCESS':
+      console.log('LOGIN_ADMIN_SUCCESS', action);
+      return {
+        ...state,
+        isLoading: false,
+        userType: 'admin',
+        phone: action.payload,
+      };
+      
+    case 'SET_CURRENT_NUMBER':
       return {
         ...state,
         existingNumber: action.payload,
@@ -80,4 +92,3 @@ export interface Interface {
   existingNumber: typeof initialState.existingNumber;
   user: typeof initialState.user;
 }
-

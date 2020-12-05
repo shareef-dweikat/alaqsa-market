@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Text,
   View,
@@ -11,12 +12,14 @@ import {
   Keyboard,
   TouchableOpacity,
   ScrollView,
+  AsyncStorage,
 } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import SignForm, { MyInputText } from '../components/SignForm';
 import BB from '../../assets/signin-screen/background.svg';
 import image from '../../assets/signin-screen/background-overlay.png';
 import firebase from '../config/firebase';
+import { login } from '../store/action/auth';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -97,22 +100,41 @@ const styles = StyleSheet.create({
   },
 });
 export default function SignInScreen({ navigation, setUser }) {
-
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const [logoVisible, setLogoVisible] = useState(true);
+  const [pass, setPass] = useState(null);
+  const [phone, setPhone] = useState(null);
+  
+  const dispatch = useDispatch();
   const submit = async () => {
-    // firebase.auth().onAuthStateChanged(({email: 'aa@gmail.com', password: '1234'})=> {
-    // })
-    firebase
-      .auth()
-      .signInWithEmailAndPassword('alaqsamart2020@gmail.com', 'husam1994S')
-      .then((e) => {
-         setUser({userType: 'customer'})
-        console.log('adsd', e);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    dispatch(login(phone, pass))
+    // await firebase
+    //   .database()
+    //   .ref(`users/${phone}`)
+    //   .once('value', async (user) => {
+    //     if (user.val() != null && pass == user.val().password) {
+    //       AsyncStorage.setItem('userType', 'customer');
+    //       setUser({ userType: 'customer' });
+    //       // firebase
+    //       //   .database()
+    //       //   .ref(`users/0599102218`)
+    //       //   .set({
+    //       //     name: 'حسام ملحس',
+    //       //   })
+    //       //   .catch((e) => console.log('SignInScreen', e));
+    //     } else alert('خطا في العلومات');
+    //   })
+    //   .catch((e) => console.log('createCategoryAPI', e));
+    // firebase
+    //   .auth()
+    //   .signInWithPhoneNumber('0599102215', '111111')
+    //   .then((e) => {
+    //      setUser({userType: 'customer'})
+    //     console.log('adsd', e);
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
   };
   let [bachgroundHeight, setBachgroundHeight] = useState(
     Dimensions.get('window').height * 0.5
@@ -161,11 +183,11 @@ export default function SignInScreen({ navigation, setUser }) {
               inputs={
                 <>
                   <MyInputText
-                    onChangeText={(d) => console.log(d)}
+                    onChangeText={(phone) => setPhone(phone)}
                     placeholder='الإيميل'
                   />
                   <MyInputText
-                    onChangeText={(d) => console.log(d)}
+                    onChangeText={(pass) => setPass(pass)}
                     placeholder='كلمة المرور'
                   />
                 </>

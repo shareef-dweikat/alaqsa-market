@@ -1,7 +1,15 @@
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Text, View, ActivityIndicator, Dimensions, Image } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  Text,
+  View,
+  ActivityIndicator,
+  Dimensions,
+  Image,
+  AsyncStorage,
+} from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { AntDesign } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -37,6 +45,7 @@ import AddCategoryScreen from '../screens/dashboard/AddCategoryScreen';
 import SignInAdminScreen from '../screens/SignInAdminScreen';
 import DashboardItemDetailsScreen from '../screens/dashboard/DashboardItemDetailsScreen';
 import OrdersPage from '../screens/OrdersPage';
+import { setUserType } from '../store/action/auth';
 const ContactsStack = createStackNavigator();
 const ContactsStackScreen = ({ navigation }) => (
   <ContactsStack.Navigator headerMode='none'>
@@ -197,19 +206,17 @@ const DashboardDrawerStackScreen = () => (
 );
 
 const AuthStack = createStackNavigator();
-const AuthStackScreen = ({ setUser }) => (
+const AuthStackScreen = () => (
   <AuthStack.Navigator headerMode='none'>
     <AuthStack.Screen
       name='SignInScreen'
-      component={(header) => (
-        <SignInScreen setUser={setUser} navigation={header.navigation} />
-      )}
+      component={(header) => <SignInScreen navigation={header.navigation} />}
     />
     <AuthStack.Screen name='SignUpScreen' component={SignUpScreen} />
     <AuthStack.Screen
       name='SignInAdminScreen'
       component={(header) => (
-        <SignInAdminScreen setUser={setUser} navigation={header.navigation} />
+        <SignInAdminScreen navigation={header.navigation} />
       )}
     />
 
@@ -219,11 +226,22 @@ const AuthStackScreen = ({ setUser }) => (
 
 const RootStack = createStackNavigator();
 const RootStackScreen = () => {
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   // const [user, setUser] = React.useState({ userType: '' });
-  const [user, setUser] = React.useState(null);
-
+  // const [user, setUser] = React.useState(null);
+  const user = useSelector((state) => state.auth.userType);
+  const dispatch = useDispatch();
   React.useEffect(() => {
+    const getUser = async () => {
+      const USER_FROM_ASYNC = await AsyncStorage.getItem('userType');
+      const USER_PHONE_FROM_ASYNC = await AsyncStorage.getItem('phone');
+      if (USER_FROM_ASYNC != null) {
+        dispatch(setUserType(USER_FROM_ASYNC, USER_PHONE_FROM_ASYNC));
+        // setUser({ userType: USER_FROM_ASYNC })
+      }
+      setIsLoading(false);
+    };
+    getUser();
     // setTimeout(() => {
     //   setIsLoading(!isLoading);
     //   setUser();
@@ -241,7 +259,7 @@ const RootStackScreen = () => {
       ) : user == null ? (
         <RootStack.Screen
           name='AuthStackScreen'
-          component={() => <AuthStackScreen setUser={setUser} />}
+          component={() => <AuthStackScreen />}
         />
       ) : user.userType === 'admin' || user.userType === 'seller' ? (
         <RootStack.Screen
@@ -254,6 +272,7 @@ const RootStackScreen = () => {
           component={DrawerStackScreen}
         />
       )}
+
       <RootStack.Screen
         name='Modal'
         component={Modal}
