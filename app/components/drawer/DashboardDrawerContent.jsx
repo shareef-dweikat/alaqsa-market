@@ -6,9 +6,11 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  AsyncStorage,
 } from 'react-native';
 import Colors from '../../constants/colors';
 import { SafeAreaView } from 'react-navigation';
+import { useDispatch, useSelector } from 'react-redux';
 
 import CategoriesIcon from '../../../assets/dashboard-drawer/cat-icon.svg';
 import SmallHeart from '../../../assets/small-heart-icon.svg';
@@ -21,7 +23,7 @@ import FbIcon from '../../../assets/drawer/fb.svg';
 import ProductsIcon from '../../../assets/dashboard-drawer/product.svg';
 import SignOut from '../../../assets/drawer/logout.svg';
 import navigation from '../../config/navigation';
-
+import { setUserType } from '../../store/action/auth';
 const styles = StyleSheet.create({
   container: {
     marginTop: 12,
@@ -42,6 +44,8 @@ const styles = StyleSheet.create({
   },
 });
 export default function DashboardDrawerContent({ value, navigation }) {
+  const dispatch = useDispatch();
+
   return (
     <View style={{ backgroundColor: Colors.BACKGROUND, flex: 1 }}>
       <View
@@ -157,6 +161,10 @@ export default function DashboardDrawerContent({ value, navigation }) {
       />*/}
       <Tap
         title='تسجيل خروج'
+        onPress={() => {
+          AsyncStorage.clear();
+          dispatch(setUserType(null, null));
+        }}
         tapIcon={
           <SignOut
             // color={Colors.BACKGROUND}

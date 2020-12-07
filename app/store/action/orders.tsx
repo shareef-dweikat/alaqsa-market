@@ -23,3 +23,23 @@ export function fetchOrders() {
       });
   };
 }
+
+export function makeOrder() {
+  // firebase
+  //   .database()
+  //   .ref('category/')
+  //   .push({
+  //     category_name: name,
+  //     category_desc: desc,
+  //     isVisible: true,
+  //     image: url,
+  //   })
+  //   .catch((e) => console.log('createCategoryAPI', e));
+
+  // return (dispatch) => {
+  //   dispatch({
+  //     type: 'FETCH_ORDERS_SUCCESS',
+  //     // payload: ordersList
+  //   });
+  // };
+}

@@ -12,6 +12,7 @@ import {
   StyleSheet,
   Dimensions,
   Keyboard,
+  AsyncStorage
 } from 'react-native';
 import { SafeAreaView } from 'react-navigation';
 import SignForm, { MyInputText } from '../components/SignForm';
@@ -115,6 +116,7 @@ export default function SignInAdminScreen({ navigation, setUser }) {
         if (userObj) {
           if (userObj.password == password.trim()) {
             // setUser({userType: 'admin'});
+            AsyncStorage.setItem('userType', 'admin');
             dispatch({
               type: 'LOGIN_ADMIN_SUCCESS',
               payload: {

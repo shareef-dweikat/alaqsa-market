@@ -40,6 +40,8 @@ export default function CategoriesScreen({ navigation }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.category.categories);
+  const phone = useSelector((state) => state.auth.phone);
+
   const [products, setProducts] = useState([]);
   const [isVertical, setIsVertical] = useState(true);
   const isLoading = useSelector((state) => state.cart.isLoading);
@@ -61,6 +63,7 @@ export default function CategoriesScreen({ navigation }) {
     // dispatch(searchAction(txt))
   };
   const parseCategpry = (name) => {
+    // console.log(name, "aaaaa")
     for (let index in categories) {
       if (categories[index].category_name === name) {
         // console.log(Object.values(categories[index]['products']))
@@ -173,7 +176,7 @@ export default function CategoriesScreen({ navigation }) {
           products.map((product) => (
             <VerticalItemCard
               key={product.product_name}
-              add={() => dispatch(addProductToCart(product, navigation))}
+              add={() => dispatch(addProductToCart(product, navigation, phone))}
               name={product.product_name}
               desc={product.product_desc}
               isFav={product.isVisible}
@@ -196,7 +199,7 @@ export default function CategoriesScreen({ navigation }) {
               products.map((product) => (
                 <HorizontalItemCard
                   key={product.product_name}
-                  add={() => dispatch(addProductToCart(product, navigation))}
+                  add={() => dispatch(addProductToCart(product, navigation, phone))}
                   name={product.product_name}
                   desc={product.product_desc}
                   isFav={true}

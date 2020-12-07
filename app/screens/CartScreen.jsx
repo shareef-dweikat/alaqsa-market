@@ -61,13 +61,14 @@ export default function CartScreen({ navigation }) {
   const [orderModalVisible, setOrderConfirmationModalVisible] = useState(false);
   const cartProducts = useSelector((state) => state.cart.products);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
+  const phone = useSelector((state) => state.auth.phone);
   const [pickerValue, setPickerValue] = useState('العنوان');
   const isDeleted = useSelector((state) => state.cart.isDeleted);
   const transPrice = pickerValue === options[0] ? 15 : 20;
   console.log(isDeleted, 'brisDeletedboooooor');
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts(phone));
   }, [isDeleted]);
   return (
     <View style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
@@ -250,6 +251,7 @@ export function DeleteConfirmation({ navigation, visible, setVisible }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const itemToDelete = useSelector((state) => state.cart.itemToDelete);
   const dispatch = useDispatch();
+  const phone = useSelector((state) => state.auth.phone);
 
   return (
     <Modal visible={visible}>
@@ -302,7 +304,7 @@ export function DeleteConfirmation({ navigation, visible, setVisible }) {
             </TouchableOpacity>
             <TouchableOpacity
               onPress={() => {
-                dispatch(deleteCartItem(itemToDelete));
+                dispatch(deleteCartItem(itemToDelete, phone));
                 setVisible(false);
               }}
               style={{ ...styles.btn, width: '45%' }}

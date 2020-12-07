@@ -65,6 +65,7 @@ export default (state = initialState, action: AnyAction) => {
         ...state,
         isLoading: false,
         userType: 'admin',
+        username: 'ahmad',
         phone: action.payload,
       };
       

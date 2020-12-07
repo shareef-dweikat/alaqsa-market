@@ -9,6 +9,8 @@ import {
 } from 'react-native';
 import Colors from '../../constants/colors';
 import { SafeAreaView } from 'react-navigation';
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserType } from '../../store/action/auth';
 
 import SIcon from '../../../assets/small-search-icon.svg';
 import SmallHeart from '../../../assets/small-heart-icon.svg';
@@ -43,6 +45,8 @@ const styles = StyleSheet.create({
   },
 });
 export default function DrawerContent({ value, navigation }) {
+  const dispatch = useDispatch();
+
   return (
     <View>
       <View
@@ -133,8 +137,8 @@ export default function DrawerContent({ value, navigation }) {
       />
       <Tap
         onPress={() => {
-          AsyncStorage.clear()
-          navigation.push('AuthStackScreen')
+          AsyncStorage.clear();
+          dispatch(setUserType(null, null));
         }}
         title='تسجيل خروج'
         tapIcon={

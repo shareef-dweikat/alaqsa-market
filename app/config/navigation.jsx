@@ -230,11 +230,13 @@ const RootStackScreen = () => {
   // const [user, setUser] = React.useState({ userType: '' });
   // const [user, setUser] = React.useState(null);
   const user = useSelector((state) => state.auth.userType);
+  console.log(user, 'usssss');
   const dispatch = useDispatch();
   React.useEffect(() => {
     const getUser = async () => {
       const USER_FROM_ASYNC = await AsyncStorage.getItem('userType');
       const USER_PHONE_FROM_ASYNC = await AsyncStorage.getItem('phone');
+      console.log(USER_FROM_ASYNC, 'USER_FROM_ASYNCss');
       if (USER_FROM_ASYNC != null) {
         dispatch(setUserType(USER_FROM_ASYNC, USER_PHONE_FROM_ASYNC));
         // setUser({ userType: USER_FROM_ASYNC })
@@ -261,7 +263,7 @@ const RootStackScreen = () => {
           name='AuthStackScreen'
           component={() => <AuthStackScreen />}
         />
-      ) : user.userType === 'admin' || user.userType === 'seller' ? (
+      ) : user === 'admin' || user === 'seller' ? (
         <RootStack.Screen
           name='DashboardDrawerStackScreen'
           component={DashboardDrawerStackScreen}
