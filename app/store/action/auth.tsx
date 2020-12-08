@@ -85,20 +85,14 @@ export function login(phone, pass, navigation) {
   };
 }
 
-export function signUp(email, password) {
+export function signup(phone, pass, confirmPass, email, name) {
   return (dispatch) => {
-    handleSignUp(email.toLowerCase(), password).then((SUCCESS) => {
-      // console.log(SUCCESS, 'SUCCESSsddddss');
-      if (!SUCCESS.message)
-        dispatch({
-          type: 'SIGNUP_SUCCESS',
-          // payload: TOKEN,
-        });
-      else
-        dispatch({
-          type: 'SIGNUP_FAILURE',
-          errors: SUCCESS.message,
-        });
-    });
+    firebase
+    .database()
+    .ref(`users/${phone}`)
+    .set({
+     pass, confirmPass, email, name,
+    })
+    .catch((e) => console.log('addProductToCartAPI', e));
   };
 }

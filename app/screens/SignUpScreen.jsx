@@ -11,9 +11,10 @@ import {
   Dimensions,
   Keyboard,
 } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { SafeAreaView } from 'react-navigation';
 import SignForm, { MyInputText } from '../components/SignForm';
-import BB from '../../assets/signin-screen/background.svg';
+import { signup } from '../store/action/auth';
 import image from '../../assets/signin-screen/background-overlay.png';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 const styles = StyleSheet.create({
@@ -96,6 +97,23 @@ const styles = StyleSheet.create({
   },
 });
 export default function SignUpScreen() {
+  const [pass, setPass] = useState('');
+  const [confirmPass, setConfirmPass] = useState('');
+  const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const dispatch = useDispatch();
+  const submit = async () => {
+    if (pass != confirmPass) {
+      alert('كلمات المرور غير متطابقة')
+      return;
+    }
+    if (email.search('@') === -1) {
+      alert('الايميل المدخل غير صحيح')
+      return;
+    }
+    dispatch(signup(phone, pass, confirmPass, email, name));
+  };
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const [logoVisible, setLogoVisible] = useState(true);
   let [bachgroundHeight, setBachgroundHeight] = useState(
@@ -138,26 +156,27 @@ export default function SignUpScreen() {
             <SignForm
               agreeOnConditionsBoxShown={true}
               submitText='دخول'
+              onPress={() => submit()}
               inputs={
                 <>
                   <MyInputText
-                    onChangeText={(d) => console.log(d)}
+                    onChangeText={(d) => setName(d)}
                     placeholder='اسم السمتخدم'
                   />
                   <MyInputText
-                    onChangeText={(d) => console.log(d)}
+                    onChangeText={(d) => setPhone(d)}
                     placeholder='رقم الجوال'
                   />
                   <MyInputText
-                    onChangeText={(d) => console.log(d)}
+                    onChangeText={(d) => setEmail(d)}
                     placeholder='الايميل'
                   />
                   <MyInputText
-                    onChangeText={(d) => console.log(d)}
+                    onChangeText={(d) => setPass(d)}
                     placeholder='كلمة المرور'
                   />
                   <MyInputText
-                    onChangeText={(d) => console.log(d)}
+                    onChangeText={(d) => setConfirmPass(d)}
                     placeholder='تأكيد كلمة المرور'
                   />
                 </>

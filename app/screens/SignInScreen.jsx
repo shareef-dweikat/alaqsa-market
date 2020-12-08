@@ -180,6 +180,7 @@ export default function SignInScreen({ navigation, setUser }) {
               forgotPassBtnShown={true}
               submitText='دخول'
               onPress={() => submit()}
+              navigation={navigation}
               inputs={
                 <>
                   <MyInputText
