@@ -20,6 +20,8 @@ import RightArrow from '../../assets/right-arrow.svg';
 import SearchBox from '../components/SearchBox';
 import { StatusBar } from 'expo-status-bar';
 import VerticalItemCard from '../components/VerticalItemCard';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchFav, fetchProducts } from '../store/action/product';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -38,7 +40,13 @@ const styles = StyleSheet.create({
 });
 export default function FavScreen({ navigation }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
-
+  const dispatch = useDispatch();
+   const phone = useSelector((state) => state.auth.phone);
+   const products = useSelector((state) => state.product.products);
+  useEffect(() => {
+    dispatch(fetchFav(phone));
+    dispatch(fetchProducts())
+  }, []);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
@@ -81,7 +89,8 @@ export default function FavScreen({ navigation }) {
       </View>
 
       <ScrollView style={{ padding: 8 }}>
-        <VerticalItemCard />
+        {/* {products.map((product)=><VerticalItemCard product={product}/>)} */}
+        
       </ScrollView>
     </SafeAreaView>
   );

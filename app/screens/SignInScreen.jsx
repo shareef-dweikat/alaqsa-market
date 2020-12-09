@@ -19,6 +19,7 @@ import SignForm, { MyInputText } from '../components/SignForm';
 import BB from '../../assets/signin-screen/background.svg';
 import image from '../../assets/signin-screen/background-overlay.png';
 import firebase from '../config/firebase';
+import {useRoute} from '@react-navigation/native';
 import { login } from '../store/action/auth';
 const styles = StyleSheet.create({
   container: {
@@ -104,8 +105,8 @@ export default function SignInScreen({ navigation, setUser }) {
   const [logoVisible, setLogoVisible] = useState(true);
   const [pass, setPass] = useState(null);
   const [phone, setPhone] = useState(null);
-  
   const dispatch = useDispatch();
+  const route = useRoute();
   const submit = async () => {
     dispatch(login(phone, pass))
     // await firebase
@@ -180,6 +181,7 @@ export default function SignInScreen({ navigation, setUser }) {
               forgotPassBtnShown={true}
               submitText='دخول'
               onPress={() => submit()}
+              routeName={route.name}
               navigation={navigation}
               inputs={
                 <>

@@ -1,5 +1,5 @@
 import IntroductionSlider from './introductionSlider/IntroductionSlider';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  AsyncStorage,
 } from 'react-native';
 import pImage from '../../assets/home/product.png';
 import HeartIcon from '../../assets/small-heart-icon.svg';
@@ -21,13 +22,38 @@ export default function VerticalItemCard({
   name,
   price,
   desc,
-  isFav,
+  // isFav,
   onPress,
   add,
   addToFav,
   deleteFromFav,
   product,
+  phone,
 }) {
+  const [isFav, setIsFav] = useState(false);
+  const handleFav = async () => {
+    const x = await AsyncStorage.getItem(product.firebaseId);
+
+    if (x) {
+      AsyncStorage.removeItem(product.firebaseId);
+      setIsFav(false);
+    } else {
+      AsyncStorage.setItem(product.firebaseId, product.firebaseId);
+      setIsFav(true);
+    }
+
+    // const x = await AsyncStorage.getItem(product.firebaseId)
+    addToFav(product, phone);
+  };
+  useEffect(() => {
+    const getProductId = async () => {
+      const x = await AsyncStorage.getItem(product.firebaseId);
+      if (x) {
+        setIsFav(true);
+      }
+    };
+    getProductId();
+  }, []);
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -56,15 +82,11 @@ export default function VerticalItemCard({
           }}
         >
           {isFav ? (
-            <TouchableOpacity 
-            // onPress={() => addToFav(product)}
-            >
+            <TouchableOpacity onPress={() => handleFav()}>
               <HeartIcon color='red' />
             </TouchableOpacity>
           ) : (
-            <TouchableOpacity
-            //  onPress={() => deleteFromFav(name)}
-             >
+            <TouchableOpacity onPress={() => handleFav()}>
               <HeartEmptyIcon />
             </TouchableOpacity>
           )}

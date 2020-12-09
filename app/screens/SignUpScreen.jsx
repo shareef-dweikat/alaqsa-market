@@ -112,7 +112,7 @@ export default function SignUpScreen() {
       alert('الايميل المدخل غير صحيح')
       return;
     }
-    dispatch(signup(phone, pass, confirmPass, email, name));
+    dispatch(signup(phone, pass, email, name));
   };
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const [logoVisible, setLogoVisible] = useState(true);

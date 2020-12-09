@@ -16,9 +16,9 @@ const addProductAPI = async (product, url, catFirebaseId) => {
 
 export function addProduct(product, navigation, categories) {
   let catFirebaseId;
-  for(let index in categories) {
-    if (categories[index].category_name === product.productCat )
-       catFirebaseId = categories[index].firebaseId
+  for (let index in categories) {
+    if (categories[index].category_name === product.productCat)
+      catFirebaseId = categories[index].firebaseId;
   }
   return (dispatch) => {
     dispatch({
@@ -28,8 +28,8 @@ export function addProduct(product, navigation, categories) {
       async (snapshot) => {
         let url = await snapshot.ref.getDownloadURL();
         addProductAPI(product, url, catFirebaseId).then(() => {
-          dispatch(fetchProducts())
-          navigation.goBack()
+          dispatch(fetchProducts());
+          navigation.goBack();
           dispatch({
             type: 'PRODUCT_ADD_SUCCESS',
           });
@@ -48,34 +48,35 @@ export function addProduct(product, navigation, categories) {
 }
 
 const fetchProductsAPI = async () => {
-  return firebase.database().ref('category')
-            .once('value', function(snapshot) {
-                console.log("adasdd",snapshot.val())
-  })
-  
+  return firebase
+    .database()
+    .ref('category')
+    .once('value', function (snapshot) {
+      console.log('adasdd', snapshot.val());
+    })
+
     .catch((e) => console.log('addProductAPI', e));
 };
 
 export function fetchProducts() {
-
   return (dispatch) => {
-    
-    firebase.database().ref('category')
-    .once('value', function(snapshot) {
-      let products = []
-        let categories = snapshot.val()
-        for(let index in categories) {
-          
-          for(let i in categories[index]['products']) {
-            products.push(categories[index]['products'][i])
+    firebase
+      .database()
+      .ref('category')
+      .once('value', function (snapshot) {
+        let products = [];
+        let categories = snapshot.val();
+        for (let index in categories) {
+          for (let i in categories[index]['products']) {
+            products.push(categories[index]['products'][i]);
           }
         }
-        console.log(products, "fetchProducts")
+        console.log(products, 'fetchProducts');
         dispatch({
           type: 'FETCH_PRODUCTS',
-          payload: products
+          payload: products,
         });
-})
+      });
     // dispatch({
     //   type: 'IMAGE_UPLOAD_SUCCESS',
     //   payload: x,
@@ -96,7 +97,6 @@ const uploadProductImageAPI = async (productName, uri) => {
   return ref.put(blob);
 };
 
-
 export function uploadProductImage(productName, uri) {
   return (dispatch) => {
     dispatch({
@@ -114,49 +114,68 @@ export function uploadProductImage(productName, uri) {
 }
 
 export function fetchSearchProducts(text) {
-
   return (dispatch) => {
-    
-    firebase.database().ref('category')
-    .once('value', function(snapshot) {
-      let products = []
-        let categories = snapshot.val()
-        for(let index in categories) {
-          
-          for(let i in categories[index]['products']) {
-          //  if(categories[index]['products'][i].product_name.search(text) != -1)
-                products.push(categories[index]['products'][i])
+    firebase
+      .database()
+      .ref('category')
+      .once('value', function (snapshot) {
+        let products = [];
+        let categories = snapshot.val();
+        for (let index in categories) {
+          for (let i in categories[index]['products']) {
+            //  if(categories[index]['products'][i].product_name.search(text) != -1)
+            products.push(categories[index]['products'][i]);
           }
         }
         // console.log(products, "fetchProducts")
         dispatch({
           type: 'FETCH_PRODUCTS_SEARCH',
-          payload: products
+          payload: products,
         });
-})
-  
+      });
   };
 }
 
-
-const setFav = async (product, catFirebaseId) => {
-
-  console.log(product, catFirebaseId)
-  // return firebase
-  //   .database()
-  //   .ref(`category/${catFirebaseId}/products`)
-  //   .set({
-  //     product_name: product.productName,
-  //     product_desc: product.productDesc,
-  //     isVisible: product.productAvailability,
-  //     price: product.price,
-  //   })
-  //   .catch((e) => console.log('addProductAPI', e));
+export const setFav = (product, phone) => {
+  return (dispatch) => { 
+     firebase
+      .database()
+      .ref(`fav/${phone}/`)
+      .push({
+        product_name: product.product_name,
+        product_desc: product.product_desc,
+        isVisible: product.isVisible,
+        price: product.price,
+      })
+      .then(()=> {
+        dispatch({
+          type: 'FAV_ADDED',
+          // payload: products,
+        });
+      })
+      .catch((e) => console.log('addProductAPI', e));
+  };
 };
 
-const deleteFav = async (product, catFirebaseId) => {
+export const fetchFav = (phone) => {
+  return (dispatch) => { 
+     firebase
+      .database()
+      .ref(`fav/${phone}/`)
+      .once('value', function (snapshot) {
+        // console.log('adasdd', snapshot.val());
+        dispatch({
+          type: 'FETCH_FAV_SUC',
+           payload: snapshot.val(),
+        });
+      })
+      .catch((e) => console.log('addProductAPI', e));
+  };
+};
 
-  console.log(product, catFirebaseId)
+
+const deleteFav = async (product, catFirebaseId) => {
+  console.log(product, catFirebaseId);
   // return firebase
   //   .database()
   //   .ref(`category/${catFirebaseId}/products`)

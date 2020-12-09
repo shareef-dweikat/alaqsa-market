@@ -66,8 +66,13 @@ export default function CategoriesScreen({ navigation }) {
     // console.log(name, "aaaaa")
     for (let index in categories) {
       if (categories[index].category_name === name) {
-        // console.log(Object.values(categories[index]['products']))
-        setProducts(Object.values(categories[index]['products']));
+        // console.log(categories[index]['products'], "adaaaaa")
+        let products =[]
+        for (let p in categories[index]['products']) {
+          categories[index]['products'][p].firebaseId = p
+          products.push(categories[index]['products'][p])
+        }
+        setProducts(products);
       }
     }
   };
@@ -182,7 +187,8 @@ export default function CategoriesScreen({ navigation }) {
               isFav={product.isVisible}
               price={product.price}
               product={product}
-              addToFav={() => dispatch(setFav())}
+              phone={phone}
+              addToFav={() => dispatch(setFav(product, phone))}
               deleteFromFav={() => dispatch(deleteFav())}
               onPress={() => navigation.push('ItemDetailsScreen', { product })}
             />
@@ -204,7 +210,7 @@ export default function CategoriesScreen({ navigation }) {
                   desc={product.product_desc}
                   isFav={true}
                   product={product}
-                  addToFav={() => dispatch(setFav())}
+                  addToFav={() => dispatch(setFav(product, phone))}
                   deleteFromFav={() => dispatch(deleteFav())}
                   price={product.price}
                   onPress={() =>

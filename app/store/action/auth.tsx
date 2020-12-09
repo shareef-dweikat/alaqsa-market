@@ -53,12 +53,13 @@ const handleSignUp = async (email, password) => {
 };
 
 export function login(phone, pass, navigation) {
+
   return (dispatch) => {
     firebase
       .database()
       .ref(`users/${phone}`)
       .once('value', async (user) => {
-        if (user.val() != null && pass == user.val().password) {
+        if (user.val() != null && pass == user.val().pass) {
           AsyncStorage.setItem('userType', 'customer');
           AsyncStorage.setItem('phone', phone + '');
           dispatch({

@@ -101,13 +101,23 @@ export default function SignForm({
   submitText,
   onPress,
   navigation,
+  routeName,
 }) {
   return (
     <View style={styles.formContainer}>
       <View style={styles.formContainerHeader}>
-        <TouchableOpacity style={{ alignItems: 'center' }}>
+        <TouchableOpacity
+          onPress={() => navigation.pop()}
+          style={{ alignItems: 'center' }}
+        >
           <Text style={styles.formContainerHeaderTap}>دخول</Text>
-          <View style={styles.formContainerHeaderTapActiveLine}></View>
+          <View
+            style={
+              routeName === 'SignInScreen'
+                ? styles.formContainerHeaderTapActiveLine
+                : styles.formContainerHeaderTapLine
+            }
+          ></View>
         </TouchableOpacity>
         {/* {isSignUpActive && ( */}
         <TouchableOpacity
@@ -115,7 +125,13 @@ export default function SignForm({
           style={{ alignItems: 'center' }}
         >
           <Text style={styles.formContainerHeaderTap}>إنشاء حساب</Text>
-          <View style={styles.formContainerHeaderTapLine}></View>
+          <View
+            style={
+              routeName === 'SignInScreen'
+                ? styles.formContainerHeaderTapLine
+                : styles.formContainerHeaderTapActiveLine
+            }
+          ></View>
         </TouchableOpacity>
         {/* )} */}
       </View>
