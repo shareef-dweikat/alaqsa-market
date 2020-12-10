@@ -146,6 +146,7 @@ export const setFav = (product, phone) => {
         product_desc: product.product_desc,
         isVisible: product.isVisible,
         price: product.price,
+        firebaseId: product.firebaseId
       })
       .then(()=> {
         dispatch({
@@ -164,9 +165,16 @@ export const fetchFav = (phone) => {
       .ref(`fav/${phone}/`)
       .once('value', function (snapshot) {
         // console.log('adasdd', snapshot.val());
+        let products = snapshot.val()
+        let productsList =[]
+        for(let index in products) {
+          products[index].favId = index
+          productsList.push(products[index])
+        }
+        console.log(productsList, "doooom")
         dispatch({
-          type: 'FETCH_FAV_SUC',
-           payload: snapshot.val(),
+          type: 'FETCH_FAV_SUCCESS',
+           payload: productsList,
         });
       })
       .catch((e) => console.log('addProductAPI', e));
@@ -174,16 +182,11 @@ export const fetchFav = (phone) => {
 };
 
 
-const deleteFav = async (product, catFirebaseId) => {
-  console.log(product, catFirebaseId);
-  // return firebase
-  //   .database()
-  //   .ref(`category/${catFirebaseId}/products`)
-  //   .set({
-  //     product_name: product.productName,
-  //     product_desc: product.productDesc,
-  //     isVisible: product.productAvailability,
-  //     price: product.price,
-  //   })
-  //   .catch((e) => console.log('addProductAPI', e));
+export const deleteFav = async (product, phone) => {
+  console.log(product, phone);
+  return firebase
+    .database()
+    .ref(`fav/${phone}/${product.favId}`)
+    .remove()
+    .catch((e) => console.log('deleteFav', e));
 };

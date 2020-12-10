@@ -1,10 +1,16 @@
 import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
 import React, { useEffect, useState } from 'react';
+
+import pImage from '../../assets/home/product.png';
+import HeartIcon from '../../assets/small-heart-icon.svg';
+import HeartEmptyIcon from '../../assets/small-heart-empty-icon.svg';
+import PlusIcon from '../../assets/plus-icon.svg';
+import { setFav, deleteFav } from '../store/action/product';
 import {
   Text,
   View,
   Image,
-  KeyboardAvoidingView,
+  AsyncStorage,
   TextInput,
   ImageBackground,
   StyleSheet,
@@ -19,7 +25,6 @@ import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import RightArrow from '../../assets/right-arrow.svg';
 import SearchBox from '../components/SearchBox';
 import { StatusBar } from 'expo-status-bar';
-import VerticalItemCard from '../components/VerticalItemCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFav, fetchProducts } from '../store/action/product';
 const styles = StyleSheet.create({
@@ -41,11 +46,12 @@ const styles = StyleSheet.create({
 export default function FavScreen({ navigation }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const dispatch = useDispatch();
-   const phone = useSelector((state) => state.auth.phone);
-   const products = useSelector((state) => state.product.products);
+  const phone = useSelector((state) => state.auth.phone);
+  const favProducts = useSelector((state) => state.product.favProducts);
+  // const favProduct1s = useSelector((state) => state.product.favProducts);
   useEffect(() => {
     dispatch(fetchFav(phone));
-    dispatch(fetchProducts())
+    // dispatch(fetchProducts());
   }, []);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
@@ -89,9 +95,128 @@ export default function FavScreen({ navigation }) {
       </View>
 
       <ScrollView style={{ padding: 8 }}>
-        {/* {products.map((product)=><VerticalItemCard product={product}/>)} */}
-        
+        {favProducts != undefined &&
+          favProducts.map((product) => (
+            <VerticalItemCard
+              product={product}
+              addToFav={() => dispatch(setFav(product, phone))}
+              deleteFav={() => dispatch(deleteFav(product, phone))}
+            />
+          ))}
       </ScrollView>
     </SafeAreaView>
+  );
+}
+export function VerticalItemCard({ product, addToFav, deleteFav }) {
+  const [isFav, setIsFav] = useState(false);
+  const handleFav = async () => {
+    const x = await AsyncStorage.getItem(product.firebaseId);
+
+    if (x) {
+      AsyncStorage.removeItem(product.firebaseId);
+      setIsFav(false);
+      deleteFav();
+    } else {
+      AsyncStorage.setItem(product.firebaseId, product.firebaseId);
+      setIsFav(true);
+      addToFav();
+    }
+
+    // const x = await AsyncStorage.getItem(product.firebaseId)
+  };
+  useEffect(() => {
+    const getProductId = async () => {
+      console.log(product, 'adasdadasd');
+      const x = await AsyncStorage.getItem(product.firebaseId);
+      if (x) {
+        setIsFav(true);
+      }
+    };
+    getProductId();
+  }, []);
+  return (
+    <TouchableOpacity
+      // onPress={onPress}
+      style={{
+        flex: 1,
+        height: 140,
+        borderWidth: 1,
+        borderColor: '#d0d0d0',
+        borderRadius: 10,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        // paddingTop: 13,
+        marginTop: 16,
+        flexDirection: 'row',
+      }}
+    >
+      <View style={{ flex: 1 }}>
+        <View
+          style={{
+            flexDirection: 'row',
+            // justifyContent: 'space-between',
+            //  width: '100%',
+            paddingHorizontal: 16,
+            marginTop: 8,
+            justifyContent: 'space-between',
+          }}
+        >
+          {isFav ? (
+            <TouchableOpacity onPress={() => handleFav()}>
+              <HeartIcon color='red' />
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity onPress={() => handleFav()}>
+              <HeartEmptyIcon />
+            </TouchableOpacity>
+          )}
+          <Text style={{ textAlign: 'right', fontFamily: 'Tajawal-Medium' }}>
+            {product.product_name}
+          </Text>
+        </View>
+        <View
+          style={{
+            justifyContent: 'flex-end',
+            width: '100%',
+            paddingHorizontal: 16,
+          }}
+        >
+          <Text
+            style={{
+              color: '#B8B8CD',
+              fontFamily: 'Tajawal-Regular',
+              height: 50,
+            }}
+          >
+            {product.product_desc}
+          </Text>
+        </View>
+        <View
+          style={{
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            width: '100%',
+            paddingHorizontal: 16,
+            marginTop: 8,
+          }}
+        >
+          <TouchableOpacity
+          //  onPress={add}
+          >
+            <PlusIcon />
+          </TouchableOpacity>
+          <Text
+            style={{
+              textAlign: 'right',
+              fontFamily: 'Tajawal-Bold',
+              color: '#515462',
+            }}
+          >
+            {product.price} شيكل
+          </Text>
+        </View>
+      </View>
+      <Image resizeMode='contain' style={{ height: 100 }} source={pImage} />
+    </TouchableOpacity>
   );
 }
