@@ -136,6 +136,14 @@ export function fetchSearchProducts(text) {
   };
 }
 
+export const storeFavIdToProduct = (key, phone) => {
+    firebase
+     .database()
+     .ref(`category/${phone}/${key}`)
+     .set({favFirebase: key})
+     
+     .catch((e) => console.log('addProductAPI', e));
+}
 export const setFav = (product, phone) => {
   return (dispatch) => { 
      firebase
@@ -148,7 +156,9 @@ export const setFav = (product, phone) => {
         price: product.price,
         firebaseId: product.firebaseId
       })
-      .then(()=> {
+      .then((e)=> {
+        console.log(e.key, "aaaaaaaaaaaaaaaaa")
+        // storeFavIdToProduct(e.key, phone)
         dispatch({
           type: 'FAV_ADDED',
           // payload: products,

@@ -16,12 +16,13 @@ import { useAssets } from 'expo-asset';
 import { SafeAreaView } from 'react-navigation';
 import RightArrow from '../../assets/right-arrow.svg';
 import DrawerIcon from '../../assets/drawer-icon.svg';
-import Tick from '../../assets/tick.svg';
+import Pen from '../../assets/tick.svg';
 import navigation from '../config/navigation';
 import Alert from './Alert';
 import * as ImagePicker from 'expo-image-picker';
-import Camera from '../../assets/photo-camera.svg';
+import { fetchProfile } from '../store/action/auth';
 import BottomNav from '../components/BottomNav';
+import { useDispatch, useSelector } from 'react-redux';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -29,26 +30,31 @@ const styles = StyleSheet.create({
 });
 export default function ProfileScreen({ navigation }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
-  const [alertVisibility, setVisible] = useState(false);
   const [image, setImage] = useState(null);
+  const phone = useSelector((state) => state.auth.phone);
+  let userProfile = useSelector((state) => state.auth.userProfile);
+  userProfile = userProfile ? userProfile : {};
+  console.log(userProfile);
+  const dispatch = useDispatch();
   const [chooseImageModalVisible, setChooseImageModalVisible] = useState(false);
   useEffect(() => {
-    (async () => {
-      if (Platform.OS !== 'web') {
-        const {
-          status,
-        } = await ImagePicker.requestCameraRollPermissionsAsync();
-        if (status !== 'granted') {
-          alert('لا يمكنك تغيير صوتك دون منح الإذن');
-        }
-        const {
-          statusCamera,
-        } = await ImagePicker.requestCameraPermissionsAsync();
-        // if (statusCamera !== 'granted') {
-        //   alert('لا يمكنك استعمال الكاميرا دون اعطاء اذن للتطبيق');
-        // }
-      }
-    })();
+    dispatch(fetchProfile(phone));
+    // (async () => {
+    //   if (Platform.OS !== 'web') {
+    //     const {
+    //       status,
+    //     } = await ImagePicker.requestCameraRollPermissionsAsync();
+    //     if (status !== 'granted') {
+    //       alert('لا يمكنك تغيير صوتك دون منح الإذن');
+    //     }
+    //     const {
+    //       statusCamera,
+    //     } = await ImagePicker.requestCameraPermissionsAsync();
+    //     // if (statusCamera !== 'granted') {
+    //     //   alert('لا يمكنك استعمال الكاميرا دون اعطاء اذن للتطبيق');
+    //     // }
+    //   }
+    // })();
   }, []);
 
   // const [assets] = useAssets([
@@ -98,22 +104,33 @@ export default function ProfileScreen({ navigation }) {
           style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
         > */}
           <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8 }}>
-            تغيير الصورة الشخصية
+            {/* تغيير الصورة الشخصية */}
+            {userProfile.name}
           </Text>
           {/* <Camera />
         </TouchableOpacity> */}
 
-          <Field title='اسم المستخدم' onPress={() => setVisible(true)} />
-          <Field title='الايميل' />
-          <Field title='رقم الجوال' />
+          <Field
+            title='اسم المستخدم'
+            value={userProfile.name}
+            onPress={() => setVisible(true)}
+            inputName='name'
+          />
+          <Field title='الايميل' inputName='email' value={userProfile.email} />
+          <Field title='رقم الجوال' inputName='phone' value={phone} />
           <Field
             title='كلمة المرور'
+            value='*****'
+            inputName='pass'
             onPress={() => navigation.push('PasswordResetScreen')}
           />
-          <Field title='العنوان' />
+          <Field
+            title='العنوان'
+            inputName='address'
+            value={userProfile.address}
+          />
         </View>
 
-        <Alert visible={alertVisibility} setVisible={setVisible} />
         <ChooseImageModal
           visible={chooseImageModalVisible}
           setVisible={setChooseImageModalVisible}
@@ -125,8 +142,9 @@ export default function ProfileScreen({ navigation }) {
   );
 }
 
-export function Field({ title, onPress }) {
+export function Field({ title, value, inputName }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
+  const [alertVisibility, setVisible] = useState(false);
 
   return (
     <View
@@ -141,8 +159,8 @@ export function Field({ title, onPress }) {
       }}
     >
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <TouchableOpacity onPress={onPress}>
-          <Tick />
+        <TouchableOpacity onPress={() => setVisible(true)}>
+          <Pen />
         </TouchableOpacity>
 
         <Text
@@ -157,10 +175,21 @@ export function Field({ title, onPress }) {
         </Text>
       </View>
       <Text
-        style={{ fontSize: 15, color: 'black', fontFamily: 'Tajawal-Medium' }}
+        style={{
+          fontSize: 15,
+          color: 'black',
+          fontFamily: 'Tajawal-Medium',
+          textAlign: 'right',
+        }}
       >
-        شسيشسي
+        {value}
       </Text>
+      <Alert
+        visible={alertVisibility}
+        setVisible={setVisible}
+        title={title}
+        inputName={inputName}
+      />
     </View>
   );
 }

@@ -1,16 +1,18 @@
-import IntroductionSlider from './introductionSlider/IntroductionSlider';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Text,
   View,
   Image,
   StyleSheet,
-  Dimensions,
+  AsyncStorage,
   TouchableOpacity,
 } from 'react-native';
 import pImage from '../../assets/home/product.png';
 import HeartIcon from '../../assets/small-heart-icon.svg';
+import { addToFav } from '../store/action/product';
 import PlusIcon from '../../assets/plus-icon.svg';
+import HeartEmptyIcon from '../../assets/small-heart-empty-icon.svg';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -20,10 +22,39 @@ export default function HorizontalItemCard({
   name,
   price,
   desc,
-  isFav,
+  phone,
   onPress,
   add,
+  product,
+  addToFav,
+  deleteFromFav,
+
 }) {
+  const [isFav, setIsFav] = useState(false);
+  const handleFav = async () => {
+    const x = await AsyncStorage.getItem(product.firebaseId);
+
+    if (x) {
+      AsyncStorage.removeItem(product.firebaseId);
+      // setIsFav(false);
+       deleteFromFav()
+    } else {
+      AsyncStorage.setItem(product.firebaseId, product.firebaseId);
+      setIsFav(true);
+      addToFav();
+    }
+
+    // const x = await AsyncStorage.getItem(product.firebaseId)
+  };
+  useEffect(() => {
+    const getProductId = async () => {
+      const x = await AsyncStorage.getItem(product.firebaseId);
+      if (x) {
+        setIsFav(true);
+      }
+    };
+    getProductId();
+  }, []);
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -48,9 +79,13 @@ export default function HorizontalItemCard({
           marginTop: 8,
         }}
       >
-        {true && (
-          <TouchableOpacity>
-            <HeartIcon />
+        {isFav ? (
+          <TouchableOpacity onPress={() => handleFav()}>
+            <HeartIcon color='red' />
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity onPress={() => handleFav()}>
+            <HeartEmptyIcon />
           </TouchableOpacity>
         )}
         <Text style={{ textAlign: 'right', fontFamily: 'Tajawal-Medium' }}>

@@ -35,7 +35,8 @@ export default function VerticalItemCard({
 
     if (x) {
       AsyncStorage.removeItem(product.firebaseId);
-      setIsFav(false);
+      // setIsFav(false);
+      deleteFromFav()
     } else {
       AsyncStorage.setItem(product.firebaseId, product.firebaseId);
       setIsFav(true);

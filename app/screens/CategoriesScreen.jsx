@@ -67,10 +67,10 @@ export default function CategoriesScreen({ navigation }) {
     for (let index in categories) {
       if (categories[index].category_name === name) {
         // console.log(categories[index]['products'], "adaaaaa")
-        let products =[]
+        let products = [];
         for (let p in categories[index]['products']) {
-          categories[index]['products'][p].firebaseId = p
-          products.push(categories[index]['products'][p])
+          categories[index]['products'][p].firebaseId = p;
+          products.push(categories[index]['products'][p]);
         }
         setProducts(products);
       }
@@ -189,7 +189,7 @@ export default function CategoriesScreen({ navigation }) {
               product={product}
               phone={phone}
               addToFav={() => dispatch(setFav(product, phone))}
-              deleteFromFav={() => dispatch(deleteFav())}
+              deleteFromFav={() => navigation.push('FavScreen')}
               onPress={() => navigation.push('ItemDetailsScreen', { product })}
             />
           ))
@@ -205,13 +205,14 @@ export default function CategoriesScreen({ navigation }) {
               products.map((product) => (
                 <HorizontalItemCard
                   key={product.product_name}
-                  add={() => dispatch(addProductToCart(product, navigation, phone))}
+                  add={() =>
+                    dispatch(addProductToCart(product, navigation, phone))
+                  }
                   name={product.product_name}
                   desc={product.product_desc}
-                  isFav={true}
                   product={product}
                   addToFav={() => dispatch(setFav(product, phone))}
-                  deleteFromFav={() => dispatch(deleteFav())}
+                  deleteFromFav={() => navigation.push('FavScreen')}
                   price={product.price}
                   onPress={() =>
                     navigation.push('ItemDetailsScreen', { product })

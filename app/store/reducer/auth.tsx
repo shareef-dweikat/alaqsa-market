@@ -59,7 +59,7 @@ export default (state = initialState, action: AnyAction) => {
         isLoading: false,
         error: action.errors,
       };
-      case 'LOGIN_ADMIN_SUCCESS':
+    case 'LOGIN_ADMIN_SUCCESS':
       console.log('LOGIN_ADMIN_SUCCESS', action);
       return {
         ...state,
@@ -68,11 +68,17 @@ export default (state = initialState, action: AnyAction) => {
         username: 'ahmad',
         phone: action.payload,
       };
-      
+
     case 'SET_CURRENT_NUMBER':
       return {
         ...state,
         existingNumber: action.payload,
+      };
+    case 'PROFILE_SUCCESS':
+      // AsyncStorage.clear();
+      return {
+        ...state,
+        userProfile: action.payload,
       };
     case 'SET_USER':
       return {
@@ -80,6 +86,11 @@ export default (state = initialState, action: AnyAction) => {
         user: action.payload,
       };
     case 'LOGOUT':
+      // AsyncStorage.clear();
+      return {
+        ...initialState,
+      };
+    case 'PROFILE_SUCCESS':
       // AsyncStorage.clear();
       return {
         ...initialState,

@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import firebase from '../../config/firebase';
+import { Field } from '../../screens/ProfileScreen';
 
 export const setUserType = (USER_FROM_ASYNC, USER_PHONE_FROM_ASYNC) => {
   console.log('ctra', USER_FROM_ASYNC);
@@ -53,7 +54,6 @@ const handleSignUp = async (email, password) => {
 };
 
 export function login(phone, pass, navigation) {
-
   return (dispatch) => {
     firebase
       .database()
@@ -89,11 +89,43 @@ export function login(phone, pass, navigation) {
 export function signup(phone, pass, confirmPass, email, name) {
   return (dispatch) => {
     firebase
-    .database()
-    .ref(`users/${phone}`)
-    .set({
-     pass, confirmPass, email, name,
-    })
-    .catch((e) => console.log('addProductToCartAPI', e));
+      .database()
+      .ref(`users/${phone}`)
+      .set({
+        pass,
+        confirmPass,
+        email,
+        name,
+      })
+      .catch((e) => console.log('addProductToCartAPI', e));
   };
 }
+
+export function fetchProfile(phone) {
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`users/${phone}`)
+      .once('value', async (user) => {
+        dispatch({
+          type: 'PROFILE_SUCCESS',
+          payload: user.val(),
+        });
+      })
+      .catch((e) => console.log('createCategoryAPI', e));
+  };
+}
+export function updateProfile(phone, field, value) {
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`users/${phone}/${field}`)
+      .set(value)
+      .catch((e) => console.log('createCategoryAPI', e));
+  };
+}
+
+// dispatch({
+//   type: 'PROFILE_SUCCESS',
+//   payload: user.val(),
+// });
