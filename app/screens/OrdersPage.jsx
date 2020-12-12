@@ -76,6 +76,7 @@ export default function OrdersPage({ navigation }) {
   const phone = useSelector((state) => state.auth.phone);
   const order = useSelector((state) => state.orders.order);
   const products = useSelector((state) => state.orders.products);
+  const [orderId, setOrderId] = useState('');
   useEffect(() => {
     dispatch(fetchOrders(phone));
   }, []);
@@ -91,111 +92,132 @@ export default function OrdersPage({ navigation }) {
           {/* <SearchBox /> */}
         </View>
       </View>
+      {orders &&
+        orders.map((orderHeader) => (
+          <OrderCardsContainer
+            orders={orders}
+            products={products}
+            order={order}
+            orderHeader={orderHeader}
+            orderId={orderId}
+            setOrderId={setOrderId}
+          />
+        ))}
 
-      <ScrollView style={{ padding: 8 }}>
-        {orders &&
-          orders.map((orderHeader) => (
-            <View style={styles.orderCard}>
-              <TouchableOpacity
-                onPress={() =>
-                  dispatch(fetchOrder(orderHeader.orderId, orderHeader.branch))
-                }
-                style={styles.orderCardHeader}
-              >
+      <ScrollView style={{ padding: 8 }}></ScrollView>
+    </SafeAreaView>
+  );
+}
+
+export function OrderCardsContainer({
+  orders,
+  products,
+  order,
+  orderHeader,
+  setOrderId,
+  orderId,
+}) {
+  const dispatch = useDispatch();
+
+  const handleHeaderClicked = () => {
+    setOrderId(orderHeader.orderId);
+    dispatch(fetchOrder(orderHeader.orderId, orderHeader.branch));
+  };
+  return (
+    <>
+      <View style={styles.orderCard}>
+        <TouchableOpacity
+          onPress={() => handleHeaderClicked()}
+          style={styles.orderCardHeader}
+        >
+          <Text
+            style={{
+              color: '#F8A912',
+              fontSize: 12,
+              fontFamily: 'Tajawal-Medium',
+            }}
+          >
+            {orderHeader.date}
+          </Text>
+
+          <Text style={styles.orderTitle}>طلبية رقم 1</Text>
+        </TouchableOpacity>
+        {products.length > 0 && orderId == orderHeader.orderId && (
+          <>
+            {products &&
+              products.map((product) => (
+                <View style={styles.productRow}>
+                  <Text style={styles.productPrice}>{product.price} شيكل</Text>
+                  <Text style={styles.productName}>
+                    {product.product_desc.substring(0, 25)}
+                  </Text>
+                  <Text style={styles.productName}>{product.product_name}</Text>
+                </View>
+              ))}
+
+            <View
+              style={{
+                justifyContent: 'space-between',
+                width: '50%',
+                flexDirection: 'row',
+                marginTop: 32,
+              }}
+            >
+              <View>
+                <Text style={{ fontFamily: 'Tajawal-Regular' }}>
+                  {order.totalPrice} شيكل
+                </Text>
                 <Text
                   style={{
-                    color: '#F8A912',
-                    fontSize: 12,
-                    fontFamily: 'Tajawal-Medium',
+                    fontFamily: 'Tajawal-Regular',
+                    color: 'black',
+                    marginTop: 8,
                   }}
                 >
-                  {orderHeader.date}
+                  {order.transPrice} شيكل
                 </Text>
-
-                <Text style={styles.orderTitle}>طلبية رقم 1</Text>
-              </TouchableOpacity>
-              {products.length > 0 && (
-                <>
-                  {products &&
-                    products.map((product) => (
-                      <View style={styles.productRow}>
-                        <Text style={styles.productPrice}>
-                          {product.price} شيكل
-                        </Text>
-                        <Text style={styles.productName}>
-                          {product.product_desc.substring(0, 25)}
-                        </Text>
-                        <Text style={styles.productName}>
-                          {product.product_name}
-                        </Text>
-                      </View>
-                    ))}
-
-                  <View
-                    style={{
-                      justifyContent: 'space-between',
-                      width: '50%',
-                      flexDirection: 'row',
-                      marginTop: 32,
-                    }}
-                  >
-                    <View>
-                      <Text style={{ fontFamily: 'Tajawal-Regular' }}>
-                        {order.totalPrice} شيكل
-                      </Text>
-                      <Text
-                        style={{
-                          fontFamily: 'Tajawal-Regular',
-                          color: 'black',
-                          marginTop: 8,
-                        }}
-                      >
-                        {order.transPrice} شيكل
-                      </Text>
-                      <Text
-                        style={{
-                          fontFamily: 'Tajawal-Regular',
-                          marginTop: 8,
-                          color: '#F8A912',
-                        }}
-                      >
-                        {order.totalPrice + order.transPrice} شيكل
-                      </Text>
-                    </View>
-                    <View>
-                      <Text
-                        style={{
-                          fontFamily: 'Tajawal-Regular',
-                          color: 'black',
-                        }}
-                      >
-                        المجموع
-                      </Text>
-                      <Text
-                        style={{
-                          fontFamily: 'Tajawal-Regular',
-                          marginTop: 8,
-                          color: 'black',
-                        }}
-                      >
-                        التوصيل
-                      </Text>
-                      <Text
-                        style={{
-                          fontFamily: 'Tajawal-Regular',
-                          color: '#F8A912',
-                          marginTop: 8,
-                        }}
-                      >
-                        الاجمالي
-                      </Text>
-                    </View>
-                  </View>
-                </>
-              )}
+                <Text
+                  style={{
+                    fontFamily: 'Tajawal-Regular',
+                    marginTop: 8,
+                    color: '#F8A912',
+                  }}
+                >
+                  {order.totalPrice + order.transPrice} شيكل
+                </Text>
+              </View>
+              <View>
+                <Text
+                  style={{
+                    fontFamily: 'Tajawal-Regular',
+                    color: 'black',
+                  }}
+                >
+                  المجموع
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Tajawal-Regular',
+                    marginTop: 8,
+                    color: 'black',
+                  }}
+                >
+                  التوصيل
+                </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Tajawal-Regular',
+                    color: '#F8A912',
+                    marginTop: 8,
+                  }}
+                >
+                  الاجمالي
+                </Text>
+              </View>
             </View>
-          ))}
-      </ScrollView>
-    </SafeAreaView>
+          </>
+        )}
+      </View>
+    </>
   );
 }
