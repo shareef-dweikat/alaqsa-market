@@ -8,6 +8,7 @@ const initialState = {
   itemToDelete: '',
   isLoading: false,
   totalPrice: 0,
+  branches: []
 };
 
 export default (state = initialState, action: AnyAction) => {
@@ -39,6 +40,14 @@ export default (state = initialState, action: AnyAction) => {
         isLoading: false,
         itemToDelete: action.payload,
       };
+      case 'DELETE_CART_PRODUCTS':
+        console.log('DELETE_CART_PRODUCTS', action.payload);
+        return {
+          ...state,
+          isLoading: false,
+          products: action.payload.productsList,
+          totalPrice: action.payload.totalPrice,
+        };
     case 'DELETE_ITEM_SUCCESS':
       console.log('DELETE_ITEM_SUCCESSsss', state.itemToDelete);
       let newProducts = state.products.filter(
@@ -47,6 +56,12 @@ export default (state = initialState, action: AnyAction) => {
       return {
         ...state,
         products: newProducts,
+      };
+      case 'FETCH_BRANCHES_SUCCESS':
+      console.log('FETCH_BRANCHES_SUCCESS');
+      return {
+        ...state,
+        branches: action.payload,
       };
       // case 'SEARCH_CART_PRODUCTS':
       // let newProducts1 = state.products.filter((item)=> item.product_name.search(action.txt) != -1)

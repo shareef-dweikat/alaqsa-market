@@ -1,13 +1,11 @@
 import firebase from '../../config/firebase';
 
-const addProductToCartAPI = async ({
-  product_name,
-  product_desc,
-  isVisible,
-  price,
-  image,
-},  navigation, phone) => {
-  console.log(phone, "$${phone}sss")
+const addProductToCartAPI = async (
+  { product_name, product_desc, isVisible, price, image },
+  navigation,
+  phone
+) => {
+  console.log(phone, '$${phone}sss');
   return firebase
     .database()
     .ref(`cart/${phone}`)
@@ -104,6 +102,46 @@ export function deleteCartItem(itemToDelete, phone) {
       type: 'DELETE_ITEM_SUCCESS',
       payload: [],
     });
+  };
+}
+
+export function fetchBranches() {
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`admins`)
+      .once('value', function (branches) {
+        const branchesList = Object.keys(branches.val());
+        dispatch({
+          type: 'FETCH_BRANCHES_SUCCESS',
+          payload: branchesList,
+        });
+      });
+  };
+}
+export function order(seller, phone, totalPrice, transPrice) {
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`cart/${phone}`)
+      .once('value', function (products) {
+        const productsObject = products.val();
+        firebase
+          .database()
+          .ref(`seller-orders/${seller}`)
+          .push({ productsObject, totalPrice, transPrice, phone, date: new Date().toLocaleString() })
+          .then((e) =>
+            firebase
+              .database()
+              .ref(`orders/${phone}`)
+              .push({orderId:e.key, branch: seller,totalPrice, transPrice,  date: new Date().toLocaleString() })
+          );
+        firebase.database().ref(`cart/${phone}`).remove();
+        dispatch({
+          type: 'DELETE_CART_PRODUCTS',
+          payload: { productsList: [], totalPrice: 0 },
+        });
+      });
   };
 }
 

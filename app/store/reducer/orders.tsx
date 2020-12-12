@@ -5,7 +5,9 @@ const initialState = {
   // existingNumber: null,
   itemToDelete: '',
   isLoading: false,
-  orders:[]
+  orders:[],
+  order: {},
+  products: [],
 };
 
 export default (state = initialState, action: AnyAction) => {
@@ -17,6 +19,14 @@ export default (state = initialState, action: AnyAction) => {
         isLoading: false,
         orders: action.payload,
       };
+      case 'FETCH_SELLER_ORDERS_SUCCESS':
+        console.log('FETCH_SELLER_ORDERS_SUCCESS');
+        return {
+          ...state,
+          isLoading: false,
+          order: action.payload.order,
+          products: action.payload.products,
+        };
     default:
       return state;
   }

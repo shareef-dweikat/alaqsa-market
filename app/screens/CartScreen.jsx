@@ -20,7 +20,12 @@ import Tick from '../../assets/tick-confirmation.svg';
 import { CustomPicker } from 'react-native-custom-picker';
 import BottomNav from '../components/BottomNav';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, deleteCartItem } from '../store/action/cart';
+import {
+  fetchProducts,
+  deleteCartItem,
+  fetchBranches,
+  order,
+} from '../store/action/cart';
 
 const styles = StyleSheet.create({
   container: {
@@ -55,20 +60,33 @@ const styles = StyleSheet.create({
   },
 });
 export default function CartScreen({ navigation }) {
-  const options = ['داخل نابلس', 'خارج نابلس'];
   let picker;
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [orderModalVisible, setOrderConfirmationModalVisible] = useState(false);
   const cartProducts = useSelector((state) => state.cart.products);
+  const options = useSelector((state) => state.cart.branches);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
   const phone = useSelector((state) => state.auth.phone);
-  const [pickerValue, setPickerValue] = useState('العنوان');
+  const [pickerValue, setPickerValue] = useState('');
   const isDeleted = useSelector((state) => state.cart.isDeleted);
   const transPrice = pickerValue === options[0] ? 15 : 20;
-  console.log(isDeleted, 'brisDeletedboooooor');
   const dispatch = useDispatch();
+  const handleOrder = () => {
+    if (cartProducts.length <= 0) {
+      return;
+    }
+    if (pickerValue == '') {
+      alert('اختر الفرع');
+      return;
+    }
+    dispatch(
+      order(pickerValue, phone, parseInt(totalPrice), parseInt(transPrice))
+    );
+    setOrderConfirmationModalVisible(true);
+  };
   useEffect(() => {
     dispatch(fetchProducts(phone));
+    dispatch(fetchBranches());
   }, [isDeleted]);
   return (
     <View style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
@@ -149,7 +167,7 @@ export default function CartScreen({ navigation }) {
         <CustomPicker
           ref={(el) => (picker = el)}
           options={options}
-          value={'العنوان'}
+          value={'اختر الفرع'}
           style={{ width: 300, marginLeft: 16 }}
           // modalStyle={{borderRadius: 20, borderWidth: 1}}
           // headerTemplate={(item) => (
@@ -227,10 +245,7 @@ export default function CartScreen({ navigation }) {
           <Text style={styles.checkoutTxt}>{totalPrice + transPrice} شيكل</Text>
           <Text style={styles.checkoutTxt}>المبلغ الكلي</Text>
         </View>
-        <TouchableOpacity
-          onPress={() => setOrderConfirmationModalVisible(true)}
-          style={styles.btn}
-        >
+        <TouchableOpacity onPress={() => handleOrder()} style={styles.btn}>
           <Text style={styles.btnText}>شراء الآن</Text>
         </TouchableOpacity>
       </View>
