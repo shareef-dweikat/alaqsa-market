@@ -96,7 +96,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
-export default function SignUpScreen() {
+export default function SignUpScreen({ navigation }) {
   const [pass, setPass] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
   const [phone, setPhone] = useState('');
@@ -105,14 +105,22 @@ export default function SignUpScreen() {
   const dispatch = useDispatch();
   const submit = async () => {
     if (pass != confirmPass) {
-      alert('كلمات المرور غير متطابقة')
+      alert('كلمات المرور غير متطابقة');
       return;
     }
     if (email.search('@') === -1) {
-      alert('الايميل المدخل غير صحيح')
+      alert('الايميل المدخل غير صحيح');
       return;
     }
-    dispatch(signup(phone, pass, email, name));
+    dispatch(
+      signup(
+        phone.trim(),
+        pass.trim(),
+        email.trim().toLowerCase(),
+        name.trim(),
+        navigation
+      )
+    );
   };
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const [logoVisible, setLogoVisible] = useState(true);
@@ -156,6 +164,7 @@ export default function SignUpScreen() {
             <SignForm
               agreeOnConditionsBoxShown={true}
               submitText='دخول'
+              navigation={navigation}
               onPress={() => submit()}
               inputs={
                 <>
@@ -166,6 +175,7 @@ export default function SignUpScreen() {
                   <MyInputText
                     onChangeText={(d) => setPhone(d)}
                     placeholder='رقم الجوال'
+                    keyboardType= "number-pad"
                   />
                   <MyInputText
                     onChangeText={(d) => setEmail(d)}

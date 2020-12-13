@@ -137,12 +137,12 @@ export default function SignForm({
       </View>
 
       {inputs}
-      {forgotPassBtnShown && (
+      {/* {forgotPassBtnShown && (
         <Text style={styles.forgotPassText}>نسيت كلمة المرور؟</Text>
-      )}
+      )} */}
       {agreeOnConditionsBoxShown && (
         <Text style={styles.agreeOnConditionsTxt}>
-          أوافق على الشروط والأحكام
+            بالنقر على زر التسجيل أنا أوافق على الشروط والأحكام
         </Text>
       )}
       <TouchableOpacity onPress={onPress} style={styles.btn}>
@@ -151,11 +151,12 @@ export default function SignForm({
     </View>
   );
 }
-export function MyInputText({ placeholder, onChangeText, style }) {
+export function MyInputText({ placeholder, onChangeText, keyboardType }) {
   return (
     <TextInput
       onChangeText={onChangeText}
       style={styles.input}
+      keyboardType={keyboardType}
       placeholder={placeholder}
     />
   );

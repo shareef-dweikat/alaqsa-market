@@ -11,7 +11,7 @@ import Colors from '../../constants/colors';
 import { SafeAreaView } from 'react-navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserType } from '../../store/action/auth';
-
+import firebase from '../../config/firebase';
 import SIcon from '../../../assets/small-search-icon.svg';
 import SmallHeart from '../../../assets/small-heart-icon.svg';
 import BuyHistory from '../../../assets/drawer/history.svg';
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
 });
 export default function DrawerContent({ value, navigation }) {
   const dispatch = useDispatch();
-
+  const phone = useSelector((state) => state.auth.phone);
   return (
     <View>
       <View
@@ -90,7 +90,7 @@ export default function DrawerContent({ value, navigation }) {
           />
         }
       />
-      <Tap
+      {/* <Tap
         title='إبلاغ'
         tapIcon={
           <Report
@@ -134,11 +134,17 @@ export default function DrawerContent({ value, navigation }) {
             color={Colors.WHITE}
           />
         }
-      />
+      /> */}
       <Tap
         onPress={() => {
-          AsyncStorage.clear();
-          dispatch(setUserType(null, null));
+          firebase
+            .database()
+            .ref(`fav/${phone}`)
+            .remove()
+            .then(() => {
+              AsyncStorage.clear();
+              dispatch(setUserType(null, null));
+            });
         }}
         title='تسجيل خروج'
         tapIcon={

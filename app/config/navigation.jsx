@@ -208,10 +208,7 @@ const DashboardDrawerStackScreen = () => (
 const AuthStack = createStackNavigator();
 const AuthStackScreen = () => (
   <AuthStack.Navigator headerMode='none'>
-    <AuthStack.Screen
-      name='SignInScreen'
-      component={(header) => <SignInScreen navigation={header.navigation} />}
-    />
+    <AuthStack.Screen name='SignInScreen' component={SignInScreen} />
     <AuthStack.Screen name='SignUpScreen' component={SignUpScreen} />
     <AuthStack.Screen
       name='SignInAdminScreen'
@@ -230,8 +227,9 @@ const RootStackScreen = () => {
   // const [user, setUser] = React.useState({ userType: '' });
   // const [user, setUser] = React.useState(null);
   const user = useSelector((state) => state.auth.userType);
-  console.log(user, 'usssss');
+  
   const dispatch = useDispatch();
+
   React.useEffect(() => {
     const getUser = async () => {
       const USER_FROM_ASYNC = await AsyncStorage.getItem('userType');

@@ -41,9 +41,8 @@ const styles = StyleSheet.create({
 export default function VerticalItemDetailsCard({ product, navigation }) {
   const height = Dimensions.get('window').height * 0.4;
   const width = Dimensions.get('window').width - 40;
-  console.log(product.image, 'o[[[[[');
   const dispatch = useDispatch();
-
+  const phone = useSelector((state) => state.auth.phone);
   return (
     <ScrollView
       contentContainerStyle={{
@@ -123,7 +122,7 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
         </Text>
       </View> */}
       <TouchableOpacity
-        onPress={() => dispatch(addProductToCart(product, navigation))}
+        onPress={() => dispatch(addProductToCart(product, navigation, phone))}
         style={styles.btn}
       >
         <Text style={styles.btnText}>أضف إلى السلة</Text>

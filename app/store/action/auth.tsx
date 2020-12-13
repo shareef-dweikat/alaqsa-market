@@ -1,5 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import firebase from '../../config/firebase';
+import navigation from '../../config/navigation';
 import { Field } from '../../screens/ProfileScreen';
 
 export const setUserType = (USER_FROM_ASYNC, USER_PHONE_FROM_ASYNC) => {
@@ -54,11 +55,13 @@ const handleSignUp = async (email, password) => {
 };
 
 export function login(phone, pass, navigation) {
+  console.log(phone, pass)
   return (dispatch) => {
     firebase
       .database()
-      .ref(`users/${phone}`)
-      .once('value', async (user) => {
+      .ref(`users/0599102215`)
+      .once('value',  (user) => {
+        console.log(user)
         if (user.val() != null && pass == user.val().pass) {
           AsyncStorage.setItem('userType', 'customer');
           AsyncStorage.setItem('phone', phone + '');
@@ -86,16 +89,19 @@ export function login(phone, pass, navigation) {
   };
 }
 
-export function signup(phone, pass, confirmPass, email, name) {
+export function signup(phone, pass,email, name, navigation) {
+  console.log(name, "my_Nme")
   return (dispatch) => {
     firebase
       .database()
       .ref(`users/${phone}`)
       .set({
         pass,
-        confirmPass,
         email,
         name,
+      }).then(()=>{
+        alert('تم التسجيل بنجاح')
+        navigation.pop()
       })
       .catch((e) => console.log('addProductToCartAPI', e));
   };
