@@ -140,11 +140,11 @@ export default function SignForm({
       {/* {forgotPassBtnShown && (
         <Text style={styles.forgotPassText}>نسيت كلمة المرور؟</Text>
       )} */}
-      {agreeOnConditionsBoxShown && (
+      {/* {agreeOnConditionsBoxShown && (
         <Text style={styles.agreeOnConditionsTxt}>
             بالنقر على زر التسجيل أنا أوافق على الشروط والأحكام
         </Text>
-      )}
+      )} */}
       <TouchableOpacity onPress={onPress} style={styles.btn}>
         <Text style={styles.btnText}>{submitText}</Text>
       </TouchableOpacity>

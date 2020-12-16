@@ -63,6 +63,7 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     color: 'white',
     fontFamily: 'Tajawal-Regular',
+    textAlign: 'center'
   },
   formContainer: {
     backgroundColor: 'white',
@@ -156,31 +157,31 @@ export default function SignUpScreen({ navigation }) {
             }}
           >
             {logoVisible ? (
-              <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+              <View style={{ alignItems: 'center', justifyContent: 'center'}}>
                 <Image source={require('../../assets/logo.png')} />
                 <Text style={styles.slogon}>كل ما تحتاجه في تطبيق</Text>
               </View>
             ) : null}
             <SignForm
               agreeOnConditionsBoxShown={true}
-              submitText='دخول'
+              submitText='إنشاء حساب'
               navigation={navigation}
               onPress={() => submit()}
               inputs={
                 <>
                   <MyInputText
                     onChangeText={(d) => setName(d)}
-                    placeholder='اسم السمتخدم'
+                    placeholder='اسم المستخدم'
                   />
                   <MyInputText
                     onChangeText={(d) => setPhone(d)}
                     placeholder='رقم الجوال'
                     keyboardType= "number-pad"
                   />
-                  <MyInputText
+                  {/* <MyInputText
                     onChangeText={(d) => setEmail(d)}
                     placeholder='الايميل'
-                  />
+                  /> */}
                   <MyInputText
                     onChangeText={(d) => setPass(d)}
                     placeholder='كلمة المرور'

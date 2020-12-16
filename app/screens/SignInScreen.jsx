@@ -187,7 +187,7 @@ export default function SignInScreen({ navigation, setUser }) {
                 <>
                   <MyInputText
                     onChangeText={(phone) => setPhone(phone)}
-                    placeholder='رقم المحمول'
+                    placeholder='رقم الجوال'
                     keyboardType= "number-pad"
                   />
                   <MyInputText

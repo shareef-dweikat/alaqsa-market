@@ -67,9 +67,10 @@ export default function CartScreen({ navigation }) {
   const options = useSelector((state) => state.cart.branches);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
   const phone = useSelector((state) => state.auth.phone);
-  const [pickerValue, setPickerValue] = useState('');
+  const [pickerValue, setPickerValue] = useState('Nablus');
   const isDeleted = useSelector((state) => state.cart.isDeleted);
-  const transPrice = pickerValue === options[0] ? 15 : 20;
+  // const transPrice = pickerValue === options[0] ? 15 : 20;
+  const transPrice = 10
   const dispatch = useDispatch();
   const handleOrder = () => {
     if (cartProducts.length <= 0) {
@@ -142,96 +143,7 @@ export default function CartScreen({ navigation }) {
         </View>
         {/* <View style={{ height: 4000 }}></View> */}
       </ScrollView>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginTop: 16,
-          borderRadius: 5,
-          borderColor: Colors.BORDER_COLOR,
-          borderWidth: 1,
-          padding: 8,
-          marginHorizontal: 16,
-        }}
-      >
-        <TouchableOpacity
-          onPress={() => {
-            if (picker) {
-              picker.showOptions();
-            }
-          }}
-        >
-          <Image source={DownArrow} />
-        </TouchableOpacity>
-        <CustomPicker
-          ref={(el) => (picker = el)}
-          options={options}
-          value={'اختر الفرع'}
-          style={{ width: 300, marginLeft: 16 }}
-          // modalStyle={{borderRadius: 20, borderWidth: 1}}
-          // headerTemplate={(item) => (
-          //   <View
-          //     style={{
-          //       backgroundColor: 'white',
-          //       width: '100%',
-          //       padding: 8,
-          //       // justifyContent: 'center',
-          //       // alignItems: 'center',
-          //     }}
-          //   >
-          //     <View
-          //       style={{
-          //         flexDirection: 'row',
-          //         justifyContent: 'flex-end',
-          //         borderBottomColor: Colors.BORDER_COLOR,
-          //         borderBottomWidth: 1,
-          //         paddingBottom: 12,
-          //       }}
-          //     >
-          //       {/* <TouchableOpacity
-          //         style={{ width: 25, height: 25 }}
-          //         // onPress={() => setVisible(false)}
-          //       >
-          //         <Text style={{ color: Colors.BORDER_COLOR, fontSize: 20 }}>
-          //           X
-          //         </Text>
-          //       </TouchableOpacity> */}
-          //       <Text style={{ fontFamily: 'Tajawal-Bold' }}>{pickerValue}</Text>
-          //     </View>
-          //   </View>
-          // )}
-          // optionTemplate={({ item }) => (
-          //   <TouchableOpacity
-          //     // onPress={() => pickImage()}
-          //     style={{ marginTop: 12, marginRight: 16 }}
-          //   >
-          //     <Text style={{ fontFamily: 'Tajawal-Regular' }}>{item}</Text>
-          //   </TouchableOpacity>
-          // )}
-          fieldTemplate={(item) => (
-            <View>
-              <Text
-                style={{
-                  textAlign: 'right',
-                  fontFamily: 'Tajawal-Medium',
-                  color: 'black',
-                }}
-              >
-                {item.selectedItem}
-              </Text>
-            </View>
-          )}
-          footerTemplate={() => (
-            <View style={{ height: 20, backgroundColor: 'white' }}></View>
-          )}
-          onValueChange={(value) => {
-            setPickerValue(value);
-            console.log(value);
-            // Alert.alert('Selected Item', value || 'No item were selected!');
-          }}
-        />
-      </View>
+    
       <View style={{ marginTop: 16, padding: 16, marginBottom: 16 }}>
         <View style={styles.checkoutContainer}>
           <Text style={styles.checkoutTxt}>{parseInt(totalPrice)} شيكل</Text>
