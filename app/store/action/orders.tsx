@@ -37,6 +37,22 @@ export function fetchOrders(phone) {
       });
   };
 }
+export function fetchSellerOrders(username) {
+  console.log(username, "uuuuuuuuuu")
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`seller-orders/${username}`)
+      .once('value', function (remoteOrders) {
+        console.log(remoteOrders, 'rrrrrr')
+        //  let orders = Object.values(remoteOrders.val());
+        dispatch({
+          type: 'FETCH_ORDERS_ADMIN_SUCCESS',
+          payload: [],
+        });
+      });
+  };
+}
 
 export function makeOrder() {
   // firebase

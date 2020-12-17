@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Text,
   View,
   Image,
-  TextInput,
+  AsyncStorage,
   StyleSheet,
   Dimensions,
 } from 'react-native';
@@ -15,12 +15,14 @@ import SearchIcon from '../../../assets/dashboard-drawer/search.svg';
 import BellIcon from '../../../assets/dashboard-drawer/bell.svg';
 import SIcon from '../../../assets/small-search-icon.svg';
 import Colors from '../../constants/colors';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { setAdminType } from '../../store/action/auth';
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
-    padding: 16
+    padding: 16,
   },
   image: {
     // flex: 1,
@@ -34,9 +36,19 @@ const styles = StyleSheet.create({
   },
 });
 export default function DashboardHome({ navigation }) {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    const getUsername = async () => {
+      const userType = await AsyncStorage.getItem('userType');
+      const username = await AsyncStorage.getItem('username');
+      dispatch(setAdminType(userType, username));
+    };
+    getUsername();
+  }, []);
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
-      <SafeAreaView  forceInset={{ top: 'always' }}>
+      <SafeAreaView forceInset={{ top: 'always' }}>
         <View
           style={{
             marginTop: 8,

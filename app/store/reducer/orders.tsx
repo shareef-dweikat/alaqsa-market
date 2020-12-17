@@ -19,6 +19,7 @@ export default (state = initialState, action: AnyAction) => {
         isLoading: false,
         orders: action.payload,
       };
+      
       case 'FETCH_SELLER_ORDERS_SUCCESS':
         console.log('FETCH_SELLER_ORDERS_SUCCESS');
         return {
@@ -26,6 +27,13 @@ export default (state = initialState, action: AnyAction) => {
           isLoading: false,
           order: action.payload.order,
           products: action.payload.products,
+        };
+        case 'FETCH_ORDERS_ADMIN_SUCCESS':
+        console.log('FETCH_ORDERS_ADMIN_SUCCESS');
+        return {
+          ...state,
+          // isLoading: false,
+          orders: action.payload.orders,
         };
     default:
       return state;

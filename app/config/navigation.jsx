@@ -45,6 +45,7 @@ import AddCategoryScreen from '../screens/dashboard/AddCategoryScreen';
 import SignInAdminScreen from '../screens/SignInAdminScreen';
 import DashboardItemDetailsScreen from '../screens/dashboard/DashboardItemDetailsScreen';
 import OrdersPage from '../screens/OrdersPage';
+import DashboardOrdersPage from '../screens/dashboard/DashboardOrdersPage'
 import { setUserType } from '../store/action/auth';
 const ContactsStack = createStackNavigator();
 const ContactsStackScreen = ({ navigation }) => (
@@ -332,6 +333,10 @@ const RootStackScreen = () => {
       <DashboardDrawerStack.Screen
         name='DashboardCategoriesScreen'
         component={DashboardCategoriesScreen}
+      />
+        <DashboardDrawerStack.Screen
+        name='DashboardOrdersPage'
+        component={DashboardOrdersPage}
       />
       <DashboardDrawerStack.Screen
         name='AddCategoryScreen'

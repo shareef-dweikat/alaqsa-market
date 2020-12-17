@@ -111,16 +111,17 @@ export default function DashboardDrawerContent({ value, navigation }) {
             color={Colors.WHITE}
           />
         }
-      />
+      />*/}
       <Tap
         title='الطلبات'
+        onPress={() => navigation.push('DashboardOrdersPage')}
         tapIcon={
           <Rate
             // color={Colors.BACKGROUND}
             color={Colors.WHITE}
           />
         }
-      /> */}
+      />
       <Tap
         title='التصنيفات'
         onPress={() => navigation.push('DashboardCategoriesScreen')}

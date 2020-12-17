@@ -64,9 +64,9 @@ export default (state = initialState, action: AnyAction) => {
       return {
         ...state,
         isLoading: false,
-        userType: 'admin',
-        username: 'ahmad',
-        phone: action.payload,
+        userType: action.payload.userType,
+        username: action.payload.username,
+        // phone: action.payload,
       };
 
     case 'SET_CURRENT_NUMBER':

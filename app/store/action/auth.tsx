@@ -15,6 +15,18 @@ export const setUserType = (USER_FROM_ASYNC, USER_PHONE_FROM_ASYNC) => {
     });
   };
 };
+export const setAdminType = (USERTYPE_FROM_ASYNC, USER_USERNAME_FROM_ASYNC) => {
+  console.log('ctra', USERTYPE_FROM_ASYNC);
+  return (dispatch) => {
+    dispatch({
+      type: 'SET_USER_TYPE',
+      payload: {
+        userType: USERTYPE_FROM_ASYNC,
+        username: USER_USERNAME_FROM_ASYNC,
+      },
+    });
+  };
+};
 
 const handleSignIn = async (phone, pass) => {
   // console.log(email, password);
