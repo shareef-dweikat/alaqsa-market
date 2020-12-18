@@ -18,7 +18,7 @@ import Colors from '../../constants/colors';
 import RightArrow from '../../../assets/right-arrow.svg';
 import SearchBox from '../../components/SearchBox';
 import { StatusBar } from 'expo-status-bar';
-import {fetchSellerOrders } from '../../store/action/orders';
+import { fetchSellerOrders, fetchSellerOrder } from '../../store/action/orders';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -75,9 +75,10 @@ export default function DashboardOrdersPage({ navigation }) {
   const userType = useSelector((state) => state.auth.userType);
   const username = useSelector((state) => state.auth.username);
 
-  console.log(username, 'userTypesss');
   const order = useSelector((state) => state.orders.order);
   const products = useSelector((state) => state.orders.products);
+  // console.log(products, 'products');
+
   const [orderId, setOrderId] = useState('');
   useEffect(() => {
     dispatch(fetchSellerOrders(username));
@@ -94,37 +95,26 @@ export default function DashboardOrdersPage({ navigation }) {
           {/* <SearchBox /> */}
         </View>
       </View>
-      {orders &&
-        orders.map((orderHeader) => (
-          <OrderCardsContainer
-            orders={orders}
-            products={products}
-            order={order}
-            orderHeader={orderHeader}
-            orderId={orderId}
-            setOrderId={setOrderId}
-          />
-        ))}
-
+      <View style={{height: '100%', backgroundColor: '#F9F9FA'}}>
+        {orders &&
+          orders.map((order) => (
+            <OrderCardContainer
+              date={order.date}
+              order={order}
+              products={order.productsObject}
+            />
+          ))}
+      </View>
       <ScrollView style={{ padding: 8 }}></ScrollView>
     </SafeAreaView>
   );
 }
 
-export function OrderCardsContainer({
-  orders,
-  products,
-  order,
-  orderHeader,
-  setOrderId,
-  orderId,
-}) {
+export function OrderCardContainer({ date, products, order }) {
   const dispatch = useDispatch();
-
-  const handleHeaderClicked = () => {
-    setOrderId(orderHeader.orderId);
-    dispatch(fetchOrder(orderHeader.orderId, orderHeader.branch));
-  };
+  let myProducts = Object.values(products);
+  console.log(myProducts, 'ppppssss');
+  const handleHeaderClicked = () => {};
   return (
     <>
       <View style={styles.orderCard}>
@@ -139,15 +129,15 @@ export function OrderCardsContainer({
               fontFamily: 'Tajawal-Medium',
             }}
           >
-            {orderHeader.date}
+            {date}
           </Text>
 
-          <Text style={styles.orderTitle}>طلبية رقم 1</Text>
+          <Text style={styles.orderTitle}> اسم الطالب</Text>
         </TouchableOpacity>
-        {products.length > 0 && orderId == orderHeader.orderId && (
+        {myProducts.length > 0 && (
           <>
-            {products &&
-              products.map((product) => (
+            {myProducts &&
+              myProducts.map((product) => (
                 <View style={styles.productRow}>
                   <Text style={styles.productPrice}>{product.price} شيكل</Text>
                   <Text style={styles.productName}>

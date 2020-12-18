@@ -45,8 +45,10 @@ import AddCategoryScreen from '../screens/dashboard/AddCategoryScreen';
 import SignInAdminScreen from '../screens/SignInAdminScreen';
 import DashboardItemDetailsScreen from '../screens/dashboard/DashboardItemDetailsScreen';
 import OrdersPage from '../screens/OrdersPage';
-import DashboardOrdersPage from '../screens/dashboard/DashboardOrdersPage'
+import DashboardOrdersPage from '../screens/dashboard/DashboardOrdersPage';
 import { setUserType } from '../store/action/auth';
+import DashboardAccounts from '../screens/dashboard/DashboardAccounts';
+import DashboardHomeSlider from '../screens/dashboard/DashboardHomeSlider';
 const ContactsStack = createStackNavigator();
 const ContactsStackScreen = ({ navigation }) => (
   <ContactsStack.Navigator headerMode='none'>
@@ -228,7 +230,7 @@ const RootStackScreen = () => {
   // const [user, setUser] = React.useState({ userType: '' });
   // const [user, setUser] = React.useState(null);
   const user = useSelector((state) => state.auth.userType);
-  
+
   const dispatch = useDispatch();
 
   React.useEffect(() => {
@@ -327,6 +329,14 @@ const RootStackScreen = () => {
         component={DashboardProductsScreen}
       />
       <DashboardDrawerStack.Screen
+        name='DashboardHomeSlider'
+        component={DashboardHomeSlider}
+      />
+      <DashboardDrawerStack.Screen
+        name='DashboardAccounts'
+        component={DashboardAccounts}
+      />
+      <DashboardDrawerStack.Screen
         name='AddProductScreen'
         component={AddProductScreen}
       />
@@ -334,7 +344,7 @@ const RootStackScreen = () => {
         name='DashboardCategoriesScreen'
         component={DashboardCategoriesScreen}
       />
-        <DashboardDrawerStack.Screen
+      <DashboardDrawerStack.Screen
         name='DashboardOrdersPage'
         component={DashboardOrdersPage}
       />

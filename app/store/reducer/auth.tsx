@@ -39,6 +39,13 @@ export default (state = initialState, action: AnyAction) => {
         userType: action.payload.userType,
         phone: action.payload.phone,
       };
+    case 'SET_ADMIN_TYPE':
+      console.log(action.payload, 'SET_ADMIN_TYPE');
+      return {
+        ...state,
+        userType: action.payload.userType,
+        username: action.payload.username,
+      };
     case 'LOGIN':
       return {
         ...state,

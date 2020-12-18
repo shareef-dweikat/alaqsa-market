@@ -11,7 +11,7 @@ import {
 import Colors from '../../constants/colors';
 import { SafeAreaView } from 'react-navigation';
 import { useDispatch, useSelector } from 'react-redux';
-
+import AccountManeger from '../../../assets/drawer/account.svg';
 import CategoriesIcon from '../../../assets/dashboard-drawer/cat-icon.svg';
 import SmallHeart from '../../../assets/small-heart-icon.svg';
 import BuyHistory from '../../../assets/drawer/history.svg';
@@ -85,16 +85,17 @@ export default function DashboardDrawerContent({ value, navigation }) {
           />
         }
       />
-      {/*   <Tap
+      <Tap
         title='إدارة المستخدمين'
         tapIcon={
-          <BuyHistory
+          <AccountManeger
             // color={Colors.BACKGROUND}
             color={Colors.WHITE}
           />
         }
+        onPress={() => navigation.push('DashboardAccounts')}
       />
-      <Tap
+      {/*  <Tap
         title='إبلاغ'
         tapIcon={
           <Report
@@ -102,17 +103,18 @@ export default function DashboardDrawerContent({ value, navigation }) {
             color={Colors.WHITE}
           />
         }
-      />
+      />*/}
       <Tap
         title='السلايدر الإعلاني'
-        tapIcon={
+        tapIcon={  
           <Share
             // color={Colors.BACKGROUND}
             color={Colors.WHITE}
           />
         }
-      />*/}
-      <Tap
+        onPress={() => navigation.push('DashboardHomeSlider')}
+      />
+      <Tap   
         title='الطلبات'
         onPress={() => navigation.push('DashboardOrdersPage')}
         tapIcon={

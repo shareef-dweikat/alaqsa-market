@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 20 20">
+  <defs>
+    <clipPath id="clip-path">
+      <path id="Shape" d="M6.5,20A2.5,2.5,0,0,1,4,17.5v-.712a2.5,2.5,0,0,1,1.466-2.276l3.457-1.571a5,5,0,1,1,6.155,0l3.457,1.571A2.5,2.5,0,0,1,20,16.788V17.5A2.5,2.5,0,0,1,17.5,20ZM0,13.5v-.78A2.5,2.5,0,0,1,1.355,10.5L4.713,8.769a5,5,0,1,1,7.425-6.576.5.5,0,0,1-.827.563A4,4,0,1,0,5.92,8.418a.5.5,0,0,1-.051.881L1.814,11.386A1.5,1.5,0,0,0,1,12.72v.78A1.5,1.5,0,0,0,2.5,15a.5.5,0,0,1,0,1A2.5,2.5,0,0,1,0,13.5Z" transform="translate(0 0.478)" fill="#fff"/>
+    </clipPath>
+  </defs>
+  <g id="Group_1514" data-name="Group 1514" transform="translate(0 -0.478)">
+    <path id="Shape-2" data-name="Shape" d="M6.5,20A2.5,2.5,0,0,1,4,17.5v-.712a2.5,2.5,0,0,1,1.466-2.276l3.457-1.571a5,5,0,1,1,6.155,0l3.457,1.571A2.5,2.5,0,0,1,20,16.788V17.5A2.5,2.5,0,0,1,17.5,20ZM0,13.5v-.78A2.5,2.5,0,0,1,1.355,10.5L4.713,8.769a5,5,0,1,1,7.425-6.576.5.5,0,0,1-.827.563A4,4,0,1,0,5.92,8.418a.5.5,0,0,1-.051.881L1.814,11.386A1.5,1.5,0,0,0,1,12.72v.78A1.5,1.5,0,0,0,2.5,15a.5.5,0,0,1,0,1A2.5,2.5,0,0,1,0,13.5Z" transform="translate(0 0.478)" fill="#fff"/>
+    <g id="Mask_Group_39" data-name="Mask Group 39" transform="translate(0)" clip-path="url(#clip-path)">
+      <g id="_Icon_Color" data-name="↳🎨 Icon Color" transform="translate(-2 -2)">
+        <rect id="Black_Black-800" data-name="Black / Black-800" width="24" height="24" transform="translate(0 0.478)" fill="#fff"/>
+      </g>
+    </g>
+  </g>
+</svg>

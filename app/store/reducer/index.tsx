@@ -6,6 +6,8 @@ import product from './product';
 import cart from './cart';
 import orders from './orders';
 import notifications from './notifications';
+import accounts from './accounts';
+import homeSlider from './homeSlider';
 
 const reducers = combineReducers({
   auth,
@@ -14,7 +16,9 @@ const reducers = combineReducers({
   product:product,
   cart: cart,
   orders: orders,
-  notification: notifications
+  notification: notifications,
+  accounts: accounts,
+  homeSlider: homeSlider
 });
 
 export default reducers;

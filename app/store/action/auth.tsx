@@ -19,7 +19,7 @@ export const setAdminType = (USERTYPE_FROM_ASYNC, USER_USERNAME_FROM_ASYNC) => {
   console.log('ctra', USERTYPE_FROM_ASYNC);
   return (dispatch) => {
     dispatch({
-      type: 'SET_USER_TYPE',
+      type: 'SET_ADMIN_TYPE',
       payload: {
         userType: USERTYPE_FROM_ASYNC,
         username: USER_USERNAME_FROM_ASYNC,
@@ -143,6 +143,20 @@ export function updateProfile(phone, field, value) {
   };
 }
 
+export function fetchSellerAccounts() {
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`admins/`)
+      .once('value', async (sellers) => {
+        dispatch({
+          type: 'FETCH_SELLERS_ACCOUNTS_SUCCESS',
+          payload: sellers.val(),
+        });
+      })
+      .catch((e) => console.log('fetchSellerAccounts', e));
+  };
+}
 // dispatch({
 //   type: 'PROFILE_SUCCESS',
 //   payload: user.val(),

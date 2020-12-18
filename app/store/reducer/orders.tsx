@@ -33,7 +33,7 @@ export default (state = initialState, action: AnyAction) => {
         return {
           ...state,
           // isLoading: false,
-          orders: action.payload.orders,
+          orders: action.payload,
         };
     default:
       return state;

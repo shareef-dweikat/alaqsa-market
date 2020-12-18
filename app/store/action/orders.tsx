@@ -44,11 +44,10 @@ export function fetchSellerOrders(username) {
       .database()
       .ref(`seller-orders/${username}`)
       .once('value', function (remoteOrders) {
-        console.log(remoteOrders, 'rrrrrr')
-        //  let orders = Object.values(remoteOrders.val());
+        let orders = Object.values(remoteOrders.val());
         dispatch({
           type: 'FETCH_ORDERS_ADMIN_SUCCESS',
-          payload: [],
+          payload:orders,
         });
       });
   };
@@ -90,5 +89,21 @@ export function fetchOrder(orderId, seller) {
   };
 }
 
+export function fetchSellerOrder(orderId, seller) {
+  console.log(orderId, seller)
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`seller-orders/${seller}/${orderId}`)
+      .once('value', function (remoteOrders) {
+        let order = remoteOrders.val()
+        let products = Object.values(order.productsObject);
+          dispatch({
+            type: 'FETCH_SELLER_ORDERS_SUCCESS',
+            payload: {order, products},
+          });
+      });
+  };
+}
 
 
