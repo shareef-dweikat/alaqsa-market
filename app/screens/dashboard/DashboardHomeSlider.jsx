@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  ActivityIndicator,
 } from 'react-native';
 import EditIcon from '../../../assets/edit.svg';
 import * as ImagePicker from 'expo-image-picker';
@@ -20,7 +21,8 @@ import RightArrow from '../../../assets/right-arrow.svg';
 
 import Colors from '../../constants/colors';
 import { fetchSellerAccounts } from '../../store/action/accounts';
-import { uploadSlide } from '../../store/action/homeSlider';
+import { uploadSlide, fetchSlideImage } from '../../store/action/homeSlider';
+import { TextInput } from 'react-native-gesture-handler';
 const styles = StyleSheet.create({
   image: {
     backgroundColor: Colors.BACKGROUND,
@@ -77,13 +79,13 @@ export default function DashboardHomeSlider({ navigation }) {
 }
 
 export function SlideCard({ slide }) {
-  const [value, setValue] = useState('');
-  const [image, setImage] = useState('');
   const uploadeImageUri = useSelector(
     (state) => state.homeSlider.uploadedSlideImageUri
   );
+  const [value, setValue] = useState('');
+  const [image, setImage] = useState('');
+  const isLoading = useSelector((state) => state.homeSlider.isLoading);
   const dispatch = useDispatch();
-    console.log(uploadeImageUri, "uploadeImageUriiiiii")
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -93,21 +95,16 @@ export function SlideCard({ slide }) {
     });
 
     if (!result.cancelled) {
-      dispatch(uploadSlide("homeSlider1", "homeSlider1", result.uri));
-      // setImage(result.uri);
+      setImage(result.uri);
     }
   };
-  const handleChangePassword = () => {
-    // firebase
-    //   .database()
-    //   .ref(`admins/${account}/password`)
-    //   .set(value.trim())
-    //   .then(() => {
-    //     setValue('')
-    //     alert(`تم تغيير كلمة مرور ${account} بنجاح`)
-    //   })
-    //   .catch((e) => console.log('AccountCard', e));
+  const handleUpdate = () => {
+    dispatch(uploadSlide('homeSlider1', value, image));
   };
+  useEffect(() => {
+    dispatch(fetchSlideImage());
+    // setImage(uploadeImageUri);
+  }, [uploadeImageUri]);
   return (
     <>
       <View
@@ -143,59 +140,74 @@ export function SlideCard({ slide }) {
             البانر الإعلاني للشاشة الرئيسة{' '}
           </Text>
         </View>
-        <Image style={{height: 250, borderRadius: 5}} resizeMode='contain' source={{uri: uploadeImageUri }} />
+        <Image
+          style={{ height: 250, borderRadius: 5 }}
+          resizeMode='contain'
+          source={{ uri: uploadeImageUri }}
+        />
+        <TextInput
+          style={{
+            backgroundColor: '#515462',
+            borderRadius: 10,
+            height: 40,
+            paddingHorizontal: 8,
+            color: 'white',
+            fontFamily: 'Tajawal-Regular',
+          }}
+          onChangeText={(txt) => setValue(txt)}
+          value={value}
+          placeholderTextColor='white'
+          placeholder='اكتب نصا هنا'
+        />
+        <TouchableOpacity
+          onPress={() => handleUpdate()}
+          style={{
+            backgroundColor: Colors.GOLDEN,
+            marginTop: 8,
+            height: 40,
+            width: '100%',
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Text style={{ color: 'white', fontFamily: 'Tajawal-Regular' }}>
+            حفظ
+          </Text>
+        </TouchableOpacity>
       </View>
+      <LoadingModal visible={isLoading} />
     </>
   );
 }
-
-// export function DeleteConfirmation({
-//   name,
-//   visible,
-//   handleDelete,
-//   setDeleteDialogVisible,
-// }) {
-//   return (
-//     <Modal visible={visible}>
-//       <TouchableOpacity
-//         onPress={() => setDeleteDialogVisible(false)}
-//         style={{
-//           height: '100%',
-//           justifyContent: 'center',
-//           alignItems: 'center',
-//           backgroundColor: 'rgba(0,0,0,0.5)',
-//         }}
-//       >
-//         <View
-//           style={{
-//             backgroundColor: 'white',
-//             width: '80%',
-//             height: 300,
-//             padding: 16,
-//             borderRadius: 10,
-//             justifyContent: 'center',
-//             alignItems: 'center',
-//           }}
-//         >
-//           <DeleteIcon />
-//           <Text
-//             style={{
-//               marginTop: 8,
-//               fontFamily: 'Tajawal-Bold',
-//               fontSize: 20,
-//               textAlign: 'center',
-//             }}
-//           >
-//             هل انت متأكد من حذف التصنيف {name}؟ كل منتجات التصنيف ستضيع
-//           </Text>
-
-//           <View style={{ width: '100%' }}>
-//             <TouchableOpacity onPress={() => handleDelete()} style={styles.btn}>
-//               <Text style={styles.btnTxt}>تأكيد الحذف</Text>
-//             </TouchableOpacity>
-//           </View>
-//         </View>
-//       </TouchableOpacity>
-//     </Modal>
-//   );
-// }
+export function LoadingModal({ title, visible, setVisible, setImage }) {
+  return (
+    <Modal visible={visible} transparent>
+      <View
+        style={{
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'white',
+            width: '80%',
+            height: 200,
+            padding: 16,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ActivityIndicator color={Colors.GOLDEN} size='large' />
+          <Text style={{ marginTop: 32, fontFamily: 'Tajawal-Medium' }}>
+            جار إضافة إعلان
+          </Text>
+        </View>
+      </View>
+    </Modal>
+  );
+}

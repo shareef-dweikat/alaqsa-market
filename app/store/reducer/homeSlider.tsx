@@ -10,15 +10,27 @@ const initialState = {
 
 export default (state = initialState, action: AnyAction) => {
   switch (action.type) {
+    case 'SLIDE_ADDED':
+      console.log("asdddddddddddddddddd", action)
+      return {
+        ...state,
+         isLoading: true,
+      };
     case 'SLIDE_ADDED_SUCCESS':
       console.log("asdddddddddddddddddd", action)
-
       return {
         ...state,
          isLoading: false,
          uploadedSlideImageUri: action.payload
       };
-    default:
+      case 'FETCH_SLIDE_IMAGE':
+      console.log("FETCH_SLIDE_IMAGE", action)
+      return {
+        ...state,
+         isLoading: false,
+         uploadedSlideImageUri: action.payload
+      };
+    default: 
       return state;
   }
 };

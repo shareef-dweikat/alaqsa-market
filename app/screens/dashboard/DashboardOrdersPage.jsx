@@ -18,7 +18,11 @@ import Colors from '../../constants/colors';
 import RightArrow from '../../../assets/right-arrow.svg';
 import SearchBox from '../../components/SearchBox';
 import { StatusBar } from 'expo-status-bar';
-import { fetchSellerOrders, fetchSellerOrder } from '../../store/action/orders';
+import {
+  fetchSellerOrders,
+  fetchSellerOrder,
+  changeStatus,
+} from '../../store/action/orders';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -95,7 +99,7 @@ export default function DashboardOrdersPage({ navigation }) {
           {/* <SearchBox /> */}
         </View>
       </View>
-      <View style={{height: '100%', backgroundColor: '#F9F9FA'}}>
+      <View style={{ height: '100%', backgroundColor: '#F9F9FA' }}>
         {orders &&
           orders.map((order) => (
             <OrderCardContainer
@@ -112,13 +116,20 @@ export default function DashboardOrdersPage({ navigation }) {
 
 export function OrderCardContainer({ date, products, order }) {
   const dispatch = useDispatch();
+  const [status, setStatus] = useState(order.status);
   let myProducts = Object.values(products);
-  console.log(myProducts, 'ppppssss');
+  const username = useSelector((state) => state.auth.username);
+
+  const handleChangeStatus = (orderId, status) => {
+    console.log(orderId, status);
+    setStatus(status);
+    dispatch(changeStatus(orderId, username, status));
+  };
   const handleHeaderClicked = () => {};
   return (
     <>
       <View style={styles.orderCard}>
-        <TouchableOpacity
+        <View
           onPress={() => handleHeaderClicked()}
           style={styles.orderCardHeader}
         >
@@ -132,8 +143,8 @@ export function OrderCardContainer({ date, products, order }) {
             {date}
           </Text>
 
-          <Text style={styles.orderTitle}> اسم الطالب</Text>
-        </TouchableOpacity>
+          <Text style={styles.orderTitle}> الزبون {order.phone}</Text>
+        </View>
         {myProducts.length > 0 && (
           <>
             {myProducts &&
@@ -177,6 +188,28 @@ export function OrderCardContainer({ date, products, order }) {
                 >
                   {order.totalPrice + order.transPrice} شيكل
                 </Text>
+                <View
+                  style={{
+                    height: 30,
+                    paddingHorizontal: 8,
+                    borderRadius: 5,
+                    marginTop: 8,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color:
+                        status == 'تم التوصيل'
+                          ? 'green'
+                          : status == ' قبول'
+                          ? 'orange'
+                          : 'red',
+                      fontFamily: 'Tajawal-Regular',
+                    }}
+                  >
+                    {status}
+                  </Text>
+                </View>
               </View>
               <View>
                 <Text
@@ -205,10 +238,69 @@ export function OrderCardContainer({ date, products, order }) {
                 >
                   الاجمالي
                 </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Tajawal-Regular',
+                    color: 'black',
+                    marginTop: 8,
+                  }}
+                >
+                  الحالة
+                </Text>
               </View>
             </View>
           </>
         )}
+        <View
+          style={{
+            flexDirection: 'row',
+            marginTop: 16,
+            justifyContent: 'space-between',
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              height: 30,
+              borderWidth: 1,
+              borderColor: 'green',
+              paddingHorizontal: 8,
+              borderRadius: 5,
+            }}
+            onPress={() => handleChangeStatus(order.orderId, 'تم التوصيل')}
+          >
+            <Text style={{ color: 'green', fontFamily: 'Tajawal-Regular' }}>
+              تم التوصيل
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              height: 30,
+              borderWidth: 1,
+              borderColor: 'orange',
+              paddingHorizontal: 8,
+              borderRadius: 5,
+            }}
+            onPress={() => handleChangeStatus(order.orderId, 'قبول')}
+          >
+            <Text style={{ color: 'orange', fontFamily: 'Tajawal-Regular' }}>
+              قبول
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              height: 30,
+              borderWidth: 1,
+              borderColor: 'red',
+              paddingHorizontal: 8,
+              borderRadius: 5,
+            }}
+            onPress={() => handleChangeStatus(order.orderId, 'رفض')}
+          >
+            <Text style={{ color: 'red', fontFamily: 'Tajawal-Regular' }}>
+              رفض
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </>
   );

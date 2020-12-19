@@ -129,12 +129,26 @@ export function order(seller, phone, totalPrice, transPrice) {
         firebase
           .database()
           .ref(`seller-orders/${seller}`)
-          .push({ productsObject, totalPrice, transPrice, phone, date: new Date().toLocaleString() })
+          .push({
+            productsObject,
+            totalPrice,
+            transPrice,
+            phone,
+            status: 'جار التنفيذ',
+            date: new Date().toLocaleString(),
+          })
           .then((e) =>
             firebase
               .database()
               .ref(`orders/${phone}`)
-              .push({orderId:e.key, branch: seller,totalPrice, transPrice,  date: new Date().toLocaleString() })
+              .push({
+                orderId: e.key,
+                branch: seller,
+                totalPrice,
+                transPrice,
+                status: 'جار التنفيذ',
+                date: new Date().toLocaleString(),
+              })
           );
         firebase.database().ref(`cart/${phone}`).remove();
         dispatch({

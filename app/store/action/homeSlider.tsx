@@ -31,10 +31,26 @@ export function uploadSlide(name, desc, image) {
       let url = await snapshot.ref.getDownloadURL();
       addSlide(name, desc, url).then(() => {
         dispatch({
-           type: 'SLIDE_ADDED_SUCCESS',
-           payload: url,
+          type: 'SLIDE_ADDED_SUCCESS',
+          payload: url,
         });
       });
     });
+  };
+}
+
+export function fetchSlideImage() {
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref('slider/home-slide/image')
+      .once('value', function (image) {
+        let myImage = image.val();
+        dispatch({
+          type: 'FETCH_SLIDE_IMAGE',
+          payload: myImage,
+        });
+      })
+      .catch((e) => console.log(e, 'errrrrr'));
   };
 }

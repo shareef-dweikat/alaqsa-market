@@ -29,7 +29,7 @@ export function fetchOrders(phone) {
       .database()
       .ref(`orders/${phone}`)
       .once('value', function (remoteOrders) {
-         let orders = Object.values(remoteOrders.val());
+        let orders = Object.values(remoteOrders.val());
         dispatch({
           type: 'FETCH_ORDERS_SUCCESS',
           payload: orders,
@@ -38,16 +38,21 @@ export function fetchOrders(phone) {
   };
 }
 export function fetchSellerOrders(username) {
-  console.log(username, "uuuuuuuuuu")
   return (dispatch) => {
     firebase
       .database()
       .ref(`seller-orders/${username}`)
       .once('value', function (remoteOrders) {
-        let orders = Object.values(remoteOrders.val());
+        //  let orders = Object.values(remoteOrders.val());
+        let orders = remoteOrders.val();
+        const r = []
+        for (let index in orders) {
+          r.push({...orders[index], orderId: index })
+        }
+
         dispatch({
           type: 'FETCH_ORDERS_ADMIN_SUCCESS',
-          payload:orders,
+          payload: r,
         });
       });
   };
@@ -73,37 +78,48 @@ export function makeOrder() {
 }
 
 export function fetchOrder(orderId, seller) {
-  console.log(orderId, seller)
   return (dispatch) => {
     firebase
       .database()
       .ref(`seller-orders/${seller}/${orderId}`)
       .once('value', function (remoteOrders) {
-        let order = remoteOrders.val()
+        let order = remoteOrders.val();
         let products = Object.values(order.productsObject);
-          dispatch({
-            type: 'FETCH_SELLER_ORDERS_SUCCESS',
-            payload: {order, products},
-          });
+        dispatch({
+          type: 'FETCH_SELLER_ORDERS_SUCCESS',
+          payload: { order, products },
+        });
       });
   };
 }
 
 export function fetchSellerOrder(orderId, seller) {
-  console.log(orderId, seller)
   return (dispatch) => {
     firebase
       .database()
       .ref(`seller-orders/${seller}/${orderId}`)
       .once('value', function (remoteOrders) {
-        let order = remoteOrders.val()
+        let order = remoteOrders.val();
         let products = Object.values(order.productsObject);
-          dispatch({
-            type: 'FETCH_SELLER_ORDERS_SUCCESS',
-            payload: {order, products},
-          });
+        dispatch({
+          type: 'FETCH_SELLER_ORDERS_SUCCESS',
+          payload: { order, products },
+        });
       });
   };
 }
 
-
+export function changeStatus(orderId, seller, status) {
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`seller-orders/${seller}/${orderId}/status`)
+      .set(status)
+      .then(() => {
+        dispatch({
+          type: 'FETCH_SELLER_ORDERS_SUCCESSrrrrrrr',
+          // payload: { order, products },
+        });
+      });
+  };
+}
