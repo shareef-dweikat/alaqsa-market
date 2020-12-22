@@ -67,11 +67,19 @@ const handleSignUp = async (email, password) => {
 };
 
 export function login(phone, pass, navigation) {
-  console.log(phone, pass)
+  console.log(phone)
+
   return (dispatch) => {
+    // AsyncStorage.setItem('userType', 'customer');
+    // AsyncStorage.setItem('phone', phone + '');
+    // dispatch({
+    //   type: 'LOGIN_SUCCESS',
+    //   payload: phone,
+    // });
+ 
     firebase
       .database()
-      .ref(`users/0599102215`)
+      .ref(`users/`)
       .once('value',  (user) => {
         console.log(user)
         if (user.val() != null && pass == user.val().pass) {
@@ -85,19 +93,7 @@ export function login(phone, pass, navigation) {
         } else alert('خطا في العلومات');
       })
       .catch((e) => console.log('createCategoryAPI', e));
-    // handleSignIn(email.toLowerCase(), password).then((TOKEN) => {
-    //   if (!TOKEN.message) {
-    //     navigation.push('Home');
-    //     dispatch({
-    //       type: 'LOGIN_SUCCESS',
-    //       payload: TOKEN,
-    //     });
-    //   } else
-    //     dispatch({
-    //       type: 'LOGIN_FAILURE',
-    //       errors: TOKEN.message,
-    //     });
-    // });
+   
   };
 }
 

@@ -137,15 +137,19 @@ export default function DrawerContent({ value, navigation }) {
       /> */}
       <Tap
         onPress={() => {
-          firebase
-            .database()
-            .ref(`fav/${phone}`)
-            .remove()
-            .then(() => {
-              AsyncStorage.clear();
-              dispatch(setUserType(null, null));
-            });
+          AsyncStorage.clear();
+          dispatch(setUserType(null, null));
         }}
+        // onPress={() => {
+        //   firebase
+        //     .database()
+        //     .ref(`fav/${phone}`)
+        //     .remove()
+        //     .then(() => {
+        //       AsyncStorage.clear();
+        //       dispatch(setUserType(null, null));
+        //     });
+        // }}
         title='تسجيل خروج'
         tapIcon={
           <SignOut

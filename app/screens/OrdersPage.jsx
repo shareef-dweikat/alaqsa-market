@@ -20,6 +20,8 @@ import SearchBox from '../components/SearchBox';
 import { StatusBar } from 'expo-status-bar';
 import { fetchOrders, fetchOrder } from '../store/action/orders';
 import VerticalItemCard from '../components/VerticalItemCard';
+import firebase from '../config/firebase';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -77,9 +79,17 @@ export default function OrdersPage({ navigation }) {
   const order = useSelector((state) => state.orders.order);
   const products = useSelector((state) => state.orders.products);
   const [orderId, setOrderId] = useState('');
+  console.log(orders, 'orderssdsdd')
   useEffect(() => {
+    // firebase
+    //   .database()
+    //   .ref(`orders/${phone}/${order.orderId}/status`)
+    //   .on('value', (status) => {
+    //     alert(status.val());
+    //   });
     dispatch(fetchOrders(phone));
   }, []);
+
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
@@ -118,11 +128,11 @@ export function OrderCardsContainer({
   orderId,
 }) {
   const dispatch = useDispatch();
-
   const handleHeaderClicked = () => {
     setOrderId(orderHeader.orderId);
     dispatch(fetchOrder(orderHeader.orderId, orderHeader.branch));
   };
+
   return (
     <>
       <View style={styles.orderCard}>
