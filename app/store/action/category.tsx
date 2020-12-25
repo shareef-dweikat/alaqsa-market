@@ -113,3 +113,22 @@ export function deleteCategory(firebaseId, arrayElementId) {
     });
   };
 }
+const editCategoryAPI = async (firebaseId, name, desc) => {
+  console.log(firebaseId);
+  return firebase
+    .database()
+    .ref(`category/${firebaseId}`)
+    .update({ category_desc: desc, category_name: name })
+};
+export function editCategory(firebaseId, name, desc, image) {
+  return (dispatch) => {
+    editCategoryAPI(firebaseId, name, desc).then(() => {
+      // dispatch(fetchCategories());
+      alert('تم التعديل')
+      dispatch({
+        type: 'CATEGORY_EDITED_SUCCESS',
+        payload: { name, desc},
+      });
+    });
+  };
+}

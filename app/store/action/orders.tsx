@@ -45,9 +45,9 @@ export function fetchSellerOrders(username) {
       .once('value', function (remoteOrders) {
         //  let orders = Object.values(remoteOrders.val());
         let orders = remoteOrders.val();
-        const r = []
+        const r = [];
         for (let index in orders) {
-          r.push({...orders[index], orderId: index })
+          r.push({ ...orders[index], orderId: index });
         }
 
         dispatch({
@@ -84,7 +84,8 @@ export function fetchOrder(orderId, seller) {
       .ref(`seller-orders/${seller}/${orderId}`)
       .once('value', function (remoteOrders) {
         let order = remoteOrders.val();
-        let products = Object.values(order.productsObject);
+        let products = [];
+        if (order != null) products = Object.values(order.productsObject);
         dispatch({
           type: 'FETCH_SELLER_ORDERS_SUCCESS',
           payload: { order, products },
@@ -111,14 +112,58 @@ export function fetchSellerOrder(orderId, seller) {
 
 export function changeStatus(orderId, seller, status) {
   return (dispatch) => {
+    dispatch({
+      type: 'CHANGE_ORDER_STATUS',
+      // payload: { order, products },
+    });
     firebase
       .database()
       .ref(`seller-orders/${seller}/${orderId}/status`)
       .set(status)
       .then(() => {
         dispatch({
-          type: 'FETCH_SELLER_ORDERS_SUCCESSrrrrrrr',
+          type: 'CHANGE_ORDER_STATUS_SUCCESS',
           // payload: { order, products },
+        });
+      });
+  };
+}
+
+export function updateSalesStatistics(seller, price) {
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`statistics/${seller}`)
+      .once('value', function (statistics) {
+        let myStatistics = statistics.val();
+        myStatistics = parseInt(price) + parseInt(JSON.stringify(myStatistics));
+        firebase.database().ref(`statistics/${seller}`).set(myStatistics);
+        // .then(() => {
+        //   dispatch({
+        //     type: 'FETCH_SELLER_ORDERS_SUCCESSrrrrrrr',
+        //     // payload: { order, products },
+        //   });
+        // });
+      });
+  };
+}
+
+export function getSalesStatistics() {
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`statistics/`)
+      .once('value', function (statistics) {
+        let myStatistics = Object.entries(statistics.val())
+        let statics = []
+
+        console.log(myStatistics)
+        // for(let index in myStatistics) {
+        //     statics.push({[index]:myStatistics[index]})
+        // }
+        dispatch({
+          type: 'FETCH_STATISTICS_SUCCESS',
+          payload: myStatistics,
         });
       });
   };

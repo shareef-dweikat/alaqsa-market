@@ -5,10 +5,10 @@ import {
   Image,
   KeyboardAvoidingView,
   TextInput,
-  ImageBackground,
+  ActivityIndicator,
   StyleSheet,
   Dimensions,
-  Keyboard,
+  Modal,
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
@@ -22,6 +22,7 @@ import {
   fetchSellerOrders,
   fetchSellerOrder,
   changeStatus,
+  updateSalesStatistics,
 } from '../../store/action/orders';
 const styles = StyleSheet.create({
   container: {
@@ -76,7 +77,7 @@ export default function DashboardOrdersPage({ navigation }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.orders.orders);
-  const userType = useSelector((state) => state.auth.userType);
+  const isLoading = useSelector((state) => state.orders.isLoading);
   const username = useSelector((state) => state.auth.username);
 
   const order = useSelector((state) => state.orders.order);
@@ -109,7 +110,8 @@ export default function DashboardOrdersPage({ navigation }) {
             />
           ))}
       </View>
-      <ScrollView style={{ padding: 8 }}></ScrollView>
+      {/* <ScrollView style={{ padding: 8 }}></ScrollView> */}
+      <LoadingModal visible={isLoading} />
     </SafeAreaView>
   );
 }
@@ -121,9 +123,9 @@ export function OrderCardContainer({ date, products, order }) {
   const username = useSelector((state) => state.auth.username);
 
   const handleChangeStatus = (orderId, status) => {
-    console.log(orderId, status);
     setStatus(status);
     dispatch(changeStatus(orderId, username, status));
+    dispatch(updateSalesStatistics(username, order.totalPrice))
   };
   const handleHeaderClicked = () => {};
   return (
@@ -303,5 +305,37 @@ export function OrderCardContainer({ date, products, order }) {
         </View>
       </View>
     </>
+  );
+}
+
+export function LoadingModal({ title, visible, setVisible, setImage }) {
+  return (
+    <Modal visible={visible} transparent>
+      <View
+        style={{
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'white',
+            width: '80%',
+            height: 200,
+            padding: 16,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ActivityIndicator color={Colors.GOLDEN} size='large' />
+          <Text style={{ marginTop: 32, fontFamily: 'Tajawal-Medium' }}>
+            جار تغيير الحالة
+          </Text>
+        </View>
+      </View>
+    </Modal>
   );
 }

@@ -4,6 +4,7 @@ import {
   View,
   Image,
   Modal,
+  TextInput,
   ScrollView,
   StyleSheet,
   Dimensions,
@@ -13,7 +14,8 @@ import { Switch } from 'react-native-paper';
 import EditIcon from '../../../assets/edit.svg';
 import DeleteIcon from '../../../assets/delete-icon-dashboard.svg';
 import { ExpandableListView } from 'react-native-expandable-listview';
-import bb from '../../../assets/home/header.png';
+import * as ImagePicker from 'expo-image-picker';
+
 import { SafeAreaView } from 'react-navigation';
 import pImage from '../../../assets/home/product.png';
 import HeartIcon from '../../../assets/small-heart-icon.svg';
@@ -30,7 +32,9 @@ import {
   fetchCategories,
   updateCategory,
   deleteCategory,
+  editCategory,
 } from '../../store/action/category';
+
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
@@ -76,11 +80,22 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontFamily: 'Tajawal-Medium',
   },
+  input: {
+    width: '100%',
+    borderColor: Colors.BORDER_COLOR,
+    borderWidth: 1,
+    borderRadius: 10,
+    marginTop: 8,
+    paddingHorizontal: 8,
+    height: 40,
+    fontFamily: 'Tajawal-Regular',
+  },
 });
 const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId }) => {
   console.log('arrayElementId', arrayElementId);
   const [productAvailability, setProductAvailability] = useState(isVisible);
   const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
+  const [editModalVisible, setEditModalVisible] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -91,6 +106,10 @@ const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId }) => {
   const handleDelete = () => {
     setDeleteDialogVisible(false);
     dispatch(deleteCategory(firebaseId, arrayElementId));
+  };
+  const handleEdit = (catName, catDesc, image) => {
+    setEditModalVisible(false);
+    dispatch(editCategory(firebaseId, catName, catDesc, image));
   };
   const showDeleteDialog = () => {
     setDeleteDialogVisible(!deleteDialogVisible);
@@ -107,9 +126,7 @@ const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId }) => {
         <TouchableOpacity onPress={() => showDeleteDialog()}>
           <DeleteIcon style={{ marginRight: 16 }} />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => alert('راجع مدير قاعدة البيانات للتعديل')}
-        >
+        <TouchableOpacity onPress={() => setEditModalVisible(true)}>
           <EditIcon style={{ marginRight: 8 }} />
         </TouchableOpacity>
         <Switch
@@ -135,6 +152,12 @@ const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId }) => {
         name={name}
         setDeleteDialogVisible={setDeleteDialogVisible}
       />
+      <EditModal
+        visible={editModalVisible}
+        handleEdit={handleEdit}
+        name={name}
+        setDeleteDialogVisible={setEditModalVisible}
+      />
     </View>
   );
 };
@@ -142,14 +165,14 @@ const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId }) => {
 export default function DashboardCategoriesScreen({ navigation }) {
   const categories = useSelector((state) => state.category.categories);
   const dispatch = useDispatch();
-  console.log('categoriesadasdasdsd', categories);
+  console.log('c', categories);
   const CONTENT = [];
 
   categories.map((cat, id) =>
     CONTENT.push({
       id,
       firebaseId: cat.firebaseId,
-      categoryName: 'cat.category_name',
+      categoryName: cat.category_name,
       isVisible: cat.isVisible,
       customItem: (
         <MySwitch
@@ -227,12 +250,6 @@ export default function DashboardCategoriesScreen({ navigation }) {
             >
               التصنيفات
             </Text>
-            {/* <TouchableOpacity
-              // style={{ marginLeft: 8, flex: 1 }}
-              onPress={() => navigation.toggleDrawer()}
-            >
-              <DrawerIcon />
-            </TouchableOpacity> */}
           </View>
         </View>
       </SafeAreaView>
@@ -246,8 +263,6 @@ export default function DashboardCategoriesScreen({ navigation }) {
             backgroundColor: Colors.WHITE,
           }}
           innerItemLabelStyle={{ fontFamily: 'Tajawal-Medium' }}
-          // onInnerItemClick={this.handleInnerItemClick.bind(this)}
-          // onItemClick={() => setIsOpend(!isOpend)}
         />
         <View style={{ height: 120 }}></View>
       </ScrollView>
@@ -305,6 +320,89 @@ export function DeleteConfirmation({
           <View style={{ width: '100%' }}>
             <TouchableOpacity onPress={() => handleDelete()} style={styles.btn}>
               <Text style={styles.btnTxt}>تأكيد الحذف</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </Modal>
+  );
+}
+
+export function EditModal({
+  name,
+  visible,
+  handleEdit,
+  setDeleteDialogVisible,
+}) {
+  const [catName, setCatName] = useState(name);
+  const [catDesc, setCatDesc] = useState('');
+  const [image, setImage] = useState('');
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      // aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+  return (
+    <Modal visible={visible}>
+      <TouchableOpacity
+        onPress={() => setDeleteDialogVisible(false)}
+        style={{
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'white',
+            width: '80%',
+            height: 300,
+            padding: 16,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <TextInput
+            onChangeText={(txt) => setCatName(txt)}
+            value={catName}
+            style={styles.input}
+            placeholder='اسم التصنيف'
+          />
+          <TextInput
+            onChangeText={(txt) => setCatDesc(txt)}
+            value={catDesc}
+            style={{ ...styles.input, height: 80, padding: 8 }}
+            textAlignVertical='top'
+            placeholder='الوصف'
+          />
+          <TouchableOpacity
+            onPress={() => pickImage()}
+            style={{
+              borderColor: Colors.BORDER_COLOR,
+              borderWidth: 1,
+              padding: 8,
+              marginTop: 8,
+              borderRadius: 10,
+            }}
+          >
+            <Text style={{ fontFamily: 'Tajawal-Medium' }}>اختر صورة</Text>
+          </TouchableOpacity>
+          <View style={{ width: '100%' }}>
+            <TouchableOpacity
+              onPress={() => handleEdit(catName, catDesc, image)}
+              style={styles.btn}
+            >
+              <Text style={styles.btnTxt}>حفظ</Text>
             </TouchableOpacity>
           </View>
         </View>

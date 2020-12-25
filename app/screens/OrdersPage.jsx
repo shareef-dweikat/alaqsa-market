@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
-  Image,
+  Modal,
   KeyboardAvoidingView,
   TextInput,
   ImageBackground,
@@ -79,9 +79,9 @@ export default function OrdersPage({ navigation }) {
   const order = useSelector((state) => state.orders.order);
   const products = useSelector((state) => state.orders.products);
   const [orderId, setOrderId] = useState('');
-  console.log(orders, 'orderssdsdd')
+  console.log(orders, 'orderssdsdd');
   useEffect(() => {
-    // firebase
+    // firebasef
     //   .database()
     //   .ref(`orders/${phone}/${order.orderId}/status`)
     //   .on('value', (status) => {
@@ -132,7 +132,6 @@ export function OrderCardsContainer({
     setOrderId(orderHeader.orderId);
     dispatch(fetchOrder(orderHeader.orderId, orderHeader.branch));
   };
-
   return (
     <>
       <View style={styles.orderCard}>
@@ -150,8 +149,9 @@ export function OrderCardsContainer({
             {orderHeader.date}
           </Text>
 
-          <Text style={styles.orderTitle}>طلبية رقم 1</Text>
+          <Text style={styles.orderTitle}>{orderHeader.branch} الفرع</Text>
         </TouchableOpacity>
+
         {products.length > 0 && orderId == orderHeader.orderId && (
           <>
             {products &&
@@ -186,15 +186,37 @@ export function OrderCardsContainer({
                 >
                   {order.transPrice} شيكل
                 </Text>
+                
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
-                    marginTop: 8,
                     color: '#F8A912',
                   }}
                 >
                   {order.totalPrice + order.transPrice} شيكل
                 </Text>
+                <View
+                  style={{
+                    height: 30,
+                    paddingHorizontal: 8,
+                    borderRadius: 5,
+                    marginTop: 16,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color:
+                        orderHeader.status == 'تم التوصيل'
+                          ? 'green'
+                          : orderHeader.status == ' قبول'
+                          ? 'orange'
+                          : 'red',
+                      fontFamily: 'Tajawal-Regular',
+                    }}
+                  >
+                    {orderHeader.status}
+                  </Text>
+                </View>
               </View>
               <View>
                 <Text
@@ -214,6 +236,7 @@ export function OrderCardsContainer({
                 >
                   التوصيل
                 </Text>
+            
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
@@ -223,6 +246,15 @@ export function OrderCardsContainer({
                 >
                   الاجمالي
                 </Text>
+                <Text
+                  style={{
+                    fontFamily: 'Tajawal-Regular',
+                    color: 'black',
+                    marginTop: 8,
+                  }}
+                >
+                  الحالة
+                </Text>
               </View>
             </View>
           </>
@@ -231,3 +263,4 @@ export function OrderCardsContainer({
     </>
   );
 }
+

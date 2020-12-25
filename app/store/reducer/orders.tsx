@@ -35,7 +35,23 @@ export default (state = initialState, action: AnyAction) => {
           // isLoading: false,
           orders: action.payload,
         };
-    default:
+        case 'CHANGE_ORDER_STATUS':
+        return {
+          ...state,
+           isLoading: true,
+        };
+        case 'CHANGE_ORDER_STATUS_SUCCESS':
+        return {
+          ...state,
+           isLoading: false,
+        };
+        case 'FETCH_STATISTICS_SUCCESS':
+        return {
+          ...state,
+          statistics: action.payload
+          //  isLoading: false,
+        };
+    default:  
       return state;
   }
 };

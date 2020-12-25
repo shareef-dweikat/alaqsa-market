@@ -19,6 +19,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import { setAdminType } from '../../store/action/auth';
+import { getSalesStatistics } from '../../store/action/orders';
+
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
@@ -34,10 +36,19 @@ const styles = StyleSheet.create({
   screenContentContainer: {
     padding: 16,
   },
+  branchCard: {
+    backgroundColor: Colors.MEDIUM_BACKGROUND_COLOR,
+    height: 100,
+    width: 80,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 8,
+    borderRadius: 10
+  },
 });
 export default function DashboardHome({ navigation }) {
   const dispatch = useDispatch();
-
+  const statistics = useSelector((state) => state.orders.statistics);
   useEffect(() => {
     const getUsername = async () => {
       const userType = await AsyncStorage.getItem('userType');
@@ -45,6 +56,7 @@ export default function DashboardHome({ navigation }) {
       dispatch(setAdminType(userType, username));
     };
     getUsername();
+    dispatch(getSalesStatistics());
   }, []);
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
@@ -123,7 +135,32 @@ export default function DashboardHome({ navigation }) {
         </View>
       </SafeAreaView>
       <View style={styles.container}>
-        <Text>مرحبا بك في لوحة التحكم</Text>
+        <Text style={{ fontFamily: 'Tajawal-Medium', fontSize: 20 }}>
+          مرحبا بك في لوحة التحكم
+        </Text>
+        <Text
+          style={{ fontFamily: 'Tajawal-Regular', fontSize: 20, marginTop: 32 }}
+        >
+          اللإحصائيات
+        </Text>
+        <View
+          style={{
+            flexWrap: 'wrap',
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            marginTop: 8,
+          }}
+        >
+          {statistics &&
+            statistics.map((item) => (
+              <View key={item[0]} style={styles.branchCard}>
+                <Text style={{ fontFamily: 'Tajawal-Regular' }}>{item[0]}</Text>
+                <Text style={{ fontFamily: 'Tajawal-Regular', fontSize: 12 }}>
+                  {item[1]} شيكل
+                </Text>
+              </View>
+            ))}
+        </View>
       </View>
       {/* <Button title="Alert" onPress={()=>navigation.push('Alert')}/> */}
     </View>

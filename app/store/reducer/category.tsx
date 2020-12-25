@@ -34,7 +34,18 @@ export default (state = initialState, action: AnyAction) => {
         categories: state.categories,
         // isLoading: true,
       };
-    default:
+      case 'CATEGORY_EDITED_SUCCESS':
+        let categories = state.categories.map((category)=> {
+          if(action.payload.name == category.category_name)
+           return {...category, category_desc: action.payload.desc, category_name: action.payload.name}
+           else return category
+        })
+         console.log('categcategories', categories);
+        return {
+          ...state,
+            categories
+        };
+    default: 
       return state;
   }
 };

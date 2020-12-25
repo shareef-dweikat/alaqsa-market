@@ -70,18 +70,12 @@ export function login(phone, pass, navigation) {
   console.log(phone)
 
   return (dispatch) => {
-    // AsyncStorage.setItem('userType', 'customer');
-    // AsyncStorage.setItem('phone', phone + '');
-    // dispatch({
-    //   type: 'LOGIN_SUCCESS',
-    //   payload: phone,
-    // });
- 
+
     firebase
       .database()
-      .ref(`users/`)
+      .ref(`users/${phone}`)
       .once('value',  (user) => {
-        console.log(user)
+        console.log(user.val())
         if (user.val() != null && pass == user.val().pass) {
           AsyncStorage.setItem('userType', 'customer');
           AsyncStorage.setItem('phone', phone + '');
