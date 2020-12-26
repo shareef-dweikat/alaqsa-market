@@ -3,17 +3,17 @@ import {
   Text,
   View,
   Image,
+  Modal,
   TextInput,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Switch,
+  ScrollView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-navigation';
-import pImage from '../../../assets/home/product.png';
-import HeartIcon from '../../../assets/small-heart-icon.svg';
-import PlusIcon from '../../../assets/plus-icon.svg';
+import EditIcon from '../../../assets/edit.svg';
+import * as ImagePicker from 'expo-image-picker';
 
 import DrawerIcon from '../../../assets/drawer-icon.svg';
 import FloatingICon from '../../../assets/floating-button-icon.svg';
@@ -21,7 +21,7 @@ import BellIcon from '../../../assets/dashboard-drawer/bell.svg';
 import SIcon from '../../../assets/small-search-icon.svg';
 import Colors from '../../constants/colors';
 import { fetchProducts } from '../../store/action/product';
-import { ScrollView } from 'react-native-gesture-handler';
+
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
@@ -53,11 +53,35 @@ const styles = StyleSheet.create({
     fontSize: 40,
     color: 'white',
   },
+  btn: {
+    backgroundColor: Colors.GOLDEN,
+    height: 45,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginTop: 32,
+    width: '100%',
+  },
+  btnTxt: {
+    color: 'white',
+    fontSize: 17,
+    fontFamily: 'Tajawal-Medium',
+  },
+  input: {
+    width: '100%',
+    borderColor: Colors.BORDER_COLOR,
+    borderWidth: 1,
+    borderRadius: 10,
+    marginTop: 8,
+    paddingHorizontal: 8,
+    height: 40,
+    fontFamily: 'Tajawal-Regular',
+  },
 });
 export default function DashboardHome({ navigation }) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
-
+  console.log(products, 'productssssssss');
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
@@ -128,10 +152,11 @@ export default function DashboardHome({ navigation }) {
       </SafeAreaView>
 
       <ScrollView style={styles.container}>
-        {/* <VerticalItemCard /> */}
         {products.map((item) => (
           <VerticalItemCard
+            id={item.productFirebaseId}
             name={item.product_name}
+            category={item.category_name}
             price={item.price}
             desc={item.product_desc}
             isFav={item.isFav}
@@ -157,17 +182,29 @@ function VerticalItemCard({
   name,
   price,
   desc,
-  isFav,
-  onPress,
+  category,
+  productFirebaseId,
   image,
   isVisible,
   navigation,
 }) {
-  console.log(isVisible);
-  const [productAvailability, setProductAvailability] = useState(isVisible);
+  const [editModalVisible, setEditModalVisible] = useState(false);
+  const dispatch = useDispatch();
+
+  const handleEdit = (catName, catDesc, image) => {
+    setEditModalVisible(false);
+    // dispatch(editCategory(firebaseId, catName, catDesc, image));
+  };
   return (
     <TouchableOpacity
-      onPress={() => navigation.push('DashboardItemDetailsScreen')}
+      onPress={() =>
+        navigation.push('DashboardItemDetailsScreen', {
+          image,
+          name,
+          desc,
+          category,
+        })
+      }
       style={{
         height: 120,
         borderWidth: 1,
@@ -191,6 +228,9 @@ function VerticalItemCard({
             justifyContent: 'space-between',
           }}
         >
+          <TouchableOpacity onPress={() => setEditModalVisible(true)}>
+            <EditIcon style={{ marginRight: 8 }} />
+          </TouchableOpacity>
           {/* <HeartIcon color='red'/> */}
           {/* <Switch
             trackColor={{ false: '#767577', true: '#22C993' }}
@@ -233,12 +273,101 @@ function VerticalItemCard({
         </Text>
       </View>
       <Image
-      style={{ height: 100, width: 100, marginRight: 8, borderRadius: 10}}
+        style={{ height: 100, width: 100, marginRight: 8, borderRadius: 10 }}
         source={{
-          uri:
-            'https://firebasestorage.googleapis.com/v0/b/alaqsamart-9e68e.appspot.com/o/images%2Fproducts%2F%D9%84%D8%A8%D9%86%D8%A9?alt=media&token=71219dce-1a81-467d-b9cf-cca6356bc57b'
+          uri: image,
         }}
       />
+      <EditModal
+        name={name}
+        desc={desc}
+        handleEdit={handleEdit}
+        setEditModalVisible={setEditModalVisible}
+        visible={editModalVisible}
+      />
     </TouchableOpacity>
+  );
+}
+export function EditModal({
+  name,
+  visible,
+  desc,
+  handleEdit,
+  setEditModalVisible,
+}) {
+  const [catName, setCatName] = useState(name);
+  const [catDesc, setCatDesc] = useState(desc);
+  const [image, setImage] = useState('');
+
+  const pickImage = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      // aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+  return (
+    <Modal visible={visible}>
+      <TouchableOpacity
+        onPress={() => setEditModalVisible(false)}
+        style={{
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'white',
+            width: '80%',
+            height: 300,
+            padding: 16,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <TextInput
+            onChangeText={(txt) => setCatName(txt)}
+            value={catName}
+            style={styles.input}
+            placeholder='اسم التصنيف'
+          />
+          <TextInput
+            onChangeText={(txt) => setCatDesc(txt)}
+            value={catDesc}
+            style={{ ...styles.input, height: 80, padding: 8 }}
+            textAlignVertical='top'
+            placeholder='الوصف'
+          />
+          <TouchableOpacity
+            onPress={() => pickImage()}
+            style={{
+              borderColor: Colors.BORDER_COLOR,
+              borderWidth: 1,
+              padding: 8,
+              marginTop: 8,
+              borderRadius: 10,
+            }}
+          >
+            <Text style={{ fontFamily: 'Tajawal-Medium' }}>اختر صورة</Text>
+          </TouchableOpacity>
+          <View style={{ width: '100%' }}>
+            <TouchableOpacity
+              onPress={() => handleEdit(catName, catDesc, image)}
+              style={styles.btn}
+            >
+              <Text style={styles.btnTxt}>حفظ</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableOpacity>
+    </Modal>
   );
 }

@@ -68,7 +68,11 @@ export function fetchProducts() {
         let categories = snapshot.val();
         for (let index in categories) {
           for (let i in categories[index]['products']) {
-            products.push(categories[index]['products'][i]);
+            products.push({
+              ...categories[index]['products'][i],
+              productFirebaseId: i,
+              category_name: categories[index].category_name,
+            });
           }
         }
         console.log(products, 'fetchProducts');
@@ -137,16 +141,16 @@ export function fetchSearchProducts(text) {
 }
 
 export const storeFavIdToProduct = (key, phone) => {
-    firebase
-     .database()
-     .ref(`category/${phone}/${key}`)
-     .set({favFirebase: key})
-     
-     .catch((e) => console.log('addProductAPI', e));
-}
+  firebase
+    .database()
+    .ref(`category/${phone}/${key}`)
+    .set({ favFirebase: key })
+
+    .catch((e) => console.log('addProductAPI', e));
+};
 export const setFav = (product, phone) => {
-  return (dispatch) => { 
-     firebase
+  return (dispatch) => {
+    firebase
       .database()
       .ref(`fav/${phone}/`)
       .push({
@@ -154,10 +158,10 @@ export const setFav = (product, phone) => {
         product_desc: product.product_desc,
         isVisible: product.isVisible,
         price: product.price,
-        firebaseId: product.firebaseId
+        firebaseId: product.firebaseId,
       })
-      .then((e)=> {
-        console.log(e.key, "aaaaaaaaaaaaaaaaa")
+      .then((e) => {
+        console.log(e.key, 'aaaaaaaaaaaaaaaaa');
         // storeFavIdToProduct(e.key, phone)
         dispatch({
           type: 'FAV_ADDED',
@@ -169,28 +173,27 @@ export const setFav = (product, phone) => {
 };
 
 export const fetchFav = (phone) => {
-  return (dispatch) => { 
-     firebase
+  return (dispatch) => {
+    firebase
       .database()
       .ref(`fav/${phone}/`)
       .once('value', function (snapshot) {
         // console.log('adasdd', snapshot.val());
-        let products = snapshot.val()
-        let productsList =[]
-        for(let index in products) {
-          products[index].favId = index
-          productsList.push(products[index])
+        let products = snapshot.val();
+        let productsList = [];
+        for (let index in products) {
+          products[index].favId = index;
+          productsList.push(products[index]);
         }
-        console.log(productsList, "doooom")
+        console.log(productsList, 'doooom');
         dispatch({
           type: 'FETCH_FAV_SUCCESS',
-           payload: productsList,
+          payload: productsList,
         });
       })
       .catch((e) => console.log('addProductAPI', e));
   };
 };
-
 
 export const deleteFav = async (product, phone) => {
   console.log(product, phone);

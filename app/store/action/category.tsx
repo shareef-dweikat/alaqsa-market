@@ -113,21 +113,27 @@ export function deleteCategory(firebaseId, arrayElementId) {
     });
   };
 }
-const editCategoryAPI = async (firebaseId, name, desc) => {
+const editCategoryAPI = async (firebaseId, name, desc, uri) => {
   console.log(firebaseId);
   return firebase
     .database()
     .ref(`category/${firebaseId}`)
-    .update({ category_desc: desc, category_name: name })
+    .update({ category_desc: desc, category_name: name, image: uri });
 };
 export function editCategory(firebaseId, name, desc, image) {
   return (dispatch) => {
-    editCategoryAPI(firebaseId, name, desc).then(() => {
-      // dispatch(fetchCategories());
-      alert('تم التعديل')
-      dispatch({
-        type: 'CATEGORY_EDITED_SUCCESS',
-        payload: { name, desc},
+    dispatch({
+      type: 'CATEGORY_EDITED',
+    });
+    uploadCategoryImageAPI(name, image).then(async (snapshot) => {
+      let url = await snapshot.ref.getDownloadURL();
+      editCategoryAPI(firebaseId, name, desc, url).then(() => {
+        // dispatch(fetchCategories());
+        alert('تم التعديل');
+        dispatch({
+          type: 'CATEGORY_EDITED_SUCCESS',
+          payload: { name, desc },
+        });
       });
     });
   };

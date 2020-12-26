@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
-  Image,
+  ActivityIndicator,
   Modal,
   TextInput,
   ScrollView,
@@ -96,6 +96,7 @@ const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId }) => {
   const [productAvailability, setProductAvailability] = useState(isVisible);
   const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
+  const isLoading = useSelector((state) => state.category.isLoading);
 
   const dispatch = useDispatch();
 
@@ -154,9 +155,16 @@ const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId }) => {
       />
       <EditModal
         visible={editModalVisible}
+        desc={desc}
         handleEdit={handleEdit}
         name={name}
         setDeleteDialogVisible={setEditModalVisible}
+      />
+      <LoadingModal
+        visible={isLoading}
+        // handleEdit={handleEdit}
+        // name={name}
+        // setDeleteDialogVisible={setEditModalVisible}
       />
     </View>
   );
@@ -164,10 +172,9 @@ const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId }) => {
 
 export default function DashboardCategoriesScreen({ navigation }) {
   const categories = useSelector((state) => state.category.categories);
-  const dispatch = useDispatch();
-  console.log('c', categories);
-  const CONTENT = [];
 
+  const dispatch = useDispatch();
+  const CONTENT = [];
   categories.map((cat, id) =>
     CONTENT.push({
       id,
@@ -331,11 +338,12 @@ export function DeleteConfirmation({
 export function EditModal({
   name,
   visible,
+  desc,
   handleEdit,
   setDeleteDialogVisible,
 }) {
   const [catName, setCatName] = useState(name);
-  const [catDesc, setCatDesc] = useState('');
+  const [catDesc, setCatDesc] = useState(desc);
   const [image, setImage] = useState('');
 
   const pickImage = async () => {
@@ -407,6 +415,37 @@ export function EditModal({
           </View>
         </View>
       </TouchableOpacity>
+    </Modal>
+  );
+}
+export function LoadingModal({  visible}) {
+  return (
+    <Modal visible={visible} transparent>
+      <View
+        style={{
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'white',
+            width: '80%',
+            height: 200,
+            padding: 16,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ActivityIndicator color={Colors.GOLDEN} size='large' />
+          <Text style={{ marginTop: 32, fontFamily: 'Tajawal-Medium' }}>
+            جار تعديل التصنيف
+          </Text>
+        </View>
+      </View>
     </Modal>
   );
 }

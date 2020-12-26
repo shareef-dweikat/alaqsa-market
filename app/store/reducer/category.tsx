@@ -5,7 +5,7 @@ const initialState = {
   categories: [],
   // user: {},
   // existingNumber: null,
-   isLoading: false,
+  isLoading: false,
 };
 
 export default (state = initialState, action: AnyAction) => {
@@ -13,7 +13,7 @@ export default (state = initialState, action: AnyAction) => {
     case 'CATEGORY_CREATE_SUCCESS':
       return {
         ...state,
-         isLoading: false,
+        isLoading: false,
       };
     case 'CATEGORY_CREATE':
       return {
@@ -34,18 +34,29 @@ export default (state = initialState, action: AnyAction) => {
         categories: state.categories,
         // isLoading: true,
       };
-      case 'CATEGORY_EDITED_SUCCESS':
-        let categories = state.categories.map((category)=> {
-          if(action.payload.name == category.category_name)
-           return {...category, category_desc: action.payload.desc, category_name: action.payload.name}
-           else return category
-        })
-         console.log('categcategories', categories);
+    case 'CATEGORY_EDITED_SUCCESS':
+      let categories = state.categories.map((category) => {
+        if (action.payload.name == category.category_name)
+          return {
+            ...category,
+            category_desc: action.payload.desc,
+            category_name: action.payload.name,
+          };
+        else return category;
+      });
+      console.log('categcategories', categories);
+      return {
+        ...state,
+        categories,
+        isLoading: false
+      };
+      case 'CATEGORY_EDITED':
+        
         return {
           ...state,
-            categories
+          isLoading: true
         };
-    default: 
+    default:
       return state;
   }
 };

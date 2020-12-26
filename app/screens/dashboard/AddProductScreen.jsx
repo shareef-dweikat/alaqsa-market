@@ -78,7 +78,6 @@ export default function AddProductScreen({ navigation }) {
 
   const [productDesc, setProductDesc] = useState('');
   const [productCat, setProductCat] = useState('لحوم بقر');
-  console.log(productCat)
   const [unit, setUnit] = useState('');
   const [price, setPrice] = useState('');
   const isLoading = useSelector((state) => state.product.isLoading);

@@ -227,7 +227,7 @@ export function MyCustomPicker({ navigation }) {
   );
 }
 
-export function LoadingModal({ title, visible, setVisible, setImage }) {
+export function LoadingModal({ visible }) {
   return (
     <Modal visible={visible} transparent>
       <View

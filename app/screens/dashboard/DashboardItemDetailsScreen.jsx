@@ -51,9 +51,9 @@ const styles = StyleSheet.create({
     fontSize: 17,
   },
 });
-export default function DashboardItemDetailsScreen({ navigation }) {
+export default function DashboardItemDetailsScreen({ route, navigation }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
-
+  const product = route.params;
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
@@ -73,19 +73,14 @@ export default function DashboardItemDetailsScreen({ navigation }) {
           </Text>
         </View>
       </View>
-      <VerticalItemDetailsCard />
+      <VerticalItemDetailsCard product={product} />
     </SafeAreaView>
   );
 }
 
-export function VerticalItemDetailsCard({
-  name,
-  price,
-  desc,
-  isFav,
-  onPress,
-  btn,
-}) {
+export function VerticalItemDetailsCard({ product }) {
+  const prod = product && product;
+  console.log(prod)
   return (
     <ScrollView
       contentContainerStyle={{
@@ -96,22 +91,11 @@ export function VerticalItemDetailsCard({
     >
       <Image
         style={{
-          width: '100%',
           borderRadius: 10,
+          height: 250,
         }}
-        source={pImage}
+        source={{ uri: prod.image }}
       />
-
-      {/* <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginTop: 12,
-          width: '100%',
-        }}
-      >
-        <Text style={{fontFamily: 'Tajawal-Medium'}}>اسسسس</Text>
-      </View> */}
       <Text
         style={{
           fontFamily: 'Tajawal-Medium',
@@ -119,9 +103,28 @@ export function VerticalItemDetailsCard({
           color: '#515462',
         }}
       >
-        اسسسس
+        {product.name}
       </Text>
-
+      <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+      <Text
+          style={{
+            fontFamily: 'Tajawal-Regular',
+            marginTop: 16,
+            color: '#515462',
+          }}
+        >
+          {product.category}
+        </Text>
+        <Text
+          style={{
+            fontFamily: 'Tajawal-Regular',
+             marginTop: 16,
+            color: '#515462',
+          }}
+        >
+          التصنيف :
+        </Text>
+      </View>
       <Text
         style={{
           fontFamily: 'Tajawal-Regular',
@@ -131,21 +134,7 @@ export function VerticalItemDetailsCard({
           color: '#515462',
         }}
       >
-        التصنيف
-      </Text>
-      <Text
-        style={{
-          fontFamily: 'Tajawal-Regular',
-          textAlign: 'right',
-          width: '100%',
-          marginTop: 16,
-          color: '#515462',
-        }}
-      >
-        هذا النـص هو مثال لنص يمكن أن يستبدل في نـــــــــــفس المساحــة، لقد تم
-        توليد هذا النص من مولد النـــــــــــــــــــــــص العربى، حيـث يمكنك أن
-        تولد مثل هذا النص أو العديـــــــــــد من النـصوص الأخرى إضافة إلى زيادة
-        عدد الحروف التـــــى يولدها التطبيق
+        {product.desc}
       </Text>
     </ScrollView>
   );
