@@ -72,6 +72,7 @@ export function fetchProducts() {
               ...categories[index]['products'][i],
               productFirebaseId: i,
               category_name: categories[index].category_name,
+              categoryFirebaseId: index,
             });
           }
         }
@@ -203,3 +204,50 @@ export const deleteFav = async (product, phone) => {
     .remove()
     .catch((e) => console.log('deleteFav', e));
 };
+
+const editProductAPI = async (
+  productFirebaseId,
+  categoryFirebaseId,
+  name,
+  desc,
+  uri
+) => {
+  return firebase
+    .database()
+    .ref(`category/${categoryFirebaseId}/products/${productFirebaseId}`)
+    .update({ product_desc: desc, product_name: name, image: uri });
+};
+export function editProduct(
+  productFirebaseId,
+  categoryFirebaseId,
+  name,
+  desc,
+  image
+) {
+  return (dispatch) => {
+    dispatch({
+      type: 'PRODUCT_EDITED',
+    });
+    console.log( productFirebaseId,
+      categoryFirebaseId,
+      name,
+      desc, "pdadsdasd")
+    uploadProductImageAPI(name, image).then(async (snapshot) => {
+      let url = await snapshot.ref.getDownloadURL();
+      editProductAPI(
+        productFirebaseId,
+        categoryFirebaseId,
+        name,
+        desc,
+        url
+      ).then(() => {
+        // dispatch(fetchCategories());
+        alert('تم التعديل');
+        dispatch({
+          type: 'PRODUCT_EDITED_SUCCESS',
+          // payload: { name, desc },
+        });
+      });
+    });
+  };
+}

@@ -44,7 +44,20 @@ export default (state = initialState, action: AnyAction) => {
         // isLoading: true,
         favProducts: action.payload,
       };
-    default:
+      case 'PRODUCT_EDITED_SUCCESS':
+        return {
+          ...state,
+          isLoading: false,
+          // favProducts: action.payload,
+        };
+        case 'PRODUCT_EDITED':
+          console.log('PRODUCT_EDITED');
+          return {
+            ...state,
+             isLoading: true,
+            // favProducts: action.payload,
+          };
+    default: 
       return state;
   }
 };

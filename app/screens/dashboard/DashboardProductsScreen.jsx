@@ -9,6 +9,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
+  ActivityIndicator,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-navigation';
@@ -20,8 +21,7 @@ import FloatingICon from '../../../assets/floating-button-icon.svg';
 import BellIcon from '../../../assets/dashboard-drawer/bell.svg';
 import SIcon from '../../../assets/small-search-icon.svg';
 import Colors from '../../constants/colors';
-import { fetchProducts } from '../../store/action/product';
-
+import { editProduct, fetchProducts } from '../../store/action/product';
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
@@ -154,7 +154,8 @@ export default function DashboardHome({ navigation }) {
       <ScrollView style={styles.container}>
         {products.map((item) => (
           <VerticalItemCard
-            id={item.productFirebaseId}
+            productFirebaseId={item.productFirebaseId}
+            catId={item.categoryFirebaseId}
             name={item.product_name}
             category={item.category_name}
             price={item.price}
@@ -185,15 +186,16 @@ function VerticalItemCard({
   category,
   productFirebaseId,
   image,
-  isVisible,
+  catId,
   navigation,
 }) {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const dispatch = useDispatch();
+  const isLoading = useSelector((state) => state.product.isLoading);
 
   const handleEdit = (catName, catDesc, image) => {
     setEditModalVisible(false);
-    // dispatch(editCategory(firebaseId, catName, catDesc, image));
+     dispatch(editProduct(productFirebaseId, catId, catName, catDesc, image));
   };
   return (
     <TouchableOpacity
@@ -285,6 +287,7 @@ function VerticalItemCard({
         setEditModalVisible={setEditModalVisible}
         visible={editModalVisible}
       />
+      <LoadingModal visible={isLoading} />
     </TouchableOpacity>
   );
 }
@@ -371,3 +374,36 @@ export function EditModal({
     </Modal>
   );
 }
+
+export function LoadingModal({  visible}) {
+  return (
+    <Modal visible={visible} transparent>
+      <View
+        style={{
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'white',
+            width: '80%',
+            height: 200,
+            padding: 16,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <ActivityIndicator color={Colors.GOLDEN} size='large' />
+          <Text style={{ marginTop: 32, fontFamily: 'Tajawal-Medium' }}>
+            جار تعديل المنتج
+          </Text>
+        </View>
+      </View>
+    </Modal>
+  );
+}
+
