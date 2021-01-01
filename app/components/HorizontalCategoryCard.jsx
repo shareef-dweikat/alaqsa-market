@@ -18,45 +18,43 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-export default function HorizontalCategoryCard({
-  name,
-  desc,
-  onPress,
-  image
-}) {
-
+export default function HorizontalCategoryCard({ name, desc, onPress, image }) {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={{
         width: 100,
-        height: 200,
+        height: 180,
         borderWidth: 1,
         borderColor: '#d0d0d0',
         borderRadius: 10,
         alignItems: 'center',
         paddingTop: 13,
         marginTop: 16,
-        marginHorizontal: 4
+        marginHorizontal: 4,
       }}
     >
-      <Image style={{height: 80, width: 80}} source={{uri: image}} />
+      <Image style={{ height: 80, width: 80 }} source={{ uri: image }} />
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: 'space-between',
-          width: '100%',
-          paddingHorizontal: 16,
+          // justifyContent: 'space-between',
+          // width: '100%',
+          // paddingHorizontal: 16,
           marginTop: 8,
         }}
       >
-       
-        <Text style={{ textAlign: 'right', fontFamily: 'Tajawal-Medium' }}>
+        <Text
+          style={{
+            fontFamily: 'Tajawal-Medium',
+            flexWrap: 'nowrap',
+            fontSize: 12,
+            textAlign: 'center',
+          }}
+        >
           {name}
         </Text>
       </View>
-    
-      
     </TouchableOpacity>
   );
 }

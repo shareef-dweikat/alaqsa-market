@@ -14,7 +14,7 @@ import { SafeAreaView } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import DrawerIcon from '../../assets/drawer-icon.svg';
 import SearchIcon from '../../assets/search-icon.svg';
-// import * as Notifications from 'expo-notifications';
+// import {getDevicePushTokenAsync} from 'expo-notifications';
 import HorizontalItemCard from '../components/HorizontalItemCard';
 import BottomNav from '../components/BottomNav';
 import { useDispatch, useSelector } from 'react-redux';
