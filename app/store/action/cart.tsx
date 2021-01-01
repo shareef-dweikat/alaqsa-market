@@ -1,7 +1,7 @@
 import firebase from '../../config/firebase';
 
 const addProductToCartAPI = async (
-  { product_name, product_desc, isVisible, price, image },
+  { product_name, product_desc, isVisible, price, image, },
   navigation,
   phone
 ) => {
@@ -14,17 +14,13 @@ const addProductToCartAPI = async (
       product_desc: product_desc,
       price: price,
       image: image,
+      quantity: "1",
     })
     .catch((e) => console.log('addProductToCartAPI', e));
 };
 
 export function addProductToCart(product, navigation, phone) {
-  // let catFirebaseId;
-  // for(let index in categories) {
-  //   if (categories[index].category_name === product.productCat )
-  //      catFirebaseId = categories[index].firebaseId
-  // }
-  console.log('addProductToCartAPIsssssss');
+
   return (dispatch) => {
     dispatch({
       type: 'PRODUCT_ADD_TO_CART',
@@ -61,7 +57,9 @@ export function fetchProducts(phone) {
         let totalPrice = 0;
         for (let productIndex in productsObject) {
           totalPrice =
-            parseInt(productsObject[productIndex].price) + totalPrice;
+            parseInt(productsObject[productIndex].price) *
+              parseInt(productsObject[productIndex].quantity) +
+            totalPrice;
           console.log(totalPrice, 'totalPricetotalPrice');
 
           productsObject[productIndex].firebaseId = productIndex;
@@ -138,17 +136,14 @@ export function order(seller, phone, totalPrice, transPrice) {
             date: new Date().toLocaleString(),
           })
           .then((e) =>
-            firebase
-              .database()
-              .ref(`orders/${phone}`)
-              .push({
-                orderId: e.key,
-                branch: seller,
-                totalPrice,
-                transPrice,
-                status: 'جار التنفيذ',
-                date: new Date().toLocaleString(),
-              })
+            firebase.database().ref(`orders/${phone}`).push({
+              orderId: e.key,
+              branch: seller,
+              totalPrice,
+              transPrice,
+              status: 'جار التنفيذ',
+              date: new Date().toLocaleString(),
+            })
           );
         firebase.database().ref(`cart/${phone}`).remove();
         dispatch({

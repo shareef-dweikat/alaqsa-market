@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import firebase from '../../config/firebase';
 import Icon from '../../../assets/cart/cart-item.png';
 import Pen from '../../../assets/cart/pen.svg';
 import X from '../../../assets/cart/x.svg';
@@ -15,14 +16,34 @@ import navigation from '../../config/navigation';
 import { storeItemToDelete } from '../../store/action/cart';
 const styles = StyleSheet.create({});
 export default function Card({
+  fetchProducts,
   setDeleteModalVisible,
-  navigation,
+  phone,
   price,
   name,
   image,
   firebaseId,
+  quantity
 }) {
+
+  const [value, setValue] = useState('1')
   const dispatch = useDispatch();
+  const handleQChanged = (txt) => {
+    setValue(txt)
+    firebase
+      .database()
+      .ref(`cart/${phone}/${firebaseId}`)
+      .update({
+        quantity: txt,
+      })
+      .then(() => {
+        dispatch(fetchProducts(phone))
+      });
+  };
+
+  useEffect(()=> {
+    setValue(quantity)
+  },[])
   return (
     <View style={{ marginBottom: 16 }}>
       <View
@@ -35,8 +56,9 @@ export default function Card({
       >
         <TouchableOpacity
           onPress={() => {
-            dispatch(storeItemToDelete(firebaseId))
-            setDeleteModalVisible()}}
+            dispatch(storeItemToDelete(firebaseId));
+            setDeleteModalVisible();
+          }}
         >
           <X style={{ marginRight: 16 }} />
         </TouchableOpacity>
@@ -63,9 +85,15 @@ export default function Card({
           <Text style={{ fontSize: 15, fontFamily: 'Tajawal-Medium' }}>
             {price} شيكل
           </Text>
-          <Text style={{ fontSize: 15, fontFamily: 'Tajawal-Regular' }}>
-            2 كيلو
-          </Text>
+          <View>
+            <TextInput
+              keyboardType='number-pad'
+              value={value}
+              onChangeText={(txt) => handleQChanged(txt)}
+              style={{ fontSize: 15, fontFamily: 'Tajawal-Regular' }}
+              placeholder='0'
+            />
+          </View>
         </View>
         <View
           style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-end' }}

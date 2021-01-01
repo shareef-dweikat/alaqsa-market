@@ -35,11 +35,19 @@ const styles = StyleSheet.create({
     padding: 16,
     alignItems: 'flex-end',
     height: Dimensions.get('window').height * 0.2,
-    // width: Dimensions.get('window').width,
+    paddingBottom: 32,
+  },
+  seatchResultsTitle: {
+    fontFamily: 'Tajawal-Medium',
+    marginRight: 16,
+    marginTop: 16,
+    fontSize: 18,
   },
 });
 export default function SearchScreen({ navigation }) {
   const products = useSelector((state) => state.product.products);
+  const phone = useSelector((state) => state.auth.phone);
+  console.log(phone, 'phoneeeee');
   const dispatch = useDispatch();
   const [filterdProducts, setFilterdProducts] = useState([]);
 
@@ -61,34 +69,44 @@ export default function SearchScreen({ navigation }) {
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
       <View style={styles.image}>
-        <TouchableOpacity onPress={() => navigation.pop()}>
-          <RightArrow />
-        </TouchableOpacity>
-        <View style={{ width: '100%', height: 100 }}>
+        <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
+          <TouchableOpacity onPress={() => navigation.pop()}>
+            <RightArrow />
+          </TouchableOpacity>
           <Text
             style={{
               fontSize: 30,
+              marginRight: 16,
               fontFamily: 'Tajawal-Medium',
               color: 'white',
             }}
           >
             ابحث عن منتج
           </Text>
+        </View>
+        <View style={{ width: '100%', height: 60 }}>
           <SearchBox search={search} />
         </View>
       </View>
-
       <ScrollView style={{ padding: 8 }}>
-        {filterdProducts.map((product) => (
-          <VerticalItemCard
-            add={() => dispatch(addProductToCart(product, navigation))}
-            name={product.product_name}
-            price={product.price}
-            desc={product.product_desc}
-            isFav={product.isVisible}
-            onPress={() => navigation.push('ItemDetailsScreen', { product })}
-          />
-        ))}
+        <>
+          {filterdProducts.length > 0 && (
+            <Text style={styles.seatchResultsTitle}>نتائج البحث</Text>
+          )}
+
+          {filterdProducts.map((product) => (
+            <VerticalItemCard
+              isFavHeartAvailable={false}
+              add={() => dispatch(addProductToCart(product, navigation, phone))}
+              name={product.product_name}
+              price={product.price}
+              image={product.image}
+              desc={product.product_desc}
+              isFav={product.isVisible}
+              onPress={() => navigation.push('ItemDetailsScreen', { product })}
+            />
+          ))}
+        </>
       </ScrollView>
     </SafeAreaView>
   );

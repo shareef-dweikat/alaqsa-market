@@ -63,6 +63,15 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     fontFamily: 'Tajawal-Regular',
   },
+  imagePlaceholder: {
+    borderWidth: 1,
+    borderColor: Colors.BORDER_COLOR,
+    width: '100%',
+    height: 200,
+    borderRadius: 10,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
 });
 export default function AddProductScreen({ navigation }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
@@ -72,7 +81,7 @@ export default function AddProductScreen({ navigation }) {
   let picker;
   const [checked, setChecked] = useState('unchecked');
   const [productAvailability, setProductAvailability] = useState(true);
-  const [image, setImage] = useState('https://via.placeholder.com/125');
+  const [image, setImage] = useState('');
   const [productName, setProductName] = useState('');
   const [isProductNameEditable, setProductNameEditable] = useState(true);
 
@@ -249,11 +258,26 @@ export default function AddProductScreen({ navigation }) {
             اختر صورة
           </Text>
 
-          <TouchableOpacity onPress={() => pickImage()}>
-            <Image
+          <TouchableOpacity
+            style={{ marginTop: 16 }}
+            onPress={() => pickImage()}
+          >
+            {/* <Image
               source={{ uri: image }}
-              style={{ flex: 1, height: 200, marginTop: 16 }}
-            />
+              style={{ flex: 1, height: 200 }}
+            /> */}
+            {image ? (
+              <Image
+                source={{ uri: image }}
+                style={{ flex: 1, height: 200, marginTop: 16 }}
+              />
+            ) : (
+              <View style={styles.imagePlaceholder}>
+                <Text style={{ fontFamily: 'Tajawal-Bold' }}>
+                  انقر لإضافة صورة
+                </Text>
+              </View>
+            )}
           </TouchableOpacity>
           <LoadingModal visible={isLoading} />
           {/* <View style={{height: 100}}></View> */}
@@ -333,8 +357,8 @@ export function MyCustomPicker({ navigation, setProductCat, categories }) {
         <View style={{ height: 20, backgroundColor: 'white' }}></View>
       )}
       onValueChange={(value) => {
-        console.log(value)
-        setProductCat(value)
+        console.log(value);
+        setProductCat(value);
       }}
     />
   );

@@ -156,12 +156,12 @@ export default function SignUpScreen({ navigation }) {
               justifyContent: 'flex-start',
             }}
           >
-            {logoVisible ? (
+            {/* {logoVisible ? (
               <View style={{ alignItems: 'center', justifyContent: 'center'}}>
                 <Image source={require('../../assets/logo.png')} />
                 <Text style={styles.slogon}>كل ما تحتاجه في تطبيق</Text>
               </View>
-            ) : null}
+            ) : null} */}
             <SignForm
               agreeOnConditionsBoxShown={true}
               submitText='إنشاء حساب'

@@ -156,6 +156,7 @@ export const setFav = (product, phone) => {
       .ref(`fav/${phone}/`)
       .push({
         product_name: product.product_name,
+        image: product.image,
         product_desc: product.product_desc,
         isVisible: product.isVisible,
         price: product.price,

@@ -39,32 +39,9 @@ export default function ProfileScreen({ navigation }) {
   const [chooseImageModalVisible, setChooseImageModalVisible] = useState(false);
   useEffect(() => {
     dispatch(fetchProfile(phone));
-    // (async () => {
-    //   if (Platform.OS !== 'web') {
-    //     const {
-    //       status,
-    //     } = await ImagePicker.requestCameraRollPermissionsAsync();
-    //     if (status !== 'granted') {
-    //       alert('لا يمكنك تغيير صوتك دون منح الإذن');
-    //     }
-    //     const {
-    //       statusCamera,
-    //     } = await ImagePicker.requestCameraPermissionsAsync();
-    //     // if (statusCamera !== 'granted') {
-    //     //   alert('لا يمكنك استعمال الكاميرا دون اعطاء اذن للتطبيق');
-    //     // }
-    //   }
-    // })();
   }, []);
 
-  // const [assets] = useAssets([
-  //   require('file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540shareef.dweikat%252Falaqsa/ImagePicker/982b6615-0f0c-4283-b284-70bed1bf96d8.jpg'),
-  // ]);
-
-  // if (!assets) {
-  //   return <AppLoading />;
-  // }
-  // console.log("adddd", assets)
+ 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.WHITE }}>
       <ScrollView
@@ -97,26 +74,14 @@ export default function ProfileScreen({ navigation }) {
             marginTop: 16,
           }}
         >
-          <Image source={require('../../assets/person-drawer.png')} />
-          {/*  <TouchableOpacity
-          // onPress={() => pickImage()}
-          onPress={() => setChooseImageModalVisible(true)}
-          style={{ flexDirection: 'row', alignItems: 'center', marginTop: 8 }}
-        > */}
-          <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8 }}>
-            {/* تغيير الصورة الشخصية */}
-            {userProfile.name}
-          </Text>
-          {/* <Camera />
-        </TouchableOpacity> */}
-
+       
           <Field
             title='اسم المستخدم'
             value={userProfile.name}
             onPress={() => setVisible(true)}
             inputName='name'
           />
-          <Field title='الايميل' inputName='email' value={userProfile.email} />
+          {/* <Field title='الايميل' inputName='email' value={userProfile.email} /> */}
           <Field title='رقم الجوال' inputName='phone' value={phone} />
           <Field
             title='كلمة المرور'

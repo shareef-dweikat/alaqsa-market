@@ -60,7 +60,7 @@ export default function DashboardAccounts({ navigation }) {
             <RightArrow />
           </TouchableOpacity>
           <View style={{ width: '100%' }}>
-            <Text style={styles.lookForProductText}>حسابات إدارة الفروع</Text>
+            <Text style={styles.lookForProductText}> إدارة حسابات الفروع</Text>
             {/* <SearchBox /> */}
           </View>
         </View>
@@ -111,7 +111,7 @@ export function DeleteConfirmation({
               textAlign: 'center',
             }}
           >
-            هل انت متأكد من حذف التصنيف {name}؟ كل منتجات التصنيف ستضيع
+            هل انت متأكد من حذف تصنيف {name}؟ كل منتجات التصنيف ستضيع
           </Text>
 
           <View style={{ width: '100%' }}>

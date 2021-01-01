@@ -70,7 +70,7 @@ export default function CartScreen({ navigation }) {
   const [pickerValue, setPickerValue] = useState('Nablus');
   const isDeleted = useSelector((state) => state.cart.isDeleted);
   // const transPrice = pickerValue === options[0] ? 15 : 20;
-  const transPrice = 10
+  const transPrice = 10;
   const dispatch = useDispatch();
   const handleOrder = () => {
     if (cartProducts.length <= 0) {
@@ -130,6 +130,9 @@ export default function CartScreen({ navigation }) {
             {cartProducts &&
               cartProducts.map((product) => (
                 <Card
+                  fetchProducts={fetchProducts}
+                  phone={phone}
+                  quantity={product.quantity}
                   key={product.firebaseId}
                   firebaseId={product.firebaseId}
                   name={product.product_name}
@@ -143,7 +146,7 @@ export default function CartScreen({ navigation }) {
         </View>
         {/* <View style={{ height: 4000 }}></View> */}
       </ScrollView>
-    
+
       <View style={{ marginTop: 16, padding: 16, marginBottom: 16 }}>
         <View style={styles.checkoutContainer}>
           <Text style={styles.checkoutTxt}>{parseInt(totalPrice)} شيكل</Text>

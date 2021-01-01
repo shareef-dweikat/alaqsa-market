@@ -43,12 +43,13 @@ export function fetchSlideImage() {
   return (dispatch) => {
     firebase
       .database()
-      .ref('slider/home-slide/image')
-      .once('value', function (image) {
-        let myImage = image.val();
+      .ref('slider/home-slide/')
+      .once('value', function (data) {
+        let myImage = data.val().image;
+        let desc = data.val().slide_desc
         dispatch({
           type: 'FETCH_SLIDE_IMAGE',
-          payload: myImage,
+          payload: {myImage,desc},
         });
       })
       .catch((e) => console.log(e, 'errrrrr'));

@@ -46,27 +46,13 @@ export default function CategoriesScreen({ navigation }) {
   const [isVertical, setIsVertical] = useState(true);
   const isLoading = useSelector((state) => state.cart.isLoading);
 
-  // const [searchValue, setSearchValue] = useState('');
-
-  // const allProducts = () => {
-  //   let products = [];
-  //   for (let index in categories) {
-  //     for (let i in categories[index]['products']) {
-  //       products.push(categories[index]['products'][i]);
-  //     }
-  //   }
-  //   console.log(products, 'all-productssssss');
-
-  //   setProducts(products);
-  // };
   const search = (txt) => {
     // dispatch(searchAction(txt))
   };
   const parseCategpry = (name) => {
-    // console.log(name, "aaaaa")
+
     for (let index in categories) {
       if (categories[index].category_name === name) {
-        // console.log(categories[index]['products'], "adaaaaa")
         let products = [];
         for (let p in categories[index]['products']) {
           categories[index]['products'][p].firebaseId = p;
@@ -80,10 +66,8 @@ export default function CategoriesScreen({ navigation }) {
   for (let index in categories) {
     names.push(categories[index].category_name);
   }
-  // console.log('aadsd', categories);
   useEffect(() => {
     dispatch(fetchCategories());
-    // allProducts()
     parseCategpry(names[0]);
   }, [names[0]]);
   return (
@@ -100,7 +84,7 @@ export default function CategoriesScreen({ navigation }) {
       >
         <View
           style={{
-            marginHorizontal: 8,
+            // marginHorizontal: 8,
             flexDirection: 'row',
             flex: 1,
             alignItems: 'center',
@@ -111,7 +95,7 @@ export default function CategoriesScreen({ navigation }) {
               color={
                 isVertical ? Colors.ACTIVE_VIEW_TAP : Colors.INACTIVE_VIEW_TAP
               }
-              style={{ marginRight: 8 }}
+              style={{ marginRight: 4 }}
             />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setIsVertical(false)}>
@@ -129,17 +113,12 @@ export default function CategoriesScreen({ navigation }) {
             alignItems: 'center',
             borderColor: Colors.BORDER_COLOR,
             borderWidth: 1,
-            flex: 3,
+            flex: 2.8,
             paddingHorizontal: 8,
             borderRadius: 10,
             height: 35,
           }}
         >
-          {/* <TextInput
-            style={{ marginRight: 8 }}
-            onChangeText={(txt) => search(txt)}
-            placeholder='بحث'
-          /> */}
           <TouchableOpacity
             onPress={() => navigation.push('SearchScreen')}
             style={{ flexDirection: 'row' }}
@@ -180,6 +159,7 @@ export default function CategoriesScreen({ navigation }) {
           products &&
           products.map((product) => (
             <VerticalItemCard
+              image={product.image}
               key={product.product_name}
               add={() => dispatch(addProductToCart(product, navigation, phone))}
               name={product.product_name}

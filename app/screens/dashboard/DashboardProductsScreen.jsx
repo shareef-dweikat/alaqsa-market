@@ -271,7 +271,7 @@ function VerticalItemCard({
             marginLeft: 16,
           }}
         >
-          ${price} شيكل
+          {price} شيكل
         </Text>
       </View>
       <Image

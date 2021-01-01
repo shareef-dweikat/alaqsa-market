@@ -28,7 +28,9 @@ export default (state = initialState, action: AnyAction) => {
       return {
         ...state,
          isLoading: false,
-         uploadedSlideImageUri: action.payload
+         uploadedSlideImageUri: action.payload.myImage,
+         desc: action.payload.desc
+
       };
     default: 
       return state;

@@ -27,6 +27,11 @@ import SearchBox from '../components/SearchBox';
 import { StatusBar } from 'expo-status-bar';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchFav, fetchProducts } from '../store/action/product';
+import { fetchCategories } from '../store/action/category';
+import {
+  addProductToCart,
+  // searchAction
+} from '../store/action/cart';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -62,13 +67,13 @@ export default function FavScreen({ navigation }) {
         </TouchableOpacity>
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            width: '100%',
-            alignItems: 'center',
+            // flexDirection: 'row',
+            // justifyContent: 'space-between',
+            // width: '100%',
+            // alignItems: 'center',
           }}
         >
-          <View
+          {/* <View
             style={{
               marginHorizontal: 8,
               flexDirection: 'row',
@@ -81,7 +86,7 @@ export default function FavScreen({ navigation }) {
               style={{ marginRight: 8 }}
             />
             <GridViewIcon color={Colors.INACTIVE_VIEW_TAP} />
-          </View>
+          </View> */}
           <Text
             style={{
               fontSize: 30,
@@ -101,26 +106,29 @@ export default function FavScreen({ navigation }) {
               product={product}
               addToFav={() => dispatch(setFav(product, phone))}
               deleteFav={() => dispatch(deleteFav(product, phone))}
+              add={() => dispatch(addProductToCart(product, navigation, phone))}
             />
           ))}
       </ScrollView>
     </SafeAreaView>
   );
 }
-export function VerticalItemCard({ product, addToFav, deleteFav }) {
-  const [isFav, setIsFav] = useState(false);
+export function VerticalItemCard({ product, addToFav, deleteFav, add }) {
+  const [isFav, setIsFav] = useState(true);
+  const dispatch = useDispatch();
+  console.log(product, 'productimage');
   const handleFav = async () => {
     const x = await AsyncStorage.getItem(product.firebaseId);
 
-    if (x) {
-      AsyncStorage.removeItem(product.firebaseId);
-      setIsFav(false);
-      deleteFav();
-    } else {
-      AsyncStorage.setItem(product.firebaseId, product.firebaseId);
-      setIsFav(true);
-      addToFav();
-    }
+    AsyncStorage.removeItem(product.firebaseId);
+    setIsFav(false);
+    deleteFav();
+    // dispatch(fetchCategories())
+    // else {
+    //   AsyncStorage.setItem(product.firebaseId, product.firebaseId);
+    //   setIsFav(true);
+    //   addToFav();
+    // }
 
     // const x = await AsyncStorage.getItem(product.firebaseId)
   };
@@ -139,7 +147,7 @@ export function VerticalItemCard({ product, addToFav, deleteFav }) {
       // onPress={onPress}
       style={{
         flex: 1,
-        height: 140,
+        height: 120,
         borderWidth: 1,
         borderColor: '#d0d0d0',
         borderRadius: 10,
@@ -200,9 +208,7 @@ export function VerticalItemCard({ product, addToFav, deleteFav }) {
             marginTop: 8,
           }}
         >
-          <TouchableOpacity
-          //  onPress={add}
-          >
+          <TouchableOpacity onPress={add}>
             <PlusIcon />
           </TouchableOpacity>
           <Text
@@ -216,7 +222,12 @@ export function VerticalItemCard({ product, addToFav, deleteFav }) {
           </Text>
         </View>
       </View>
-      <Image resizeMode='contain' style={{ height: 100 }} source={pImage} />
+
+      <Image
+        style={{ width: 100, height: 100, marginRight: 8, borderRadius: 5 }}
+        resizeMode='contain'
+        source={{ uri: product.image }}
+      />
     </TouchableOpacity>
   );
 }

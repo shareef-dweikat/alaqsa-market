@@ -57,7 +57,7 @@ export default function DrawerContent({ value, navigation }) {
           alignItems: 'center',
         }}
       >
-        <Image source={require('../../../assets/person-drawer.png')} />
+        <Image style={{height: 100}} resizeMode='contain' source={require('../../../assets/logo.png')} />
         <Text
           style={{ color: 'white', marginTop: 8, fontFamily: 'Tajawal-Medium' }}
         >
@@ -136,20 +136,22 @@ export default function DrawerContent({ value, navigation }) {
         }
       /> */}
       <Tap
-        onPress={() => {
-          AsyncStorage.clear();
-          dispatch(setUserType(null, null));
-        }}
         // onPress={() => {
-        //   firebase
-        //     .database()
-        //     .ref(`fav/${phone}`)
-        //     .remove()
-        //     .then(() => {
-        //       AsyncStorage.clear();
-        //       dispatch(setUserType(null, null));
-        //     });
+        //   AsyncStorage.clear();
+        //   dispatch(setUserType(null, null));
         // }}
+        onPress={() => {
+          firebase
+            .database()
+            .ref(`fav/${phone}`)
+            .remove()
+            .then(() => {
+              AsyncStorage.clear();
+              dispatch(setUserType(null, null));
+            });
+            // AsyncStorage.clear();
+            // dispatch(setUserType(null, null));
+        }}
         title='تسجيل خروج'
         tapIcon={
           <SignOut

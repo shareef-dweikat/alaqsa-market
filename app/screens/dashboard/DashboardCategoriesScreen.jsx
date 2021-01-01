@@ -321,7 +321,7 @@ export function DeleteConfirmation({
               textAlign: 'center',
             }}
           >
-            هل انت متأكد من حذف التصنيف {name}؟ كل منتجات التصنيف ستضيع
+            هل انت متأكد من حذف تصنيف {name}؟ كل منتجات التصنيف ستضيع
           </Text>
 
           <View style={{ width: '100%' }}>

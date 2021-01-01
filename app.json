@@ -39,7 +39,8 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.shareef.dweikat.alaqsa"
+      "package": "com.shareef.dweikat.alaqsa",
+      "useNextNotificationsApi": true
     }
   }
 }

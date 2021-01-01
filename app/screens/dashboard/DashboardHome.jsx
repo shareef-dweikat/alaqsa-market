@@ -141,7 +141,7 @@ export default function DashboardHome({ navigation }) {
         <Text
           style={{ fontFamily: 'Tajawal-Regular', fontSize: 20, marginTop: 32 }}
         >
-          اللإحصائيات
+          الإحصائيات
         </Text>
         <View
           style={{

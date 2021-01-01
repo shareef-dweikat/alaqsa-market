@@ -137,11 +137,11 @@ export function SlideCard({ slide }) {
           </View>
           <Text style={{ fontFamily: 'Tajawal-Regular' }}>
             {' '}
-            البانر الإعلاني للشاشة الرئيسة{' '}
+            السلابدر الإعلاني للشاشة الرئيسة{' '}
           </Text>
         </View>
         <Image
-          style={{ height: 250, borderRadius: 5 }}
+          style={{ height: 180, borderRadius: 5 }}
           resizeMode='contain'
           source={{ uri: uploadeImageUri }}
         />

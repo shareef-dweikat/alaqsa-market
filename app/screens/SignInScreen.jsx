@@ -108,34 +108,14 @@ export default function SignInScreen({ navigation, setUser }) {
   const dispatch = useDispatch();
   const route = useRoute();
   const submit = async () => {
-    dispatch(login(phone, pass))
-    // await firebase
-    //   .database()
-    //   .ref(`users/${phone}`)
-    //   .once('value', async (user) => {
-    //     if (user.val() != null && pass == user.val().password) {
-    //       AsyncStorage.setItem('userType', 'customer');
-    //       setUser({ userType: 'customer' });
-    //       // firebase
-    //       //   .database()
-    //       //   .ref(`users/0599102218`)
-    //       //   .set({
-    //       //     name: 'حسام ملحس',
-    //       //   })
-    //       //   .catch((e) => console.log('SignInScreen', e));
-    //     } else alert('خطا في العلومات');
-    //   })
-    //   .catch((e) => console.log('createCategoryAPI', e));
-    // firebase
-    //   .auth()
-    //   .signInWithPhoneNumber('0599102215', '111111')
-    //   .then((e) => {
-    //      setUser({userType: 'customer'})
-    //     console.log('adsd', e);
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
+    firebase
+    .database()
+    .ref(`fav/${phone}`)
+    .remove()
+    .then(() => {
+      dispatch(login(phone, pass))
+    });
+   
   };
   let [bachgroundHeight, setBachgroundHeight] = useState(
     Dimensions.get('window').height * 0.5
