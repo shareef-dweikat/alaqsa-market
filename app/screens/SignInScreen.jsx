@@ -159,6 +159,7 @@ export default function SignInScreen({ navigation, setUser }) {
             ) : null}
             <SignForm
               forgotPassBtnShown={true}
+              isSignUpActive={true}
               submitText='دخول'
               onPress={() => submit()}
               routeName={route.name}

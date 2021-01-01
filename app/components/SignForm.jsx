@@ -1,4 +1,3 @@
-import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
 import React from 'react';
 import {
   Text,
@@ -98,6 +97,7 @@ export default function SignForm({
   inputs,
   forgotPassBtnShown,
   agreeOnConditionsBoxShown,
+  isSignUpActive,
   submitText,
   onPress,
   navigation,
@@ -119,21 +119,21 @@ export default function SignForm({
             }
           ></View>
         </TouchableOpacity>
-        {/* {isSignUpActive && ( */}
-        <TouchableOpacity
-          onPress={() => navigation.push('SignUpScreen')}
-          style={{ alignItems: 'center' }}
-        >
-          <Text style={styles.formContainerHeaderTap}>إنشاء حساب</Text>
-          <View
-            style={
-              routeName === 'SignInScreen'
-                ? styles.formContainerHeaderTapLine
-                : styles.formContainerHeaderTapActiveLine
-            }
-          ></View>
-        </TouchableOpacity>
-        {/* )} */}
+        {isSignUpActive && (
+          <TouchableOpacity
+            onPress={() => navigation.push('SignUpScreen')}
+            style={{ alignItems: 'center' }}
+          >
+            <Text style={styles.formContainerHeaderTap}>إنشاء حساب</Text>
+            <View
+              style={
+                routeName === 'SignInScreen'
+                  ? styles.formContainerHeaderTapLine
+                  : styles.formContainerHeaderTapActiveLine
+              }
+            ></View>
+          </TouchableOpacity>
+        )}
       </View>
 
       {inputs}

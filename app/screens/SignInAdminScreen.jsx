@@ -107,13 +107,11 @@ export default function SignInAdminScreen({ navigation, setUser }) {
 
   const [logoVisible, setLogoVisible] = useState(true);
   const login = () => {
-    console.log('username', username);
     firebase
       .database()
       .ref(`admins/${username.trim()}`)
       .once('value', (user) => {
         const userObj = user.val();
-        console.log(userObj, "iiiii")
         if (userObj) {
           if (userObj.password == password.trim()) {
             // setUser({userType: 'admin'});
@@ -123,7 +121,7 @@ export default function SignInAdminScreen({ navigation, setUser }) {
               type: 'LOGIN_ADMIN_SUCCESS',
               payload: {
                 username,
-                userType: userObj.userType
+                userType: userObj.userType,
               },
             });
           } else {

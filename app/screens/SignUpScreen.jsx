@@ -165,6 +165,7 @@ export default function SignUpScreen({ navigation }) {
             <SignForm
               agreeOnConditionsBoxShown={true}
               submitText='إنشاء حساب'
+              isSignUpActive={true}
               navigation={navigation}
               onPress={() => submit()}
               inputs={
