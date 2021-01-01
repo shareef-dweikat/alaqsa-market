@@ -173,6 +173,7 @@ export default function HomeScreen({ navigation }) {
                 />
               ))}
           </View>
+          <View style={{height: 20}} />
         </ScrollView>
         {/* <View
           style={{

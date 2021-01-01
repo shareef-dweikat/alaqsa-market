@@ -49,6 +49,7 @@ import DashboardOrdersPage from '../screens/dashboard/DashboardOrdersPage';
 import { setUserType } from '../store/action/auth';
 import DashboardAccounts from '../screens/dashboard/DashboardAccounts';
 import DashboardHomeSlider from '../screens/dashboard/DashboardHomeSlider';
+import CustomerService from '../screens/CustomerService';
 const ContactsStack = createStackNavigator();
 const ContactsStackScreen = ({ navigation }) => (
   <ContactsStack.Navigator headerMode='none'>
@@ -312,6 +313,8 @@ const RootStackScreen = () => {
         name='ChangeQuantityScreen'
         component={ChangeQuantityScreen}
       />
+      <RootStack.Screen name='CustomerService' component={CustomerService} />
+
       <ContactsStack.Screen
         name='ItemDetailsScreen'
         component={ItemDetailsScreen}

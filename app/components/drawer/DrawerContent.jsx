@@ -57,7 +57,11 @@ export default function DrawerContent({ value, navigation }) {
           alignItems: 'center',
         }}
       >
-        <Image style={{height: 100}} resizeMode='contain' source={require('../../../assets/logo.png')} />
+        <Image
+          style={{ height: 100 }}
+          resizeMode='contain'
+          source={require('../../../assets/logo.png')}
+        />
         <Text
           style={{ color: 'white', marginTop: 8, fontFamily: 'Tajawal-Medium' }}
         >
@@ -136,6 +140,16 @@ export default function DrawerContent({ value, navigation }) {
         }
       /> */}
       <Tap
+        title='خدمة العملاء'
+        onPress={() => navigation.push('CustomerService')}
+        tapIcon={
+          <Report
+            // color={Colors.BACKGROUND}
+            color={Colors.WHITE}
+          />
+        }
+      />
+      <Tap
         // onPress={() => {
         //   AsyncStorage.clear();
         //   dispatch(setUserType(null, null));
@@ -149,8 +163,8 @@ export default function DrawerContent({ value, navigation }) {
               AsyncStorage.clear();
               dispatch(setUserType(null, null));
             });
-            // AsyncStorage.clear();
-            // dispatch(setUserType(null, null));
+          // AsyncStorage.clear();
+          // dispatch(setUserType(null, null));
         }}
         title='تسجيل خروج'
         tapIcon={
