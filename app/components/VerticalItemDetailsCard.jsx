@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -6,6 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 import pImage from '../../assets/meat.png';
 import HeartIcon from '../../assets/small-heart-icon.svg';
@@ -17,6 +18,8 @@ import {
   addProductToCart,
   // searchAction
 } from '../store/action/cart';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
+import colors from '../constants/colors';
 
 const styles = StyleSheet.create({
   container: {
@@ -39,10 +42,20 @@ const styles = StyleSheet.create({
   },
 });
 export default function VerticalItemDetailsCard({ product, navigation }) {
+  const [quantity, setQuantity] = useState('1');
+
   const height = Dimensions.get('window').height * 0.4;
   const width = Dimensions.get('window').width - 40;
   const dispatch = useDispatch();
   const phone = useSelector((state) => state.auth.phone);
+
+  const handleAddToCart = () => {
+    if (!product.isVisible){
+      alert('هذا المنتج غير متوفر')
+      return
+    }
+      dispatch(addProductToCart(product, navigation, phone, quantity));
+  };
   return (
     <ScrollView
       contentContainerStyle={{
@@ -71,7 +84,12 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
       >
         <Text style={{fontFamily: 'Tajawal-Medium'}}>اسسسس</Text>
       </View> */}
-      <View style={{flexDirection: 'row-reverse', justifyContent: 'space-between'}}>
+      <View
+        style={{
+          flexDirection: 'row-reverse',
+          justifyContent: 'space-between',
+        }}
+      >
         <Text
           style={{
             fontFamily: 'Tajawal-Medium',
@@ -99,39 +117,42 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
       >
         {product.product_desc}{' '}
       </Text>
-      {/* <View
+
+      <View
         style={{
           flexDirection: 'row',
-          justifyContent: 'space-between',
-          width: '100%',
+          justifyContent: 'flex-end',
           alignItems: 'center',
-          paddingHorizontal: 32,
+          // paddingHorizontal: 32,
           marginTop: 32,
         }}
       >
-        <View style={{ flex: 1 }}>
-          <Picker
-            selectedValue={'sss'}
-            style={{ height: 50, width: 100 }}
-            onValueChange={(itemValue, itemIndex) =>
-              this.setState({ language: itemValue })
-            }
-          >
-            <Picker.Item label='دولار  للكيلو' value='1' />
-            <Picker.Item label='دولارين  للكيلتين' value='2' />
-          </Picker>
+        <View>
+          <TextInput
+            keyboardType='number-pad'
+            value={quantity}
+            onChangeText={(txt) => setQuantity(txt)}
+            style={{
+              fontSize: 15,
+              fontFamily: 'Tajawal-Regular',
+              borderWidth: 0.5,
+              borderRadius: 40,
+              textAlign: 'center',
+              marginRight: 8,
+              color: 'black',
+              borderColor: colors.PLACEHOLDER,
+              width: 50,
+              fontSize: 12,
+            }}
+            placeholder='الكمية'
+          />
         </View>
 
-        <Text
-          style={{ fontFamily: 'Tajawal-Regular', color: '#515462', flex: 1 }}
-        >
+        <Text style={{ fontFamily: 'Tajawal-Regular', color: '#515462' }}>
           قم بتحديد الكمية
         </Text>
-      </View> */}
-      <TouchableOpacity
-        onPress={() => dispatch(addProductToCart(product, navigation, phone))}
-        style={styles.btn}
-      >
+      </View>
+      <TouchableOpacity onPress={() => handleAddToCart()} style={styles.btn}>
         <Text style={styles.btnText}>أضف إلى السلة</Text>
       </TouchableOpacity>
     </ScrollView>

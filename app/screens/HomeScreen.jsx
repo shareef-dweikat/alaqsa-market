@@ -58,7 +58,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
-      <View
+      {/* <View
         style={{
           height: 45,
           backgroundColor: '#515462',
@@ -76,7 +76,7 @@ export default function HomeScreen({ navigation }) {
         >
           {desc}
         </Text>
-      </View>
+      </View> */}
       <ImageBackground style={styles.image} source={{ uri: image }}>
         <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
           <View
@@ -88,11 +88,28 @@ export default function HomeScreen({ navigation }) {
             }}
           >
             <View
-              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                backgroundColor: '#d0d0d0',
+                borderRadius: 20,
+                height: 40,
+                paddingHorizontal: 8,
+                alignItems: 'center',
+              }}
             >
               <TouchableOpacity onPress={() => navigation.push('SearchScreen')}>
                 <SearchIcon />
               </TouchableOpacity>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 17,
+                  fontFamily: 'Tajawal-Regular',
+                }}
+              >
+                {'desc'}
+              </Text>
               <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
                 <DrawerIcon />
               </TouchableOpacity>

@@ -3,9 +3,10 @@ import moment from 'moment'
 const addProductToCartAPI = async (
   { product_name, product_desc, isVisible, price, image, },
   navigation,
-  phone
+  phone,
+  quantity
 ) => {
-  console.log(phone, '$${phone}sss');
+  console.log(quantity, '$${phone}sss');
   return firebase
     .database()
     .ref(`cart/${phone}`)
@@ -14,18 +15,18 @@ const addProductToCartAPI = async (
       product_desc: product_desc,
       price: price,
       image: image,
-      quantity: "1",
+      quantity: quantity,
     })
     .catch((e) => console.log('addProductToCartAPI', e));
 };
 
-export function addProductToCart(product, navigation, phone) {
-
+export function addProductToCart(product, navigation, phone, quantity) {
+  console.log(quantity, "dadasdsdddd")
   return (dispatch) => {
     dispatch({
       type: 'PRODUCT_ADD_TO_CART',
     });
-    addProductToCartAPI(product, navigation, phone).then(() => {
+    addProductToCartAPI(product, navigation, phone, quantity).then(() => {
       console.log('addProductToCartAPI');
       //   // dispatch(fetchProducts());
       dispatch({

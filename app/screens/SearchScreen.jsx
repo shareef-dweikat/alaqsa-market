@@ -70,7 +70,10 @@ export default function SearchScreen({ navigation }) {
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
       <View style={styles.image}>
         <View style={{ flexDirection: 'row-reverse', alignItems: 'center' }}>
-          <TouchableOpacity onPress={() => navigation.pop()}>
+          <TouchableOpacity
+            style={{ width: 20 }}
+            onPress={() => navigation.pop()}
+          >
             <RightArrow />
           </TouchableOpacity>
           <Text

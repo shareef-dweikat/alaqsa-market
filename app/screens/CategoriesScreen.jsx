@@ -46,6 +46,13 @@ export default function CategoriesScreen({ route, navigation }) {
   const [isVertical, setIsVertical] = useState(true);
   const isLoading = useSelector((state) => state.cart.isLoading);
 
+  const handleAddToCart = (product, navigation, phone) => {
+    if (!product.isVisible){
+      alert('هذا المنتج غير متوفر')
+      return
+    }
+    dispatch(addProductToCart(product, navigation, phone, "1"));
+  };
   const search = (txt) => {
     // dispatch(searchAction(txt))
   };
@@ -164,7 +171,7 @@ export default function CategoriesScreen({ route, navigation }) {
             <VerticalItemCard
               image={product.image}
               key={product.product_name}
-              add={() => dispatch(addProductToCart(product, navigation, phone))}
+              add={() => handleAddToCart(product, navigation, phone)}
               name={product.product_name}
               desc={product.product_desc}
               isFav={product.isVisible}
@@ -188,9 +195,7 @@ export default function CategoriesScreen({ route, navigation }) {
               products.map((product) => (
                 <HorizontalItemCard
                   key={product.product_name}
-                  add={() =>
-                    dispatch(addProductToCart(product, navigation, phone))
-                  }
+                  add={() => handleAddToCart(product, navigation, phone)}
                   image={product.image}
                   name={product.product_name}
                   desc={product.product_desc}
