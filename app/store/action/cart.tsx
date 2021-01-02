@@ -1,5 +1,5 @@
 import firebase from '../../config/firebase';
-
+import moment from 'moment'
 const addProductToCartAPI = async (
   { product_name, product_desc, isVisible, price, image, },
   navigation,
@@ -133,7 +133,7 @@ export function order(seller, phone, totalPrice, transPrice) {
             transPrice,
             phone,
             status: 'جار التنفيذ',
-            date: new Date().toLocaleString(),
+            date: `${moment().format('dddd')} ${moment().format('DD-MM-YYYY')} ${moment().format('HH:mm:SS')}`,
           })
           .then((e) =>
             firebase.database().ref(`orders/${phone}`).push({
@@ -142,7 +142,7 @@ export function order(seller, phone, totalPrice, transPrice) {
               totalPrice,
               transPrice,
               status: 'جار التنفيذ',
-              date: new Date().toLocaleString(),
+              date: `${moment().format('dddd')} ${moment().format('DD-MM-YYYY')} ${moment().format('HH:mm:SS')}`,
             })
           );
         firebase.database().ref(`cart/${phone}`).remove();

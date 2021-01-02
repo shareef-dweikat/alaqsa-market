@@ -259,7 +259,7 @@ export function LoadingModal({ title, visible, setVisible, setImage }) {
         >
           <ActivityIndicator color={Colors.GOLDEN} size='large' />
           <Text style={{ marginTop: 32, fontFamily: 'Tajawal-Medium' }}>
-            جار إضافة التصنيف
+            جار إضافة المنتج
           </Text>
         </View>
       </View>

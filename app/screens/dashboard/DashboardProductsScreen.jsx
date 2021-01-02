@@ -16,7 +16,8 @@ import { SafeAreaView } from 'react-navigation';
 import EditIcon from '../../../assets/edit.svg';
 import * as ImagePicker from 'expo-image-picker';
 import { Switch } from 'react-native-paper';
-
+import DeleteIcon from '../../../assets/delete-icon-dashboard.svg';
+import { deleteProduct } from '../../store/action/product';
 import DrawerIcon from '../../../assets/drawer-icon.svg';
 import FloatingICon from '../../../assets/floating-button-icon.svg';
 import BellIcon from '../../../assets/dashboard-drawer/bell.svg';
@@ -82,7 +83,6 @@ const styles = StyleSheet.create({
 export default function DashboardHome({ navigation }) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
-  console.log(products, 'productssssssss');
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
@@ -193,10 +193,27 @@ function VerticalItemCard({
   const [editModalVisible, setEditModalVisible] = useState(false);
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.product.isLoading);
-
+  const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
+  const showDeleteDialog = () => {
+    setDeleteDialogVisible(!deleteDialogVisible);
+  };
+  const handleDelete = () => {
+    setDeleteDialogVisible(false);
+    console.log(catId, productFirebaseId, "firebaseIdddd")
+     dispatch(deleteProduct(catId, productFirebaseId));
+  };
   const handleEdit = (catName, catDesc, image, productVisible) => {
     setEditModalVisible(false);
-    dispatch(editProduct(productFirebaseId, catId, catName, catDesc, image, productVisible));
+    dispatch(
+      editProduct(
+        productFirebaseId,
+        catId,
+        catName,
+        catDesc,
+        image,
+        productVisible
+      )
+    );
   };
   return (
     <TouchableOpacity
@@ -231,17 +248,17 @@ function VerticalItemCard({
             justifyContent: 'space-between',
           }}
         >
-          <TouchableOpacity onPress={() => setEditModalVisible(true)}>
-            <EditIcon style={{ marginRight: 8 }} />
-          </TouchableOpacity>
-          {/* <HeartIcon color='red'/> */}
-          {/* <Switch
-            trackColor={{ false: '#767577', true: '#22C993' }}
-            thumbColor={productAvailability ? Colors.WHITE : '#f4f3f4'}
-            ios_backgroundColor='#3e3e3e'
-            onValueChange={(e) => setProductAvailability(e)}
-            value={productAvailability}
-          /> */}
+          <View style={{ flexDirection: 'row' }}>
+            <TouchableOpacity
+              style={{ marginRight: 8 }}
+              onPress={() => setEditModalVisible(true)}
+            >
+              <EditIcon />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => showDeleteDialog()}>
+              <DeleteIcon />
+            </TouchableOpacity>
+          </View>
           <View />
           <Text style={{ textAlign: 'right', fontFamily: 'Tajawal-Medium' }}>
             {name}
@@ -289,6 +306,12 @@ function VerticalItemCard({
         visible={editModalVisible}
       />
       <LoadingModal visible={isLoading} />
+      <DeleteConfirmation
+        visible={deleteDialogVisible}
+        handleDelete={handleDelete}
+        name={name}
+        setDeleteDialogVisible={setDeleteDialogVisible}
+      />
     </TouchableOpacity>
   );
 }
@@ -337,8 +360,10 @@ export function EditModal({
             alignItems: 'flex-end',
           }}
         >
-          <View style={{flexDirection: 'row'}}>
-            <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8}}>التوافر</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8 }}>
+              التوافر
+            </Text>
             <Switch
               trackColor={{ false: '#767577', true: '#22C993' }}
               thumbColor={visible ? Colors.WHITE : '#f4f3f4'}
@@ -375,7 +400,9 @@ export function EditModal({
           </TouchableOpacity>
           <View style={{ width: '100%' }}>
             <TouchableOpacity
-              onPress={() => handleEdit(catName, catDesc, image, productVisible)}
+              onPress={() =>
+                handleEdit(catName, catDesc, image, productVisible)
+              }
               style={styles.btn}
             >
               <Text style={styles.btnTxt}>حفظ</Text>
@@ -415,6 +442,57 @@ export function LoadingModal({ visible }) {
           </Text>
         </View>
       </View>
+    </Modal>
+  );
+}
+
+export function DeleteConfirmation({
+  name,
+  visible,
+  handleDelete,
+  setDeleteDialogVisible,
+}) {
+  return (
+    <Modal visible={visible}>
+      <TouchableOpacity
+        onPress={() => setDeleteDialogVisible(false)}
+        style={{
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'white',
+            width: '80%',
+            height: 300,
+            padding: 16,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <DeleteIcon />
+          <Text
+            style={{
+              marginTop: 8,
+              fontFamily: 'Tajawal-Bold',
+              fontSize: 20,
+              textAlign: 'center',
+            }}
+          >
+            هل انت متأكد من حذف تصنيف {name}؟ كل منتجات التصنيف ستضيع
+          </Text>
+
+          <View style={{ width: '100%' }}>
+            <TouchableOpacity onPress={() => handleDelete()} style={styles.btn}>
+              <Text style={styles.btnTxt}>تأكيد الحذف</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </TouchableOpacity>
     </Modal>
   );
 }

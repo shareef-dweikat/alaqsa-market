@@ -258,7 +258,27 @@ export function editProduct(
             // payload: { name, desc },
           });
         })
-        .catch((e) => console.log(e, "rrrrr"));
+        .catch((e) => console.log(e, 'rrrrr'));
+    });
+  };
+}
+
+const deleteProductAPI = async (catFirebaseId, firebaseId) => {
+  console.log(catFirebaseId, firebaseId, 'asdasdsadad');
+  return firebase
+    .database()
+    .ref(`category/${catFirebaseId}/products/${firebaseId}`)
+    .remove()
+    .catch((e) => console.log('createCategoryAPI', e));
+};
+export function deleteProduct(catFirebaseId, firebaseId) {
+  return (dispatch) => {
+    deleteProductAPI(catFirebaseId, firebaseId).then(() => {
+      dispatch(fetchProducts());
+      dispatch({
+        type: 'PRODUCT_DELETED_SUCCESS',
+        // payload: arrayElementId,
+      });
     });
   };
 }

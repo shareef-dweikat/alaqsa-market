@@ -28,9 +28,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'space-between',
     padding: 16,
-    paddingTop: 45,
+    paddingTop: 30,
     alignItems: 'flex-end',
     height: Dimensions.get('window').height * 0.15,
+    flexDirection: 'row-reverse',
+    alignItems: 'center'
   },
   lookForProductText: {
     fontSize: 22,
@@ -58,13 +60,13 @@ export default function DashboardHomeSlider({ navigation }) {
       <View>
         <View style={styles.image}>
           <TouchableOpacity
-            style={{ width: 20 }}
+            style={{ width: 25 }}
             onPress={() => navigation.pop()}
           >
             <RightArrow />
           </TouchableOpacity>
-          <View style={{ width: '100%' }}>
-            <Text style={styles.lookForProductText}>البانر الإعلاني</Text>
+          <View style={{ width: '100%', marginRight: 16 }}>
+            <Text style={styles.lookForProductText}>السلايدر الإعلاني</Text>
             {/* <SearchBox /> */}
           </View>
         </View>
@@ -137,7 +139,7 @@ export function SlideCard({ slide }) {
           </View>
           <Text style={{ fontFamily: 'Tajawal-Regular' }}>
             {' '}
-            السلابدر الإعلاني للشاشة الرئيسة{' '}
+            السلايدر الإعلاني للشاشة الرئيسة{' '}
           </Text>
         </View>
         <Image

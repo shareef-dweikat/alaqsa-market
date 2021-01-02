@@ -220,6 +220,7 @@ export default function AddProductScreen({ navigation }) {
           </View> */}
           <TextInput
             onChangeText={(txt) => setPrice(txt)}
+            keyboardType='number-pad'
             style={styles.input}
             placeholder='السعر'
           />

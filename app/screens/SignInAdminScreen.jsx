@@ -180,7 +180,7 @@ export default function SignInAdminScreen({ navigation, setUser }) {
                 <>
                   <MyInputText
                     onChangeText={(d) => setUsername(d)}
-                    placeholder='الإيميل'
+                    placeholder='اسم المستخدم'
                   />
                   <MyInputText
                     onChangeText={(d) => setPassword(d)}

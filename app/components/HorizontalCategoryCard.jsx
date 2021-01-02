@@ -24,12 +24,12 @@ export default function HorizontalCategoryCard({ name, desc, onPress, image }) {
       onPress={onPress}
       style={{
         width: 100,
-        height: 180,
+        height: 140,
         borderWidth: 1,
         borderColor: '#d0d0d0',
         borderRadius: 10,
         alignItems: 'center',
-        paddingTop: 13,
+        paddingTop: 8,
         marginTop: 16,
         marginHorizontal: 4,
       }}

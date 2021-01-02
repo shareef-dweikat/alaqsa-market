@@ -21,14 +21,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchSlideImage } from '../store/action/homeSlider';
 import { fetchCategories } from '../store/action/category';
 import HorizontalCategoryCard from '../components/HorizontalCategoryCard';
-
+import { StatusBar } from 'react-native';
+import Colors from '../constants/colors';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
   image: {
     justifyContent: 'center',
-    height: Dimensions.get('window').height * 0.3,
+    height: Dimensions.get('window').height * 0.2,
+    // marginTop: 32,
   },
   screenContentContainer: {
     padding: 16,
@@ -55,6 +57,26 @@ export default function HomeScreen({ navigation }) {
   }, []);
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
+      <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
+      <View
+        style={{
+          height: 45,
+          backgroundColor: '#515462',
+          justifyContent: 'center',
+          alignItems: 'center',
+          // marginTop: 32,
+        }}
+      >
+        <Text
+          style={{
+            color: 'white',
+            fontSize: 17,
+            fontFamily: 'Tajawal-Regular',
+          }}
+        >
+          {desc}
+        </Text>
+      </View>
       <ImageBackground style={styles.image} source={{ uri: image }}>
         <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
           <View
@@ -107,7 +129,7 @@ export default function HomeScreen({ navigation }) {
           </View>
         </SafeAreaView>
       </ImageBackground>
-      <View
+      {/* <View
         style={{
           height: 45,
           backgroundColor: '#515462',
@@ -124,7 +146,7 @@ export default function HomeScreen({ navigation }) {
         >
           {desc}
         </Text>
-      </View>
+      </View> */}
       <ScrollView style={styles.screenContentContainer}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -136,9 +158,7 @@ export default function HomeScreen({ navigation }) {
             <TouchableOpacity
               onPress={() => navigation.push('CategoriesScreen')}
             >
-              <Text style={styles.seeMoreLabel}>
-                مشاهدة المزيد
-              </Text>
+              <Text style={styles.seeMoreLabel}>مشاهدة المزيد</Text>
             </TouchableOpacity>
           </View>
           <Text
@@ -152,7 +172,7 @@ export default function HomeScreen({ navigation }) {
           </Text>
         </View>
 
-        <ScrollView style={{ paddingHorizontal: 16 }}>
+        <ScrollView>
           <View
             style={{
               flexWrap: 'wrap',
@@ -168,12 +188,12 @@ export default function HomeScreen({ navigation }) {
                   category={category}
                   image={category.image}
                   onPress={() =>
-                    navigation.push('CategoriesScreen', {category})
+                    navigation.push('CategoriesScreen', { category })
                   }
                 />
               ))}
           </View>
-          <View style={{height: 20}} />
+          <View style={{ height: 20 }} />
         </ScrollView>
         {/* <View
           style={{
