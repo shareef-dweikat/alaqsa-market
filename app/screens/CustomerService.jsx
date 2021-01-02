@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
-  Image,
+  Linking,
   KeyboardAvoidingView,
   TextInput,
   ImageBackground,
@@ -62,8 +62,22 @@ export default function CustomerService({ navigation }) {
       <View style={{ justifyContent: 'center', marginTop: 64 }}>
         <Text style={styles.txt}>شكرا لثقتك بنا</Text>
         <Text style={styles.txt}>للتواصل</Text>
-        <Text style={styles.txt}>حسام ملحس 0592369440</Text>
-        <Text style={styles.txt}>alaqsamart@gmail.com</Text>
+        <Text style={{...styles.txt, marginTop: 32}}>فرع نابلس</Text>
+        <Text style={styles.txt}>حسام ملحس </Text>
+        <TouchableOpacity onPress={() => Linking.openURL(`tel:0592369440`)}>
+          <Text style={styles.txt}>0592369440</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Linking.openURL(`mailto:alaqsamart@gmail.com`)}>
+          <Text style={styles.txt}>alaqsamart@gmail.com</Text>
+        </TouchableOpacity>
+        <Text style={{...styles.txt, marginTop: 16}}>فرع نابلس</Text>
+        <Text style={styles.txt}>حسام ملحس </Text>
+        <TouchableOpacity onPress={() => Linking.openURL(`tel:0592369440`)}>
+          <Text style={styles.txt}>0592369440</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => Linking.openURL(`mailto:alaqsamart@gmail.com`)}>
+          <Text style={styles.txt}>alaqsamart@gmail.com</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
