@@ -323,6 +323,7 @@ const RootStackScreen = () => {
         name='DashboardItemDetailsScreen'
         component={DashboardItemDetailsScreen}
       />
+      {/* <RootStack.Screen name='CategoriesScreen' component={CategoriesScreen} /> */}
       <RootStack.Screen
         name='PasswordResetScreen'
         component={PasswordResetScreen}

@@ -28,7 +28,7 @@ export default function HorizontalItemCard({
   product,
   addToFav,
   deleteFromFav,
-
+  image,
 }) {
   const [isFav, setIsFav] = useState(false);
   const handleFav = async () => {
@@ -37,7 +37,7 @@ export default function HorizontalItemCard({
     if (x) {
       AsyncStorage.removeItem(product.firebaseId);
       // setIsFav(false);
-       deleteFromFav()
+      deleteFromFav();
     } else {
       AsyncStorage.setItem(product.firebaseId, product.firebaseId);
       setIsFav(true);
@@ -69,7 +69,10 @@ export default function HorizontalItemCard({
         marginTop: 16,
       }}
     >
-      <Image source={pImage} />
+      <Image
+        style={{ width: 100, height: 100, marginRight: 8, borderRadius: 5 }}
+        source={{ uri: image }}
+      />
       <View
         style={{
           flexDirection: 'row',

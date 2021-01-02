@@ -71,15 +71,22 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
       >
         <Text style={{fontFamily: 'Tajawal-Medium'}}>اسسسس</Text>
       </View> */}
-      <Text
-        style={{
-          fontFamily: 'Tajawal-Medium',
-          marginTop: 12,
-          color: '#515462',
-        }}
-      >
-        {product.product_name}
-      </Text>
+      <View style={{flexDirection: 'row-reverse', justifyContent: 'space-between'}}>
+        <Text
+          style={{
+            fontFamily: 'Tajawal-Medium',
+            // marginTop: 12,
+            color: '#515462',
+          }}
+        >
+          {product.product_name}
+        </Text>
+        {!product.isVisible && (
+          <Text style={{ color: 'red', fontFamily: 'Tajawal-Medium' }}>
+            غير متوفر
+          </Text>
+        )}
+      </View>
 
       <Text
         style={{

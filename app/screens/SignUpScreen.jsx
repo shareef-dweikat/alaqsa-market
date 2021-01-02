@@ -109,10 +109,10 @@ export default function SignUpScreen({ navigation }) {
       alert('كلمات المرور غير متطابقة');
       return;
     }
-    if (email.search('@') === -1) {
-      alert('الايميل المدخل غير صحيح');
-      return;
-    }
+    // if (email.search('@') === -1) {
+    //   alert('الايميل المدخل غير صحيح');
+    //   return;
+    // }
     dispatch(
       signup(
         phone.trim(),

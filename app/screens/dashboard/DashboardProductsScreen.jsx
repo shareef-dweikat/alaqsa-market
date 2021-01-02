@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-navigation';
 import EditIcon from '../../../assets/edit.svg';
 import * as ImagePicker from 'expo-image-picker';
+import { Switch } from 'react-native-paper';
 
 import DrawerIcon from '../../../assets/drawer-icon.svg';
 import FloatingICon from '../../../assets/floating-button-icon.svg';
@@ -193,9 +194,9 @@ function VerticalItemCard({
   const dispatch = useDispatch();
   const isLoading = useSelector((state) => state.product.isLoading);
 
-  const handleEdit = (catName, catDesc, image) => {
+  const handleEdit = (catName, catDesc, image, productVisible) => {
     setEditModalVisible(false);
-     dispatch(editProduct(productFirebaseId, catId, catName, catDesc, image));
+    dispatch(editProduct(productFirebaseId, catId, catName, catDesc, image, productVisible));
   };
   return (
     <TouchableOpacity
@@ -301,7 +302,7 @@ export function EditModal({
   const [catName, setCatName] = useState(name);
   const [catDesc, setCatDesc] = useState(desc);
   const [image, setImage] = useState('');
-
+  const [productVisible, setProductVisible] = useState(true);
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -333,9 +334,19 @@ export function EditModal({
             padding: 16,
             borderRadius: 10,
             justifyContent: 'center',
-            alignItems: 'center',
+            alignItems: 'flex-end',
           }}
         >
+          <View style={{flexDirection: 'row'}}>
+            <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8}}>التوافر</Text>
+            <Switch
+              trackColor={{ false: '#767577', true: '#22C993' }}
+              thumbColor={visible ? Colors.WHITE : '#f4f3f4'}
+              ios_backgroundColor='#3e3e3e'
+              onValueChange={(e) => setProductVisible(!productVisible)}
+              value={productVisible}
+            />
+          </View>
           <TextInput
             onChangeText={(txt) => setCatName(txt)}
             value={catName}
@@ -349,6 +360,7 @@ export function EditModal({
             textAlignVertical='top'
             placeholder='الوصف'
           />
+
           <TouchableOpacity
             onPress={() => pickImage()}
             style={{
@@ -363,7 +375,7 @@ export function EditModal({
           </TouchableOpacity>
           <View style={{ width: '100%' }}>
             <TouchableOpacity
-              onPress={() => handleEdit(catName, catDesc, image)}
+              onPress={() => handleEdit(catName, catDesc, image, productVisible)}
               style={styles.btn}
             >
               <Text style={styles.btnTxt}>حفظ</Text>
@@ -375,7 +387,7 @@ export function EditModal({
   );
 }
 
-export function LoadingModal({  visible}) {
+export function LoadingModal({ visible }) {
   return (
     <Modal visible={visible} transparent>
       <View
@@ -406,4 +418,3 @@ export function LoadingModal({  visible}) {
     </Modal>
   );
 }
-

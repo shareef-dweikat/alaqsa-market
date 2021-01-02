@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
 });
 export default function DashboardDrawerContent({ value, navigation }) {
   const dispatch = useDispatch();
-
+  const userType = useSelector((state) => state.auth.userType);
+  console.log(userType, 'userTypeeeee');
   return (
     <View style={{ backgroundColor: Colors.BACKGROUND, flex: 1 }}>
       <View
@@ -85,16 +86,18 @@ export default function DashboardDrawerContent({ value, navigation }) {
           />
         }
       />
-      <Tap
-        title='إدارة المستخدمين'
-        tapIcon={
-          <AccountManeger
-            // color={Colors.BACKGROUND}
-            color={Colors.WHITE}
-          />
-        }
-        onPress={() => navigation.push('DashboardAccounts')}
-      />
+      {userType == 'admin' && (
+        <Tap
+          title='إدارة المستخدمين'
+          tapIcon={
+            <AccountManeger
+              // color={Colors.BACKGROUND}
+              color={Colors.WHITE}
+            />
+          }
+          onPress={() => navigation.push('DashboardAccounts')}
+        />
+      )}
       {/*  <Tap
         title='إبلاغ'
         tapIcon={
@@ -104,17 +107,19 @@ export default function DashboardDrawerContent({ value, navigation }) {
           />
         }
       />*/}
+      {userType == 'admin' && (
+        <Tap
+          title='السلايدر الإعلاني'
+          tapIcon={
+            <Share
+              // color={Colors.BACKGROUND}
+              color={Colors.WHITE}
+            />
+          }
+          onPress={() => navigation.push('DashboardHomeSlider')}
+        />
+      )}
       <Tap
-        title='السلايدر الإعلاني'
-        tapIcon={  
-          <Share
-            // color={Colors.BACKGROUND}
-            color={Colors.WHITE}
-          />
-        }
-        onPress={() => navigation.push('DashboardHomeSlider')}
-      />
-      <Tap   
         title='الطلبات'
         onPress={() => navigation.push('DashboardOrdersPage')}
         tapIcon={

@@ -211,28 +211,35 @@ const editProductAPI = async (
   categoryFirebaseId,
   name,
   desc,
-  uri
+  uri,
+  productVisible
 ) => {
   return firebase
     .database()
     .ref(`category/${categoryFirebaseId}/products/${productFirebaseId}`)
-    .update({ product_desc: desc, product_name: name, image: uri });
+    .update({
+      product_desc: desc,
+      product_name: name,
+      image: uri,
+      isVisible: productVisible,
+    });
 };
 export function editProduct(
   productFirebaseId,
   categoryFirebaseId,
   name,
   desc,
-  image
+  image,
+  productVisible
 ) {
   return (dispatch) => {
     dispatch({
       type: 'PRODUCT_EDITED',
     });
-    console.log( productFirebaseId,
-      categoryFirebaseId,
-      name,
-      desc, "pdadsdasd")
+    // console.log( productFirebaseId,
+    //   categoryFirebaseId,
+    //   name,
+    //   desc, "pdadsdasd")
     uploadProductImageAPI(name, image).then(async (snapshot) => {
       let url = await snapshot.ref.getDownloadURL();
       editProductAPI(
@@ -240,15 +247,18 @@ export function editProduct(
         categoryFirebaseId,
         name,
         desc,
-        url
-      ).then(() => {
-        // dispatch(fetchCategories());
-        alert('تم التعديل');
-        dispatch({
-          type: 'PRODUCT_EDITED_SUCCESS',
-          // payload: { name, desc },
-        });
-      });
+        url,
+        productVisible
+      )
+        .then(() => {
+          // dispatch(fetchCategories());
+          alert('تم التعديل');
+          dispatch({
+            type: 'PRODUCT_EDITED_SUCCESS',
+            // payload: { name, desc },
+          });
+        })
+        .catch((e) => console.log(e, "rrrrr"));
     });
   };
 }

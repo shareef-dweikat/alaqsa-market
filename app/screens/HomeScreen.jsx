@@ -167,9 +167,9 @@ export default function HomeScreen({ navigation }) {
                   name={category.category_name}
                   category={category}
                   image={category.image}
-                  // onPress={() =>
-                  //   navigation.push('ItemDetailsScreen', { product })
-                  // }
+                  onPress={() =>
+                    navigation.push('CategoriesScreen', {category})
+                  }
                 />
               ))}
           </View>

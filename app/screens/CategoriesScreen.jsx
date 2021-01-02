@@ -36,12 +36,12 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
   },
 });
-export default function CategoriesScreen({ navigation }) {
+export default function CategoriesScreen({ route, navigation }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.category.categories);
   const phone = useSelector((state) => state.auth.phone);
-
+  const category = route?.params?.category;
   const [products, setProducts] = useState([]);
   const [isVertical, setIsVertical] = useState(true);
   const isLoading = useSelector((state) => state.cart.isLoading);
@@ -50,7 +50,6 @@ export default function CategoriesScreen({ navigation }) {
     // dispatch(searchAction(txt))
   };
   const parseCategpry = (name) => {
-
     for (let index in categories) {
       if (categories[index].category_name === name) {
         let products = [];
@@ -68,7 +67,11 @@ export default function CategoriesScreen({ navigation }) {
   }
   useEffect(() => {
     dispatch(fetchCategories());
-    parseCategpry(names[0]);
+    if (category) {
+      parseCategpry(category.category_name);
+    } else {
+      parseCategpry(names[0]);
+    }
   }, [names[0]]);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
@@ -188,6 +191,7 @@ export default function CategoriesScreen({ navigation }) {
                   add={() =>
                     dispatch(addProductToCart(product, navigation, phone))
                   }
+                  image={product.image}
                   name={product.product_name}
                   desc={product.product_desc}
                   product={product}

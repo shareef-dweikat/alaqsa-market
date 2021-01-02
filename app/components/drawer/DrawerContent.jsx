@@ -48,7 +48,7 @@ export default function DrawerContent({ value, navigation }) {
   const dispatch = useDispatch();
   const phone = useSelector((state) => state.auth.phone);
   return (
-    <View>
+    <View style={{ backgroundColor: Colors.BACKGROUND, flex: 1 }}>
       <View
         style={{
           backgroundColor: Colors.BACKGROUND,
@@ -57,16 +57,27 @@ export default function DrawerContent({ value, navigation }) {
           alignItems: 'center',
         }}
       >
-        <Image
-          style={{ height: 100 }}
-          resizeMode='contain'
-          source={require('../../../assets/logo.png')}
-        />
-        <Text
+        <View
+          style={{
+            backgroundColor: Colors.WHITE,
+            width: 100,
+            height: 120,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderRadius: 20,
+          }}
+        >
+          <Image
+            style={{ height: 100 }}
+            resizeMode='contain'
+            source={require('../../../assets/logo.png')}
+          />
+        </View>
+        {/* <Text
           style={{ color: 'white', marginTop: 8, fontFamily: 'Tajawal-Medium' }}
         >
           أحمد محمد
-        </Text>
+        </Text> */}
       </View>
       <Tap
         title='المفضلة'
