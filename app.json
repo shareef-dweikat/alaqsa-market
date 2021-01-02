@@ -4,7 +4,7 @@
     "slug": "alaqsa",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo.png",
+    "icon": "./assets/exlogo.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
