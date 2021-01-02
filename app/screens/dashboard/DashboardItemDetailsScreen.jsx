@@ -80,7 +80,7 @@ export default function DashboardItemDetailsScreen({ route, navigation }) {
 
 export function VerticalItemDetailsCard({ product }) {
   const prod = product && product;
-  console.log(prod)
+  console.log(prod, "ddddddddd")
   return (
     <ScrollView
       contentContainerStyle={{

@@ -189,6 +189,7 @@ function VerticalItemCard({
   image,
   catId,
   navigation,
+  isVisible,
 }) {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const dispatch = useDispatch();
@@ -199,8 +200,8 @@ function VerticalItemCard({
   };
   const handleDelete = () => {
     setDeleteDialogVisible(false);
-    console.log(catId, productFirebaseId, "firebaseIdddd")
-     dispatch(deleteProduct(catId, productFirebaseId));
+    console.log(catId, productFirebaseId, 'firebaseIdddd');
+    dispatch(deleteProduct(catId, productFirebaseId));
   };
   const handleEdit = (catName, catDesc, image, productVisible) => {
     setEditModalVisible(false);
@@ -281,23 +282,32 @@ function VerticalItemCard({
             {desc}
           </Text>
         </View>
-        <Text
-          style={{
-            textAlign: 'left',
-            fontFamily: 'Tajawal-Bold',
-            color: '#515462',
-            marginLeft: 16,
-          }}
-        >
-          {price} شيكل
-        </Text>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text
+            style={{
+              textAlign: 'left',
+              fontFamily: 'Tajawal-Bold',
+              color: '#515462',
+              marginLeft: 16,
+            }}
+          >
+            {price} شيكل
+          </Text>
+          {!isVisible && (
+            <Text style={{ color: 'red', fontFamily: 'Tajawal-Regular' }}>
+              غير متوفر
+            </Text>
+          )}
+        </View>
       </View>
+
       <Image
         style={{ height: 100, width: 100, marginRight: 8, borderRadius: 10 }}
         source={{
           uri: image,
         }}
       />
+
       <EditModal
         name={name}
         desc={desc}
