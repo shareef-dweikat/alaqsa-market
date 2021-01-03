@@ -50,11 +50,11 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
   const phone = useSelector((state) => state.auth.phone);
 
   const handleAddToCart = () => {
-    if (!product.isVisible){
-      alert('هذا المنتج غير متوفر')
-      return
+    if (!product.isVisible) {
+      alert('هذا المنتج غير متوفر');
+      return;
     }
-      dispatch(addProductToCart(product, navigation, phone, quantity));
+    dispatch(addProductToCart(product, navigation, phone, quantity));
   };
   return (
     <ScrollView
@@ -131,7 +131,10 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
           <TextInput
             keyboardType='number-pad'
             value={quantity}
-            onChangeText={(txt) => setQuantity(txt)}
+            onChangeText={(txt) => {
+              if (txt == '0' || txt =='') return;
+              setQuantity(txt);
+            }}
             style={{
               fontSize: 15,
               fontFamily: 'Tajawal-Regular',

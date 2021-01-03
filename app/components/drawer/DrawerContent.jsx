@@ -68,7 +68,7 @@ export default function DrawerContent({ value, navigation }) {
           }}
         >
           <Image
-            style={{ height: 100 }}
+            style={{ width: 80, height: 80 }}
             resizeMode='contain'
             source={require('../../../assets/logo.png')}
           />

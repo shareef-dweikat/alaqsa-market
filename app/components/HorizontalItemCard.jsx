@@ -60,12 +60,12 @@ export default function HorizontalItemCard({
       onPress={onPress}
       style={{
         width: 150,
-        height: 230,
+        height: 200,
         borderWidth: 1,
         borderColor: '#d0d0d0',
         borderRadius: 10,
         alignItems: 'center',
-        paddingTop: 13,
+        paddingTop: 4,
         marginTop: 16,
       }}
     >

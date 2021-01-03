@@ -217,7 +217,7 @@ export function DeleteConfirmation({ navigation, visible, setVisible }) {
               fontSize: 17,
             }}
           >
-            هل تريد فعلا حذف (اسم المنتج) من السلة ؟
+            هل تريد فعلا حذف من السلة ؟
           </Text>
           <View
             style={{

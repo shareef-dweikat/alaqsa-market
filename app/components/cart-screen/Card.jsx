@@ -23,13 +23,13 @@ export default function Card({
   name,
   image,
   firebaseId,
-  quantity
+  quantity,
 }) {
-
-  const [value, setValue] = useState('1')
+  const [value, setValue] = useState('1');
   const dispatch = useDispatch();
   const handleQChanged = (txt) => {
-    setValue(txt)
+    if (txt == 0) return;
+    setValue(txt);
     firebase
       .database()
       .ref(`cart/${phone}/${firebaseId}`)
@@ -37,13 +37,13 @@ export default function Card({
         quantity: txt,
       })
       .then(() => {
-        dispatch(fetchProducts(phone))
+        dispatch(fetchProducts(phone));
       });
   };
 
-  useEffect(()=> {
-    setValue(quantity)
-  },[])
+  useEffect(() => {
+    setValue(quantity);
+  }, []);
   return (
     <View style={{ marginBottom: 16 }}>
       <View

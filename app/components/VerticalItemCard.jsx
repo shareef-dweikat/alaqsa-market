@@ -72,7 +72,7 @@ export default function VerticalItemCard({
       onPress={onPress}
       style={{
         flex: 1,
-        height: 140,
+        height: 110,
         borderWidth: 1,
         borderColor: '#d0d0d0',
         borderRadius: 10,
