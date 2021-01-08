@@ -12,16 +12,14 @@ import {
 import bb from '../../assets/home/header.png';
 import { SafeAreaView } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
-import DrawerIcon from '../../assets/drawer-icon.svg';
-import SearchIcon from '../../assets/search-icon.svg';
-// import {getDevicePushTokenAsync} from 'expo-notifications';
-import HorizontalItemCard from '../components/HorizontalItemCard';
+import * as Permissions from 'expo-permissions';
 import BottomNav from '../components/BottomNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSlideImage } from '../store/action/homeSlider';
 import { fetchCategories } from '../store/action/category';
 import HorizontalCategoryCard from '../components/HorizontalCategoryCard';
 import { StatusBar } from 'react-native';
+import * as Notifications from 'expo-notifications';
 import Colors from '../constants/colors';
 const styles = StyleSheet.create({
   container: {
@@ -29,7 +27,7 @@ const styles = StyleSheet.create({
   },
   image: {
     justifyContent: 'center',
-    height: Dimensions.get('window').height * 0.2,
+    height: Dimensions.get('window').height * 0.25,
     // marginTop: 32,
   },
   screenContentContainer: {
@@ -45,14 +43,20 @@ export default function HomeScreen({ navigation }) {
   const desc = slide.desc;
   const [products, setProducts] = useState([]);
 
-  // const names = [];
-  // for (let index in categories) {
-  //   names.push(categories[index].category_name);
-  // }
-  console.log(products, 'productssss');
   useEffect(() => {
     dispatch(fetchSlideImage());
     dispatch(fetchCategories());
+    const getToken = async () => {
+      const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      const subscription = Notifications.addNotificationReceivedListener(notification => {
+        console.log(notification, "xxxxxxxx");
+      });
+     
+      const expoPushToken = await Notifications.getExpoPushTokenAsync();
+      console.log(expoPushToken, "adsccccc");
+    };
+    getToken();
+    // registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
     // parseCategpry(names[0]);
   }, []);
   return (
@@ -87,7 +91,7 @@ export default function HomeScreen({ navigation }) {
               marginTop: 16,
             }}
           >
-            <View
+            {/* <View
               style={{
                 flexDirection: 'row',
                 justifyContent: 'space-between',
@@ -113,7 +117,7 @@ export default function HomeScreen({ navigation }) {
               <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
                 <DrawerIcon />
               </TouchableOpacity>
-            </View>
+            </View> */}
             <View style={{ justifyContent: 'center', flex: 1 }}>
               {/* <Text
                 style={{

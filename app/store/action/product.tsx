@@ -95,11 +95,16 @@ export function fetchProducts() {
 
 const uploadProductImageAPI = async (productName, uri) => {
   console.log('productName', productName);
-  const response = await fetch(uri);
-  const blob = await response.blob();
-  var ref = firebase.storage().ref(`/images/products`).child(productName);
+  try {
+    const response = await fetch(uri);
 
-  return ref.put(blob);
+    const blob = await response.blob();
+    var ref = firebase.storage().ref(`/images/products`).child(productName);
+
+    return ref.put(blob);
+  } catch (error) {
+    return null;
+  }
 };
 
 export function uploadProductImage(productName, uri) {
@@ -214,15 +219,25 @@ const editProductAPI = async (
   uri,
   productVisible
 ) => {
-  return firebase
-    .database()
-    .ref(`category/${categoryFirebaseId}/products/${productFirebaseId}`)
-    .update({
-      product_desc: desc,
-      product_name: name,
-      image: uri,
-      isVisible: productVisible,
-    });
+  if (uri)
+    return firebase
+      .database()
+      .ref(`category/${categoryFirebaseId}/products/${productFirebaseId}`)
+      .update({
+        product_desc: desc,
+        product_name: name,
+        image: uri,
+        isVisible: productVisible,
+      });
+  else
+    return firebase
+      .database()
+      .ref(`category/${categoryFirebaseId}/products/${productFirebaseId}`)
+      .update({
+        product_desc: desc,
+        product_name: name,
+        isVisible: productVisible,
+      });
 };
 export function editProduct(
   productFirebaseId,
@@ -241,24 +256,41 @@ export function editProduct(
     //   name,
     //   desc, "pdadsdasd")
     uploadProductImageAPI(name, image).then(async (snapshot) => {
-      let url = await snapshot.ref.getDownloadURL();
-      editProductAPI(
-        productFirebaseId,
-        categoryFirebaseId,
-        name,
-        desc,
-        url,
-        productVisible
-      )
-        .then(() => {
+      let url = snapshot;
+      if (url) {
+        url = await snapshot.ref.getDownloadURL();
+        editProductAPI(
+          productFirebaseId,
+          categoryFirebaseId,
+          name,
+          desc,
+          url,
+          productVisible
+        ).then(() => {
           // dispatch(fetchCategories());
           alert('تم التعديل');
           dispatch({
             type: 'PRODUCT_EDITED_SUCCESS',
             // payload: { name, desc },
           });
-        })
-        .catch((e) => console.log(e, 'rrrrr'));
+        });
+      } else {
+        editProductAPI(
+          productFirebaseId,
+          categoryFirebaseId,
+          name,
+          desc,
+          url,
+          productVisible
+        ).then(() => {
+          // dispatch(fetchCategories());
+          alert('تم التعديل');
+          dispatch({
+            type: 'PRODUCT_EDITED_SUCCESS',
+            // payload: { name, desc },
+          });
+        });
+      }
     });
   };
 }

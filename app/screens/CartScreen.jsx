@@ -26,6 +26,7 @@ import {
   fetchBranches,
   order,
 } from '../store/action/cart';
+import { fetchOrders } from '../store/action/orders';
 
 const styles = StyleSheet.create({
   container: {
@@ -235,6 +236,7 @@ export function DeleteConfirmation({ navigation, visible, setVisible }) {
             <TouchableOpacity
               onPress={() => {
                 dispatch(deleteCartItem(itemToDelete, phone));
+                dispatch(fetchProducts(phone))
                 setVisible(false);
               }}
               style={{ ...styles.btn, width: '45%' }}

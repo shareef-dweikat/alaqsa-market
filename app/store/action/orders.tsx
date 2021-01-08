@@ -57,7 +57,29 @@ export function fetchSellerOrders(username) {
       });
   };
 }
+export function fetchSellersOrders() {
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`seller-orders/`)
+      .once('value', function (remoteOrders) {
+        //  let orders = Object.values(remoteOrders.val());
+        let sellers = remoteOrders.val();
+        const r = [];
 
+        for (let seller in sellers) {
+          for (let index in sellers[seller]) {
+            r.push({ ...sellers[seller][index], orderId: index, seller });
+          }
+        }
+
+        dispatch({
+          type: 'FETCH_ORDERS_ADMIN_SUCCESS',
+          payload: r,
+        });
+      });
+  };
+}
 export function makeOrder() {
   // firebase
   //   .database()
@@ -154,10 +176,10 @@ export function getSalesStatistics() {
       .database()
       .ref(`statistics/`)
       .once('value', function (statistics) {
-        let myStatistics = Object.entries(statistics.val())
-        let statics = []
+        let myStatistics = Object.entries(statistics.val());
+        let statics = [];
 
-        console.log(myStatistics)
+        console.log(myStatistics);
         // for(let index in myStatistics) {
         //     statics.push({[index]:myStatistics[index]})
         // }

@@ -103,6 +103,7 @@ export default function SignForm({
   navigation,
   routeName,
 }) {
+  console.log(routeName, 'SignInAdminScreennnn');
   return (
     <View style={styles.formContainer}>
       <View style={styles.formContainerHeader}>
@@ -113,7 +114,7 @@ export default function SignForm({
           <Text style={styles.formContainerHeaderTap}>دخول</Text>
           <View
             style={
-              routeName === 'SignInScreen'
+              routeName === 'SignInScreen' || routeName === 'SignInAdminScreen'
                 ? styles.formContainerHeaderTapActiveLine
                 : styles.formContainerHeaderTapLine
             }

@@ -418,18 +418,19 @@ export function EditModal({
     </Modal>
   );
 }
-export function LoadingModal({  visible}) {
+export function LoadingModal({ visible }) {
+  console.log(visible, 'pvvvvvvv');
   return (
-    <Modal visible={visible} transparent>
+    <Modal visible={visible}>
       <View
-        style={{
-          height: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(0,0,0,0.5)',
-        }}
+        // style={{
+        //   height: '100%',
+        //   justifyContent: 'center',
+        //   alignItems: 'center',
+        //   backgroundColor: 'rgba(0,0,0,0.5)',
+        // }}
       >
-        <View
+        {/* <View
           style={{
             backgroundColor: 'white',
             width: '80%',
@@ -444,7 +445,7 @@ export function LoadingModal({  visible}) {
           <Text style={{ marginTop: 32, fontFamily: 'Tajawal-Medium' }}>
             جار تعديل التصنيف
           </Text>
-        </View>
+        </View> */}
       </View>
     </Modal>
   );

@@ -54,7 +54,7 @@ export default (state = initialState, action: AnyAction) => {
         
         return {
           ...state,
-          isLoading: true
+          isLoading: false
         };
     default:
       return state;

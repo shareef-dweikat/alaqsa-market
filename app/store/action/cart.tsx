@@ -29,6 +29,7 @@ export function addProductToCart(product, navigation, phone, quantity) {
     addProductToCartAPI(product, navigation, phone, quantity).then(() => {
       console.log('addProductToCartAPI');
       //   // dispatch(fetchProducts());
+      alert("تم إضافة منتج")
       dispatch({
         type: 'PRODUCT_ADD_TO_CART_SUCCESS',
       });

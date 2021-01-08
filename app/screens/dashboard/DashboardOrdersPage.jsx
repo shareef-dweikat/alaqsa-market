@@ -20,7 +20,7 @@ import SearchBox from '../../components/SearchBox';
 import { StatusBar } from 'expo-status-bar';
 import {
   fetchSellerOrders,
-  fetchSellerOrder,
+  fetchSellersOrders,
   changeStatus,
   updateSalesStatistics,
 } from '../../store/action/orders';
@@ -79,14 +79,19 @@ export default function DashboardOrdersPage({ navigation }) {
   const orders = useSelector((state) => state.orders.orders);
   const isLoading = useSelector((state) => state.orders.isLoading);
   const username = useSelector((state) => state.auth.username);
-
+  const userType = useSelector((state) => state.auth.userType);
+  console.log(userType, 'casdadsad');
   const order = useSelector((state) => state.orders.order);
   const products = useSelector((state) => state.orders.products);
   // console.log(products, 'products');
 
   const [orderId, setOrderId] = useState('');
   useEffect(() => {
-    dispatch(fetchSellerOrders(username));
+    if (userType == 'admin') {
+      dispatch(fetchSellersOrders());
+    } else {
+      dispatch(fetchSellerOrders(username));
+    }
   }, []);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
@@ -100,7 +105,7 @@ export default function DashboardOrdersPage({ navigation }) {
           {/* <SearchBox /> */}
         </View>
       </View>
-      <View style={{ height: '100%', backgroundColor: '#F9F9FA' }}>
+      <ScrollView style={{ height: '100%', backgroundColor: '#F9F9FA' }}>
         {orders &&
           orders.map((order) => (
             <OrderCardContainer
@@ -109,7 +114,7 @@ export default function DashboardOrdersPage({ navigation }) {
               products={order.productsObject}
             />
           ))}
-      </View>
+      </ScrollView>
       {/* <ScrollView style={{ padding: 8 }}></ScrollView> */}
       <LoadingModal visible={isLoading} />
     </SafeAreaView>
@@ -117,15 +122,15 @@ export default function DashboardOrdersPage({ navigation }) {
 }
 
 export function OrderCardContainer({ date, products, order }) {
+  console.log(order, "adasdsadccccccc")
   const dispatch = useDispatch();
   const [status, setStatus] = useState(order.status);
   let myProducts = Object.values(products);
   const username = useSelector((state) => state.auth.username);
-
   const handleChangeStatus = (orderId, status) => {
     setStatus(status);
     dispatch(changeStatus(orderId, username, status));
-    dispatch(updateSalesStatistics(username, order.totalPrice))
+    dispatch(updateSalesStatistics(username, order.totalPrice));
   };
   const handleHeaderClicked = () => {};
   return (
@@ -144,18 +149,19 @@ export function OrderCardContainer({ date, products, order }) {
           >
             {date}
           </Text>
-
+          <Text style={styles.orderTitle}>{order.seller}</Text>
           <Text style={styles.orderTitle}> الزبون {order.phone}</Text>
         </View>
         {myProducts.length > 0 && (
           <>
             {myProducts &&
-              myProducts.map((product) => (
+              myProducts.map((product) => ( 
                 <View style={styles.productRow}>
                   <Text style={styles.productPrice}>{product.price} شيكل</Text>
                   <Text style={styles.productName}>
-                    {product.product_desc.substring(0, 25)}
+                    {product.product_desc.substring(0, 10)}
                   </Text>
+                  <Text style={styles.productName}>الكمية: {product.quantity} </Text>
                   <Text style={styles.productName}>{product.product_name}</Text>
                 </View>
               ))}

@@ -147,7 +147,7 @@ export default function CategoriesScreen({ route, navigation }) {
         </TouchableOpacity>
       </View>
       <ScrollView style={{ maxHeight: 60, marginRight: 16 }} horizontal>
-        {names &&
+         {names &&
           names.map((name) => (
             <Card
               key={name}
@@ -163,7 +163,7 @@ export default function CategoriesScreen({ route, navigation }) {
           name='الكل'
           onPress={() => allProducts()}
         /> */}
-      </ScrollView>
+      </ScrollView> 
       <ScrollView style={{ paddingHorizontal: 16 }}>
         {isVertical ? (
           products &&
@@ -225,17 +225,18 @@ export function Card({ name, backgroundColor, color = 'black', onPress }) {
       onPress={onPress}
       style={{
         backgroundColor: backgroundColor,
-        width: 100,
+        // width: 140,
         height: 35,
         borderRadius: 10,
         justifyContent: 'center',
         alignItems: 'center',
         marginTop: 16,
         marginHorizontal: 4,
+        paddingHorizontal: 4,
         marginBottom: 32,
       }}
     >
-      <Text style={{ color: color, fontFamily: 'Tajawal-Medium' }}>{name}</Text>
+      <Text style={{ color: color, fontFamily: 'Tajawal-Medium', fontSize: 12 }}>{name}</Text>
     </TouchableOpacity>
   );
 }

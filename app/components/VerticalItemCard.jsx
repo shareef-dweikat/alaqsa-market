@@ -45,18 +45,18 @@ export default function VerticalItemCard({
   const [isFav, setIsFav] = useState(false);
   const handleFav = async () => {
     const x = await AsyncStorage.getItem(product.firebaseId);
-
+     console.log(x, "pdddf")
     if (x) {
-      AsyncStorage.removeItem(product.firebaseId);
-      // setIsFav(false);
-      deleteFromFav();
+      // AsyncStorage.removeItem(product.firebaseId);
+      //  setIsFav(false);
+       deleteFromFav();
     } else {
       AsyncStorage.setItem(product.firebaseId, product.firebaseId);
       setIsFav(true);
+      addToFav(product, phone);
     }
 
     // const x = await AsyncStorage.getItem(product.firebaseId)
-    addToFav(product, phone);
   };
   useEffect(() => {
     const getProductId = async () => {
@@ -72,7 +72,7 @@ export default function VerticalItemCard({
       onPress={onPress}
       style={{
         flex: 1,
-        height: 110,
+        height: 90,
         borderWidth: 1,
         borderColor: '#d0d0d0',
         borderRadius: 10,
@@ -86,15 +86,32 @@ export default function VerticalItemCard({
       <View style={{ flex: 1 }}>
         {isFavHeartAvailable && (
           <View style={styles.nameAndFavContainer}>
-            {isFav ? (
-              <TouchableOpacity onPress={() => handleFav()}>
-                <HeartIcon color='red' />
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+            >
+              {isFav ? (
+                <TouchableOpacity
+                  style={{ marginRight: 8 }}
+                  onPress={() => handleFav()}
+                >
+                  <HeartIcon color='red' />
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={{ marginRight: 8 }}
+                  onPress={() => handleFav()}
+                >
+                  <HeartEmptyIcon />
+                </TouchableOpacity>
+              )}
+              <TouchableOpacity onPress={add}>
+                <PlusIcon />
               </TouchableOpacity>
-            ) : (
-              <TouchableOpacity onPress={() => handleFav()}>
-                <HeartEmptyIcon />
-              </TouchableOpacity>
-            )}
+            </View>
             <Text style={styles.name}>{name}</Text>
           </View>
         )}
@@ -108,13 +125,13 @@ export default function VerticalItemCard({
             justifyContent: 'flex-end',
             width: '100%',
             paddingHorizontal: 16,
+            // height: 30
           }}
         >
           <Text
             style={{
               color: '#B8B8CD',
               fontFamily: 'Tajawal-Regular',
-              height: 50,
             }}
           >
             {desc}
@@ -129,9 +146,6 @@ export default function VerticalItemCard({
             marginBottom: 8,
           }}
         >
-          <TouchableOpacity onPress={add}>
-            <PlusIcon />
-          </TouchableOpacity>
           <Text
             style={{
               textAlign: 'right',
@@ -144,8 +158,8 @@ export default function VerticalItemCard({
         </View>
       </View>
       <Image
-        style={{ width: 100, height: 100, marginRight: 8, borderRadius: 5 }}
-        resizeMode='contain'
+        style={{ width: 100, height: 80, marginRight: 8, borderRadius: 5 }}
+        // resizeMode='contain'
         source={{ uri: image }}
       />
     </TouchableOpacity>

@@ -99,12 +99,12 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
-export default function SignInAdminScreen({ navigation, setUser }) {
+export default function SignInAdminScreen({route, navigation, setUser }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-
+  console.log(route, "ccccc")
   const [logoVisible, setLogoVisible] = useState(true);
   const login = () => {
     firebase
@@ -175,6 +175,7 @@ export default function SignInAdminScreen({ navigation, setUser }) {
               forgotPassBtnShown={true}
               isSignUpActive={false}
               submitText='دخول'
+              routeName={route.name}
               onPress={() => login()}
               inputs={
                 <>

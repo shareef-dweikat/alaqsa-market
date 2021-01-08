@@ -59,7 +59,7 @@ export default function HorizontalItemCard({
     <TouchableOpacity
       onPress={onPress}
       style={{
-        width: 150,
+        width: 120,
         height: 200,
         borderWidth: 1,
         borderColor: '#d0d0d0',

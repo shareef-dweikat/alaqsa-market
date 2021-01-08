@@ -18,12 +18,15 @@ export const fetchCategoriesAPI = async () => {
 };
 
 const uploadCategoryImageAPI = async (categoryName, uri) => {
-  console.log('categoryName', categoryName);
-  const response = await fetch(uri);
-  const blob = await response.blob();
-  var ref = firebase.storage().ref(`/images/categories`).child(categoryName);
+  try {
+    const response = await fetch(uri);
+    const blob = await response.blob();
+    var ref = firebase.storage().ref(`/images/categories`).child(categoryName);
 
-  return ref.put(blob);
+    return ref.put(blob);
+  } catch (error) {
+    return null;
+  }
 };
 
 const createCategoryAPI = async (name, desc, url) => {
@@ -75,7 +78,7 @@ const updateCategoryAPI = async (name, desc, isVisible, firebaseId) => {
   return firebase
     .database()
     .ref(`category/${firebaseId}`)
-    .set({
+    .update({
       category_name: name,
       category_desc: desc,
       isVisible: isVisible,
@@ -114,11 +117,16 @@ export function deleteCategory(firebaseId, arrayElementId) {
   };
 }
 const editCategoryAPI = async (firebaseId, name, desc, uri) => {
-  console.log(firebaseId);
-  return firebase
-    .database()
-    .ref(`category/${firebaseId}`)
-    .update({ category_desc: desc, category_name: name, image: uri });
+  if (uri)
+    return firebase
+      .database()
+      .ref(`category/${firebaseId}`)
+      .update({ category_desc: desc, category_name: name, image: uri });
+  else
+    return firebase
+      .database()
+      .ref(`category/${firebaseId}`)
+      .update({ category_desc: desc, category_name: name });
 };
 export function editCategory(firebaseId, name, desc, image) {
   return (dispatch) => {
@@ -126,15 +134,27 @@ export function editCategory(firebaseId, name, desc, image) {
       type: 'CATEGORY_EDITED',
     });
     uploadCategoryImageAPI(name, image).then(async (snapshot) => {
-      let url = await snapshot.ref.getDownloadURL();
-      editCategoryAPI(firebaseId, name, desc, url).then(() => {
-        // dispatch(fetchCategories());
-        alert('تم التعديل');
-        dispatch({
-          type: 'CATEGORY_EDITED_SUCCESS',
-          payload: { name, desc },
+      let url = snapshot;
+      if (url) {
+        url = await snapshot.ref.getDownloadURL();
+        editCategoryAPI(firebaseId, name, desc, url).then(() => {
+          // dispatch(fetchCategories());
+          alert('تم التعديل');
+          dispatch({
+            type: 'CATEGORY_EDITED_SUCCESS',
+            payload: { name, desc },
+          });
         });
-      });
+      } else {
+        editCategoryAPI(firebaseId, name, desc, url).then(() => {
+          // dispatch(fetchCategories());
+          alert('تم التعديل');
+          dispatch({
+            type: 'CATEGORY_EDITED_SUCCESS',
+            payload: { name, desc },
+          });
+        });
+      }
     });
   };
 }

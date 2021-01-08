@@ -214,12 +214,13 @@ const AuthStackScreen = () => (
   <AuthStack.Navigator headerMode='none'>
     <AuthStack.Screen name='SignInScreen' component={SignInScreen} />
     <AuthStack.Screen name='SignUpScreen' component={SignUpScreen} />
-    <AuthStack.Screen
+    <AuthStack.Screen name='SignInAdminScreen' component={SignInAdminScreen} />
+    {/* <AuthStack.Screen
       name='SignInAdminScreen'
       component={(header) => (
         <SignInAdminScreen navigation={header.navigation} />
       )}
-    />
+    /> */}
 
     {/* <ContactsStack.Screen name="ContactDetails" component={ContactDetails} /> */}
   </AuthStack.Navigator>
