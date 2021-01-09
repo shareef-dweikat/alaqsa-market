@@ -119,8 +119,67 @@ export function fetchBranches() {
       });
   };
 }
+
+export function pushOrderNotificationAPI(token) {
+  console.log(token, "tokeeen")
+  return (dispatch) => {
+    fetch('https://exp.host/--/api/v2/push/send', {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+        'accept-encoding': 'gzip, deflate',
+        host: 'exp.host',
+      },
+      body: JSON.stringify({
+        to: token,
+        title: "Helloooo",
+        body: "Hello that is my body",
+        
+      }),
+    })
+      .then((response) => response.json())
+      .then((responseJson) => console.log(responseJson, "responseJson"))
+      .catch((error) => {
+        console.log(error, "errrrrrr");
+      });
+  };
+}
+
+export function pushOrderNotification() {
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`admins/Nablus/pushToken`)
+      .once('value', async (pushToken) => {
+        console.log(pushToken, 'pushTokenpushToken');
+        fetch('https://exp.host/--/api/v2/push/send', {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            to: pushToken,
+            title: "لديك طلب جديد",
+            body: "لديك طلب جديد",
+            
+          }),
+        })
+        .then((response) => response.json())
+      .then((responseJson) => console.log(responseJson, "responseJson"))
+        // pushOrderNotificationAPI(pushToken);
+        // dispatch({
+        //   type: 'PROFILE_SUCCESS',
+        //   payload: user.val(),
+        // });
+      })
+      .catch((e) => console.log('createCategoryAPI', e));
+  };
+}
 export function order(seller, phone, totalPrice, transPrice) {
   return (dispatch) => {
+    dispatch(pushOrderNotification())
     firebase
       .database()
       .ref(`cart/${phone}`)
@@ -155,13 +214,3 @@ export function order(seller, phone, totalPrice, transPrice) {
       });
   };
 }
-
-// export function searchAction(txt) {
-//   console.log(txt)
-//   return (dispatch) => {
-//     dispatch({
-//       type: 'SEARCH_CART_PRODUCTS',
-//       text: txt
-//     });
-//   };
-// }

@@ -51,16 +51,6 @@ import DashboardAccounts from '../screens/dashboard/DashboardAccounts';
 import DashboardHomeSlider from '../screens/dashboard/DashboardHomeSlider';
 import CustomerService from '../screens/CustomerService';
 const ContactsStack = createStackNavigator();
-const ContactsStackScreen = ({ navigation }) => (
-  <ContactsStack.Navigator headerMode='none'>
-    {/* <ContactsStack.Screen name='HomeScreen' component={HomeScreen} /> */}
-    <ContactsStack.Screen name='SearchScreen' component={SearchScreen} />
-    <ContactsStack.Screen name='FavScreen' component={FavScreen} />
-
-    {/* <ContactsStack.Screen name="ContactDetails" component={ContactDetails} /> */}
-  </ContactsStack.Navigator>
-);
-
 const TabStack = createStackNavigator();
 const TabsStackScreen = ({ navigation }) => (
   <TabStack.Navigator headerMode='none'>
@@ -77,93 +67,6 @@ const TabsStackScreen = ({ navigation }) => (
     <RootStack.Screen name='OrdersPage' component={OrdersPage} />
   </TabStack.Navigator>
 );
-// const TabsStack = createBottomTabNavigator();
-// const TabsStackScreen = ({ navigation }) => (
-//   <TabsStack.Navigator
-//     tabBarOptions={{
-//       // activeTintColor: GOLDEN,
-//       showLabel: false,
-//       // activeBackgroundColor:  'blue'
-//     }}
-//   >
-//     <TabsStack.Screen
-//       name='ProfileScreen'
-//       component={ProfileScreen}
-//       options={{
-//         tabBarLabel: '',
-//         tabBarIcon: (props) => (
-//           <ProfileIcon
-//             size={props.size}
-//             color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
-//           />
-//         ),
-//       }}
-//     />
-//     <TabsStack.Screen
-//       name='NotificationsScreen'
-//       component={NotificationsScreen}
-//       options={{
-//         tabBarLabel: '',
-//         tabBarIcon: (props) => (
-//           //props.foucused
-//           <AntDesign
-//             name='notification'
-//             size={props.size}
-//             color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
-//           />
-//         ),
-//       }}
-//     />
-//     <TabsStack.Screen
-//       name='ContactsList'
-//       component={ContactsStackScreen}
-//       options={{
-//         tabBarLabel: '',
-//         tabBarIcon: (props) => (
-//           //props.foucused
-//           <View style={{ position: 'relative', bottom: 20 }}>
-//             <HomeIcon
-//               size={props.size}
-//               color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
-//             />
-//           </View>
-//         ),
-//       }}
-//     />
-
-//     <TabsStack.Screen
-//       name='CartScreen'
-//       component={CartScreen}
-//       options={{
-//         tabBarIcon: (props) => (
-//           //props.foucused
-//           <AntDesign
-//             name='shoppingcart'
-//             size={props.size}
-//             color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
-//           />
-//         ),
-//       }}
-//     />
-
-//     <TabsStack.Screen
-//       name='CategoriesScreen'
-//       component={CategoriesScreen}
-//       options={{
-//         tabBarLabel: '',
-//         tabBarIcon: (props) => (
-//           //props.foucused
-//           <CategoriesIcon
-//             size={props.size}
-//             color={props.focused ? Colors.GOLDEN : Colors.IN_ACTIVE_TAP}
-//           />
-//         ),
-//       }}
-//     />
-
-//     {/* <ContactsStack.Screen name="ContactDetails" component={ContactDetails} /> */}
-//   </TabsStack.Navigator>
-// );
 
 const DrawerStack = createDrawerNavigator();
 const DrawerStackScreen = () => (
@@ -215,14 +118,6 @@ const AuthStackScreen = () => (
     <AuthStack.Screen name='SignInScreen' component={SignInScreen} />
     <AuthStack.Screen name='SignUpScreen' component={SignUpScreen} />
     <AuthStack.Screen name='SignInAdminScreen' component={SignInAdminScreen} />
-    {/* <AuthStack.Screen
-      name='SignInAdminScreen'
-      component={(header) => (
-        <SignInAdminScreen navigation={header.navigation} />
-      )}
-    /> */}
-
-    {/* <ContactsStack.Screen name="ContactDetails" component={ContactDetails} /> */}
   </AuthStack.Navigator>
 );
 

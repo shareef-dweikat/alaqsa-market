@@ -28,54 +28,15 @@ export const setAdminType = (USERTYPE_FROM_ASYNC, USER_USERNAME_FROM_ASYNC) => {
   };
 };
 
-const handleSignIn = async (phone, pass) => {
-  // console.log(email, password);
-  // let problem = null;
-  // try {
-  //   const response = await Auth.signIn(email, password);
-  //   const idToken = response
-  //     .getSignInUserSession()
-  //     ?.getIdToken()
-  //     ?.getJwtToken();
-  //   if (idToken) return idToken;
-  // } catch (e) {
-  //   return e;
-  // }
-};
-
-const handleSignUp = async (email, password) => {
-  let problem = null;
-
-  try {
-    await Auth.signUp({
-      username: email.toLowerCase(),
-      password,
-      // attributes: {
-      //   email: email.toLowerCase(),
-      //   given_name: firstName,
-      //   family_name: lastName,
-      // },
-    });
-  } catch (e) {
-    // setErrorMessage(e);
-    return e;
-    // console.log('eesss', e);
-    // problem = e;
-  }
-
-  return true;
-};
-
 export function login(phone, pass, navigation) {
-  console.log(phone)
+  console.log(phone);
 
   return (dispatch) => {
-
     firebase
       .database()
       .ref(`users/${phone}`)
-      .once('value',  (user) => {
-        console.log(user.val())
+      .once('value', (user) => {
+        console.log(user.val());
         if (user.val() != null && pass == user.val().pass) {
           AsyncStorage.setItem('userType', 'customer');
           AsyncStorage.setItem('phone', phone + '');
@@ -87,12 +48,11 @@ export function login(phone, pass, navigation) {
         } else alert('خطا في العلومات');
       })
       .catch((e) => console.log('createCategoryAPI', e));
-   
   };
 }
 
-export function signup(phone, pass,email, name, navigation) {
-  console.log(name, "my_Nme")
+export function signup(phone, pass, email, name, navigation) {
+  console.log(name, 'my_Nme');
   return (dispatch) => {
     firebase
       .database()
@@ -101,9 +61,10 @@ export function signup(phone, pass,email, name, navigation) {
         pass,
         email,
         name,
-      }).then(()=>{
-        alert('تم التسجيل بنجاح')
-        navigation.pop()
+      })
+      .then(() => {
+        alert('تم التسجيل بنجاح');
+        navigation.pop();
       })
       .catch((e) => console.log('addProductToCartAPI', e));
   };
@@ -133,6 +94,23 @@ export function updateProfile(phone, field, value) {
   };
 }
 
+export function uploadPushToken(userType, pushToken) {
+  return (dispatch) => {
+    if (userType == 'seller')
+      firebase
+        .database()
+        .ref(`admins/Nablus`)
+        .update({ pushToken })
+        .catch((e) => console.log('createCategoryAPI', e));
+    // else
+    //   firebase
+    //     .database()
+    //     .ref(`users/`)
+    //     .set({pushToken})
+    //     .catch((e) => console.log('createCategoryAPI', e));
+  };
+}
+
 export function fetchSellerAccounts() {
   return (dispatch) => {
     firebase
@@ -147,7 +125,3 @@ export function fetchSellerAccounts() {
       .catch((e) => console.log('fetchSellerAccounts', e));
   };
 }
-// dispatch({
-//   type: 'PROFILE_SUCCESS',
-//   payload: user.val(),
-// });

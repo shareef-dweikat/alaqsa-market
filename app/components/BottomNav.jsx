@@ -10,6 +10,7 @@ import {
 import CategoriesIcon from '../../assets/categories-icon.svg';
 import { AntDesign } from '@expo/vector-icons';
 import HomeIcon from '../../assets/home-icon.svg';
+import Notifications from '../../assets/bell.svg';
 import ProfileIcon from '../../assets/profile-icon.svg';
 import Colors from '../constants/colors';
 const styles = StyleSheet.create({
@@ -40,7 +41,7 @@ export default function BottomNav({ navigation }) {
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.push('NotificationsScreen')}>
-        <AntDesign
+        <Notifications
           name='notification'
           color={
             currentScreen === 'NotificationsScreen' ? Colors.GOLDEN : 'black'

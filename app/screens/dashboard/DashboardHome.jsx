@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import bb from '../../../assets/home/header.png';
 import { SafeAreaView } from 'react-navigation';
+import * as Notifications from 'expo-notifications';
 
 import DrawerIcon from '../../../assets/drawer-icon.svg';
 import SearchIcon from '../../../assets/dashboard-drawer/search.svg';
@@ -16,8 +17,9 @@ import BellIcon from '../../../assets/dashboard-drawer/bell.svg';
 import SIcon from '../../../assets/small-search-icon.svg';
 import Colors from '../../constants/colors';
 import { useDispatch, useSelector } from 'react-redux';
+import { uploadPushToken } from '../../store/action/auth';
 
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import { setAdminType } from '../../store/action/auth';
 import { getSalesStatistics } from '../../store/action/orders';
 
@@ -43,13 +45,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 8,
-    borderRadius: 10
+    borderRadius: 10,
   },
 });
 export default function DashboardHome({ navigation }) {
   const dispatch = useDispatch();
   const statistics = useSelector((state) => state.orders.statistics);
+  const userType = useSelector((state) => state.auth.userType);
+
   useEffect(() => {
+    const getToken = async () => {
+      // const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      const expoPushToken = await Notifications.getExpoPushTokenAsync();
+      dispatch(uploadPushToken(userType, expoPushToken.data));
+      Notifications.addNotificationReceivedListener((d) => {
+        console.log(d, 'zzxxxx');
+        alert('notifiatino rec');
+      });
+    };
+    getToken();
     const getUsername = async () => {
       const userType = await AsyncStorage.getItem('userType');
       const username = await AsyncStorage.getItem('username');

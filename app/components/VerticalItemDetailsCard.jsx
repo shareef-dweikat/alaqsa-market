@@ -111,7 +111,7 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
           fontFamily: 'Tajawal-Regular',
           textAlign: 'right',
           width: '100%',
-          marginTop: 16,
+          marginTop: 8,
           color: '#515462',
         }}
       >
@@ -124,7 +124,7 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
           justifyContent: 'flex-end',
           alignItems: 'center',
           // paddingHorizontal: 32,
-          marginTop: 32,
+          marginTop: 8,
         }}
       >
         <View>
