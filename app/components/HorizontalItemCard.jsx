@@ -59,7 +59,7 @@ export default function HorizontalItemCard({
     <TouchableOpacity
       onPress={onPress}
       style={{
-        width: 120,
+        width: 110,
         height: 200,
         borderWidth: 1,
         borderColor: '#d0d0d0',
@@ -70,7 +70,7 @@ export default function HorizontalItemCard({
       }}
     >
       <Image
-        style={{ width: 100, height: 100, marginRight: 8, borderRadius: 5 }}
+        style={{ width: 100, height: 100, borderRadius: 5 }}
         source={{ uri: image }}
       />
       <View

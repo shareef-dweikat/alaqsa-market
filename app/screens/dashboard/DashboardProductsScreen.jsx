@@ -8,7 +8,6 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  ScrollView,
   ActivityIndicator,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,6 +23,7 @@ import BellIcon from '../../../assets/dashboard-drawer/bell.svg';
 import SIcon from '../../../assets/small-search-icon.svg';
 import Colors from '../../constants/colors';
 import { editProduct, fetchProducts } from '../../store/action/product';
+import { FlatList } from 'react-native-gesture-handler';
 const styles = StyleSheet.create({
   container: {
     // flex: 1,
@@ -142,18 +142,13 @@ export default function DashboardHome({ navigation }) {
             >
               المنتجات
             </Text>
-            {/* <TouchableOpacity
-              // style={{ marginLeft: 8, flex: 1 }}
-              onPress={() => navigation.toggleDrawer()}
-            >
-              <DrawerIcon />
-            </TouchableOpacity> */}
           </View>
         </View>
       </SafeAreaView>
 
-      <ScrollView style={styles.container}>
-        {products.map((item) => (
+      <FlatList
+        data={products}
+        renderItem={({item}) => (
           <VerticalItemCard
             productFirebaseId={item.productFirebaseId}
             catId={item.categoryFirebaseId}
@@ -166,9 +161,9 @@ export default function DashboardHome({ navigation }) {
             isVisible={item.isVisible}
             navigation={navigation}
           />
-        ))}
-        <View style={{ height: 100 }}></View>
-      </ScrollView>
+        )}
+      />
+ 
       <TouchableOpacity
         onPress={() => navigation.push('AddProductScreen')}
         style={styles.fab}
@@ -200,7 +195,6 @@ function VerticalItemCard({
   };
   const handleDelete = () => {
     setDeleteDialogVisible(false);
-    console.log(catId, productFirebaseId, 'firebaseIdddd');
     dispatch(deleteProduct(catId, productFirebaseId));
   };
   const handleEdit = (catName, catDesc, image, productVisible) => {

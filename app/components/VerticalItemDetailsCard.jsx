@@ -132,7 +132,10 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
             keyboardType='number-pad'
             value={quantity}
             onChangeText={(txt) => {
-              if (txt == '0' || txt =='') return;
+              if (txt == 0) {
+                setQuantity(txt);
+                return;
+              }
               setQuantity(txt);
             }}
             style={{

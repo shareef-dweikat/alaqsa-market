@@ -47,11 +47,11 @@ export default function CategoriesScreen({ route, navigation }) {
   const isLoading = useSelector((state) => state.cart.isLoading);
 
   const handleAddToCart = (product, navigation, phone) => {
-    if (!product.isVisible){
-      alert('هذا المنتج غير متوفر')
-      return
+    if (!product.isVisible) {
+      alert('هذا المنتج غير متوفر');
+      return;
     }
-    dispatch(addProductToCart(product, navigation, phone, "1"));
+    dispatch(addProductToCart(product, navigation, phone, '1'));
   };
   const search = (txt) => {
     // dispatch(searchAction(txt))
@@ -147,7 +147,7 @@ export default function CategoriesScreen({ route, navigation }) {
         </TouchableOpacity>
       </View>
       <ScrollView style={{ maxHeight: 60, marginRight: 16 }} horizontal>
-         {names &&
+        {names &&
           names.map((name) => (
             <Card
               key={name}
@@ -156,14 +156,7 @@ export default function CategoriesScreen({ route, navigation }) {
               onPress={() => parseCategpry(name)}
             />
           ))}
-
-        {/* <Card
-          backgroundColor={Colors.GOLDEN}
-          color={Colors.WHITE}
-          name='الكل'
-          onPress={() => allProducts()}
-        /> */}
-      </ScrollView> 
+      </ScrollView>
       <ScrollView style={{ paddingHorizontal: 16 }}>
         {isVertical ? (
           products &&
@@ -236,7 +229,11 @@ export function Card({ name, backgroundColor, color = 'black', onPress }) {
         marginBottom: 32,
       }}
     >
-      <Text style={{ color: color, fontFamily: 'Tajawal-Medium', fontSize: 12 }}>{name}</Text>
+      <Text
+        style={{ color: color, fontFamily: 'Tajawal-Medium', fontSize: 12 }}
+      >
+        {name}
+      </Text>
     </TouchableOpacity>
   );
 }

@@ -125,7 +125,7 @@ export function OrderCardContainer({ date, products, order }) {
   console.log(order, "adasdsadccccccc")
   const dispatch = useDispatch();
   const [status, setStatus] = useState(order.status);
-  let myProducts = Object.values(products);
+  let myProducts = products ?Object.values(products): []
   const username = useSelector((state) => state.auth.username);
   const handleChangeStatus = (orderId, status) => {
     setStatus(status);

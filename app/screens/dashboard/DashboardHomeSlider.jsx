@@ -67,7 +67,6 @@ export default function DashboardHomeSlider({ navigation }) {
           </TouchableOpacity>
           <View style={{ width: '100%', marginRight: 16 }}>
             <Text style={styles.lookForProductText}>السلايدر الإعلاني</Text>
-            {/* <SearchBox /> */}
           </View>
         </View>
       </View>
@@ -133,9 +132,7 @@ export function SlideCard({ slide }) {
             <TouchableOpacity onPress={() => pickImage()}>
               <EditIcon style={{ marginRight: 8 }} />
             </TouchableOpacity>
-            {/* <TouchableOpacity onPress={() => showDeleteDialog()}>
-              <DeleteIcon style={{ marginRight: 16 }} />
-            </TouchableOpacity> */}
+           
           </View>
           <Text style={{ fontFamily: 'Tajawal-Regular' }}>
             {' '}
@@ -147,7 +144,7 @@ export function SlideCard({ slide }) {
           resizeMode='contain'
           source={{ uri: uploadeImageUri }}
         />
-        <TextInput
+        {/* <TextInput
           style={{
             backgroundColor: '#515462',
             borderRadius: 10,
@@ -160,7 +157,7 @@ export function SlideCard({ slide }) {
           value={value}
           placeholderTextColor='white'
           placeholder='اكتب نصا هنا'
-        />
+        /> */}
         <TouchableOpacity
           onPress={() => handleUpdate()}
           style={{
