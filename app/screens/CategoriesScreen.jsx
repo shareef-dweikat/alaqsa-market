@@ -17,7 +17,11 @@ import ListViewIcon from '../../assets/list-view.svg';
 import GridViewIcon from '../../assets/grid-view.svg';
 import SIcon from '../../assets/small-search-icon.svg';
 import VerticalItemCard from '../components/VerticalItemCard';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import {
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+} from 'react-native-gesture-handler';
 import Colors from '../constants/colors';
 import SearchBox from '../components/SearchBox';
 import HorizontalItemCard from '../components/HorizontalItemCard';
@@ -53,9 +57,7 @@ export default function CategoriesScreen({ route, navigation }) {
     }
     dispatch(addProductToCart(product, navigation, phone, '1'));
   };
-  const search = (txt) => {
-    // dispatch(searchAction(txt))
-  };
+
   const parseCategpry = (name) => {
     for (let index in categories) {
       if (categories[index].category_name === name) {
@@ -157,13 +159,62 @@ export default function CategoriesScreen({ route, navigation }) {
             />
           ))}
       </ScrollView>
-      <ScrollView style={{ paddingHorizontal: 16 }}>
+
+      <FlatList
+        data={products}
+        contentContainerStyle={
+          !isVertical
+            ? {
+                justifyContent: 'space-between',
+                flexDirection: 'row',
+                flexWrap: 'wrap',
+                paddingHorizontal: 8,
+                
+              }
+            : {}
+        }
+        keyExtractor={(item) => item.product_name + item.product_desc}
+        renderItem={({ item }) => (
+          <>
+            {isVertical ? (
+              <VerticalItemCard
+                image={item.image}
+                add={() => handleAddToCart(item, navigation, phone)}
+                name={item.product_name}
+                desc={item.product_desc}
+                isFav={item.isVisible}
+                price={item.price}
+                product={item}
+                phone={phone}
+                addToFav={() => dispatch(setFav(item, phone))}
+                deleteFromFav={() => navigation.push('FavScreen')}
+                onPress={() => navigation.push('ItemDetailsScreen', { item })}
+              />
+            ) : (
+              <HorizontalItemCard
+                key={item.product_name}
+                add={() => handleAddToCart(item, navigation, phone)}
+                image={item.image}
+                name={item.product_name}
+                desc={item.product_desc}
+                product={item}
+                addToFav={() => dispatch(setFav(item, phone))}
+                deleteFromFav={() => navigation.push('FavScreen')}
+                price={item.price}
+                onPress={() => navigation.push('ItemDetailsScreen', { item })}
+              />
+            )}
+          </>
+        )}
+      />
+
+      {/* <ScrollView style={{ paddingHorizontal: 16 }}>
         {isVertical ? (
           products &&
           products.map((product) => (
             <VerticalItemCard
               image={product.image}
-              key={product.product_name}
+              key={product.product_name + product.product_desc}
               add={() => handleAddToCart(product, navigation, phone)}
               name={product.product_name}
               desc={product.product_desc}
@@ -203,7 +254,7 @@ export default function CategoriesScreen({ route, navigation }) {
               ))}
           </View>
         )}
-      </ScrollView>
+      </ScrollView> */}
       <LoadingModal visible={isLoading} />
       <BottomNav navigation={navigation} />
     </SafeAreaView>

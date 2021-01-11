@@ -59,7 +59,7 @@ export default function HorizontalItemCard({
     <TouchableOpacity
       onPress={onPress}
       style={{
-        width: 110,
+        width: 120,
         height: 200,
         borderWidth: 1,
         borderColor: '#d0d0d0',
@@ -70,7 +70,7 @@ export default function HorizontalItemCard({
       }}
     >
       <Image
-        style={{ width: 100, height: 100, borderRadius: 5 }}
+        style={{ width: 110, height: 100, borderRadius: 5 }}
         source={{ uri: image }}
       />
       <View
@@ -78,7 +78,7 @@ export default function HorizontalItemCard({
           flexDirection: 'row',
           justifyContent: 'space-between',
           width: '100%',
-          paddingHorizontal: 16,
+          paddingHorizontal: 4,
           marginTop: 8,
         }}
       >
@@ -91,7 +91,14 @@ export default function HorizontalItemCard({
             <HeartEmptyIcon />
           </TouchableOpacity>
         )}
-        <Text style={{ textAlign: 'right', fontFamily: 'Tajawal-Medium' }}>
+        <Text
+          style={{
+            textAlign: 'right',
+            fontFamily: 'Tajawal-Medium',
+            fontSize: 12,
+            width: 90,
+          }}
+        >
           {name}
         </Text>
       </View>

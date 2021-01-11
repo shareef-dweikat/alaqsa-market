@@ -43,9 +43,9 @@ export default function VerticalItemCard({
   phone,
 }) {
   const [isFav, setIsFav] = useState(false);
+  console.log(product, "cscscsc")
   const handleFav = async () => {
     const x = await AsyncStorage.getItem(product.firebaseId);
-     console.log(x, "pdddf")
     if (x) {
       // AsyncStorage.removeItem(product.firebaseId);
       //  setIsFav(false);
@@ -65,7 +65,7 @@ export default function VerticalItemCard({
         setIsFav(true);
       }
     };
-    getProductId();
+     getProductId();
   }, []);
   return (
     <TouchableOpacity
