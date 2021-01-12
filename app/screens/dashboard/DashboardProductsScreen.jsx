@@ -104,7 +104,7 @@ export default function DashboardHome({ navigation }) {
               alignItems: 'center',
             }}
           >
-            <BellIcon color={Colors.INACTIVE_VIEW_TAP} />
+            {/* <BellIcon color={Colors.INACTIVE_VIEW_TAP} /> */}
             <View
               style={{
                 position: 'relative',
