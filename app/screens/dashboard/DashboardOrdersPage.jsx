@@ -122,15 +122,20 @@ export default function DashboardOrdersPage({ navigation }) {
 }
 
 export function OrderCardContainer({ date, products, order }) {
-  console.log(order, "adasdsadccccccc")
+  console.log(order, 'adasdsadccccccc');
   const dispatch = useDispatch();
   const [status, setStatus] = useState(order.status);
-  let myProducts = products ?Object.values(products): []
+  let myProducts = products ? Object.values(products) : [];
   const username = useSelector((state) => state.auth.username);
-  const handleChangeStatus = (orderId, status) => {
+  const handleChangeStatus = (orderId, status, preStatus) => {
+    if(preStatus == 'تم التوصيل') {
+      alert('لا يمكن تغير حالة تم التوصيل')
+      return
+    }
     setStatus(status);
     dispatch(changeStatus(orderId, username, status));
-    dispatch(updateSalesStatistics(username, order.totalPrice));
+    if (status == 'تم التوصيل')
+      dispatch(updateSalesStatistics(username, order.totalPrice));
   };
   const handleHeaderClicked = () => {};
   return (
@@ -155,13 +160,15 @@ export function OrderCardContainer({ date, products, order }) {
         {myProducts.length > 0 && (
           <>
             {myProducts &&
-              myProducts.map((product) => ( 
+              myProducts.map((product) => (
                 <View style={styles.productRow}>
                   <Text style={styles.productPrice}>{product.price} شيكل</Text>
                   <Text style={styles.productName}>
                     {product.product_desc.substring(0, 10)}
                   </Text>
-                  <Text style={styles.productName}>الكمية: {product.quantity} </Text>
+                  <Text style={styles.productName}>
+                    الكمية: {product.quantity}{' '}
+                  </Text>
                   <Text style={styles.productName}>{product.product_name}</Text>
                 </View>
               ))}
@@ -274,7 +281,7 @@ export function OrderCardContainer({ date, products, order }) {
               paddingHorizontal: 8,
               borderRadius: 5,
             }}
-            onPress={() => handleChangeStatus(order.orderId, 'تم التوصيل')}
+            onPress={() => handleChangeStatus(order.orderId, 'تم التوصيل', status)}
           >
             <Text style={{ color: 'green', fontFamily: 'Tajawal-Regular' }}>
               تم التوصيل
@@ -288,7 +295,7 @@ export function OrderCardContainer({ date, products, order }) {
               paddingHorizontal: 8,
               borderRadius: 5,
             }}
-            onPress={() => handleChangeStatus(order.orderId, 'قبول')}
+            onPress={() => handleChangeStatus(order.orderId, 'قبول', status)}
           >
             <Text style={{ color: 'orange', fontFamily: 'Tajawal-Regular' }}>
               قبول
@@ -302,7 +309,7 @@ export function OrderCardContainer({ date, products, order }) {
               paddingHorizontal: 8,
               borderRadius: 5,
             }}
-            onPress={() => handleChangeStatus(order.orderId, 'رفض')}
+            onPress={() => handleChangeStatus(order.orderId, 'رفض', status)}
           >
             <Text style={{ color: 'red', fontFamily: 'Tajawal-Regular' }}>
               رفض

@@ -43,20 +43,16 @@ export default function VerticalItemCard({
   phone,
 }) {
   const [isFav, setIsFav] = useState(false);
-  console.log(product, "cscscsc")
+  console.log(image, "cscscsc")
   const handleFav = async () => {
     const x = await AsyncStorage.getItem(product.firebaseId);
     if (x) {
-      // AsyncStorage.removeItem(product.firebaseId);
-      //  setIsFav(false);
        deleteFromFav();
     } else {
       AsyncStorage.setItem(product.firebaseId, product.firebaseId);
       setIsFav(true);
       addToFav(product, phone);
     }
-
-    // const x = await AsyncStorage.getItem(product.firebaseId)
   };
   useEffect(() => {
     const getProductId = async () => {

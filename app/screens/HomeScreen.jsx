@@ -9,7 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-import bb from '../../assets/home/header.png';
+
 import { SafeAreaView } from 'react-navigation';
 import { Ionicons } from '@expo/vector-icons';
 import * as Permissions from 'expo-permissions';
@@ -17,7 +17,8 @@ import BottomNav from '../components/BottomNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSlideImage } from '../store/action/homeSlider';
 import { fetchCategories } from '../store/action/category';
-import { uploadPushToken } from '../store/action/auth';
+import { uploadCustomerPushToken } from '../store/action/auth';
+import firebase from '../config/firebase';
 
 
 import HorizontalCategoryCard from '../components/HorizontalCategoryCard';
@@ -52,15 +53,17 @@ export default function HomeScreen({ navigation }) {
     dispatch(fetchSlideImage());
     dispatch(fetchCategories());
     const getToken = async () => {
-      const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-
+      // const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
       const expoPushToken = await Notifications.getExpoPushTokenAsync();
-      dispatch(uploadPushToken(userType, expoPushToken.data))
-      Notifications.addNotificationReceivedListener((d) => {
-        console.log(d, 'zzxxxx');
-      });
+      firebase
+      .database()
+      .ref(`notificatios-tokens`)
+      .push({ token: expoPushToken.data })
+      .then((d) => console.log(d, 'dataaa'))
+     
     };
-    // getToken();
+    
+     getToken();
     // registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
     // parseCategpry(names[0]);
   }, []);

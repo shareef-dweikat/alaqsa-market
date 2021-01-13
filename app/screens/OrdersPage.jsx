@@ -79,7 +79,6 @@ export default function OrdersPage({ navigation }) {
   const order = useSelector((state) => state.orders.order);
   const products = useSelector((state) => state.orders.products);
   const [orderId, setOrderId] = useState('');
-  console.log(orders, 'orderssdsdd');
   useEffect(() => {
     // firebasef
     //   .database()
@@ -102,19 +101,21 @@ export default function OrdersPage({ navigation }) {
           {/* <SearchBox /> */}
         </View>
       </View>
-      {orders &&
-        orders.map((orderHeader) => (
-          <OrderCardsContainer
-            orders={orders}
-            products={products}
-            order={order}
-            orderHeader={orderHeader}
-            orderId={orderId}
-            setOrderId={setOrderId}
-          />
-        ))}
+      <ScrollView>
+        {orders &&
+          orders.map((orderHeader) => (
+            <OrderCardsContainer
+              orders={orders}
+              products={products}
+              order={order}
+              orderHeader={orderHeader}
+              orderId={orderId}
+              setOrderId={setOrderId}
+            />
+          ))}
+      </ScrollView>
 
-      <ScrollView style={{ padding: 8 }}></ScrollView>
+      <View style={{ padding: 8 }}></View>
     </SafeAreaView>
   );
 }
@@ -159,8 +160,12 @@ export function OrderCardsContainer({
                 <View style={styles.productRow}>
                   <Text style={styles.productPrice}>{product.price} شيكل</Text>
                   <Text style={styles.productName}>
-                    {product.product_desc.substring(0, 25)}
+                    {product.product_desc.substring(0, 10)}
                   </Text>
+                  <View style={{ flexDirection: 'row' }}>
+                    <Text style={styles.productName}>{product.quantity}</Text>
+                    <Text style={styles.productName}>الكمية: </Text>
+                  </View>
                   <Text style={styles.productName}>{product.product_name}</Text>
                 </View>
               ))}
@@ -186,7 +191,7 @@ export function OrderCardsContainer({
                 >
                   {order.transPrice} شيكل
                 </Text>
-                
+
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
@@ -236,7 +241,7 @@ export function OrderCardsContainer({
                 >
                   التوصيل
                 </Text>
-            
+
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
@@ -263,4 +268,3 @@ export function OrderCardsContainer({
     </>
   );
 }
-

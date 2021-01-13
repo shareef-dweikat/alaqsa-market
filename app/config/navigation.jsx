@@ -50,6 +50,7 @@ import { setUserType } from '../store/action/auth';
 import DashboardAccounts from '../screens/dashboard/DashboardAccounts';
 import DashboardHomeSlider from '../screens/dashboard/DashboardHomeSlider';
 import CustomerService from '../screens/CustomerService';
+import DashboardNotifications from '../screens/dashboard/DashboardNotifications';
 const ContactsStack = createStackNavigator();
 const TabStack = createStackNavigator();
 const TabsStackScreen = ({ navigation }) => (
@@ -232,6 +233,11 @@ const RootStackScreen = () => {
         name='DashboardHomeSlider'
         component={DashboardHomeSlider}
       />
+      <DashboardDrawerStack.Screen
+        name='DashboardNotifications'
+        component={DashboardNotifications}
+      />
+
       <DashboardDrawerStack.Screen
         name='DashboardAccounts'
         component={DashboardAccounts}

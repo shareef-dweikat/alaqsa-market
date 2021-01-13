@@ -94,7 +94,7 @@ export default function DashboardHome({ navigation }) {
             }}
           >
             {/* <BellIcon color={Colors.INACTIVE_VIEW_TAP} /> */}
-            <View
+            {/* <View
               style={{
                 position: 'relative',
                 bottom: 10,
@@ -118,7 +118,7 @@ export default function DashboardHome({ navigation }) {
               >
                 2
               </Text>
-            </View>
+            </View> */}
             {/* <SearchIcon
               color={Colors.ACTIVE_VIEW_TAP}
               style={{ marginRight: 8 }}

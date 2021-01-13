@@ -168,13 +168,9 @@ export function pushOrderNotification() {
         })
         .then((response) => response.json())
       .then((responseJson) => console.log(responseJson, "responseJson"))
-        // pushOrderNotificationAPI(pushToken);
-        // dispatch({
-        //   type: 'PROFILE_SUCCESS',
-        //   payload: user.val(),
-        // });
+
       })
-      .catch((e) => console.log('createCategoryAPI', e));
+      .catch((e) => console.log('pushOrderNotification', e));
   };
 }
 export function order(seller, phone, totalPrice, transPrice) {

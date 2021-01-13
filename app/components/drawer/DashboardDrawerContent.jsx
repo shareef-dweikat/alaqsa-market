@@ -9,7 +9,7 @@ import {
   AsyncStorage,
 } from 'react-native';
 import Colors from '../../constants/colors';
-import { SafeAreaView } from 'react-navigation';
+import BellIcon from '../../../assets/dashboard-drawer/bell.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import AccountManeger from '../../../assets/drawer/account.svg';
 import CategoriesIcon from '../../../assets/dashboard-drawer/cat-icon.svg';
@@ -157,16 +157,18 @@ export default function DashboardDrawerContent({ value, navigation }) {
             color={Colors.WHITE}
           />
         }
-      />
-       <Tap
-        title='الرئائل والإبلاغات'
+      />*/}
+      <Tap
+        title='الإشعارات'
         tapIcon={
-          <SignOut
+          <BellIcon
             // color={Colors.BACKGROUND}
-            color={Colors.WHITE}
+            // color={Colors.WHITE}
+            style={{width: 20, height: 20}}
+            onPress={() => navigation.push('DashboardNotifications')}
           />
         }
-      />*/}
+      />
       <Tap
         title='تسجيل خروج'
         onPress={() => {

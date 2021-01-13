@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 });
 export default function ItemDetailsScreen({ route, navigation }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
-   const product = route.params.item
+  const product = route.params.item ? route.params.item : route.params.product;
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />

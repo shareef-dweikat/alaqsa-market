@@ -59,7 +59,7 @@ export default function SearchScreen({ navigation }) {
         myProducts.push(products[i]);
       }
     }
-
+      console.log(myProducts, "myProductsssss")
     setFilterdProducts(myProducts);
   };
   useEffect(() => {

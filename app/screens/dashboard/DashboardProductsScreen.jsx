@@ -105,7 +105,7 @@ export default function DashboardHome({ navigation }) {
             }}
           >
             {/* <BellIcon color={Colors.INACTIVE_VIEW_TAP} /> */}
-            <View
+            {/* <View
               style={{
                 position: 'relative',
                 bottom: 10,
@@ -129,7 +129,7 @@ export default function DashboardHome({ navigation }) {
               >
                 2
               </Text>
-            </View>
+            </View> */}
           </View>
 
           <View style={{ flexDirection: 'row' }}>

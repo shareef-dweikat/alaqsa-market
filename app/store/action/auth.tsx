@@ -1,7 +1,6 @@
 import { AsyncStorage } from 'react-native';
 import firebase from '../../config/firebase';
-import navigation from '../../config/navigation';
-import { Field } from '../../screens/ProfileScreen';
+
 
 export const setUserType = (USER_FROM_ASYNC, USER_PHONE_FROM_ASYNC) => {
   console.log('ctra', USER_FROM_ASYNC);
@@ -102,12 +101,22 @@ export function uploadPushToken(userType, pushToken) {
         .ref(`admins/Nablus`)
         .update({ pushToken })
         .catch((e) => console.log('createCategoryAPI', e));
-    // else
-    //   firebase
-    //     .database()
-    //     .ref(`users/`)
-    //     .set({pushToken})
-    //     .catch((e) => console.log('createCategoryAPI', e));
+  };
+}
+export function uploadCustomerPushToken(pushToken) {
+  console.log(pushToken, 'pushTokensssss');
+  // if (userType == 'seller')
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`notificatios-tokens`)
+      .push({ pushToken })
+      .then((d) => console.log(d, 'dataaa'))
+      .catch((e) => console.log('uploadCustomerPushToken', e));
+      dispatch({
+        type: 'FETCddd',
+        // payload: sellers.val(),
+      });
   };
 }
 
