@@ -9,7 +9,7 @@ import {
   AsyncStorage,
 } from 'react-native';
 import Colors from '../../constants/colors';
-import BellIcon from '../../../assets/dashboard-drawer/bell.svg';
+import NotificationsIcon from '../../../assets/notification-icon.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import AccountManeger from '../../../assets/drawer/account.svg';
 import CategoriesIcon from '../../../assets/dashboard-drawer/cat-icon.svg';
@@ -160,12 +160,16 @@ export default function DashboardDrawerContent({ value, navigation }) {
       />*/}
       <Tap
         title='الإشعارات'
+        onPress={() => navigation.push('DashboardNotifications')}
         tapIcon={
-          <BellIcon
+          <NotificationsIcon
             // color={Colors.BACKGROUND}
             // color={Colors.WHITE}
-            style={{width: 20, height: 20}}
-            onPress={() => navigation.push('DashboardNotifications')}
+            // style={{width: 20, height: 20}}
+            // onPress={() => navigation.push('DashboardNotifications')}
+            color={
+              Colors.WHITE 
+            }
           />
         }
       />

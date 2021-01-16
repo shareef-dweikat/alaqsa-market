@@ -29,7 +29,8 @@ export function addProduct(product, navigation, categories) {
         let url = await snapshot.ref.getDownloadURL();
         addProductAPI(product, url, catFirebaseId).then(() => {
           dispatch(fetchProducts());
-          navigation.goBack();
+          // navigation.goBack();
+          alert('تم الإضافة بنجاح')
           dispatch({
             type: 'PRODUCT_ADD_SUCCESS',
           });

@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
 });
 export default function AddProductScreen({ navigation }) {
@@ -111,7 +111,7 @@ export default function AddProductScreen({ navigation }) {
       // productDesc !== '' &&
       productCat !== '' &&
       price !== ''
-    )
+    ) {
       dispatch(
         addProduct(
           {
@@ -126,7 +126,8 @@ export default function AddProductScreen({ navigation }) {
           categories
         )
       );
-    else alert('كل الحقول اجبارية');
+      navigation.pop();
+    } else alert('كل الحقول اجبارية');
   };
 
   useEffect(() => {
@@ -280,7 +281,7 @@ export default function AddProductScreen({ navigation }) {
               </View>
             )}
           </TouchableOpacity>
-          <LoadingModal visible={isLoading} />
+          {/* <LoadingModal visible={isLoading} /> */}
           {/* <View style={{height: 100}}></View> */}
         </View>
       </ScrollView>

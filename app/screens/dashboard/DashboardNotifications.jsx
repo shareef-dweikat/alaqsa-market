@@ -24,7 +24,7 @@ const styles = StyleSheet.create({
     width: '100%',
     marginTop: 16,
     borderRadius: 5,
-    paddingHorizontal: 8
+    paddingHorizontal: 8,
   },
   btn: {
     backgroundColor: '#F8A912',
@@ -59,8 +59,21 @@ export default function DashboardNotifications({ navigation }) {
         paddingHorizontal: 16,
       }}
     >
+      <Text
+        style={{
+          textAlign: 'center',
+          fontFamily: 'Tajawal-Bold',
+          marginBottom: 16,
+          fontSize: 18
+        }}
+      >
+        نموذج الإشعارات
+      </Text>
       <TextInput style={styles.input} onChangeText={(txt) => setTitle(txt)} />
-      <TextInput style={{ ...styles.input, height: 60 }} onChangeText={(txt) => setDesc(txt)} />
+      <TextInput
+        style={{ ...styles.input, height: 60 }}
+        onChangeText={(txt) => setDesc(txt)}
+      />
       <TouchableOpacity onPress={() => submit()} style={styles.btn}>
         <Text style={styles.btnText}>ارسال</Text>
       </TouchableOpacity>

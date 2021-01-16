@@ -83,6 +83,8 @@ const styles = StyleSheet.create({
 export default function DashboardHome({ navigation }) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
+  const isLoading = useSelector((state) => state.product.isLoading);
+
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
@@ -103,46 +105,51 @@ export default function DashboardHome({ navigation }) {
               flex: 1,
               alignItems: 'center',
             }}
-          >
-            {/* <BellIcon color={Colors.INACTIVE_VIEW_TAP} /> */}
-            {/* <View
+          ></View>
+
+          {isLoading ? (
+            <View
               style={{
-                position: 'relative',
-                bottom: 10,
-                right: 10,
-                backgroundColor: Colors.GOLDEN,
-                width: 25,
-                height: 25,
-                borderRadius: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderColor: Colors.WHITE,
-                borderWidth: 2,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: '100%',
               }}
             >
+              <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <Text
+                  style={{
+                    fontFamily: 'Tajawal-Medium',
+                    fontSize: 12,
+                    marginRight: 8,
+                  }}
+                >
+                  جار إضافة منتج
+                </Text>
+                <ActivityIndicator color='red' />
+              </View>
+
               <Text
                 style={{
-                  color: 'white',
                   fontFamily: 'Tajawal-Medium',
-                  fontSize: 15,
+                  fontSize: 20,
+                  marginRight: 16,
+                  textAlign: 'left',
                 }}
               >
-                2
+                المنتجات
               </Text>
-            </View> */}
-          </View>
-
-          <View style={{ flexDirection: 'row' }}>
-            <Text
-              style={{
-                fontFamily: 'Tajawal-Medium',
-                fontSize: 20,
-                marginRight: 8,
-              }}
-            >
-              المنتجات
-            </Text>
-          </View>
+            </View>
+          ):
+          <Text
+                style={{
+                  fontFamily: 'Tajawal-Medium',
+                  fontSize: 20,
+                  marginRight: 8,
+                  textAlign: 'left',
+                }}
+              >
+                المنتجات
+              </Text>}
         </View>
       </SafeAreaView>
 
@@ -188,8 +195,8 @@ function VerticalItemCard({
 }) {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.product.isLoading);
   const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
+
   const showDeleteDialog = () => {
     setDeleteDialogVisible(!deleteDialogVisible);
   };
@@ -310,7 +317,7 @@ function VerticalItemCard({
         setEditModalVisible={setEditModalVisible}
         visible={editModalVisible}
       />
-      <LoadingModal visible={isLoading} />
+      {/* <LoadingModal visible={isLoading} /> */}
       <DeleteConfirmation
         visible={deleteDialogVisible}
         handleDelete={handleDelete}
@@ -395,7 +402,7 @@ export function EditModal({
           <TextInput
             onChangeText={(txt) => setPrice(txt)}
             value={price}
-            style={{...styles.input, height: 30}}
+            style={{ ...styles.input, height: 30 }}
             textAlignVertical='top'
             placeholder='السعر'
           />
