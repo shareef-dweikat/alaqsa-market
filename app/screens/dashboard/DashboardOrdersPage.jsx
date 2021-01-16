@@ -122,18 +122,17 @@ export default function DashboardOrdersPage({ navigation }) {
 }
 
 export function OrderCardContainer({ date, products, order }) {
-  console.log(order, 'adasdsadccccccc');
   const dispatch = useDispatch();
   const [status, setStatus] = useState(order.status);
   let myProducts = products ? Object.values(products) : [];
   const username = useSelector((state) => state.auth.username);
   const handleChangeStatus = (orderId, status, preStatus) => {
-    if(preStatus == 'تم التوصيل') {
-      alert('لا يمكن تغير حالة تم التوصيل')
-      return
+    if (preStatus == 'تم التوصيل') {
+      alert('لا يمكن تغير حالة تم التوصيل');
+      return;
     }
     setStatus(status);
-    dispatch(changeStatus(orderId, username, status));
+    dispatch(changeStatus(orderId, username, status, order.phone));
     if (status == 'تم التوصيل')
       dispatch(updateSalesStatistics(username, order.totalPrice));
   };
@@ -281,7 +280,9 @@ export function OrderCardContainer({ date, products, order }) {
               paddingHorizontal: 8,
               borderRadius: 5,
             }}
-            onPress={() => handleChangeStatus(order.orderId, 'تم التوصيل', status)}
+            onPress={() =>
+              handleChangeStatus(order.orderId, 'تم التوصيل', status)
+            }
           >
             <Text style={{ color: 'green', fontFamily: 'Tajawal-Regular' }}>
               تم التوصيل

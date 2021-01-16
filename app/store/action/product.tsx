@@ -217,7 +217,8 @@ const editProductAPI = async (
   name,
   desc,
   uri,
-  productVisible
+  productVisible,
+  price
 ) => {
   if (uri)
     return firebase
@@ -228,6 +229,7 @@ const editProductAPI = async (
         product_name: name,
         image: uri,
         isVisible: productVisible,
+        price
       });
   else
     return firebase
@@ -237,6 +239,7 @@ const editProductAPI = async (
         product_desc: desc,
         product_name: name,
         isVisible: productVisible,
+        price
       });
 };
 export function editProduct(
@@ -245,8 +248,11 @@ export function editProduct(
   name,
   desc,
   image,
-  productVisible
+  productVisible,
+  price
 ) {
+
+  console.log(price, "priceeeee")
   return (dispatch) => {
     dispatch({
       type: 'PRODUCT_EDITED',
@@ -265,7 +271,8 @@ export function editProduct(
           name,
           desc,
           url,
-          productVisible
+          productVisible, 
+          price
         ).then(() => {
           // dispatch(fetchCategories());
           alert('تم التعديل');
@@ -281,7 +288,8 @@ export function editProduct(
           name,
           desc,
           url,
-          productVisible
+          productVisible,
+          price
         ).then(() => {
           // dispatch(fetchCategories());
           alert('تم التعديل');

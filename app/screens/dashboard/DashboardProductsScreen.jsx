@@ -148,7 +148,7 @@ export default function DashboardHome({ navigation }) {
 
       <FlatList
         data={products}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <VerticalItemCard
             productFirebaseId={item.productFirebaseId}
             catId={item.categoryFirebaseId}
@@ -163,7 +163,7 @@ export default function DashboardHome({ navigation }) {
           />
         )}
       />
- 
+
       <TouchableOpacity
         onPress={() => navigation.push('AddProductScreen')}
         style={styles.fab}
@@ -197,7 +197,7 @@ function VerticalItemCard({
     setDeleteDialogVisible(false);
     dispatch(deleteProduct(catId, productFirebaseId));
   };
-  const handleEdit = (catName, catDesc, image, productVisible) => {
+  const handleEdit = (catName, catDesc, image, productVisible, price) => {
     setEditModalVisible(false);
     dispatch(
       editProduct(
@@ -206,7 +206,8 @@ function VerticalItemCard({
         catName,
         catDesc,
         image,
-        productVisible
+        productVisible,
+        price
       )
     );
   };
@@ -329,6 +330,8 @@ export function EditModal({
   const [catName, setCatName] = useState(name);
   const [catDesc, setCatDesc] = useState(desc);
   const [image, setImage] = useState('');
+  const [price, setPrice] = useState('');
+
   const [productVisible, setProductVisible] = useState(true);
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -357,7 +360,7 @@ export function EditModal({
           style={{
             backgroundColor: 'white',
             width: '80%',
-            height: 300,
+            height: 380,
             padding: 16,
             borderRadius: 10,
             justifyContent: 'center',
@@ -389,7 +392,13 @@ export function EditModal({
             textAlignVertical='top'
             placeholder='الوصف'
           />
-
+          <TextInput
+            onChangeText={(txt) => setPrice(txt)}
+            value={price}
+            style={{...styles.input, height: 30}}
+            textAlignVertical='top'
+            placeholder='السعر'
+          />
           <TouchableOpacity
             onPress={() => pickImage()}
             style={{
@@ -405,7 +414,7 @@ export function EditModal({
           <View style={{ width: '100%' }}>
             <TouchableOpacity
               onPress={() =>
-                handleEdit(catName, catDesc, image, productVisible)
+                handleEdit(catName, catDesc, image, productVisible, price)
               }
               style={styles.btn}
             >

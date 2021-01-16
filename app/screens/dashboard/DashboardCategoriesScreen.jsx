@@ -219,13 +219,12 @@ export default function DashboardCategoriesScreen({ navigation }) {
               alignItems: 'center',
             }}
           >
-            {/* <BellIcon color={Colors.INACTIVE_VIEW_TAP} /> */}
             <View
               style={{
                 position: 'relative',
                 bottom: 10,
                 right: 10,
-                backgroundColor: Colors.GOLDEN,
+                // backgroundColor: Colors.GOLDEN,
                 width: 25,
                 height: 25,
                 borderRadius: 50,
@@ -235,7 +234,7 @@ export default function DashboardCategoriesScreen({ navigation }) {
                 borderWidth: 2,
               }}
             >
-              <Text
+              {/* <Text
                 style={{
                   color: 'white',
                   fontFamily: 'Tajawal-Medium',
@@ -243,7 +242,7 @@ export default function DashboardCategoriesScreen({ navigation }) {
                 }}
               >
                 2
-              </Text>
+              </Text> */}
             </View>
           </View>
 

@@ -22,6 +22,7 @@ import { uploadPushToken } from '../../store/action/auth';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { setAdminType } from '../../store/action/auth';
 import { getSalesStatistics } from '../../store/action/orders';
+import { StatusBar } from 'react-native';
 
 const styles = StyleSheet.create({
   container: {
@@ -74,6 +75,7 @@ export default function DashboardHome({ navigation }) {
   }, []);
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
+      <StatusBar backgroundColor={Colors.BACKGROUND}/>
       <SafeAreaView forceInset={{ top: 'always' }}>
         <View
           style={{

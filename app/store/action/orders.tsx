@@ -1,6 +1,5 @@
 import firebase from '../../config/firebase';
 
-
 export function fetchOrders(phone) {
   return (dispatch) => {
     firebase
@@ -110,7 +109,7 @@ export function fetchSellerOrder(orderId, seller) {
   };
 }
 
-export function changeStatus(orderId, seller, status) {
+export function changeStatus(orderId, seller, status, phone) {
   return (dispatch) => {
     dispatch({
       type: 'CHANGE_ORDER_STATUS',
@@ -118,7 +117,7 @@ export function changeStatus(orderId, seller, status) {
     });
     firebase
       .database()
-      .ref(`seller-orders/${seller}/${orderId}/status`)
+      .ref(`seller-orders/Nablus/${orderId}/status`)
       .set(status)
       .then(() => {
         dispatch({
@@ -126,18 +125,45 @@ export function changeStatus(orderId, seller, status) {
           // payload: { order, products },
         });
       });
+
+    firebase
+      .database()
+      .ref(`orders/${phone}`)
+      .once('value', function (orders) {
+        let myOrders = orders.val();
+        let orderIndex = '';
+        for (let index in myOrders) {
+          if (myOrders[index].orderId == orderId) {
+            orderIndex = index;
+          }
+        }
+        firebase
+          .database()
+          .ref(`orders/${phone}/${orderIndex}`)
+          .update({
+            status: status
+          })
+          .then(() => {
+            // dispatch({
+            //   type: 'CHANGE_ORDER_STATUS_SUCCESS',
+            //   // payload: { order, products },
+            // });
+          });
+      });
   };
 }
 
 export function updateSalesStatistics(seller, price) {
+  console.log(seller, price, 'Dooooom');
   return (dispatch) => {
     firebase
       .database()
-      .ref(`statistics/${seller}`)
+      .ref(`statistics/Nablus`)
       .once('value', function (statistics) {
         let myStatistics = statistics.val();
-        myStatistics = parseInt(price) + parseInt(JSON.stringify(myStatistics));
-        firebase.database().ref(`statistics/${seller}`).set(myStatistics);
+        myStatistics = parseInt(price) + parseInt(myStatistics);
+        console.log(myStatistics, 'steppp');
+        firebase.database().ref(`statistics/Nablus`).set(myStatistics);
         // .then(() => {
         //   dispatch({
         //     type: 'FETCH_SELLER_ORDERS_SUCCESSrrrrrrr',
