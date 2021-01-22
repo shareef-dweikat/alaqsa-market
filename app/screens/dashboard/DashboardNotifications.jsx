@@ -64,14 +64,19 @@ export default function DashboardNotifications({ navigation }) {
           textAlign: 'center',
           fontFamily: 'Tajawal-Bold',
           marginBottom: 16,
-          fontSize: 18
+          fontSize: 18,
         }}
       >
         نموذج الإشعارات
       </Text>
-      <TextInput style={styles.input} onChangeText={(txt) => setTitle(txt)} />
+      <TextInput
+        placeholder='عنوان الإشعار'
+        style={styles.input}
+        onChangeText={(txt) => setTitle(txt)}
+      />
       <TextInput
         style={{ ...styles.input, height: 60 }}
+        placeholder='تفاصيل الإشعار'
         onChangeText={(txt) => setDesc(txt)}
       />
       <TouchableOpacity onPress={() => submit()} style={styles.btn}>

@@ -65,30 +65,7 @@ export default function FavScreen({ navigation }) {
         <TouchableOpacity onPress={() => navigation.pop()}>
           <RightArrow />
         </TouchableOpacity>
-        <View
-          style={
-            {
-              // flexDirection: 'row',
-              // justifyContent: 'space-between',
-              // width: '100%',
-              // alignItems: 'center',
-            }
-          }
-        >
-          {/* <View
-            style={{
-              marginHorizontal: 8,
-              flexDirection: 'row',
-              flex: 1,
-              alignItems: 'center',
-            }}
-          >
-            <ListViewIcon
-              color={Colors.ACTIVE_VIEW_TAP}
-              style={{ marginRight: 8 }}
-            />
-            <GridViewIcon color={Colors.INACTIVE_VIEW_TAP} />
-          </View> */}
+        <View>
           <Text
             style={{
               fontSize: 30,
@@ -194,7 +171,8 @@ export function VerticalItemCard({ product, addToFav, deleteFav, add }) {
             style={{
               color: '#B8B8CD',
               fontFamily: 'Tajawal-Regular',
-              height: 50,
+              height: 40,
+              marginTop: 8
             }}
           >
             {product.product_desc}

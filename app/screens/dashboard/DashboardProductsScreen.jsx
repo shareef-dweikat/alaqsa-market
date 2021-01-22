@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   },
   input: {
     width: '100%',
+    textAlign: 'right',
     borderColor: Colors.BORDER_COLOR,
     borderWidth: 1,
     borderRadius: 10,
@@ -84,7 +85,6 @@ export default function DashboardHome({ navigation }) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
   const isLoading = useSelector((state) => state.product.isLoading);
-
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
@@ -115,7 +115,13 @@ export default function DashboardHome({ navigation }) {
                 width: '100%',
               }}
             >
-              <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+              >
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Medium',
@@ -139,22 +145,24 @@ export default function DashboardHome({ navigation }) {
                 المنتجات
               </Text>
             </View>
-          ):
-          <Text
-                style={{
-                  fontFamily: 'Tajawal-Medium',
-                  fontSize: 20,
-                  marginRight: 8,
-                  textAlign: 'left',
-                }}
-              >
-                المنتجات
-              </Text>}
+          ) : (
+            <Text
+              style={{
+                fontFamily: 'Tajawal-Medium',
+                fontSize: 20,
+                marginRight: 8,
+                textAlign: 'left',
+              }}
+            >
+              المنتجات
+            </Text>
+          )}
         </View>
       </SafeAreaView>
 
       <FlatList
         data={products}
+        ListFooterComponent={()=>  <View style={{height:200}} />}
         renderItem={({ item }) => (
           <VerticalItemCard
             productFirebaseId={item.productFirebaseId}
@@ -170,7 +178,6 @@ export default function DashboardHome({ navigation }) {
           />
         )}
       />
-
       <TouchableOpacity
         onPress={() => navigation.push('AddProductScreen')}
         style={styles.fab}
@@ -196,7 +203,6 @@ function VerticalItemCard({
   const [editModalVisible, setEditModalVisible] = useState(false);
   const dispatch = useDispatch();
   const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
-
   const showDeleteDialog = () => {
     setDeleteDialogVisible(!deleteDialogVisible);
   };
@@ -312,6 +318,7 @@ function VerticalItemCard({
 
       <EditModal
         name={name}
+        price={price}
         desc={desc}
         handleEdit={handleEdit}
         setEditModalVisible={setEditModalVisible}
@@ -333,11 +340,12 @@ export function EditModal({
   desc,
   handleEdit,
   setEditModalVisible,
+  price
 }) {
   const [catName, setCatName] = useState(name);
   const [catDesc, setCatDesc] = useState(desc);
   const [image, setImage] = useState('');
-  const [price, setPrice] = useState('');
+  const [myPrice, setMyPrice] = useState(price);
 
   const [productVisible, setProductVisible] = useState(true);
   const pickImage = async () => {
@@ -353,7 +361,7 @@ export function EditModal({
     }
   };
   return (
-    <Modal visible={visible}>
+    <Modal style={{position: 'absolute', top: 0}} visible={visible}>
       <TouchableOpacity
         onPress={() => setEditModalVisible(false)}
         style={{
@@ -400,8 +408,8 @@ export function EditModal({
             placeholder='الوصف'
           />
           <TextInput
-            onChangeText={(txt) => setPrice(txt)}
-            value={price}
+            onChangeText={(txt) => setMyPrice(txt)}
+            value={myPrice}
             style={{ ...styles.input, height: 30 }}
             textAlignVertical='top'
             placeholder='السعر'
@@ -421,7 +429,7 @@ export function EditModal({
           <View style={{ width: '100%' }}>
             <TouchableOpacity
               onPress={() =>
-                handleEdit(catName, catDesc, image, productVisible, price)
+                handleEdit(catName, catDesc, image, productVisible, myPrice)
               }
               style={styles.btn}
             >

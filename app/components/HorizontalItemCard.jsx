@@ -106,7 +106,7 @@ export default function HorizontalItemCard({
         style={{
           justifyContent: 'flex-end',
           width: '100%',
-          paddingHorizontal: 16,
+          paddingHorizontal: 4,
         }}
       >
         <Text
@@ -124,7 +124,7 @@ export default function HorizontalItemCard({
           flexDirection: 'row',
           justifyContent: 'space-between',
           width: '100%',
-          paddingHorizontal: 8,
+          paddingHorizontal: 4,
           marginTop: 8,
         }}
       >
@@ -136,6 +136,7 @@ export default function HorizontalItemCard({
             textAlign: 'right',
             fontFamily: 'Tajawal-Bold',
             color: '#515462',
+            fontSize: 12
           }}
         >
           {price} شيكل

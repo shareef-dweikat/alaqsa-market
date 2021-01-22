@@ -22,11 +22,12 @@ import { ScrollView } from 'react-native';
 const styles = StyleSheet.create({
   image: {
     backgroundColor: Colors.BACKGROUND,
-    justifyContent: 'space-between',
+    flexDirection: 'row-reverse',
     padding: 16,
     paddingTop: 45,
-    alignItems: 'flex-end',
-    height: Dimensions.get('window').height * 0.15,
+    alignItems: 'center',
+    height: Dimensions.get('window').height * 0.1,
+    paddingBottom: 32
   },
   lookForProductText: {
     fontSize: 22,
@@ -54,14 +55,13 @@ export default function DashboardAccounts({ navigation }) {
       <View>
         <View style={styles.image}>
           <TouchableOpacity
-            style={{ width: 20 }}
+            style={{ width: 20, marginLeft: 8 }}
             onPress={() => navigation.pop()}
           >
             <RightArrow />
           </TouchableOpacity>
           <View style={{ width: '100%' }}>
             <Text style={styles.lookForProductText}> إدارة حسابات الفروع</Text>
-            {/* <SearchBox /> */}
           </View>
         </View>
       </View>

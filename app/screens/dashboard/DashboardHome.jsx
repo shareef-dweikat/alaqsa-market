@@ -60,8 +60,8 @@ export default function DashboardHome({ navigation }) {
       const expoPushToken = await Notifications.getExpoPushTokenAsync();
       dispatch(uploadPushToken(userType, expoPushToken.data));
       Notifications.addNotificationReceivedListener((d) => {
-        console.log(d, 'zzxxxx');
-        alert('notifiatino rec');
+        // console.log(d, 'zzxxxx');
+        // alert('notifiatino rec');
       });
     };
     getToken();

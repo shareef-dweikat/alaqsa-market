@@ -43,7 +43,6 @@ const styles = StyleSheet.create({
 });
 export default function VerticalItemDetailsCard({ product, navigation }) {
   const [quantity, setQuantity] = useState('1');
-  console.log(product, "productttt")
   const height = Dimensions.get('window').height * 0.4;
   const width = Dimensions.get('window').width - 40;
   const dispatch = useDispatch();

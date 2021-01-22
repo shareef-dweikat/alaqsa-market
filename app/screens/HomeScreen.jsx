@@ -17,9 +17,8 @@ import BottomNav from '../components/BottomNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSlideImage } from '../store/action/homeSlider';
 import { fetchCategories } from '../store/action/category';
-import { uploadCustomerPushToken } from '../store/action/auth';
+import { pushToken } from '../store/action/notifications';
 import firebase from '../config/firebase';
-
 
 import HorizontalCategoryCard from '../components/HorizontalCategoryCard';
 import { StatusBar } from 'react-native';
@@ -43,27 +42,56 @@ export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
   const slide = useSelector((state) => state.homeSlider);
   const categories = useSelector((state) => state.category.categories);
-  const userType = useSelector((state) => state.auth.userType);
-
   const image = slide.uploadedSlideImageUri;
-  const desc = slide.desc;
-  const [products, setProducts] = useState([]);
+  const registerForPushNotificationsAsync = async() => {
+    let token;
 
+    const {
+      status: existingStatus,
+    } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+
+    return token;
+  }
   useEffect(() => {
     dispatch(fetchSlideImage());
     dispatch(fetchCategories());
     const getToken = async () => {
-      // const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-      const expoPushToken = await Notifications.getExpoPushTokenAsync();
-      firebase
-      .database()
-      .ref(`notificatios-tokens`)
-      .push({ token: expoPushToken.data })
-      .then((d) => console.log(d, 'dataaa'))
-     
+      const token = await registerForPushNotificationsAsync()
+      dispatch(pushToken(token));
+      // let { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
+      // if (status != 'granted') {
+      //   await Notifications.requestPermissionsAsync();
+      //   const expoPushToken = await Notifications.getExpoPushTokenAsync();
+      //   dispatch(pushToken(expoPushToken));
+      // }
+
+      // if (status == 'granted') {
+      //   const expoPushToken = await Notifications.getExpoPushTokenAsync();
+      //   dispatch(pushToken(expoPushToken));
+      // }
     };
-    
-     getToken();
+
+    getToken();
     // registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
     // parseCategpry(names[0]);
   }, []);

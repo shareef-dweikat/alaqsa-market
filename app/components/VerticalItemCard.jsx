@@ -105,7 +105,7 @@ export default function VerticalItemCard({
                 </TouchableOpacity>
               )}
               <TouchableOpacity onPress={add}>
-                <PlusIcon />
+                <PlusIcon  />
               </TouchableOpacity>
             </View>
             <Text style={styles.name}>{name}</Text>

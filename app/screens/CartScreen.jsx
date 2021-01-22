@@ -82,7 +82,7 @@ export default function CartScreen({ navigation }) {
       return;
     }
     dispatch(
-      order(pickerValue, phone, parseInt(totalPrice), parseInt(transPrice))
+      order(pickerValue, phone, totalPrice, parseInt(transPrice))
     );
     setOrderConfirmationModalVisible(true);
   };
@@ -150,7 +150,7 @@ export default function CartScreen({ navigation }) {
 
       <View style={{ marginTop: 16, padding: 16, marginBottom: 16 }}>
         <View style={styles.checkoutContainer}>
-          <Text style={styles.checkoutTxt}>{parseInt(totalPrice)} شيكل</Text>
+          <Text style={styles.checkoutTxt}>{totalPrice} شيكل</Text>
           <Text style={styles.checkoutTxt}>المجموع</Text>
         </View>
         <View style={styles.checkoutContainer}>

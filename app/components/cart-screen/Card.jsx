@@ -82,7 +82,7 @@ export default function Card({
           style={{
             flexDirection: 'row',
             flex: 1,
-            justifyContent: 'space-evenly',
+            paddingHorizontal: 16
           }}
         >
           <Text style={{ fontSize: 15, fontFamily: 'Tajawal-Medium' }}>

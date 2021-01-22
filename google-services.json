@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "878551580351",
+    "firebase_url": "https://alaqsamart-9e68e.firebaseio.com",
+    "project_id": "alaqsamart-9e68e",
+    "storage_bucket": "alaqsamart-9e68e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:878551580351:android:ef5f7b53bde1e09317900a",
+        "android_client_info": {
+          "package_name": "com.shareef.dweikat.alaqsa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "878551580351-7ksrp7u9j04k9ilrtujf247113qr4nmk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDi7dZroc02LA2FAgZlWGadigNVBQ9BvDY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "878551580351-7ksrp7u9j04k9ilrtujf247113qr4nmk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

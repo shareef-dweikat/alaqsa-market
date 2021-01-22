@@ -40,6 +40,7 @@
     },
     "android": {
       "package": "com.shareef.dweikat.alaqsa",
+      "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true
     }
   }

@@ -13,7 +13,6 @@ const fetchProductsAPI = async () => {
 };
 
 export function fetchNotifications() {
-  console.log('fetchNotificationsaaaaaaaaa');
   return (dispatch) => {
     firebase
       .database()
@@ -67,6 +66,7 @@ export const pushNotification = (title, desc) => {
       })
       .then(() => {
         pushOrderNotification(title, desc);
+        alert('تم الإرسال')
       });
     dispatch({
       type: 'FETCH_NOTIFICATIONSsssss',
@@ -74,3 +74,33 @@ export const pushNotification = (title, desc) => {
     });
   };
 };
+
+export function pushToken(expoPushToken) {
+  console.log(expoPushToken, "expoPushTokennnn")
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`notificatios-tokens`)
+      .once('value', async (notificatiosTokens) => {
+        const notifiTokens = notificatiosTokens.val()
+        let flag = false
+        for(let index in notifiTokens) {
+
+            if(notifiTokens[index].token == expoPushToken) {
+            flag = true
+            }
+        }
+        if(flag) return
+        firebase
+          .database()
+          .ref(`notificatios-tokens`)
+          .push({ token: expoPushToken })
+          .then((d) => console.log(d, 'expoPushToken_error'));
+      });
+
+    dispatch({
+      type: 'PUSH_NOTIFICATION_TOKEN',
+      // payload: notifications,
+    });
+  };
+}

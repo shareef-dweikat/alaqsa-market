@@ -4,7 +4,7 @@ import {
   View,
   Image,
   KeyboardAvoidingView,
-  TextInput,
+  Linking,
   ActivityIndicator,
   StyleSheet,
   Dimensions,
@@ -111,6 +111,7 @@ export default function DashboardOrdersPage({ navigation }) {
             <OrderCardContainer
               date={order.date}
               order={order}
+              userType={userType}
               products={order.productsObject}
             />
           ))}
@@ -121,7 +122,7 @@ export default function DashboardOrdersPage({ navigation }) {
   );
 }
 
-export function OrderCardContainer({ date, products, order }) {
+export function OrderCardContainer({ date, products, order, userType }) {
   const dispatch = useDispatch();
   const [status, setStatus] = useState(order.status);
   let myProducts = products ? Object.values(products) : [];
@@ -154,7 +155,11 @@ export function OrderCardContainer({ date, products, order }) {
             {date}
           </Text>
           <Text style={styles.orderTitle}>{order.seller}</Text>
-          <Text style={styles.orderTitle}> الزبون {order.phone}</Text>
+          <TouchableOpacity
+            onPress={() => Linking.openURL(`tel:${order.phone}`)}
+          >
+            <Text style={styles.orderTitle}> الزبون {order.phone}</Text>
+          </TouchableOpacity>
         </View>
         {myProducts.length > 0 && (
           <>
@@ -265,63 +270,76 @@ export function OrderCardContainer({ date, products, order }) {
             </View>
           </>
         )}
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: 16,
-            justifyContent: 'space-between',
-          }}
-        >
-          <TouchableOpacity
-            style={{
-              height: 30,
-              borderWidth: 1,
-              borderColor: 'green',
-              paddingHorizontal: 8,
-              borderRadius: 5,
-            }}
-            onPress={() =>
-              handleChangeStatus(order.orderId, 'تم التوصيل', status)
-            }
-          >
-            <Text style={{ color: 'green', fontFamily: 'Tajawal-Regular' }}>
-              تم التوصيل
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              height: 30,
-              borderWidth: 1,
-              borderColor: 'orange',
-              paddingHorizontal: 8,
-              borderRadius: 5,
-            }}
-            onPress={() => handleChangeStatus(order.orderId, 'قبول', status)}
-          >
-            <Text style={{ color: 'orange', fontFamily: 'Tajawal-Regular' }}>
-              قبول
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{
-              height: 30,
-              borderWidth: 1,
-              borderColor: 'red',
-              paddingHorizontal: 8,
-              borderRadius: 5,
-            }}
-            onPress={() => handleChangeStatus(order.orderId, 'رفض', status)}
-          >
-            <Text style={{ color: 'red', fontFamily: 'Tajawal-Regular' }}>
-              رفض
-            </Text>
-          </TouchableOpacity>
-        </View>
+        {userType != 'admin' && (
+          <StatusRow
+            handleChangeStatus={handleChangeStatus}
+            status={status}
+            order={order}
+          />
+        )}
       </View>
     </>
   );
 }
 
+export function StatusRow({ handleChangeStatus, order, status }) {
+  return (
+    <>
+      <View
+        style={{
+          flexDirection: 'row',
+          marginTop: 16,
+          justifyContent: 'space-between',
+        }}
+      >
+        <TouchableOpacity
+          style={{
+            height: 30,
+            borderWidth: 1,
+            borderColor: 'green',
+            paddingHorizontal: 8,
+            borderRadius: 5,
+          }}
+          onPress={() =>
+            handleChangeStatus(order.orderId, 'تم التوصيل', status)
+          }
+        >
+          <Text style={{ color: 'green', fontFamily: 'Tajawal-Regular' }}>
+            تم التوصيل
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            height: 30,
+            borderWidth: 1,
+            borderColor: 'orange',
+            paddingHorizontal: 8,
+            borderRadius: 5,
+          }}
+          onPress={() => handleChangeStatus(order.orderId, 'قبول', status)}
+        >
+          <Text style={{ color: 'orange', fontFamily: 'Tajawal-Regular' }}>
+            قبول
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            height: 30,
+            borderWidth: 1,
+            borderColor: 'red',
+            paddingHorizontal: 8,
+            borderRadius: 5,
+          }}
+          onPress={() => handleChangeStatus(order.orderId, 'رفض', status)}
+        >
+          <Text style={{ color: 'red', fontFamily: 'Tajawal-Regular' }}>
+            رفض
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </>
+  );
+}
 export function LoadingModal({ title, visible, setVisible, setImage }) {
   return (
     <Modal visible={visible} transparent>

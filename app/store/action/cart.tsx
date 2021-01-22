@@ -1,7 +1,7 @@
 import firebase from '../../config/firebase';
-import moment from 'moment'
+import moment from 'moment';
 const addProductToCartAPI = async (
-  { product_name, product_desc, isVisible, price, image, },
+  { product_name, product_desc, isVisible, price, image },
   navigation,
   phone,
   quantity
@@ -21,7 +21,7 @@ const addProductToCartAPI = async (
 };
 
 export function addProductToCart(product, navigation, phone, quantity) {
-  console.log(quantity, "dadasdsdddd")
+  console.log(quantity, 'dadasdsdddd');
   return (dispatch) => {
     dispatch({
       type: 'PRODUCT_ADD_TO_CART',
@@ -29,7 +29,7 @@ export function addProductToCart(product, navigation, phone, quantity) {
     addProductToCartAPI(product, navigation, phone, quantity).then(() => {
       console.log('addProductToCartAPI');
       //   // dispatch(fetchProducts());
-      alert("تم إضافة منتج")
+      alert('تم إضافة منتج');
       dispatch({
         type: 'PRODUCT_ADD_TO_CART_SUCCESS',
       });
@@ -59,10 +59,9 @@ export function fetchProducts(phone) {
         let totalPrice = 0;
         for (let productIndex in productsObject) {
           totalPrice =
-            parseInt(productsObject[productIndex].price) *
+            productsObject[productIndex].price *
               parseInt(productsObject[productIndex].quantity) +
             totalPrice;
-          console.log(totalPrice, 'totalPricetotalPrice');
 
           productsObject[productIndex].firebaseId = productIndex;
           productsList.push(productsObject[productIndex]);
@@ -121,7 +120,7 @@ export function fetchBranches() {
 }
 
 export function pushOrderNotificationAPI(token) {
-  console.log(token, "tokeeen")
+  console.log(token, 'tokeeen');
   return (dispatch) => {
     fetch('https://exp.host/--/api/v2/push/send', {
       method: 'POST',
@@ -133,15 +132,14 @@ export function pushOrderNotificationAPI(token) {
       },
       body: JSON.stringify({
         to: token,
-        title: "Helloooo",
-        body: "Hello that is my body",
-        
+        title: 'Helloooo',
+        body: 'Hello that is my body',
       }),
     })
       .then((response) => response.json())
-      .then((responseJson) => console.log(responseJson, "responseJson"))
+      .then((responseJson) => console.log(responseJson, 'responseJson'))
       .catch((error) => {
-        console.log(error, "errrrrrr");
+        console.log(error, 'errrrrrr');
       });
   };
 }
@@ -161,21 +159,19 @@ export function pushOrderNotification() {
           },
           body: JSON.stringify({
             to: pushToken,
-            title: "لديك طلب جديد",
-            body: "لديك طلب جديد",
-            
+            title: 'لديك طلب جديد',
+            body: 'لديك طلب جديد',
           }),
         })
-        .then((response) => response.json())
-      .then((responseJson) => console.log(responseJson, "responseJson"))
-
+          .then((response) => response.json())
+          .then((responseJson) => console.log(responseJson, 'responseJson'));
       })
       .catch((e) => console.log('pushOrderNotification', e));
   };
 }
 export function order(seller, phone, totalPrice, transPrice) {
   return (dispatch) => {
-    dispatch(pushOrderNotification())
+    dispatch(pushOrderNotification());
     firebase
       .database()
       .ref(`cart/${phone}`)
@@ -190,17 +186,24 @@ export function order(seller, phone, totalPrice, transPrice) {
             transPrice,
             phone,
             status: 'جار التنفيذ',
-            date: `${moment().format('dddd')} ${moment().format('DD-MM-YYYY')} ${moment().format('HH:mm:SS')}`,
+            date: `${moment().format('dddd')} ${moment().format(
+              'DD-MM-YYYY'
+            )} ${moment().format('HH:mm:SS')}`,
           })
           .then((e) =>
-            firebase.database().ref(`orders/${phone}`).push({
-              orderId: e.key,
-              branch: seller,
-              totalPrice,
-              transPrice,
-              status: 'جار التنفيذ',
-              date: `${moment().format('dddd')} ${moment().format('DD-MM-YYYY')} ${moment().format('HH:mm:SS')}`,
-            })
+            firebase
+              .database()
+              .ref(`orders/${phone}`)
+              .push({
+                orderId: e.key,
+                branch: seller,
+                totalPrice,
+                transPrice,
+                status: 'جار التنفيذ',
+                date: `${moment().format('dddd')} ${moment().format(
+                  'DD-MM-YYYY'
+                )} ${moment().format('HH:mm:SS')}`,
+              })
           );
         firebase.database().ref(`cart/${phone}`).remove();
         dispatch({
