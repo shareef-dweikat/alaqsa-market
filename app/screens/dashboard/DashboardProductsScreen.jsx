@@ -85,6 +85,7 @@ export default function DashboardHome({ navigation }) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
   const isLoading = useSelector((state) => state.product.isLoading);
+  let myRef = null;
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
@@ -162,9 +163,15 @@ export default function DashboardHome({ navigation }) {
 
       <FlatList
         data={products}
-        ListFooterComponent={()=>  <View style={{height:200}} />}
+        ListFooterComponent={() => (
+          <>
+            <View style={{ height: 200 }} />
+            <View ref={(r) => (myRef = r)} />
+          </>
+        )}
         renderItem={({ item }) => (
           <VerticalItemCard
+            products={products}
             productFirebaseId={item.productFirebaseId}
             catId={item.categoryFirebaseId}
             name={item.product_name}
@@ -199,6 +206,7 @@ function VerticalItemCard({
   catId,
   navigation,
   isVisible,
+  products,
 }) {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const dispatch = useDispatch();
@@ -260,7 +268,16 @@ function VerticalItemCard({
           <View style={{ flexDirection: 'row' }}>
             <TouchableOpacity
               style={{ marginRight: 8 }}
-              onPress={() => setEditModalVisible(true)}
+              onPress={() => {
+                setEditModalVisible(true);
+                // products.map((item, id) => {
+                //   if (item.categoryFirebaseId == catId) {
+                //     if (id >= products.length - 3) {
+                //       // myRef.scrollTo()
+                //     }
+                //   }
+                // });
+              }}
             >
               <EditIcon />
             </TouchableOpacity>
@@ -302,7 +319,13 @@ function VerticalItemCard({
             {price} شيكل
           </Text>
           {!isVisible && (
-            <Text style={{ color: 'red', fontFamily: 'Tajawal-Regular' }}>
+            <Text
+              style={{
+                color: 'red',
+                fontFamily: 'Tajawal-Regular',
+                marginRight: 8,
+              }}
+            >
               غير متوفر
             </Text>
           )}
@@ -323,6 +346,7 @@ function VerticalItemCard({
         handleEdit={handleEdit}
         setEditModalVisible={setEditModalVisible}
         visible={editModalVisible}
+        isVisible={isVisible}
       />
       {/* <LoadingModal visible={isLoading} /> */}
       <DeleteConfirmation
@@ -340,14 +364,15 @@ export function EditModal({
   desc,
   handleEdit,
   setEditModalVisible,
-  price
+  price,
+  isVisible,
 }) {
   const [catName, setCatName] = useState(name);
   const [catDesc, setCatDesc] = useState(desc);
   const [image, setImage] = useState('');
   const [myPrice, setMyPrice] = useState(price);
-
-  const [productVisible, setProductVisible] = useState(true);
+  const [productVisible, setProductVisible] = useState(isVisible);
+  console.log(isVisible, 'isVisibleeee');
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -361,7 +386,7 @@ export function EditModal({
     }
   };
   return (
-    <Modal style={{position: 'absolute', top: 0}} visible={visible}>
+    <Modal visible={visible}>
       <TouchableOpacity
         onPress={() => setEditModalVisible(false)}
         style={{
@@ -383,16 +408,32 @@ export function EditModal({
           }}
         >
           <View style={{ flexDirection: 'row' }}>
+            {/* <TouchableOpacity
+              onPress={() => setProductVisible(!productVisible)}
+              style={{
+                height: 25,
+                width: 80,
+                alignItems: 'center',
+                borderRadius: 5,
+                backgroundColor: productVisible ? '#22C993' : '#f4f3f4',
+              }}
+            >
+              {productVisible ? (
+                <Text style={{ fontFamily: 'Tajawal-Medium' }}>متوفر</Text>
+              ) : (
+                <Text style={{ fontFamily: 'Tajawal-Medium' }}>غير متوفر</Text>
+              )}
+            </TouchableOpacity> */}
             <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8 }}>
-              التوافر
+              التوافر:  
             </Text>
-            <Switch
+             <Switch
               trackColor={{ false: '#767577', true: '#22C993' }}
-              thumbColor={visible ? Colors.WHITE : '#f4f3f4'}
+              thumbColor={productVisible ? Colors.WHITE : '#f4f3f4'}
               ios_backgroundColor='#3e3e3e'
               onValueChange={(e) => setProductVisible(!productVisible)}
               value={productVisible}
-            />
+            /> 
           </View>
           <TextInput
             onChangeText={(txt) => setCatName(txt)}

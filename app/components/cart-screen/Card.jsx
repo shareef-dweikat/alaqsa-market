@@ -25,7 +25,9 @@ export default function Card({
   firebaseId,
   quantity,
 }) {
-  const [value, setValue] = useState('1');
+
+  console.log('dddddd', quantity)
+  const [value, setValue] = useState();
   const dispatch = useDispatch();
   const handleQChanged = (txt) => {
     if (txt == 0) {

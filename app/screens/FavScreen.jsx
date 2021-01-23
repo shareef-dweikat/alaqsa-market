@@ -86,7 +86,7 @@ export default function FavScreen({ navigation }) {
               addToFav={() => dispatch(setFav(product, phone))}
               deleteFav={() => dispatch(deleteFav(product, phone))}
               add={() =>
-                dispatch(addProductToCart(product, navigation, phone, 1))
+                dispatch(addProductToCart(product, navigation, phone, "1"))
               }
             />
           ))}

@@ -94,6 +94,7 @@ export function updateProfile(phone, field, value) {
 }
 
 export function uploadPushToken(userType, pushToken) {
+  console.log(pushToken)
   return (dispatch) => {
     if (userType == 'seller')
       firebase

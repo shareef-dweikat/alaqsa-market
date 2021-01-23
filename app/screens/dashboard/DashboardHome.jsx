@@ -2,24 +2,18 @@ import React, { useEffect } from 'react';
 import {
   Text,
   View,
-  Image,
+  TouchableOpacity,
   AsyncStorage,
   StyleSheet,
   Dimensions,
 } from 'react-native';
-import bb from '../../../assets/home/header.png';
 import { SafeAreaView } from 'react-navigation';
 import * as Notifications from 'expo-notifications';
 
 import DrawerIcon from '../../../assets/drawer-icon.svg';
-import SearchIcon from '../../../assets/dashboard-drawer/search.svg';
-import BellIcon from '../../../assets/dashboard-drawer/bell.svg';
-import SIcon from '../../../assets/small-search-icon.svg';
 import Colors from '../../constants/colors';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadPushToken } from '../../store/action/auth';
-
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { setAdminType } from '../../store/action/auth';
 import { getSalesStatistics } from '../../store/action/orders';
 import { StatusBar } from 'react-native';
@@ -53,15 +47,42 @@ export default function DashboardHome({ navigation }) {
   const dispatch = useDispatch();
   const statistics = useSelector((state) => state.orders.statistics);
   const userType = useSelector((state) => state.auth.userType);
+  const registerForPushNotificationsAsync = async() => {
+    let token;
 
+    const {
+      status: existingStatus,
+    } = await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== 'granted') {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== 'granted') {
+      alert('Failed to get push token for push notification!');
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log(token);
+
+    if (Platform.OS === 'android') {
+      Notifications.setNotificationChannelAsync('default', {
+        name: 'default',
+        importance: Notifications.AndroidImportance.MAX,
+        vibrationPattern: [0, 250, 250, 250],
+        lightColor: '#FF231F7C',
+      });
+    }
+
+    return token;
+  }
   useEffect(() => {
     const getToken = async () => {
-      // const { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-      const expoPushToken = await Notifications.getExpoPushTokenAsync();
-      dispatch(uploadPushToken(userType, expoPushToken.data));
+      // const expoPushToken = await Notifications.getExpoPushTokenAsync();
+      const token = await registerForPushNotificationsAsync()
+      dispatch(uploadPushToken(userType, token));
       Notifications.addNotificationReceivedListener((d) => {
-        // console.log(d, 'zzxxxx');
-        // alert('notifiatino rec');
+      
       });
     };
     getToken();
@@ -95,36 +116,7 @@ export default function DashboardHome({ navigation }) {
               alignItems: 'center',
             }}
           >
-            {/* <BellIcon color={Colors.INACTIVE_VIEW_TAP} /> */}
-            {/* <View
-              style={{
-                position: 'relative',
-                bottom: 10,
-                right: 10,
-                backgroundColor: Colors.GOLDEN,
-                width: 25,
-                height: 25,
-                borderRadius: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderColor: Colors.WHITE,
-                borderWidth: 2,
-              }}
-            >
-              <Text
-                style={{
-                  color: 'white',
-                  fontFamily: 'Tajawal-Medium',
-                  fontSize: 15,
-                }}
-              >
-                2
-              </Text>
-            </View> */}
-            {/* <SearchIcon
-              color={Colors.ACTIVE_VIEW_TAP}
-              style={{ marginRight: 8 }}
-            /> */}
+            
           </View>
           <View
             style={{

@@ -179,14 +179,13 @@ export function OrderCardsContainer({
               }}
             >
               <View>
-                <Text style={{ fontFamily: 'Tajawal-Regular' }}>
+                <Text style={{ fontFamily: 'Tajawal-Regular'}}>
                   {order.totalPrice} شيكل
                 </Text>
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
                     color: 'black',
-                    marginTop: 8,
                   }}
                 >
                   {order.transPrice} شيكل
@@ -205,7 +204,7 @@ export function OrderCardsContainer({
                     height: 30,
                     paddingHorizontal: 8,
                     borderRadius: 5,
-                    marginTop: 16,
+                    marginTop: 8,
                   }}
                 >
                   <Text
@@ -235,7 +234,6 @@ export function OrderCardsContainer({
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
-                    marginTop: 8,
                     color: 'black',
                   }}
                 >
@@ -246,7 +244,6 @@ export function OrderCardsContainer({
                   style={{
                     fontFamily: 'Tajawal-Regular',
                     color: '#F8A912',
-                    marginTop: 8,
                   }}
                 >
                   الاجمالي
