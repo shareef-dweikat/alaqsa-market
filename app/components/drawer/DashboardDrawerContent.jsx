@@ -69,7 +69,7 @@ export default function DashboardDrawerContent({ value, navigation }) {
           <Image
             resizeMode='contain'
             style={{ width: 80, height: 80 }}
-            source={require('../../../assets/logo.png')}
+            source={require('../../../assets/shni-logo.png')}
           />
         </View>
       </View>

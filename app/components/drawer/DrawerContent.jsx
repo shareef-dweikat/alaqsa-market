@@ -57,20 +57,20 @@ export default function DrawerContent({ value, navigation }) {
           alignItems: 'center',
         }}
       >
-        <View
+       <View
           style={{
             backgroundColor: Colors.WHITE,
             width: 100,
-            height: 120,
+            height: 100,
             justifyContent: 'center',
             alignItems: 'center',
             borderRadius: 20,
           }}
         >
           <Image
-            style={{ width: 80, height: 80 }}
             resizeMode='contain'
-            source={require('../../../assets/logo.png')}
+            style={{ width: 80, height: 80 }}
+            source={require('../../../assets/shni-logo.png')}
           />
         </View>
         {/* <Text

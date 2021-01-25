@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   branchCard: {
     backgroundColor: Colors.MEDIUM_BACKGROUND_COLOR,
     height: 100,
-    width: 80,
+    width: 100,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 8,
@@ -105,7 +105,7 @@ export default function DashboardHome({ navigation }) {
             width: '100%',
             justifyContent: 'space-between',
             alignItems: 'center',
-            paddingHorizontal: 16,
+            // paddingHorizontal: 8,
           }}
         >
           <View
@@ -135,7 +135,7 @@ export default function DashboardHome({ navigation }) {
             </Text>
           </View>
           <TouchableOpacity
-            style={{ marginLeft: 8, flex: 1 }}
+            style={{ marginLeft: 8, flex: 0.5 }}
             onPress={() => navigation.toggleDrawer()}
           >
             <DrawerIcon />

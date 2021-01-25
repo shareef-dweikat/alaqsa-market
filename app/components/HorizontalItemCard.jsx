@@ -78,7 +78,7 @@ export default function HorizontalItemCard({
           flexDirection: 'row',
           justifyContent: 'space-between',
           width: '100%',
-          paddingHorizontal: 4,
+           paddingHorizontal: 8,
           marginTop: 8,
         }}
       >
@@ -96,7 +96,7 @@ export default function HorizontalItemCard({
             textAlign: 'right',
             fontFamily: 'Tajawal-Medium',
             fontSize: 12,
-            width: 70,
+          
           }}
         >
           {name}

@@ -71,7 +71,7 @@ export default function NotificationsScreen({ navigation }) {
                 >
                   <View>
                     <Text
-                      style={{ marginRight: 8,width: 300, fontFamily: 'Tajawal-Regular' }}
+                      style={{ marginRight: 8,width: 250, fontFamily: 'Tajawal-Regular' }}
                     >
                       {notification.title}
                     </Text>
@@ -85,7 +85,7 @@ export default function NotificationsScreen({ navigation }) {
                   <Image
                     style={{ width: 40, height: 40 }}
                     resizeMode='contain'
-                    source={require('../../assets/logo.png')}
+                    source={require('../../assets/shni-logo.png')}
                   />
                 </View>
               </View>
