@@ -96,7 +96,7 @@ export default function HorizontalItemCard({
             textAlign: 'right',
             fontFamily: 'Tajawal-Medium',
             fontSize: 12,
-          
+            width: 70,
           }}
         >
           {name}
