@@ -167,7 +167,7 @@ export default function SignInAdminScreen({route, navigation, setUser }) {
           >
             {logoVisible ? (
               <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                <Image source={require('../../assets/logo.png')} />
+                <Image source={require('../../assets/shni-logo.png')} />
                 <Text style={styles.slogon}>لوحة التحكم</Text>
               </View>
             ) : null}

@@ -78,7 +78,7 @@ export default function HorizontalItemCard({
           flexDirection: 'row',
           justifyContent: 'space-between',
           width: '100%',
-           paddingHorizontal: 8,
+           paddingHorizontal: 4,
           marginTop: 8,
         }}
       >

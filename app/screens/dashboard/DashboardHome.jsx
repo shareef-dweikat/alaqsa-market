@@ -135,7 +135,7 @@ export default function DashboardHome({ navigation }) {
             </Text>
           </View>
           <TouchableOpacity
-            style={{ marginLeft: 8, flex: 0.5 }}
+            style={{ marginLeft: 8, flex: 0.6 }}
             onPress={() => navigation.toggleDrawer()}
           >
             <DrawerIcon />

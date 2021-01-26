@@ -43,11 +43,11 @@ const styles = StyleSheet.create({
 
 export default function DashboardNotifications({ navigation }) {
   const [title, setTitle] = useState('');
-  const [desc, setDesc] = useState('');
+  // const [desc, setDesc] = useState('');
   const dispatch = useDispatch();
 
   const submit = () => {
-    dispatch(pushNotification(title, desc));
+    dispatch(pushNotification(title));
   };
 
   return (
@@ -70,17 +70,17 @@ export default function DashboardNotifications({ navigation }) {
         نموذج الإشعارات
       </Text>
       <TextInput
-        placeholder='عنوان الإشعار'
+        placeholder='محتوى الإشعار'
         style={styles.input}
         onChangeText={(txt) => setTitle(txt)}
       />
-      <TextInput
+      {/* <TextInput
         style={{ ...styles.input, height: 60 }}
         placeholder='تفاصيل الإشعار'
         onChangeText={(txt) => setDesc(txt)}
-      />
+      /> */}
       <TouchableOpacity onPress={() => submit()} style={styles.btn}>
-        <Text style={styles.btnText}>ارسال</Text>
+        <Text style={styles.btnText}>إرسال</Text>
       </TouchableOpacity>
     </View>
   );

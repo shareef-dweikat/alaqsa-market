@@ -103,16 +103,18 @@ export default function OrdersPage({ navigation }) {
       </View>
       <ScrollView>
         {orders &&
-          orders.map((orderHeader) => (
-            <OrderCardsContainer
-              orders={orders}
-              products={products}
-              order={order}
-              orderHeader={orderHeader}
-              orderId={orderId}
-              setOrderId={setOrderId}
-            />
-          ))}
+          orders
+            .reverse()
+            .map((orderHeader) => (
+              <OrderCardsContainer
+                orders={orders}
+                products={products}
+                order={order}
+                orderHeader={orderHeader}
+                orderId={orderId}
+                setOrderId={setOrderId}
+              />
+            ))}
       </ScrollView>
 
       <View style={{ padding: 8 }}></View>
@@ -179,7 +181,7 @@ export function OrderCardsContainer({
               }}
             >
               <View>
-                <Text style={{ fontFamily: 'Tajawal-Regular'}}>
+                <Text style={{ fontFamily: 'Tajawal-Regular' }}>
                   {order.totalPrice} شيكل
                 </Text>
                 <Text

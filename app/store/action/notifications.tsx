@@ -28,7 +28,7 @@ export function fetchNotifications() {
   };
 }
 
-export function pushOrderNotification(title, desc) {
+export function pushOrderNotification(title) {
   firebase
     .database()
     .ref(`notificatios-tokens`)
@@ -45,7 +45,7 @@ export function pushOrderNotification(title, desc) {
           body: JSON.stringify({
             to: token,
             title: title,
-            body: desc,
+            body: title,
           }),
         })
           .then((response) => response.json())
@@ -54,18 +54,17 @@ export function pushOrderNotification(title, desc) {
     })
     .catch((e) => console.log('pushOrderNotification', e));
 }
-export const pushNotification = (title, desc) => {
+export const pushNotification = (title) => {
   return (dispatch) => {
     firebase
       .database()
       .ref('notifications/')
       .push({
         title,
-        desc,
         date: moment().format('YYYY-MM-DD HH:mm:SS'),
       })
       .then(() => {
-        pushOrderNotification(title, desc);
+        pushOrderNotification(title);
         alert('تم الإرسال')
       });
     dispatch({

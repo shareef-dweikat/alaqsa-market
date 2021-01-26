@@ -9,9 +9,9 @@ import {
   AsyncStorage,
 } from 'react-native';
 import pImage from '../../assets/home/product.png';
-import HeartIcon from '../../assets/small-heart-icon.svg';
-import HeartEmptyIcon from '../../assets/small-heart-empty-icon.svg';
-import PlusIcon from '../../assets/plus-icon.svg';
+import HeartIcon from '../../assets/small-heart-icon-vertical.svg';
+import HeartEmptyIcon from '../../assets/small-heart-empty-icon-vertical.svg';
+import PlusIcon from '../../assets/plus-icon-for-vertical.svg';
 const styles = StyleSheet.create({
   container: {
     flex: 1,

@@ -107,7 +107,7 @@ export default function DashboardOrdersPage({ navigation }) {
       </View>
       <ScrollView style={{ height: '100%', backgroundColor: '#F9F9FA' }}>
         {orders &&
-          orders.map((order) => (
+          orders.reverse().map((order) => (
             <OrderCardContainer
               date={order.date}
               order={order}
