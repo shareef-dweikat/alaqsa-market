@@ -107,14 +107,18 @@ export default function DashboardOrdersPage({ navigation }) {
       </View>
       <ScrollView style={{ height: '100%', backgroundColor: '#F9F9FA' }}>
         {orders &&
-          orders.reverse().map((order) => (
-            <OrderCardContainer
-              date={order.date}
-              order={order}
-              userType={userType}
-              products={order.productsObject}
-            />
-          ))}
+          orders
+            .reverse()
+            .map((order) => (
+              <OrderCardContainer
+                key={order.date}
+                date={order.date}
+                order={order}
+                myStatus={order.status}
+                userType={userType}
+                products={order.productsObject}
+              />
+            ))}
       </ScrollView>
       {/* <ScrollView style={{ padding: 8 }}></ScrollView> */}
       <LoadingModal visible={isLoading} />
@@ -122,9 +126,15 @@ export default function DashboardOrdersPage({ navigation }) {
   );
 }
 
-export function OrderCardContainer({ date, products, order, userType }) {
+export function OrderCardContainer({
+  date,
+  products,
+  order,
+  myStatus,
+  userType,
+}) {
   const dispatch = useDispatch();
-  const [status, setStatus] = useState(order.status);
+  const [status, setStatus] = useState(myStatus);
   let myProducts = products ? Object.values(products) : [];
   const username = useSelector((state) => state.auth.username);
   const handleChangeStatus = (orderId, status, preStatus) => {

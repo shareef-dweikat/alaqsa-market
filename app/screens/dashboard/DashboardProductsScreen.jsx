@@ -22,7 +22,11 @@ import FloatingICon from '../../../assets/floating-button-icon.svg';
 import BellIcon from '../../../assets/dashboard-drawer/bell.svg';
 import SIcon from '../../../assets/small-search-icon.svg';
 import Colors from '../../constants/colors';
-import { editProduct, fetchProducts } from '../../store/action/product';
+import {
+  editProduct,
+  fetchProducts,
+  editProductVisibility,
+} from '../../store/action/product';
 import { FlatList } from 'react-native-gesture-handler';
 const styles = StyleSheet.create({
   container: {
@@ -171,6 +175,7 @@ export default function DashboardHome({ navigation }) {
         )}
         renderItem={({ item }) => (
           <VerticalItemCard
+            key={item.productFirebaseId}
             products={products}
             productFirebaseId={item.productFirebaseId}
             catId={item.categoryFirebaseId}
@@ -211,12 +216,18 @@ function VerticalItemCard({
   const [editModalVisible, setEditModalVisible] = useState(false);
   const dispatch = useDispatch();
   const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
+  const [av, setAv] = useState(isVisible);
+
   const showDeleteDialog = () => {
     setDeleteDialogVisible(!deleteDialogVisible);
   };
   const handleDelete = () => {
     setDeleteDialogVisible(false);
     dispatch(deleteProduct(catId, productFirebaseId));
+  };
+  const handleVisibleChange = () => {
+    dispatch(editProductVisibility(productFirebaseId, catId, !av));
+    setAv(!av);
   };
   const handleEdit = (catName, catDesc, image, productVisible, price) => {
     setEditModalVisible(false);
@@ -232,6 +243,9 @@ function VerticalItemCard({
       )
     );
   };
+  useEffect(()=> {
+    setAv(isVisible)
+  },[isVisible])
   return (
     <TouchableOpacity
       onPress={() =>
@@ -284,6 +298,13 @@ function VerticalItemCard({
             <TouchableOpacity onPress={() => showDeleteDialog()}>
               <DeleteIcon />
             </TouchableOpacity>
+            <Switch
+              trackColor={{ false: '#767577', true: '#22C993' }}
+              thumbColor={isVisible ? Colors.WHITE : '#f4f3f4'}
+              ios_backgroundColor='#3e3e3e'
+              onValueChange={(e) => handleVisibleChange()}
+              value={av}
+            />
           </View>
           <View />
           <Text style={{ textAlign: 'right', fontFamily: 'Tajawal-Medium' }}>
@@ -425,15 +446,15 @@ export function EditModal({
               )}
             </TouchableOpacity> */}
             <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8 }}>
-              التوافر:  
+              التوافر:
             </Text>
-             <Switch
+            <Switch
               trackColor={{ false: '#767577', true: '#22C993' }}
               thumbColor={productVisible ? Colors.WHITE : '#f4f3f4'}
               ios_backgroundColor='#3e3e3e'
               onValueChange={(e) => setProductVisible(!productVisible)}
               value={productVisible}
-            /> 
+            />
           </View>
           <TextInput
             onChangeText={(txt) => setCatName(txt)}

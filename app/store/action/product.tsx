@@ -30,7 +30,7 @@ export function addProduct(product, navigation, categories) {
         addProductAPI(product, url, catFirebaseId).then(() => {
           dispatch(fetchProducts());
           // navigation.goBack();
-          alert('تم الإضافة بنجاح')
+          alert('تم الإضافة بنجاح');
           dispatch({
             type: 'PRODUCT_ADD_SUCCESS',
           });
@@ -230,7 +230,7 @@ const editProductAPI = async (
         product_name: name,
         image: uri,
         isVisible: productVisible,
-        price
+        price,
       });
   else
     return firebase
@@ -240,7 +240,7 @@ const editProductAPI = async (
         product_desc: desc,
         product_name: name,
         isVisible: productVisible,
-        price
+        price,
       });
 };
 export function editProduct(
@@ -252,8 +252,7 @@ export function editProduct(
   productVisible,
   price
 ) {
-
-  console.log(price, "priceeeee")
+  console.log(price, 'priceeeee');
   return (dispatch) => {
     dispatch({
       type: 'PRODUCT_EDITED',
@@ -272,7 +271,7 @@ export function editProduct(
           name,
           desc,
           url,
-          productVisible, 
+          productVisible,
           price
         ).then(() => {
           // dispatch(fetchCategories());
@@ -321,5 +320,28 @@ export function deleteProduct(catFirebaseId, firebaseId) {
         // payload: arrayElementId,
       });
     });
+  };
+}
+
+export function editProductVisibility(
+  productFirebaseId,
+  categoryFirebaseId,
+  productVisible,
+  
+) {
+  return (dispatch) => {
+    dispatch({
+      type: 'PRODUCT_VISIBLE_EDITED',
+    });
+    console.log( productFirebaseId,
+      categoryFirebaseId,
+      productVisible,)
+    firebase
+      .database()
+      .ref(`category/${categoryFirebaseId}/products/${productFirebaseId}`)
+      .update({
+        isVisible: productVisible,
+      }).then(()=>alert('تم التعديل'))
+      .catch((e)=>console.log(e, "error"))
   };
 }
