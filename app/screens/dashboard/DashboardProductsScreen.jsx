@@ -445,7 +445,7 @@ export function EditModal({
                 <Text style={{ fontFamily: 'Tajawal-Medium' }}>غير متوفر</Text>
               )}
             </TouchableOpacity> */}
-            <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8 }}>
+            {/* <Text style={{ fontFamily: 'Tajawal-Medium', marginRight: 8 }}>
               التوافر:
             </Text>
             <Switch
@@ -454,7 +454,7 @@ export function EditModal({
               ios_backgroundColor='#3e3e3e'
               onValueChange={(e) => setProductVisible(!productVisible)}
               value={productVisible}
-            />
+            /> */}
           </View>
           <TextInput
             onChangeText={(txt) => setCatName(txt)}
