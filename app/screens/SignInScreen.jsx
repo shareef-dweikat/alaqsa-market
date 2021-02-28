@@ -153,7 +153,7 @@ export default function SignInScreen({ navigation, setUser }) {
                 onPress={() => navigation.push('SignInAdminScreen')}
                 style={{ alignItems: 'center', justifyContent: 'center' }}
               >
-                <Image source={require('../../assets/shni-logo.png')} />
+                <Image source={require('../../assets/logo.png')} />
                 <Text style={styles.slogon}>كل ما تحتاجه في تطبيق</Text>
               </TouchableOpacity>
             ) : null}

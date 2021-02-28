@@ -80,10 +80,8 @@ export default function DashboardOrdersPage({ navigation }) {
   const isLoading = useSelector((state) => state.orders.isLoading);
   const username = useSelector((state) => state.auth.username);
   const userType = useSelector((state) => state.auth.userType);
-  console.log(userType, 'casdadsad');
   const order = useSelector((state) => state.orders.order);
   const products = useSelector((state) => state.orders.products);
-  // console.log(products, 'products');
 
   const [orderId, setOrderId] = useState('');
   useEffect(() => {

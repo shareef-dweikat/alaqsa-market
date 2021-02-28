@@ -29,7 +29,6 @@ export default function NotificationsScreen({ navigation }) {
   const notifications = useSelector(
     (state) => state.notification.notifications
   );
-  console.log(notifications, 'scasds');
 
   useEffect(() => {
     dispatch(fetchNotifications());
@@ -85,7 +84,7 @@ export default function NotificationsScreen({ navigation }) {
                   <Image
                     style={{ width: 40, height: 40 }}
                     resizeMode='contain'
-                    source={require('../../assets/shni-logo.png')}
+                    source={require('../../assets/logo.png')}
                   />
                 </View>
               </View>

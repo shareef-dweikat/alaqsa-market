@@ -43,7 +43,6 @@ export default function VerticalItemCard({
   phone,
 }) {
   const [isFav, setIsFav] = useState(false);
-  console.log(image, "cscscsc")
   const handleFav = async () => {
     const x = await AsyncStorage.getItem(product.firebaseId);
     if (x) {

@@ -26,9 +26,7 @@ export default (state = initialState, action: AnyAction) => {
         categories: action.payload,
         // isLoading: true,
       };
-    case 'CATEGORY_DELETED_SUCCESS':
-      // let c = state.categories.splice(0, 1);
-      // console.log('vvvvvvv', c.length);
+    case 'CATEGORY_DELETED_SUCCESS':  
       return {
         ...state,
         categories: state.categories,
@@ -44,7 +42,6 @@ export default (state = initialState, action: AnyAction) => {
           };
         else return category;
       });
-      console.log('categcategories', categories);
       return {
         ...state,
         categories,

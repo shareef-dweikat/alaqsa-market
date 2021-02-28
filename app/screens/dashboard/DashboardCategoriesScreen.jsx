@@ -92,7 +92,6 @@ const styles = StyleSheet.create({
   },
 });
 const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId }) => {
-  console.log('arrayElementId', arrayElementId);
   const [productAvailability, setProductAvailability] = useState(isVisible);
   const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
@@ -418,7 +417,6 @@ export function EditModal({
   );
 }
 export function LoadingModal({ visible }) {
-  console.log(visible, 'pvvvvvvv');
   return (
     <Modal visible={visible}>
       <View

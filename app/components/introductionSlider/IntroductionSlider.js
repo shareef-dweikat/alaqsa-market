@@ -67,10 +67,8 @@ class IntroductionSlider extends React.Component {
   }
  
   onSwipeLeft(gestureState) {
-   console.log(gestureState.dx)
     let {data, mySlider} = this.state
      let slide = mySlider.getPrevSlide()
-      console.log(slide)
       if(slide){
      
         if(gestureState.dx <0){
@@ -85,7 +83,6 @@ class IntroductionSlider extends React.Component {
      
      let {data, mySlider} = this.state
      let slide = mySlider.getNextSlide()
-      console.log(slide)
       if(slide){
      
         if(gestureState.dx >1){

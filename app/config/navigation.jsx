@@ -135,7 +135,6 @@ const RootStackScreen = () => {
     const getUser = async () => {
       const USER_FROM_ASYNC = await AsyncStorage.getItem('userType');
       const USER_PHONE_FROM_ASYNC = await AsyncStorage.getItem('phone');
-      console.log(USER_FROM_ASYNC, 'USER_FROM_ASYNCss');
       if (USER_FROM_ASYNC != null) {
         dispatch(setUserType(USER_FROM_ASYNC, USER_PHONE_FROM_ASYNC));
         // setUser({ userType: USER_FROM_ASYNC })

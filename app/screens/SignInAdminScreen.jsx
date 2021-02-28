@@ -104,7 +104,6 @@ export default function SignInAdminScreen({route, navigation, setUser }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
-  console.log(route, "ccccc")
   const [logoVisible, setLogoVisible] = useState(true);
   const login = () => {
     firebase
@@ -130,7 +129,6 @@ export default function SignInAdminScreen({route, navigation, setUser }) {
         } else {
           alert('لا يوجد مستخدم بهذا الاسم');
         }
-        // console.log('adsda', userObj.password === password.trim());
       })
       .catch((e) => console.log('SignInAdminScreen', e));
   };
@@ -167,7 +165,7 @@ export default function SignInAdminScreen({route, navigation, setUser }) {
           >
             {logoVisible ? (
               <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-                <Image source={require('../../assets/shni-logo.png')} />
+                <Image source={require('../../assets/logo.png')} />
                 <Text style={styles.slogon}>لوحة التحكم</Text>
               </View>
             ) : null}

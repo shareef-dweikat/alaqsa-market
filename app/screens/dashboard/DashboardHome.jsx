@@ -63,7 +63,6 @@ export default function DashboardHome({ navigation }) {
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;
-    console.log(token);
 
     if (Platform.OS === 'android') {
       Notifications.setNotificationChannelAsync('default', {

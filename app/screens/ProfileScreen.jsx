@@ -34,7 +34,6 @@ export default function ProfileScreen({ navigation }) {
   const phone = useSelector((state) => state.auth.phone);
   let userProfile = useSelector((state) => state.auth.userProfile);
   userProfile = userProfile ? userProfile : {};
-  console.log(userProfile);
   const dispatch = useDispatch();
   const [chooseImageModalVisible, setChooseImageModalVisible] = useState(false);
   useEffect(() => {
@@ -169,9 +168,6 @@ export function ChooseImageModal({ title, visible, setVisible, setImage }) {
       quality: 1,
     });
 
-    //  let temp = await fetch('file:/data/user/0/host.exp.exponent/cache/ExperienceData/%2540shareef.dweikat%252Falaqsa/ImagePicker/232ae695-7e9c-4307-8242-6a6a4e88af3a.jpg')
-    //  console.log("tempaaaaaa", temp);
-
     setVisible(false);
 
     if (!result.cancelled) {
@@ -186,7 +182,6 @@ export function ChooseImageModal({ title, visible, setVisible, setImage }) {
       aspect: [4, 3],
       quality: 1,
     });
-    console.log(resultCamera);
     setVisible(false);
 
     if (!resultCamera.cancelled) {

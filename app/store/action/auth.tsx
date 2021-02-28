@@ -3,7 +3,6 @@ import firebase from '../../config/firebase';
 
 
 export const setUserType = (USER_FROM_ASYNC, USER_PHONE_FROM_ASYNC) => {
-  console.log('ctra', USER_FROM_ASYNC);
   return (dispatch) => {
     dispatch({
       type: 'SET_USER_TYPE',
@@ -15,7 +14,6 @@ export const setUserType = (USER_FROM_ASYNC, USER_PHONE_FROM_ASYNC) => {
   };
 };
 export const setAdminType = (USERTYPE_FROM_ASYNC, USER_USERNAME_FROM_ASYNC) => {
-  console.log('ctra', USERTYPE_FROM_ASYNC);
   return (dispatch) => {
     dispatch({
       type: 'SET_ADMIN_TYPE',
@@ -28,14 +26,11 @@ export const setAdminType = (USERTYPE_FROM_ASYNC, USER_USERNAME_FROM_ASYNC) => {
 };
 
 export function login(phone, pass, navigation) {
-  console.log(phone);
-
   return (dispatch) => {
     firebase
       .database()
       .ref(`users/${phone}`)
       .once('value', (user) => {
-        console.log(user.val());
         if (user.val() != null && pass == user.val().pass) {
           AsyncStorage.setItem('userType', 'customer');
           AsyncStorage.setItem('phone', phone + '');
@@ -51,7 +46,6 @@ export function login(phone, pass, navigation) {
 }
 
 export function signup(phone, pass, email, name, navigation) {
-  console.log(name, 'my_Nme');
   return (dispatch) => {
     firebase
       .database()
@@ -94,7 +88,6 @@ export function updateProfile(phone, field, value) {
 }
 
 export function uploadPushToken(userType, pushToken) {
-  console.log(pushToken)
   return (dispatch) => {
     if (userType == 'seller')
       firebase
@@ -105,8 +98,6 @@ export function uploadPushToken(userType, pushToken) {
   };
 }
 export function uploadCustomerPushToken(pushToken) {
-  console.log(pushToken, 'pushTokensssss');
-  // if (userType == 'seller')
   return (dispatch) => {
     firebase
       .database()

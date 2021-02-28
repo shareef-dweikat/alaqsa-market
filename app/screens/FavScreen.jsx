@@ -97,7 +97,6 @@ export default function FavScreen({ navigation }) {
 export function VerticalItemCard({ product, addToFav, deleteFav, add }) {
   const [isFav, setIsFav] = useState(true);
   const dispatch = useDispatch();
-  console.log(product, 'productimage');
   const handleFav = async () => {
     const x = await AsyncStorage.getItem(product.firebaseId);
 
@@ -107,7 +106,6 @@ export function VerticalItemCard({ product, addToFav, deleteFav, add }) {
   };
   useEffect(() => {
     const getProductId = async () => {
-      console.log(product, 'adasdadasd');
       const x = await AsyncStorage.getItem(product.firebaseId);
       if (x) {
         setIsFav(true);

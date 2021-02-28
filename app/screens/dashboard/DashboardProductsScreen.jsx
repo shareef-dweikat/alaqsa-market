@@ -393,7 +393,6 @@ export function EditModal({
   const [image, setImage] = useState('');
   const [myPrice, setMyPrice] = useState(price);
   const [productVisible, setProductVisible] = useState(isVisible);
-  console.log(isVisible, 'isVisibleeee');
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,

@@ -33,7 +33,6 @@ export function pushOrderNotification(title) {
     .database()
     .ref(`notificatios-tokens`)
     .once('value', async (pushTokens) => {
-      console.log(pushTokens, 'pushTokenpushToken');
       for (let index in pushTokens.val()) {
         let token = pushTokens.val()[index].token;
         fetch('https://exp.host/--/api/v2/push/send', {
@@ -75,7 +74,6 @@ export const pushNotification = (title) => {
 };
 
 export function pushToken(expoPushToken) {
-  console.log(expoPushToken, "expoPushTokennnn")
   return (dispatch) => {
     firebase
       .database()

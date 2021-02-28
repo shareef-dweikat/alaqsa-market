@@ -47,7 +47,6 @@ const styles = StyleSheet.create({
 export default function SearchScreen({ navigation }) {
   const products = useSelector((state) => state.product.products);
   const phone = useSelector((state) => state.auth.phone);
-  console.log(phone, 'phoneeeee');
   const dispatch = useDispatch();
   const [filterdProducts, setFilterdProducts] = useState([]);
 
@@ -59,7 +58,6 @@ export default function SearchScreen({ navigation }) {
         myProducts.push(products[i]);
       }
     }
-      console.log(myProducts, "myProductsssss")
     setFilterdProducts(myProducts);
   };
   useEffect(() => {

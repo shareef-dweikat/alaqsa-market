@@ -26,21 +26,18 @@ export default (state = initialState, action: AnyAction) => {
         error: null,
       };
     case 'SIGNUP_FAILURE':
-      console.log('SIGNUP_FAILURE', action);
       return {
         ...state,
         isLoading: false,
         error: action.errors,
       };
     case 'SET_USER_TYPE':
-      console.log(action.payload, 'SET_USER_TYPE');
       return {
         ...state,
         userType: action.payload.userType,
         phone: action.payload.phone,
       };
     case 'SET_ADMIN_TYPE':
-      console.log(action.payload, 'SET_ADMIN_TYPE');
       return {
         ...state,
         userType: action.payload.userType,
@@ -52,22 +49,18 @@ export default (state = initialState, action: AnyAction) => {
         isLoading: true,
       };
     case 'LOGIN_SUCCESS':
-      // AsyncStorage.setItem('token', JSON.stringify(action.payload));
-      console.log('LOGIN_SUCCESS');
       return {
         ...state,
         userType: 'customer',
         phone: action.payload,
       };
     case 'LOGIN_FAILURE':
-      console.log('LOGIN_FAILURE', action);
       return {
         ...state,
         isLoading: false,
         error: action.errors,
       };
     case 'LOGIN_ADMIN_SUCCESS':
-      console.log('LOGIN_ADMIN_SUCCESS', action);
       return {
         ...state,
         isLoading: false,

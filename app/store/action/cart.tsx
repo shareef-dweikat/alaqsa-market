@@ -6,7 +6,6 @@ const addProductToCartAPI = async (
   phone,
   quantity
 ) => {
-  console.log(quantity, '$${phone}sss');
   return firebase
     .database()
     .ref(`cart/${phone}`)
@@ -21,13 +20,11 @@ const addProductToCartAPI = async (
 };
 
 export function addProductToCart(product, navigation, phone, quantity) {
-  console.log(quantity, 'dadasdsdddd');
   return (dispatch) => {
     dispatch({
       type: 'PRODUCT_ADD_TO_CART',
     });
     addProductToCartAPI(product, navigation, phone, quantity).then(() => {
-      console.log('addProductToCartAPI');
       //   // dispatch(fetchProducts());
       alert('تم إضافة منتج');
       dispatch({
@@ -77,7 +74,6 @@ export function fetchProducts(phone) {
 export function storeItemToDelete(firebaseId) {
   //stores an item in state to make ot accesible for other fun
   return (dispatch) => {
-    console.log('storeItemToDelete', firebaseId);
     dispatch({
       type: 'STORE_ITEM_TO_DELETE',
       payload: firebaseId,
@@ -120,7 +116,6 @@ export function fetchBranches() {
 }
 
 export function pushOrderNotificationAPI(token) {
-  console.log(token, 'tokeeen');
   return (dispatch) => {
     fetch('https://exp.host/--/api/v2/push/send', {
       method: 'POST',
@@ -150,7 +145,6 @@ export function pushOrderNotification() {
       .database()
       .ref(`admins/Nablus/pushToken`)
       .once('value', async (pushToken) => {
-        console.log(pushToken, 'pushTokenpushToken');
         fetch('https://exp.host/--/api/v2/push/send', {
           method: 'POST',
           headers: {

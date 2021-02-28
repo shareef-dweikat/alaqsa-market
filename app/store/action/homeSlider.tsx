@@ -1,7 +1,6 @@
 import firebase from '../../config/firebase';
 
 const uploadSlideAPI = async (categoryName, uri) => {
-  console.log('categoryName', categoryName);
   const response = await fetch(uri);
   const blob = await response.blob();
   var ref = firebase.storage().ref(`/slides/`).child(categoryName);

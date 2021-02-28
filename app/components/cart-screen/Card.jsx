@@ -26,7 +26,6 @@ export default function Card({
   quantity,
 }) {
 
-  console.log('dddddd', quantity)
   const [value, setValue] = useState();
   const dispatch = useDispatch();
   const handleQChanged = (txt) => {

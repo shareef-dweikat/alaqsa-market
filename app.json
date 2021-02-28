@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "الشني",
-    "slug": "Shini",
+    "name": "الأقصى ماركت",
+    "slug": "alaqsa",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/ex-shni-logo.png",
+    "icon": "./assets/exlogo.png",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",

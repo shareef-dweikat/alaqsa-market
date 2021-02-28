@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
 export default function DashboardDrawerContent({ value, navigation }) {
   const dispatch = useDispatch();
   const userType = useSelector((state) => state.auth.userType);
-  console.log(userType, 'userTypeeeee');
   return (
     <View style={{ backgroundColor: Colors.BACKGROUND, flex: 1 }}>
       <View
@@ -69,11 +68,11 @@ export default function DashboardDrawerContent({ value, navigation }) {
           <Image
             resizeMode='contain'
             style={{ width: 80, height: 80 }}
-            source={require('../../../assets/shni-logo.png')}
+            source={require('../../../assets/logo.png')}
           />
         </View>
       </View>
-      <Tap
+      {/* <Tap
         title='نظرة عامة'
         onPress={() => {
           navigation.toggleDrawer();
@@ -85,7 +84,7 @@ export default function DashboardDrawerContent({ value, navigation }) {
             color={Colors.WHITE}
           />
         }
-      />
+      /> */}
       {userType == 'admin' && (
         <Tap
           title='إدارة المستخدمين'

@@ -13,7 +13,6 @@ const initialState = {
 export default (state = initialState, action: AnyAction) => {
   switch (action.type) {
     case 'FETCH_ORDERS_SUCCESS':
-      console.log('FETCH_ORDERS_SUCCESS');
       return {
         ...state,
         isLoading: false,
@@ -21,7 +20,6 @@ export default (state = initialState, action: AnyAction) => {
       };
       
       case 'FETCH_SELLER_ORDERS_SUCCESS':
-        console.log('FETCH_SELLER_ORDERS_SUCCESS');
         return {
           ...state,
           isLoading: false,
@@ -29,7 +27,6 @@ export default (state = initialState, action: AnyAction) => {
           products: action.payload.products,
         };
         case 'FETCH_ORDERS_ADMIN_SUCCESS':
-        console.log('FETCH_ORDERS_ADMIN_SUCCESS');
         return {
           ...state,
           // isLoading: false,

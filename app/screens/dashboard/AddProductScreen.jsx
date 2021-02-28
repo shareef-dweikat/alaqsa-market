@@ -359,7 +359,6 @@ export function MyCustomPicker({ navigation, setProductCat, categories }) {
         <View style={{ height: 20, backgroundColor: 'white' }}></View>
       )}
       onValueChange={(value) => {
-        console.log(value);
         setProductCat(value);
       }}
     />

@@ -74,7 +74,6 @@ export function fetchCategories() {
 }
 
 const updateCategoryAPI = async (name, desc, isVisible, firebaseId) => {
-  console.log(name, desc, isVisible, firebaseId);
   return firebase
     .database()
     .ref(`category/${firebaseId}`)
@@ -97,7 +96,6 @@ export function updateCategory(name, desc, isVisible, firebaseId) {
 }
 
 const deleteCategoryAPI = async (firebaseId) => {
-  console.log(firebaseId);
   return firebase
     .database()
     .ref(`category/${firebaseId}`)

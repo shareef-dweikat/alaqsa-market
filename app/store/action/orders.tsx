@@ -154,7 +154,6 @@ export function changeStatus(orderId, seller, status, phone) {
 }
 
 export function updateSalesStatistics(seller, price) {
-  console.log(seller, price, 'Dooooom');
   return (dispatch) => {
     firebase
       .database()
@@ -162,7 +161,6 @@ export function updateSalesStatistics(seller, price) {
       .once('value', function (statistics) {
         let myStatistics = statistics.val();
         myStatistics = parseInt(price) + parseInt(myStatistics);
-        console.log(myStatistics, 'steppp');
         firebase.database().ref(`statistics/Nablus`).set(myStatistics);
         // .then(() => {
         //   dispatch({
@@ -181,12 +179,7 @@ export function getSalesStatistics() {
       .ref(`statistics/`)
       .once('value', function (statistics) {
         let myStatistics = Object.entries(statistics.val());
-        let statics = [];
-
-        console.log(myStatistics);
-        // for(let index in myStatistics) {
-        //     statics.push({[index]:myStatistics[index]})
-        // }
+       
         dispatch({
           type: 'FETCH_STATISTICS_SUCCESS',
           payload: myStatistics,

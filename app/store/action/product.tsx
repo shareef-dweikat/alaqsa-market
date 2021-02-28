@@ -77,7 +77,6 @@ export function fetchProducts() {
             });
           }
         }
-        console.log(products, 'fetchProducts');
         dispatch({
           type: 'FETCH_PRODUCTS',
           payload: products,
@@ -95,7 +94,6 @@ export function fetchProducts() {
 }
 
 const uploadProductImageAPI = async (productName, uri) => {
-  console.log('productName', productName);
   try {
     const response = await fetch(uri);
 
@@ -113,14 +111,7 @@ export function uploadProductImage(productName, uri) {
     dispatch({
       type: 'IMAGE_UPLOAD',
     });
-    // uploadProductImageAPI(productName, uri).then(async (snapshot) => {
-    //   let x = await snapshot.ref.getDownloadURL();
-    //   console.log('caads', x);
-    //   dispatch({
-    //     type: 'IMAGE_UPLOAD_SUCCESS',
-    //     payload: x,
-    //   });
-    // });
+    
   };
 }
 
@@ -138,7 +129,6 @@ export function fetchSearchProducts(text) {
             products.push(categories[index]['products'][i]);
           }
         }
-        // console.log(products, "fetchProducts")
         dispatch({
           type: 'FETCH_PRODUCTS_SEARCH',
           payload: products,
@@ -169,7 +159,6 @@ export const setFav = (product, phone) => {
         firebaseId: product.firebaseId,
       })
       .then((e) => {
-        console.log(e.key, 'aaaaaaaaaaaaaaaaa');
         // storeFavIdToProduct(e.key, phone)
         dispatch({
           type: 'FAV_ADDED',
@@ -186,14 +175,12 @@ export const fetchFav = (phone) => {
       .database()
       .ref(`fav/${phone}/`)
       .once('value', function (snapshot) {
-        // console.log('adasdd', snapshot.val());
         let products = snapshot.val();
         let productsList = [];
         for (let index in products) {
           products[index].favId = index;
           productsList.push(products[index]);
         }
-        console.log(productsList, 'doooom');
         dispatch({
           type: 'FETCH_FAV_SUCCESS',
           payload: productsList,
@@ -204,7 +191,6 @@ export const fetchFav = (phone) => {
 };
 
 export const deleteFav = async (product, phone) => {
-  console.log(product, phone);
   return firebase
     .database()
     .ref(`fav/${phone}/${product.favId}`)
@@ -252,15 +238,11 @@ export function editProduct(
   productVisible,
   price
 ) {
-  console.log(price, 'priceeeee');
   return (dispatch) => {
     dispatch({
       type: 'PRODUCT_EDITED',
     });
-    // console.log( productFirebaseId,
-    //   categoryFirebaseId,
-    //   name,
-    //   desc, "pdadsdasd")
+ 
     uploadProductImageAPI(name, image).then(async (snapshot) => {
       let url = snapshot;
       if (url) {
@@ -304,7 +286,6 @@ export function editProduct(
 }
 
 const deleteProductAPI = async (catFirebaseId, firebaseId) => {
-  console.log(catFirebaseId, firebaseId, 'asdasdsadad');
   return firebase
     .database()
     .ref(`category/${catFirebaseId}/products/${firebaseId}`)
@@ -333,9 +314,6 @@ export function editProductVisibility(
     dispatch({
       type: 'PRODUCT_VISIBLE_EDITED',
     });
-    console.log( productFirebaseId,
-      categoryFirebaseId,
-      productVisible,)
     firebase
       .database()
       .ref(`category/${categoryFirebaseId}/products/${productFirebaseId}`)
