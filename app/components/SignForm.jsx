@@ -158,6 +158,7 @@ export function MyInputText({ placeholder, onChangeText, keyboardType }) {
       style={styles.input}
       keyboardType={keyboardType}
       placeholder={placeholder}
+      secureTextEntry
     />
   );
 }
