@@ -151,14 +151,14 @@ export default function SignForm({
     </View>
   );
 }
-export function MyInputText({ placeholder, onChangeText, keyboardType }) {
+export function MyInputText({ placeholder, onChangeText, keyboardType, secureTextEntry }) {
   return (
     <TextInput
       onChangeText={onChangeText}
       style={styles.input}
       keyboardType={keyboardType}
       placeholder={placeholder}
-      secureTextEntry
+      secureTextEntry={secureTextEntry}
     />
   );
 }

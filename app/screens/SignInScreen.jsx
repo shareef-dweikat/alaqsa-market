@@ -170,10 +170,12 @@ export default function SignInScreen({ navigation, setUser }) {
                     onChangeText={(phone) => setPhone(phone)}
                     placeholder='رقم الجوال'
                     keyboardType= "number-pad"
+                    secureTextEntry={false}
                   />
                   <MyInputText
                     onChangeText={(pass) => setPass(pass)}
                     placeholder='كلمة المرور'
+                    secureTextEntry={true}
                   />
                 </>
               }

@@ -2,7 +2,7 @@
   "expo": {
     "name": "الأقصى ماركت",
     "slug": "alaqsa",
-    "version": "2.0.0",
+    "version": "4.0.0",
     "orientation": "portrait",
     "icon": "./assets/exlogo.png",
     "splash": {
@@ -33,15 +33,18 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.shareef.dweikat.alaqsamart"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "android": {
-      "package": "com.shareef.dweikat.alaqsa",
+      "package": "com.shareef.dweikat.alaqsamart",
       "googleServicesFile": "./google-services.json",
-      "useNextNotificationsApi": true
+      "useNextNotificationsApi": true,
+      "permissions": [],
+      "versionCode": 2
     }
   }
 }

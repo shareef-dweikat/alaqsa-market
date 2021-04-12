@@ -186,10 +186,13 @@ export default function SignUpScreen({ navigation }) {
                   <MyInputText
                     onChangeText={(d) => setPass(d)}
                     placeholder='كلمة المرور'
+                    secureTextEntry={true}
                   />
                   <MyInputText
                     onChangeText={(d) => setConfirmPass(d)}
                     placeholder='تأكيد كلمة المرور'
+                    secureTextEntry={true}
+
                   />
                 </>
               }
