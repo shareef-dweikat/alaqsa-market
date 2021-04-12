@@ -34,8 +34,10 @@ export default function NotificationsScreen({ navigation }) {
     dispatch(fetchNotifications());
   }, []);
   return (
-    <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
+    <View style={styles.container} >
       <ScrollView style={{ padding: 8, paddingHorizontal: 16 }}>
+      <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
+
         <View
           style={{
             flexDirection: 'row',
@@ -56,7 +58,7 @@ export default function NotificationsScreen({ navigation }) {
             <DrawerIcon />
           </TouchableOpacity>
         </View>
-
+        </SafeAreaView>
         <View>
           {notifications &&
             notifications.map((notification) => (
@@ -93,6 +95,6 @@ export default function NotificationsScreen({ navigation }) {
         </View>
       </ScrollView>
       <BottomNav navigation={navigation} />
-    </SafeAreaView>
+    </View>
   );
 }

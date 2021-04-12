@@ -46,6 +46,8 @@ export default function ProfileScreen({ navigation }) {
       <ScrollView
         style={{ padding: 16, backgroundColor: Colors.WHITE, height: '100%' }}
       >
+      <SafeAreaView forceInset={{ top: 'always' }}>
+
         <View
           style={{
             flexDirection: 'row',
@@ -66,6 +68,7 @@ export default function ProfileScreen({ navigation }) {
             <DrawerIcon />
           </TouchableOpacity>
         </View>
+        </SafeAreaView>
         <View
           style={{
             justifyContent: 'center',

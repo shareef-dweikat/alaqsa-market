@@ -83,7 +83,8 @@ export default function CategoriesScreen({ route, navigation }) {
     }
   }, [names[0]]);
   return (
-    <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
+    <View style={styles.container} >
+      <SafeAreaView  forceInset={{ top: 'always' }}>
       <View
         style={{
           marginTop: 8,
@@ -148,6 +149,8 @@ export default function CategoriesScreen({ route, navigation }) {
           <DrawerIcon />
         </TouchableOpacity>
       </View>
+      </SafeAreaView>
+
       <ScrollView style={{ maxHeight: 60, marginRight: 16 }} horizontal>
         {names &&
           names.map((name) => (
@@ -257,7 +260,7 @@ export default function CategoriesScreen({ route, navigation }) {
       </ScrollView> */}
       <LoadingModal visible={isLoading} />
       <BottomNav navigation={navigation} />
-    </SafeAreaView>
+    </View>
   );
 }
 

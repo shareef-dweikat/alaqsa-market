@@ -33,7 +33,7 @@ export default function Alert({ visible, setVisible, inputName, title }) {
             borderRadius: 10,
           }}
         >
-          <Text style={{ fontFamily: 'Tajawal-Medium', fontSize: 17 }}>
+          <Text style={{ fontFamily: 'Tajawal-Medium', fontSize: 17, textAlign: 'right' }}>
             {title}
           </Text>
           <TextInput
@@ -43,6 +43,8 @@ export default function Alert({ visible, setVisible, inputName, title }) {
               height: 40,
               marginTop: 16,
               borderRadius: 10,
+              paddingHorizontal: 4,
+              textAlign: 'right'
             }}
             placeholder='اكتب هنا'
             onChangeText={(txt) => setValue(txt)}
