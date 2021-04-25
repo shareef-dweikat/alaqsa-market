@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   btn: {
     backgroundColor: '#F8A912',
     padding: 16,
-    height: 45,
+
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -73,16 +73,6 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
         source={{ uri: product.image }}
       />
 
-      {/* <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          marginTop: 12,
-          width: '100%',
-        }}
-      >
-        <Text style={{fontFamily: 'Tajawal-Medium'}}>اسسسس</Text>
-      </View> */}
       <View
         style={{
           flexDirection: 'row-reverse',
@@ -92,7 +82,6 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
         <Text
           style={{
             fontFamily: 'Tajawal-Medium',
-            // marginTop: 12,
             color: '#515462',
           }}
         >

@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
     padding: 16,
     borderColor: Colors.GOLDEN,
     borderWidth: 1,
-    height: 45,
+
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -279,15 +279,7 @@ export function OrderConfirmation({ navigation, visible, setVisible }) {
           >
             تم ارسال طلب الشراء
           </Text>
-          {/* <Text
-            style={{
-              marginTop: 8,
-              fontFamily: 'Tajawal-Regular',
-              fontSize: 17,
-            }}
-          >
-            تم تغيير كلمة المرور بنجاح
-          </Text> */}
+         
           <View style={{ width: '100%' }}>
             <TouchableOpacity
               onPress={() => setVisible(false)}

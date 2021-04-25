@@ -32,8 +32,7 @@ const styles = StyleSheet.create({
   },
   btn: {
     backgroundColor: '#F8A912',
-    padding: 16,
-    height: 45,
+    height: 60,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
@@ -137,14 +136,7 @@ export default function SignForm({
       </View>
 
       {inputs}
-      {/* {forgotPassBtnShown && (
-        <Text style={styles.forgotPassText}>نسيت كلمة المرور؟</Text>
-      )} */}
-      {/* {agreeOnConditionsBoxShown && (
-        <Text style={styles.agreeOnConditionsTxt}>
-            بالنقر على زر التسجيل أنا أوافق على الشروط والأحكام
-        </Text>
-      )} */}
+     
       <TouchableOpacity onPress={onPress} style={styles.btn}>
         <Text style={styles.btnText}>{submitText}</Text>
       </TouchableOpacity>
