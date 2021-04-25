@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   image: {
     justifyContent: 'center',
-    height: Dimensions.get('window').height * 0.25,
+    height: Dimensions.get('window').height * 0.30,
     // marginTop: 32,
   },
   screenContentContainer: {
