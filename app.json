@@ -2,7 +2,7 @@
   "expo": {
     "name": "الأقصى ماركت",
     "slug": "alaqsa",
-    "version": "5.0.0",
+    "version": "6.0.0",
     "orientation": "portrait",
     "icon": "./assets/exlogo.png",
     "splash": {
