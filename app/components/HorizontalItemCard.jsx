@@ -7,17 +7,11 @@ import {
   AsyncStorage,
   TouchableOpacity,
 } from 'react-native';
-import pImage from '../../assets/home/product.png';
+import { useSelector } from 'react-redux';
 import HeartIcon from '../../assets/small-heart-icon.svg';
-import { addToFav } from '../store/action/product';
 import PlusIcon from '../../assets/plus-icon.svg';
 import HeartEmptyIcon from '../../assets/small-heart-empty-icon.svg';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
 export default function HorizontalItemCard({
   name,
   price,
@@ -31,12 +25,14 @@ export default function HorizontalItemCard({
   image,
 }) {
   const [isFav, setIsFav] = useState(false);
-  const handleFav = async () => {
-    const x = await AsyncStorage.getItem(product.firebaseId);
+  const user = useSelector((state) => state.auth.userType);
 
+  const handleFav = async () => {
+    if (!user) return
+
+    const x = await AsyncStorage.getItem(product.firebaseId);
     if (x) {
       AsyncStorage.removeItem(product.firebaseId);
-      // setIsFav(false);
       deleteFromFav();
     } else {
       AsyncStorage.setItem(product.firebaseId, product.firebaseId);
@@ -44,7 +40,6 @@ export default function HorizontalItemCard({
       addToFav();
     }
 
-    // const x = await AsyncStorage.getItem(product.firebaseId)
   };
   useEffect(() => {
     const getProductId = async () => {
@@ -110,6 +105,7 @@ export default function HorizontalItemCard({
         }}
       >
         <Text
+        numberOfLines={2}
           style={{
             color: '#B8B8CD',
             fontFamily: 'Tajawal-Regular',

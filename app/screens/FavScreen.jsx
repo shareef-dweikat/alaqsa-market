@@ -53,7 +53,21 @@ export default function FavScreen({ navigation }) {
   const dispatch = useDispatch();
   const phone = useSelector((state) => state.auth.phone);
   const favProducts = useSelector((state) => state.product.favProducts);
-  // const favProduct1s = useSelector((state) => state.product.favProducts);
+
+  const user = useSelector((state) => state.auth.userType);
+
+  const isAuth = (product) => {
+    if (user) dispatch(addProductToCart(product, navigation, phone, '1'));
+    else navigation.push('AuthStackScreen');
+  };
+  const isAuthFav = (product) => {
+    if (user) dispatch(setFav(product, phone))
+    else navigation.push('AuthStackScreen');
+  };
+  const isAuthDelete = (product) => {
+    if (user) dispatch(deleteFav(product, phone))
+    else navigation.push('AuthStackScreen');
+  };
   useEffect(() => {
     dispatch(fetchFav(phone));
     // dispatch(fetchProducts());
@@ -83,11 +97,9 @@ export default function FavScreen({ navigation }) {
           favProducts.map((product) => (
             <VerticalItemCard
               product={product}
-              addToFav={() => dispatch(setFav(product, phone))}
-              deleteFav={() => dispatch(deleteFav(product, phone))}
-              add={() =>
-                dispatch(addProductToCart(product, navigation, phone, "1"))
-              }
+              addToFav={() => isAuthFav(product)}
+              deleteFav={() => isAuthDelete(product)}
+              add={() => isAuth(product)}
             />
           ))}
       </ScrollView>
@@ -140,7 +152,7 @@ export function VerticalItemCard({ product, addToFav, deleteFav, add }) {
             justifyContent: 'space-between',
           }}
         >
-          <View style={{flexDirection: 'row'}}>
+          <View style={{ flexDirection: 'row' }}>
             {isFav ? (
               <TouchableOpacity onPress={() => handleFav()}>
                 <HeartIcon color='red' />
@@ -150,7 +162,7 @@ export function VerticalItemCard({ product, addToFav, deleteFav, add }) {
                 <HeartEmptyIcon />
               </TouchableOpacity>
             )}
-            <TouchableOpacity style={{marginLeft: 8}} onPress={add}>
+            <TouchableOpacity style={{ marginLeft: 8 }} onPress={add}>
               <PlusIcon />
             </TouchableOpacity>
           </View>
@@ -170,7 +182,7 @@ export function VerticalItemCard({ product, addToFav, deleteFav, add }) {
               color: '#B8B8CD',
               fontFamily: 'Tajawal-Regular',
               height: 40,
-              marginTop: 8
+              marginTop: 8,
             }}
           >
             {product.product_desc}

@@ -49,7 +49,12 @@ export default function SearchScreen({ navigation }) {
   const phone = useSelector((state) => state.auth.phone);
   const dispatch = useDispatch();
   const [filterdProducts, setFilterdProducts] = useState([]);
+  const user = useSelector((state) => state.auth.userType);
 
+  const isAuth = (product) => {
+    if (user) dispatch(addProductToCart(product, navigation, phone))
+    else navigation.push('AuthStackScreen');
+  };
   const search = (text) => {
     let myProducts = [];
     for (let i in products) {
@@ -98,7 +103,7 @@ export default function SearchScreen({ navigation }) {
           {filterdProducts.map((product) => (
             <VerticalItemCard
               isFavHeartAvailable={false}
-              add={() => dispatch(addProductToCart(product, navigation, phone))}
+              add={() => isAuth(product)} 
               name={product.product_name}
               price={product.price}
               image={product.image}

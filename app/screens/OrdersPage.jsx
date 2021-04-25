@@ -19,8 +19,6 @@ import RightArrow from '../../assets/right-arrow.svg';
 import SearchBox from '../components/SearchBox';
 import { StatusBar } from 'expo-status-bar';
 import { fetchOrders, fetchOrder } from '../store/action/orders';
-import VerticalItemCard from '../components/VerticalItemCard';
-import firebase from '../config/firebase';
 
 const styles = StyleSheet.create({
   container: {

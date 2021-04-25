@@ -47,8 +47,13 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
   const width = Dimensions.get('window').width - 40;
   const dispatch = useDispatch();
   const phone = useSelector((state) => state.auth.phone);
+  const user = useSelector((state) => state.auth.userType);
 
   const handleAddToCart = () => {
+    if (user == null) {
+      navigation.push('AuthStackScreen');
+      return;
+    }
     if (!product.isVisible) {
       alert('هذا المنتج غير متوفر');
       return;

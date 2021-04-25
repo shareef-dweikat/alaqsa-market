@@ -49,8 +49,20 @@ export default function CategoriesScreen({ route, navigation }) {
   const [products, setProducts] = useState([]);
   const [isVertical, setIsVertical] = useState(true);
   const isLoading = useSelector((state) => state.cart.isLoading);
+  const user = useSelector((state) => state.auth.userType);
 
+  const isAuth = () => {
+    if (user == null) {
+      navigation.push('AuthStackScreen');
+      
+    } else navigation.toggleDrawer()
+
+  };
   const handleAddToCart = (product, navigation, phone) => {
+    if (user == null) {
+      navigation.push('AuthStackScreen');
+      return;
+    }
     if (!product.isVisible) {
       alert('هذا المنتج غير متوفر');
       return;
@@ -58,6 +70,14 @@ export default function CategoriesScreen({ route, navigation }) {
     dispatch(addProductToCart(product, navigation, phone, '1'));
   };
 
+  const isAuthFav = (item) => {
+    if (user) dispatch(setFav(item, phone))
+    else navigation.push('AuthStackScreen');
+  };
+  const isAuthDelete = (product) => {
+    if (user) dispatch(deleteFav(product, phone))
+    else navigation.push('FavScreen');
+  };
   const parseCategpry = (name) => {
     for (let index in categories) {
       if (categories[index].category_name === name) {
@@ -83,72 +103,72 @@ export default function CategoriesScreen({ route, navigation }) {
     }
   }, [names[0]]);
   return (
-    <View style={styles.container} >
-      <SafeAreaView  forceInset={{ top: 'always' }}>
-      <View
-        style={{
-          marginTop: 8,
-          flexDirection: 'row',
-          width: '100%',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          paddingHorizontal: 16,
-        }}
-      >
+    <View style={styles.container}>
+      <SafeAreaView forceInset={{ top: 'always' }}>
         <View
           style={{
-            // marginHorizontal: 8,
+            marginTop: 8,
             flexDirection: 'row',
-            flex: 1,
+            width: '100%',
+            justifyContent: 'space-between',
             alignItems: 'center',
+            paddingHorizontal: 16,
           }}
         >
-          <TouchableOpacity onPress={() => setIsVertical(true)}>
-            <ListViewIcon
-              color={
-                isVertical ? Colors.ACTIVE_VIEW_TAP : Colors.INACTIVE_VIEW_TAP
-              }
-              style={{ marginRight: 4 }}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setIsVertical(false)}>
-            <GridViewIcon
-              color={
-                isVertical ? Colors.INACTIVE_VIEW_TAP : Colors.ACTIVE_VIEW_TAP
-              }
-            />
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-            borderColor: Colors.BORDER_COLOR,
-            borderWidth: 1,
-            flex: 2.8,
-            paddingHorizontal: 8,
-            borderRadius: 10,
-            height: 35,
-          }}
-        >
-          <TouchableOpacity
-            onPress={() => navigation.push('SearchScreen')}
-            style={{ flexDirection: 'row' }}
+          <View
+            style={{
+              // marginHorizontal: 8,
+              flexDirection: 'row',
+              flex: 1,
+              alignItems: 'center',
+            }}
           >
-            <Text style={{ marginRight: 8, color: Colors.PLACEHOLDER }}>
-              بحث
-            </Text>
-            <SIcon />
+            <TouchableOpacity onPress={() => setIsVertical(true)}>
+              <ListViewIcon
+                color={
+                  isVertical ? Colors.ACTIVE_VIEW_TAP : Colors.INACTIVE_VIEW_TAP
+                }
+                style={{ marginRight: 4 }}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setIsVertical(false)}>
+              <GridViewIcon
+                color={
+                  isVertical ? Colors.INACTIVE_VIEW_TAP : Colors.ACTIVE_VIEW_TAP
+                }
+              />
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              alignItems: 'center',
+              borderColor: Colors.BORDER_COLOR,
+              borderWidth: 1,
+              flex: 2.8,
+              paddingHorizontal: 8,
+              borderRadius: 10,
+              height: 35,
+            }}
+          >
+            <TouchableOpacity
+              onPress={() => navigation.push('SearchScreen')}
+              style={{ flexDirection: 'row' }}
+            >
+              <Text style={{ marginRight: 8, color: Colors.PLACEHOLDER }}>
+                بحث
+              </Text>
+              <SIcon />
+            </TouchableOpacity>
+          </View>
+          <TouchableOpacity
+            style={{ marginLeft: 8, flex: 1 }}
+            onPress={() => isAuth()}
+          >
+            <DrawerIcon />
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={{ marginLeft: 8, flex: 1 }}
-          onPress={() => navigation.toggleDrawer()}
-        >
-          <DrawerIcon />
-        </TouchableOpacity>
-      </View>
       </SafeAreaView>
 
       <ScrollView style={{ maxHeight: 60, marginRight: 16 }} horizontal>
@@ -172,7 +192,6 @@ export default function CategoriesScreen({ route, navigation }) {
                 flexDirection: 'row',
                 flexWrap: 'wrap',
                 paddingHorizontal: 8,
-                
               }
             : {}
         }
@@ -188,9 +207,9 @@ export default function CategoriesScreen({ route, navigation }) {
                 isFav={item.isVisible}
                 price={item.price}
                 product={item}
-                phone={phone}
-                addToFav={() => dispatch(setFav(item, phone))}
-                deleteFromFav={() => navigation.push('FavScreen')}
+                phone={phone} 
+                addToFav={() => isAuthFav(item)}
+                deleteFromFav={() => isAuthDelete('FavScreen')}
                 onPress={() => navigation.push('ItemDetailsScreen', { item })}
               />
             ) : (
@@ -201,8 +220,8 @@ export default function CategoriesScreen({ route, navigation }) {
                 name={item.product_name}
                 desc={item.product_desc}
                 product={item}
-                addToFav={() => dispatch(setFav(item, phone))}
-                deleteFromFav={() => navigation.push('FavScreen')}
+                addToFav={() => isAuthFav(item)}
+                deleteFromFav={() => isAuthDelete('FavScreen')}
                 price={item.price}
                 onPress={() => navigation.push('ItemDetailsScreen', { item })}
               />
@@ -211,53 +230,6 @@ export default function CategoriesScreen({ route, navigation }) {
         )}
       />
 
-      {/* <ScrollView style={{ paddingHorizontal: 16 }}>
-        {isVertical ? (
-          products &&
-          products.map((product) => (
-            <VerticalItemCard
-              image={product.image}
-              key={product.product_name + product.product_desc}
-              add={() => handleAddToCart(product, navigation, phone)}
-              name={product.product_name}
-              desc={product.product_desc}
-              isFav={product.isVisible}
-              price={product.price}
-              product={product}
-              phone={phone}
-              addToFav={() => dispatch(setFav(product, phone))}
-              deleteFromFav={() => navigation.push('FavScreen')}
-              onPress={() => navigation.push('ItemDetailsScreen', { product })}
-            />
-          ))
-        ) : (
-          <View
-            style={{
-              flexWrap: 'wrap',
-              flexDirection: 'row',
-              justifyContent: 'space-around',
-            }}
-          >
-            {products &&
-              products.map((product) => (
-                <HorizontalItemCard
-                  key={product.product_name}
-                  add={() => handleAddToCart(product, navigation, phone)}
-                  image={product.image}
-                  name={product.product_name}
-                  desc={product.product_desc}
-                  product={product}
-                  addToFav={() => dispatch(setFav(product, phone))}
-                  deleteFromFav={() => navigation.push('FavScreen')}
-                  price={product.price}
-                  onPress={() =>
-                    navigation.push('ItemDetailsScreen', { product })
-                  }
-                />
-              ))}
-          </View>
-        )}
-      </ScrollView> */}
       <LoadingModal visible={isLoading} />
       <BottomNav navigation={navigation} />
     </View>

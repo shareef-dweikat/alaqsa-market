@@ -149,7 +149,7 @@ export default function AddProductScreen({ navigation }) {
           }}
         >
           <TouchableOpacity onPress={() => handleSubmit()}>
-            <TickIcon />
+            {/* <TickIcon /> */}
           </TouchableOpacity>
           <Text
             style={{
@@ -186,39 +186,7 @@ export default function AddProductScreen({ navigation }) {
             style={styles.inputDesc}
             placeholder='الوصف'
           />
-          {/* <Text
-            style={{
-              fontFamily: 'Tajawal-Medium',
-              fontSize: 16,
-              marginTop: 16,
-            }}
-          >
-            القياس
-          </Text> */}
-          {/* <View style={styles.checkboxsContainer}>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ fontFamily: 'Tajawal-Medium', fontSize: 16 }}>
-                لتر
-              </Text>
-              <Checkbox
-                status={checked ? 'checked' : 'unchecked'}
-                onPress={() => {
-                  setChecked(!checked);
-                }}
-              />
-            </View>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <Text style={{ fontFamily: 'Tajawal-Medium', fontSize: 16 }}>
-                لتر
-              </Text>
-              <Checkbox
-                status={checked ? 'checked' : 'unchecked'}
-                onPress={() => {
-                  setChecked(!checked);
-                }}
-              />
-            </View>
-          </View> */}
+         
           <TextInput
             onChangeText={(txt) => setPrice(txt)}
             keyboardType='number-pad'
@@ -264,10 +232,7 @@ export default function AddProductScreen({ navigation }) {
             style={{ marginTop: 16 }}
             onPress={() => pickImage()}
           >
-            {/* <Image
-              source={{ uri: image }}
-              style={{ flex: 1, height: 200 }}
-            /> */}
+         
             {image ? (
               <Image
                 source={{ uri: image }}
@@ -281,8 +246,7 @@ export default function AddProductScreen({ navigation }) {
               </View>
             )}
           </TouchableOpacity>
-          {/* <LoadingModal visible={isLoading} /> */}
-          {/* <View style={{height: 100}}></View> */}
+      
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -309,8 +273,7 @@ export function MyCustomPicker({ navigation, setProductCat, categories }) {
             backgroundColor: 'white',
             width: '100%',
             padding: 8,
-            // justifyContent: 'center',
-            // alignItems: 'center',
+    
           }}
         >
           <View
@@ -326,14 +289,7 @@ export function MyCustomPicker({ navigation, setProductCat, categories }) {
           </View>
         </View>
       )}
-      // optionTemplate={({ item }) => (
-      //   <TouchableOpacity
-      //     onPress={() => setProductCat(item)}
-      //     style={{ marginTop: 12, marginRight: 16 }}
-      //   >
-      //     <Text style={{ fontFamily: 'Tajawal-Regular' }}>{item}</Text>
-      //   </TouchableOpacity>
-      // )}
+     
       fieldTemplate={(item) => (
         <View
           style={{

@@ -42,10 +42,11 @@ export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
   const slide = useSelector((state) => state.homeSlider);
   const categories = useSelector((state) => state.category.categories);
+ 
+
   const image = slide.uploadedSlideImageUri;
   const registerForPushNotificationsAsync = async() => {
     let token;
-
     const {
       status: existingStatus,
     } = await Notifications.getPermissionsAsync();
@@ -77,28 +78,14 @@ export default function HomeScreen({ navigation }) {
     const getToken = async () => {
       const token = await registerForPushNotificationsAsync()
       dispatch(pushToken(token));
-      // let { status } = await Permissions.getAsync(Permissions.NOTIFICATIONS);
-      // if (status != 'granted') {
-      //   await Notifications.requestPermissionsAsync();
-      //   const expoPushToken = await Notifications.getExpoPushTokenAsync();
-      //   dispatch(pushToken(expoPushToken));
-      // }
-
-      // if (status == 'granted') {
-      //   const expoPushToken = await Notifications.getExpoPushTokenAsync();
-      //   dispatch(pushToken(expoPushToken));
-      // }
     };
-
     getToken();
-    // registerForPushNotificationsAsync().then(token => setExpoPushToken(token));
-    // parseCategpry(names[0]);
   }, []);
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
 
-      <ImageBackground style={styles.image} source={{ uri: image }}>
+      <ImageBackground style={styles.image}  source={{ uri: image }}>
         <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
           <View
             style={{

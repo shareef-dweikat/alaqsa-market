@@ -1,28 +1,23 @@
 import React from 'react';
-import {
-  Text,
-  View,
-  Image,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-} from 'react-native';
-import CategoriesIcon from '../../assets/categories-icon.svg';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { useSelector } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
 import HomeIcon from '../../assets/home-icon.svg';
 import Notifications from '../../assets/bell.svg';
 import ProfileIcon from '../../assets/profile-icon.svg';
 import Colors from '../constants/colors';
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+import CategoriesIcon from '../../assets/categories-icon.svg';
+
 export default function BottomNav({ navigation }) {
   const currentScreen = navigation.dangerouslyGetState().routes[
     navigation.dangerouslyGetState().index
   ].name;
+  const user = useSelector((state) => state.auth.userType);
 
+  const isAuth = (screen) => {
+    if (user) navigation.push(screen);
+    else navigation.push('AuthStackScreen');
+  };
   return (
     <View
       style={{
@@ -34,13 +29,13 @@ export default function BottomNav({ navigation }) {
         paddingHorizontal: 32,
       }}
     >
-      <TouchableOpacity onPress={() => navigation.push('ProfileScreen')}>
+      <TouchableOpacity onPress={() => isAuth('ProfileScreen')}>
         <ProfileIcon
           color={currentScreen === 'ProfileScreen' ? Colors.GOLDEN : 'black'}
           size={25}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('NotificationsScreen')}>
+      <TouchableOpacity onPress={() => isAuth('NotificationsScreen')}>
         <Notifications
           name='notification'
           color={
@@ -49,20 +44,20 @@ export default function BottomNav({ navigation }) {
           size={25}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('HomeScreen')}>
+      <TouchableOpacity onPress={() => isAuth('HomeScreen')}>
         <HomeIcon
           color={currentScreen === 'HomeScreen' ? Colors.GOLDEN : 'black'}
           size={50}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('CartScreen')}>
+      <TouchableOpacity onPress={() => isAuth('CartScreen')}>
         <AntDesign
           name='shoppingcart'
           color={currentScreen === 'CartScreen' ? Colors.GOLDEN : 'black'}
           size={25}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('CategoriesScreen')}>
+      <TouchableOpacity onPress={() => isAuth('CategoriesScreen')}>
         <CategoriesIcon
           size={25}
           color={currentScreen === 'CategoriesScreen' ? Colors.GOLDEN : 'black'}

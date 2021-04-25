@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   AsyncStorage,
 } from 'react-native';
-import pImage from '../../assets/home/product.png';
+import { useSelector } from 'react-redux';
 import HeartIcon from '../../assets/small-heart-icon-vertical.svg';
 import HeartEmptyIcon from '../../assets/small-heart-empty-icon-vertical.svg';
 import PlusIcon from '../../assets/plus-icon-for-vertical.svg';
@@ -43,7 +43,9 @@ export default function VerticalItemCard({
   phone,
 }) {
   const [isFav, setIsFav] = useState(false);
+  const user = useSelector((state) => state.auth.userType);
   const handleFav = async () => {
+    if (!user) return
     const x = await AsyncStorage.getItem(product.firebaseId);
     if (x) {
        deleteFromFav();
@@ -73,7 +75,6 @@ export default function VerticalItemCard({
         borderRadius: 10,
         alignItems: 'center',
         justifyContent: 'space-between',
-        // paddingTop: 13,
         marginTop: 16,
         flexDirection: 'row',
       }}

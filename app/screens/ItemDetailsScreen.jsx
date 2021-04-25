@@ -56,7 +56,7 @@ export default function ItemDetailsScreen({ route, navigation }) {
           </Text>
         </View>
       </View>
-      <VerticalItemDetailsCard product={product} />
+      <VerticalItemDetailsCard product={product} navigation={navigation} />
     </SafeAreaView>
   );
 }

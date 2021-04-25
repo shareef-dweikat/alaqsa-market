@@ -260,7 +260,6 @@ export default function DashboardCategoriesScreen({ navigation }) {
       </SafeAreaView>
 
       <ScrollView style={styles.container}>
-        {/* <VerticalItemCard /> */}
         <ExpandableListView
           data={CONTENT} // required
           itemContainerStyle={{

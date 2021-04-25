@@ -125,8 +125,7 @@ const AuthStackScreen = () => (
 const RootStack = createStackNavigator();
 const RootStackScreen = () => {
   const [isLoading, setIsLoading] = React.useState(true);
-  // const [user, setUser] = React.useState({ userType: '' });
-  // const [user, setUser] = React.useState(null);
+
   const user = useSelector((state) => state.auth.userType);
 
   const dispatch = useDispatch();
@@ -142,10 +141,7 @@ const RootStackScreen = () => {
       setIsLoading(false);
     };
     getUser();
-    // setTimeout(() => {
-    //   setIsLoading(!isLoading);
-    //   setUser();
-    // }, 500);
+  
   }, []);
 
   return (
@@ -156,11 +152,6 @@ const RootStackScreen = () => {
     >
       {isLoading ? (
         <RootStack.Screen name='Loading' component={ActivityIndicator} />
-      ) : user == null ? (
-        <RootStack.Screen
-          name='AuthStackScreen'
-          component={() => <AuthStackScreen />}
-        />
       ) : user === 'admin' || user === 'seller' ? (
         <RootStack.Screen
           name='DashboardDrawerStackScreen'
@@ -172,7 +163,10 @@ const RootStackScreen = () => {
           component={DrawerStackScreen}
         />
       )}
-
+      <RootStack.Screen
+        name='AuthStackScreen'
+        component={() => <AuthStackScreen />}
+      />
       <RootStack.Screen
         name='Modal'
         component={Modal}
