@@ -7,6 +7,7 @@ import Notifications from '../../assets/bell.svg';
 import ProfileIcon from '../../assets/profile-icon.svg';
 import Colors from '../constants/colors';
 import CategoriesIcon from '../../assets/categories-icon.svg';
+import Cart from '../../assets/cart-t.svg';
 
 export default function BottomNav({ navigation }) {
   const currentScreen = navigation.dangerouslyGetState().routes[
@@ -51,11 +52,11 @@ export default function BottomNav({ navigation }) {
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => isAuth('CartScreen')}>
-        <AntDesign
-          name='shoppingcart'
-          color={currentScreen === 'CartScreen' ? Colors.GOLDEN : 'black'}
+         <Cart
           size={25}
-        />
+          color={currentScreen === 'CartScreen' ? Colors.GOLDEN : 'black'}
+        /> 
+      
       </TouchableOpacity>
       <TouchableOpacity onPress={() => isAuth('CategoriesScreen')}>
         <CategoriesIcon
