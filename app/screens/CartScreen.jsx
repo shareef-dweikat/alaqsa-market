@@ -2,22 +2,16 @@ import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
-  Image,
   Modal,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
-  Dimensions,
-  Keyboard,
 } from 'react-native';
-import DownArrow from '../../assets/Shape.png';
 import Colors from '../constants/colors';
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import DrawerIcon from '../../assets/drawer-icon.svg';
 import { ScrollView } from 'react-native-gesture-handler';
 import Card from '../components/cart-screen/Card';
 import Tick from '../../assets/tick-confirmation.svg';
-import { CustomPicker } from 'react-native-custom-picker';
 import BottomNav from '../components/BottomNav';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -26,11 +20,9 @@ import {
   fetchBranches,
   order,
 } from '../store/action/cart';
-import { fetchOrders } from '../store/action/orders';
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     marginTop: 16,
     padding: 20,
   },
@@ -61,16 +53,14 @@ const styles = StyleSheet.create({
   },
 });
 export default function CartScreen({ navigation }) {
-  let picker;
+
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [orderModalVisible, setOrderConfirmationModalVisible] = useState(false);
   const cartProducts = useSelector((state) => state.cart.products);
-  const options = useSelector((state) => state.cart.branches);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
   const phone = useSelector((state) => state.auth.phone);
   const [pickerValue, setPickerValue] = useState('Nablus');
   const isDeleted = useSelector((state) => state.cart.isDeleted);
-  // const transPrice = pickerValue === options[0] ? 15 : 20;
   const transPrice = 10;
   const dispatch = useDispatch();
   const handleOrder = () => {
@@ -97,7 +87,6 @@ export default function CartScreen({ navigation }) {
           style={{
             flexDirection: 'row',
             justifyContent: 'space-between',
-            // marginTop: 8,
           }}
         >
           <Text
@@ -145,7 +134,6 @@ export default function CartScreen({ navigation }) {
               ))}
           </View>
         </View>
-        {/* <View style={{ height: 4000 }}></View> */}
       </ScrollView>
 
       <View style={{ marginTop: 16, padding: 16, marginBottom: 16 }}>
@@ -178,8 +166,7 @@ export default function CartScreen({ navigation }) {
   );
 }
 
-export function DeleteConfirmation({ navigation, visible, setVisible }) {
-  // const image = { uri: '../../assets/signin-screen/background.png' };
+export function DeleteConfirmation({ visible, setVisible }) {
   const itemToDelete = useSelector((state) => state.cart.itemToDelete);
   const dispatch = useDispatch();
   const phone = useSelector((state) => state.auth.phone);
@@ -250,7 +237,6 @@ export function DeleteConfirmation({ navigation, visible, setVisible }) {
   );
 }
 export function OrderConfirmation({ navigation, visible, setVisible }) {
-  // const image = { uri: '../../assets/signin-screen/background.png' };
 
   return (
     <Modal visible={visible}>

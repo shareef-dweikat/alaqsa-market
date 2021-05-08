@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import Colors from '../constants/colors';
 import { useAssets } from 'expo-asset';
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import RightArrow from '../../assets/right-arrow.svg';
 import DrawerIcon from '../../assets/drawer-icon.svg';
 import Pen from '../../assets/tick.svg';

@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Text,
   View,
   Image,
-  KeyboardAvoidingView,
   ScrollView,
   TouchableOpacity,
   StyleSheet,
   Dimensions,
-  Keyboard,
 } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import RightArrow from '../../../assets/right-arrow.svg';
 import { StatusBar } from 'expo-status-bar';
-import pImage from '../../../assets/meat.png';
-// import HeartIcon from '../../../assets/small-heart-icon.svg';
-// import PlusIcon from '../../../assets/plus-icon.svg';
-import { Picker } from '@react-native-community/picker';
+
 
 const styles = StyleSheet.create({
   container: {

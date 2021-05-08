@@ -1,17 +1,12 @@
-import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
 import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
-  Image,
-  KeyboardAvoidingView,
-  TextInput,
-  ImageBackground,
   StyleSheet,
   Modal,
   ActivityIndicator,
 } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import DrawerIcon from '../../assets/drawer-icon.svg';
 import ListViewIcon from '../../assets/list-view.svg';
 import GridViewIcon from '../../assets/grid-view.svg';
@@ -23,12 +18,10 @@ import {
   TouchableOpacity,
 } from 'react-native-gesture-handler';
 import Colors from '../constants/colors';
-import SearchBox from '../components/SearchBox';
 import HorizontalItemCard from '../components/HorizontalItemCard';
 import { fetchCategories } from '../store/action/category';
 import {
   addProductToCart,
-  // searchAction
 } from '../store/action/cart';
 import { setFav, deleteFav } from '../store/action/product';
 
@@ -41,7 +34,6 @@ const styles = StyleSheet.create({
   },
 });
 export default function CategoriesScreen({ route, navigation }) {
-  // const image = { uri: '../../assets/signin-screen/background.png' };
   const dispatch = useDispatch();
   const categories = useSelector((state) => state.category.categories);
   const phone = useSelector((state) => state.auth.phone);
@@ -50,13 +42,11 @@ export default function CategoriesScreen({ route, navigation }) {
   const [isVertical, setIsVertical] = useState(true);
   const isLoading = useSelector((state) => state.cart.isLoading);
   const user = useSelector((state) => state.auth.userType);
-
+  const [activeCategory, setActiveCategory] = useState(false);
   const isAuth = () => {
     if (user == null) {
       navigation.push('AuthStackScreen');
-      
-    } else navigation.toggleDrawer()
-
+    } else navigation.toggleDrawer();
   };
   const handleAddToCart = (product, navigation, phone) => {
     if (user == null) {
@@ -71,11 +61,11 @@ export default function CategoriesScreen({ route, navigation }) {
   };
 
   const isAuthFav = (item) => {
-    if (user) dispatch(setFav(item, phone))
+    if (user) dispatch(setFav(item, phone));
     else navigation.push('AuthStackScreen');
   };
   const isAuthDelete = (product) => {
-    if (user) dispatch(deleteFav(product, phone))
+    if (user) dispatch(deleteFav(product, phone));
     else navigation.push('FavScreen');
   };
   const parseCategpry = (name) => {
@@ -98,8 +88,10 @@ export default function CategoriesScreen({ route, navigation }) {
     dispatch(fetchCategories());
     if (category) {
       parseCategpry(category.category_name);
+      setActiveCategory(category.category_name)
     } else {
       parseCategpry(names[0]);
+      setActiveCategory(names[0])
     }
   }, [names[0]]);
   return (
@@ -171,14 +163,17 @@ export default function CategoriesScreen({ route, navigation }) {
         </View>
       </SafeAreaView>
 
-      <ScrollView style={{ maxHeight: 60, marginRight: 16 }} horizontal>
+      <ScrollView style={{ maxHeight: 100, marginRight: 16 }} horizontal>
         {names &&
           names.map((name) => (
             <Card
               key={name}
-              backgroundColor={Colors.LIGTH_BACKGROUND_COLOR}
+              backgroundColor={name===activeCategory?'orange':Colors.LIGTH_BACKGROUND_COLOR}
               name={name}
-              onPress={() => parseCategpry(name)}
+              onPress={() => {
+                parseCategpry(name)
+                setActiveCategory(name)
+              }}
             />
           ))}
       </ScrollView>
@@ -207,7 +202,7 @@ export default function CategoriesScreen({ route, navigation }) {
                 isFav={item.isVisible}
                 price={item.price}
                 product={item}
-                phone={phone} 
+                phone={phone}
                 addToFav={() => isAuthFav(item)}
                 deleteFromFav={() => isAuthDelete('FavScreen')}
                 onPress={() => navigation.push('ItemDetailsScreen', { item })}
@@ -236,9 +231,8 @@ export default function CategoriesScreen({ route, navigation }) {
   );
 }
 
-export function Card({ name, backgroundColor, color = 'black', onPress }) {
+export function Card({ name, backgroundColor, isActive, color = 'black',  onPress }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
-
   return (
     <TouchableOpacity
       onPress={onPress}

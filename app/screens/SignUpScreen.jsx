@@ -12,7 +12,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import SignForm, { MyInputText } from '../components/SignForm';
 import { signup } from '../store/action/auth';
 import image from '../../assets/signin-screen/background-overlay.png';
@@ -107,6 +107,14 @@ export default function SignUpScreen({ navigation }) {
   const submit = async () => {
     if (pass != confirmPass) {
       alert('كلمات المرور غير متطابقة');
+      return;
+    }
+    if (phone == '') {
+      alert('رقم الجوال اجباري');
+      return;
+    }
+    if (name == '') {
+      alert('حقل الاسم اجباري');
       return;
     }
     // if (email.search('@') === -1) {

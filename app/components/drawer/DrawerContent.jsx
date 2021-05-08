@@ -7,8 +7,8 @@ import {
   Dimensions,
   TouchableOpacity,
 } from 'react-native';
+import * as Updates from 'expo-updates';
 import Colors from '../../constants/colors';
-import { SafeAreaView } from 'react-navigation';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserType } from '../../store/action/auth';
 import firebase from '../../config/firebase';
@@ -24,6 +24,7 @@ import InstaIcon from '../../../assets/drawer/insta.svg';
 import SignOut from '../../../assets/drawer/logout.svg';
 import navigation from '../../config/navigation';
 import { AsyncStorage } from 'react-native';
+import Alert from '../../screens/Alert';
 
 const styles = StyleSheet.create({
   container: {
@@ -173,9 +174,10 @@ export default function DrawerContent({ value, navigation }) {
             .then(() => {
               AsyncStorage.clear();
               dispatch(setUserType(null, null));
+              Updates.reloadAsync();
             });
           // AsyncStorage.clear();
-          // dispatch(setUserType(null, null));
+          //  dispatch(setUserType(null, null));
         }}
         title='تسجيل خروج'
         tapIcon={

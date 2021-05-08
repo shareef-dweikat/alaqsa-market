@@ -11,31 +11,28 @@ import {
   View,
   Image,
   AsyncStorage,
-  TextInput,
-  ImageBackground,
   StyleSheet,
   Dimensions,
-  Keyboard,
 } from 'react-native';
-import ListViewIcon from '../../assets/list-view.svg';
-import GridViewIcon from '../../assets/grid-view.svg';
-import { SafeAreaView } from 'react-navigation';
+
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../constants/colors';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import RightArrow from '../../assets/right-arrow.svg';
-import SearchBox from '../components/SearchBox';
+
 import { StatusBar } from 'expo-status-bar';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchFav, fetchProducts } from '../store/action/product';
-import { fetchCategories } from '../store/action/category';
+import { fetchFav} from '../store/action/product';
+
 import {
   addProductToCart,
-  // searchAction
 } from '../store/action/cart';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    // marginTop: 32,
     backgroundColor: Colors.WHITE,
+    
   },
   image: {
     // flex: 1,
@@ -76,7 +73,7 @@ export default function FavScreen({ navigation }) {
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
       <View style={styles.image}>
-        <TouchableOpacity onPress={() => navigation.pop()}>
+        <TouchableOpacity  onPress={() => navigation.pop()}>
           <RightArrow />
         </TouchableOpacity>
         <View>

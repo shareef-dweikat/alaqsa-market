@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import HeartIcon from '../../assets/small-heart-icon.svg';
 import PlusIcon from '../../assets/plus-icon.svg';
 import HeartEmptyIcon from '../../assets/small-heart-empty-icon.svg';
+import HeartIconA from '../../assets/small-heart-empty-icon-vertical.svg';
 
 export default function HorizontalItemCard({
   name,
@@ -83,7 +84,7 @@ export default function HorizontalItemCard({
           </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={() => handleFav()}>
-            <HeartEmptyIcon />
+            <HeartIconA />
           </TouchableOpacity>
         )}
         <Text

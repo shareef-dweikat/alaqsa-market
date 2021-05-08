@@ -14,7 +14,7 @@ import {
   ScrollView,
   AsyncStorage,
 } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import SignForm, { MyInputText } from '../components/SignForm';
 import BB from '../../assets/signin-screen/background.svg';
 import image from '../../assets/signin-screen/background-overlay.png';

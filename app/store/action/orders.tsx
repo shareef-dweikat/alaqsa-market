@@ -6,7 +6,11 @@ export function fetchOrders(phone) {
       .database()
       .ref(`orders/${phone}`)
       .once('value', function (remoteOrders) {
-        let orders = Object.values(remoteOrders.val());
+        let orders = []
+        
+        if(remoteOrders.val()) {
+          orders = Object.values(remoteOrders.val())
+        }
         dispatch({
           type: 'FETCH_ORDERS_SUCCESS',
           payload: orders,
@@ -100,7 +104,7 @@ export function fetchSellerOrder(orderId, seller) {
       .ref(`seller-orders/${seller}/${orderId}`)
       .once('value', function (remoteOrders) {
         let order = remoteOrders.val();
-        let products = Object.values(order.productsObject);
+        let products = order!=null &&  order.productsObject!=null? Object.values(order.productsObject):[]
         dispatch({
           type: 'FETCH_SELLER_ORDERS_SUCCESS',
           payload: { order, products },

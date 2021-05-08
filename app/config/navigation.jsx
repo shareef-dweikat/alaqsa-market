@@ -73,6 +73,7 @@ const DrawerStack = createDrawerNavigator();
 const DrawerStackScreen = () => (
   <DrawerStack.Navigator
     drawerType='slide'
+    edgeWidth={0}
     drawerContent={({ navigation }) => (
       <DrawerContent navigation={navigation} />
     )}
@@ -141,7 +142,6 @@ const RootStackScreen = () => {
       setIsLoading(false);
     };
     getUser();
-  
   }, []);
 
   return (

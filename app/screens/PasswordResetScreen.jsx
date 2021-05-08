@@ -12,7 +12,7 @@ import {
   TouchableOpacity,
   Modal,
 } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Tick from '../../assets/tick-confirmation.svg';
 import Colors from '../constants/colors';
 import RightArrow from '../../assets/right-arrow.svg';

@@ -10,7 +10,9 @@ import {
 } from 'react-native';
 import { useSelector } from 'react-redux';
 import HeartIcon from '../../assets/small-heart-icon-vertical.svg';
-import HeartEmptyIcon from '../../assets/small-heart-empty-icon-vertical.svg';
+import HeartIconA from '../../assets/small-heart-empty-icon-vertical.svg';
+
+// import HeartEmptyIcon from '../../assets/small-heart-empty-icon.svg';
 import PlusIcon from '../../assets/plus-icon-for-vertical.svg';
 const styles = StyleSheet.create({
   container: {
@@ -101,7 +103,8 @@ export default function VerticalItemCard({
                   style={{ marginRight: 8 }}
                   onPress={() => handleFav()}
                 >
-                  <HeartEmptyIcon />
+                  <HeartIconA />
+                  {/* <image source={HeartEmptyIcon} /> */}
                 </TouchableOpacity>
               )}
               <TouchableOpacity onPress={add}>

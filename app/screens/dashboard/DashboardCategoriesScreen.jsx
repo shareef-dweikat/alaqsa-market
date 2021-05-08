@@ -16,7 +16,7 @@ import DeleteIcon from '../../../assets/delete-icon-dashboard.svg';
 import { ExpandableListView } from 'react-native-expandable-listview';
 import * as ImagePicker from 'expo-image-picker';
 
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import pImage from '../../../assets/home/product.png';
 import HeartIcon from '../../../assets/small-heart-icon.svg';
 import DownArrow from '../../../assets/down-arrow-categories-dashboard.svg';

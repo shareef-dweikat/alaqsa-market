@@ -36,7 +36,7 @@ export default function BottomNav({ navigation }) {
           size={25}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => isAuth('NotificationsScreen')}>
+      <TouchableOpacity onPress={() => navigation.push('NotificationsScreen')}>
         <Notifications
           name='notification'
           color={
@@ -45,7 +45,7 @@ export default function BottomNav({ navigation }) {
           size={25}
         />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => isAuth('HomeScreen')}>
+      <TouchableOpacity onPress={() =>  navigation.push('HomeScreen')}>
         <HomeIcon
           color={currentScreen === 'HomeScreen' ? Colors.GOLDEN : 'black'}
           size={50}
@@ -58,7 +58,7 @@ export default function BottomNav({ navigation }) {
         /> 
       
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => isAuth('CategoriesScreen')}>
+      <TouchableOpacity onPress={() => navigation.push('CategoriesScreen')}>
         <CategoriesIcon
           size={25}
           color={currentScreen === 'CategoriesScreen' ? Colors.GOLDEN : 'black'}

@@ -1,7 +1,7 @@
 import { AsyncStorage } from 'react-native';
 import firebase from '../../config/firebase';
-
-
+import * as Updates from 'expo-updates';
+import Alert from '../../screens/Alert';
 export const setUserType = (USER_FROM_ASYNC, USER_PHONE_FROM_ASYNC) => {
   return (dispatch) => {
     dispatch({
@@ -38,6 +38,7 @@ export function login(phone, pass, navigation) {
             type: 'LOGIN_SUCCESS',
             payload: phone,
           });
+          Updates.reloadAsync();
           //serType: 'customer'
         } else alert('خطا في العلومات');
       })
@@ -46,6 +47,10 @@ export function login(phone, pass, navigation) {
 }
 
 export function signup(phone, pass, email, name, navigation) {
+  if(phone == '') {
+    alert("لم تدخل رقم الجوال")
+    return
+  } 
   return (dispatch) => {
     firebase
       .database()

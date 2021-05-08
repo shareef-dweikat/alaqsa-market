@@ -14,12 +14,14 @@ import {
   Keyboard,
   AsyncStorage,
 } from 'react-native';
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import SignForm, { MyInputText } from '../components/SignForm';
 import BB from '../../assets/signin-screen/background.svg';
 import image from '../../assets/signin-screen/background-overlay.png';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import firebase from '../config/firebase';
+import * as Updates from 'expo-updates';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -116,6 +118,8 @@ export default function SignInAdminScreen({route, navigation, setUser }) {
             // setUser({userType: 'admin'});
             AsyncStorage.setItem('userType', userObj.userType);
             AsyncStorage.setItem('username', username);
+            Updates.reloadAsync();
+
             dispatch({
               type: 'LOGIN_ADMIN_SUCCESS',
               payload: {

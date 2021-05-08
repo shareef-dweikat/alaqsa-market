@@ -12,15 +12,12 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { CustomPicker } from 'react-native-custom-picker';
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import RightArrow from '../../../assets/right-arrow.svg';
 import TickIcon from '../../../assets/tick-big.svg';
-import SearchBox from '../../components/SearchBox';
 import { StatusBar } from 'expo-status-bar';
 import DownArrow from '../../../assets/Shape.png';
-import { Checkbox } from 'react-native-paper';
-import VerticalItemDetailsCard from '../../components/VerticalItemDetailsCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { createCategory } from '../../store/action/category';
 import * as ImagePicker from 'expo-image-picker';

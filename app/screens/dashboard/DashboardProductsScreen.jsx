@@ -11,16 +11,13 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import EditIcon from '../../../assets/edit.svg';
 import * as ImagePicker from 'expo-image-picker';
 import { Switch } from 'react-native-paper';
 import DeleteIcon from '../../../assets/delete-icon-dashboard.svg';
 import { deleteProduct } from '../../store/action/product';
-import DrawerIcon from '../../../assets/drawer-icon.svg';
 import FloatingICon from '../../../assets/floating-button-icon.svg';
-import BellIcon from '../../../assets/dashboard-drawer/bell.svg';
-import SIcon from '../../../assets/small-search-icon.svg';
 import Colors from '../../constants/colors';
 import {
   editProduct,
@@ -30,7 +27,6 @@ import {
 import { FlatList } from 'react-native-gesture-handler';
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     padding: 16,
   },
   image: {

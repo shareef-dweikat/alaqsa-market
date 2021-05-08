@@ -12,7 +12,7 @@ import {
   Switch,
 } from 'react-native';
 import { CustomPicker } from 'react-native-custom-picker';
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import RightArrow from '../../../assets/right-arrow.svg';
 import TickIcon from '../../../assets/tick-big.svg';
@@ -137,7 +137,7 @@ export default function AddProductScreen({ navigation }) {
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
       <View style={styles.image}>
-        <TouchableOpacity onPress={() => navigation.pop()}>
+        <TouchableOpacity style={{width: 20, height: 30}} onPress={() => navigation.pop()}>
           <RightArrow />
         </TouchableOpacity>
         <View
@@ -149,7 +149,7 @@ export default function AddProductScreen({ navigation }) {
           }}
         >
           <TouchableOpacity onPress={() => handleSubmit()}>
-            {/* <TickIcon /> */}
+            <TickIcon />
           </TouchableOpacity>
           <Text
             style={{

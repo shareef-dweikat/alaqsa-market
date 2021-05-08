@@ -12,7 +12,7 @@ import {
   Keyboard,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../constants/colors';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import RightArrow from '../../assets/right-arrow.svg';
@@ -78,12 +78,7 @@ export default function OrdersPage({ navigation }) {
   const products = useSelector((state) => state.orders.products);
   const [orderId, setOrderId] = useState('');
   useEffect(() => {
-    // firebasef
-    //   .database()
-    //   .ref(`orders/${phone}/${order.orderId}/status`)
-    //   .on('value', (status) => {
-    //     alert(status.val());
-    //   });
+
     dispatch(fetchOrders(phone));
   }, []);
 

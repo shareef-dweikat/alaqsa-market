@@ -2,17 +2,14 @@ import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
-  SafeAreaView,
   Modal,
   TextInput,
   StyleSheet,
-  Dimensions,
   TouchableOpacity,
 } from 'react-native';
 
 import DeleteIcon from '../../../assets/delete-icon-dashboard.svg';
-import { useDispatch, useSelector } from 'react-redux';
-import firebase from '../../config/firebase';
+import { useDispatch } from 'react-redux';
 import { pushNotification } from '../../store/action/notifications';
 import Colors from '../../constants/colors';
 

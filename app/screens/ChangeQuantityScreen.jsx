@@ -16,7 +16,7 @@ import HeartIcon from '../../assets/small-heart-icon.svg';
 import PlusIcon from '../../assets/plus-icon.svg';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Picker } from '@react-native-community/picker';
-import { SafeAreaView } from 'react-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../constants/colors';
 import RightArrow from '../../assets/right-arrow.svg';
 import SearchBox from '../components/SearchBox';
