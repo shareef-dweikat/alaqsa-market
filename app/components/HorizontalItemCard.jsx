@@ -29,7 +29,7 @@ export default function HorizontalItemCard({
   const user = useSelector((state) => state.auth.userType);
 
   const handleFav = async () => {
-    if (!user) return
+    if (!user) return;
 
     const x = await AsyncStorage.getItem(product.firebaseId);
     if (x) {
@@ -40,7 +40,6 @@ export default function HorizontalItemCard({
       setIsFav(true);
       addToFav();
     }
-
   };
   useEffect(() => {
     const getProductId = async () => {
@@ -74,7 +73,7 @@ export default function HorizontalItemCard({
           flexDirection: 'row',
           justifyContent: 'space-between',
           width: '100%',
-           paddingHorizontal: 4,
+          paddingHorizontal: 4,
           marginTop: 8,
         }}
       >
@@ -92,7 +91,7 @@ export default function HorizontalItemCard({
             textAlign: 'right',
             fontFamily: 'Tajawal-Medium',
             fontSize: 12,
-            width: 70,
+            width: 50,
           }}
         >
           {name}
@@ -106,7 +105,7 @@ export default function HorizontalItemCard({
         }}
       >
         <Text
-        numberOfLines={2}
+          numberOfLines={2}
           style={{
             color: '#B8B8CD',
             fontFamily: 'Tajawal-Regular',
@@ -133,7 +132,7 @@ export default function HorizontalItemCard({
             textAlign: 'right',
             fontFamily: 'Tajawal-Bold',
             color: '#515462',
-            fontSize: 12
+            fontSize: 12,
           }}
         >
           {price} شيكل

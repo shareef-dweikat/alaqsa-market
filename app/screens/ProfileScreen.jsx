@@ -12,24 +12,16 @@ import {
   Platform,
 } from 'react-native';
 import Colors from '../constants/colors';
-import { useAssets } from 'expo-asset';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import RightArrow from '../../assets/right-arrow.svg';
 import DrawerIcon from '../../assets/drawer-icon.svg';
 import Pen from '../../assets/tick.svg';
-import navigation from '../config/navigation';
 import Alert from './Alert';
 import * as ImagePicker from 'expo-image-picker';
 import { fetchProfile } from '../store/action/auth';
 import BottomNav from '../components/BottomNav';
 import { useDispatch, useSelector } from 'react-redux';
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-});
+
 export default function ProfileScreen({ navigation }) {
-  // const image = { uri: '../../assets/signin-screen/background.png' };
   const [image, setImage] = useState(null);
   const phone = useSelector((state) => state.auth.phone);
   let userProfile = useSelector((state) => state.auth.userProfile);

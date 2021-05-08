@@ -3,18 +3,15 @@ import {
   Text,
   View,
   Image,
-  StyleSheet,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import firebase from '../../config/firebase';
-import Icon from '../../../assets/cart/cart-item.png';
-import Pen from '../../../assets/cart/pen.svg';
+
 import X from '../../../assets/cart/x.svg';
-import navigation from '../../config/navigation';
 import { storeItemToDelete } from '../../store/action/cart';
-const styles = StyleSheet.create({});
+
 export default function Card({
   fetchProducts,
   setDeleteModalVisible,
@@ -66,9 +63,7 @@ export default function Card({
         >
           <X style={{ marginRight: 16 }} />
         </TouchableOpacity>
-        {/* <TouchableOpacity onPress={() => navigation()}>
-          <Pen />
-        </TouchableOpacity> */}
+ 
       </View>
       <View
         style={{

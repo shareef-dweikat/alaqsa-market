@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Modal,
-  ActivityIndicator,
-} from 'react-native';
+import { Text, View, StyleSheet, Modal, ActivityIndicator } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DrawerIcon from '../../assets/drawer-icon.svg';
 import ListViewIcon from '../../assets/list-view.svg';
@@ -20,9 +14,7 @@ import {
 import Colors from '../constants/colors';
 import HorizontalItemCard from '../components/HorizontalItemCard';
 import { fetchCategories } from '../store/action/category';
-import {
-  addProductToCart,
-} from '../store/action/cart';
+import { addProductToCart } from '../store/action/cart';
 import { setFav, deleteFav } from '../store/action/product';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -88,10 +80,10 @@ export default function CategoriesScreen({ route, navigation }) {
     dispatch(fetchCategories());
     if (category) {
       parseCategpry(category.category_name);
-      setActiveCategory(category.category_name)
+      setActiveCategory(category.category_name);
     } else {
       parseCategpry(names[0]);
-      setActiveCategory(names[0])
+      setActiveCategory(names[0]);
     }
   }, [names[0]]);
   return (
@@ -168,11 +160,15 @@ export default function CategoriesScreen({ route, navigation }) {
           names.map((name) => (
             <Card
               key={name}
-              backgroundColor={name===activeCategory?'orange':Colors.LIGTH_BACKGROUND_COLOR}
+              backgroundColor={
+                name === activeCategory
+                  ? Colors.GOLDEN
+                  : Colors.LIGTH_BACKGROUND_COLOR
+              }
               name={name}
               onPress={() => {
-                parseCategpry(name)
-                setActiveCategory(name)
+                parseCategpry(name);
+                setActiveCategory(name);
               }}
             />
           ))}
@@ -231,7 +227,13 @@ export default function CategoriesScreen({ route, navigation }) {
   );
 }
 
-export function Card({ name, backgroundColor, isActive, color = 'black',  onPress }) {
+export function Card({
+  name,
+  backgroundColor,
+  isActive,
+  color = 'black',
+  onPress,
+}) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
   return (
     <TouchableOpacity

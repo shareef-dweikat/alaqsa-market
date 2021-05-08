@@ -1,11 +1,8 @@
 import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
 import React, { useEffect, useState } from 'react';
 import {
-  Text,
-  View,
-  Image,
   KeyboardAvoidingView,
-  TextInput,
+  ScrollView,
   ImageBackground,
   StyleSheet,
   Dimensions,
@@ -16,7 +13,6 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import SignForm, { MyInputText } from '../components/SignForm';
 import { signup } from '../store/action/auth';
 import image from '../../assets/signin-screen/background-overlay.png';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -25,7 +21,6 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
-    // height: Dimensions.get('window').height * 0.5,
     width: Dimensions.get('window').width,
   },
   input: {
@@ -164,12 +159,6 @@ export default function SignUpScreen({ navigation }) {
               justifyContent: 'flex-start',
             }}
           >
-            {/* {logoVisible ? (
-              <View style={{ alignItems: 'center', justifyContent: 'center'}}>
-                <Image source={require('../../assets/logo.png')} />
-                <Text style={styles.slogon}>كل ما تحتاجه في تطبيق</Text>
-              </View>
-            ) : null} */}
             <SignForm
               agreeOnConditionsBoxShown={true}
               submitText='إنشاء حساب'
@@ -187,10 +176,6 @@ export default function SignUpScreen({ navigation }) {
                     placeholder='رقم الجوال'
                     keyboardType= "number-pad"
                   />
-                  {/* <MyInputText
-                    onChangeText={(d) => setEmail(d)}
-                    placeholder='الايميل'
-                  /> */}
                   <MyInputText
                     onChangeText={(d) => setPass(d)}
                     placeholder='كلمة المرور'

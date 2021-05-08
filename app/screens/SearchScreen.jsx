@@ -1,15 +1,9 @@
-import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
 import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
-  Image,
-  KeyboardAvoidingView,
-  TextInput,
-  ImageBackground,
   StyleSheet,
   Dimensions,
-  Keyboard,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../constants/colors';
@@ -28,8 +22,6 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
   },
   image: {
-    // flex: 1,
-    // resizeMode: 'cover',
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'space-between',
     padding: 16,

@@ -1,22 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import {
   Text,
-  View,
   Image,
   KeyboardAvoidingView,
-  TextInput,
   ImageBackground,
   StyleSheet,
   Dimensions,
   Keyboard,
   TouchableOpacity,
   ScrollView,
-  AsyncStorage,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SignForm, { MyInputText } from '../components/SignForm';
-import BB from '../../assets/signin-screen/background.svg';
 import image from '../../assets/signin-screen/background-overlay.png';
 import firebase from '../config/firebase';
 import {useRoute} from '@react-navigation/native';
@@ -29,7 +25,6 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
-    // height: Dimensions.get('window').height * 0.5,
     width: Dimensions.get('window').width,
   },
   input: {
@@ -100,8 +95,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
-export default function SignInScreen({ navigation, setUser }) {
-  // const image = { uri: '../../assets/signin-screen/background.png' };
+export default function SignInScreen({ navigation }) {
   const [logoVisible, setLogoVisible] = useState(true);
   const [pass, setPass] = useState(null);
   const [phone, setPhone] = useState(null);

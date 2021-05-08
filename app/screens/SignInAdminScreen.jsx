@@ -1,13 +1,11 @@
-import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import {
   Text,
   View,
   Image,
   KeyboardAvoidingView,
-  TextInput,
   ImageBackground,
   StyleSheet,
   Dimensions,
@@ -16,9 +14,8 @@ import {
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SignForm, { MyInputText } from '../components/SignForm';
-import BB from '../../assets/signin-screen/background.svg';
 import image from '../../assets/signin-screen/background-overlay.png';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView } from 'react-native-gesture-handler';
 import firebase from '../config/firebase';
 import * as Updates from 'expo-updates';
 
@@ -30,7 +27,6 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
     justifyContent: 'center',
-    // height: Dimensions.get('window').height * 0.5,
     width: Dimensions.get('window').width,
   },
   input: {
@@ -102,7 +98,6 @@ const styles = StyleSheet.create({
   },
 });
 export default function SignInAdminScreen({route, navigation, setUser }) {
-  // const image = { uri: '../../assets/signin-screen/background.png' };
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
@@ -115,7 +110,6 @@ export default function SignInAdminScreen({route, navigation, setUser }) {
         const userObj = user.val();
         if (userObj) {
           if (userObj.password == password.trim()) {
-            // setUser({userType: 'admin'});
             AsyncStorage.setItem('userType', userObj.userType);
             AsyncStorage.setItem('username', username);
             Updates.reloadAsync();
