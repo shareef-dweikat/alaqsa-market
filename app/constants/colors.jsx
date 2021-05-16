@@ -9,5 +9,6 @@ export default {
     INACTIVE_VIEW_TAP: '#a0a3b0',
     MEDIUM_BACKGROUND_COLOR: '#F5F5F5',
     PLACEHOLDER: '#8E9099',
+    LIGTH_GOLDEN: '#fabb44'
 
 }

@@ -44,7 +44,7 @@
       "googleServicesFile": "./google-services.json",
       "useNextNotificationsApi": true,
       "permissions": [],
-      "versionCode": 2
+      "versionCode": 3
     }
   }
 }

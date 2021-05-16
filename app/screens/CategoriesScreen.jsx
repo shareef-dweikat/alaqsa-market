@@ -162,7 +162,7 @@ export default function CategoriesScreen({ route, navigation }) {
               key={name}
               backgroundColor={
                 name === activeCategory
-                  ? Colors.GOLDEN
+                  ? Colors.LIGTH_GOLDEN
                   : Colors.LIGTH_BACKGROUND_COLOR
               }
               name={name}

@@ -10,8 +10,9 @@ import {
 import { useSelector } from 'react-redux';
 import HeartIcon from '../../assets/small-heart-icon.svg';
 import PlusIcon from '../../assets/plus-icon.svg';
-import HeartEmptyIcon from '../../assets/small-heart-empty-icon.svg';
 import HeartIconA from '../../assets/small-heart-empty-icon-vertical.svg';
+import HeartIconB from '../../assets/small-heart-empty-icon-h.svg';
+
 
 export default function HorizontalItemCard({
   name,
@@ -83,7 +84,7 @@ export default function HorizontalItemCard({
           </TouchableOpacity>
         ) : (
           <TouchableOpacity onPress={() => handleFav()}>
-            <HeartIconA />
+            <HeartIconB />
           </TouchableOpacity>
         )}
         <Text
@@ -91,7 +92,7 @@ export default function HorizontalItemCard({
             textAlign: 'right',
             fontFamily: 'Tajawal-Medium',
             fontSize: 12,
-            width: 50,
+            width: 60,
           }}
         >
           {name}
@@ -105,7 +106,7 @@ export default function HorizontalItemCard({
         }}
       >
         <Text
-          numberOfLines={2}
+          numberOfLines={1}
           style={{
             color: '#B8B8CD',
             fontFamily: 'Tajawal-Regular',
