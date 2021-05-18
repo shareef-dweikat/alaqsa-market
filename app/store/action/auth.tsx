@@ -26,11 +26,13 @@ export const setAdminType = (USERTYPE_FROM_ASYNC, USER_USERNAME_FROM_ASYNC) => {
 };
 
 export function login(phone, pass, navigation) {
+  console.log(phone, pass, "NEwUSer")
   return (dispatch) => {
     firebase
       .database()
       .ref(`users/${phone}`)
       .once('value', (user) => {
+        console.log(user, "MYUsssss")
         if (user.val() != null && pass == user.val().pass) {
           AsyncStorage.setItem('userType', 'customer');
           AsyncStorage.setItem('phone', phone + '');
@@ -47,10 +49,10 @@ export function login(phone, pass, navigation) {
 }
 
 export function signup(phone, pass, email, name, navigation) {
-  if(phone == '') {
-    alert("لم تدخل رقم الجوال")
-    return
-  } 
+  if (phone == '') {
+    alert('لم تدخل رقم الجوال');
+    return;
+  }
   return (dispatch) => {
     firebase
       .database()
@@ -62,7 +64,8 @@ export function signup(phone, pass, email, name, navigation) {
       })
       .then(() => {
         alert('تم التسجيل بنجاح');
-        navigation.pop();
+        dispatch(login(phone, pass, navigation))
+        //  navigation.pop();
       })
       .catch((e) => console.log('addProductToCartAPI', e));
   };
@@ -110,10 +113,10 @@ export function uploadCustomerPushToken(pushToken) {
       .push({ pushToken })
       .then((d) => console.log(d, 'dataaa'))
       .catch((e) => console.log('uploadCustomerPushToken', e));
-      dispatch({
-        type: 'FETCddd',
-        // payload: sellers.val(),
-      });
+    dispatch({
+      type: 'FETCddd',
+      // payload: sellers.val(),
+    });
   };
 }
 

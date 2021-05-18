@@ -120,7 +120,33 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
           marginTop: 8,
         }}
       >
-        <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            borderWidth: 0.5,
+            borderRadius: 40,
+            borderColor: colors.PLACEHOLDER,
+            width: 80,
+            marginHorizontal: 8,
+            paddingHorizontal: 8,
+            alignItems: 'center',
+            justifyContent: 'space-around',
+          }}
+        >
+          <TouchableOpacity
+            style={{
+              height: 20,
+              width: 20,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => {
+              const sum = parseInt(quantity) + 1;
+              setQuantity(sum + '');
+            }}
+          >
+            <Text style={{ color: 'black', fontSize: 15 }}>+</Text>
+          </TouchableOpacity>
           <TextInput
             keyboardType='number-pad'
             value={quantity}
@@ -134,17 +160,27 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
             style={{
               fontSize: 15,
               fontFamily: 'Tajawal-Regular',
-              borderWidth: 0.5,
-              borderRadius: 40,
               textAlign: 'center',
-              marginRight: 8,
               color: 'black',
-              borderColor: colors.PLACEHOLDER,
-              width: 50,
               fontSize: 12,
             }}
             placeholder='الكمية'
           />
+          <TouchableOpacity
+            style={{ 
+              height: 20,
+               width: 20,
+               justifyContent: 'center',
+              alignItems: 'center',
+             }}
+            onPress={() => {
+              const sum = parseInt(quantity) - 1;
+              if (sum < 0) setQuantity(0 + '');
+              else setQuantity(sum + '');
+            }}
+          >
+            <Text style={{ color: 'black', fontSize: 15 }}>-</Text>
+          </TouchableOpacity>
         </View>
 
         <Text style={{ fontFamily: 'Tajawal-Regular', color: '#515462' }}>

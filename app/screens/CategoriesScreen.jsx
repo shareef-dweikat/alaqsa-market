@@ -35,6 +35,7 @@ export default function CategoriesScreen({ route, navigation }) {
   const isLoading = useSelector((state) => state.cart.isLoading);
   const user = useSelector((state) => state.auth.userType);
   const [activeCategory, setActiveCategory] = useState(false);
+  let myScroll = null;
   const isAuth = () => {
     if (user == null) {
       navigation.push('AuthStackScreen');
@@ -72,10 +73,20 @@ export default function CategoriesScreen({ route, navigation }) {
       }
     }
   };
-  const names = [];
+  let names = [];
   for (let index in categories) {
     names.push(categories[index].category_name);
   }
+
+  useEffect(() => {
+    for (let index in names) {
+      if (names[index] == activeCategory) {
+        let temp = names[0];
+        names[0] = activeCategory;
+        names[index] = temp;
+      }
+    }
+  }, []);
   useEffect(() => {
     dispatch(fetchCategories());
     if (category) {
@@ -123,29 +134,25 @@ export default function CategoriesScreen({ route, navigation }) {
               />
             </TouchableOpacity>
           </View>
-          <View
+          <TouchableOpacity
+            onPress={() => navigation.push('SearchScreen')}
             style={{
               flexDirection: 'row',
               justifyContent: 'flex-end',
               alignItems: 'center',
               borderColor: Colors.BORDER_COLOR,
               borderWidth: 1,
-              flex: 2.8,
+              width: 240,
               paddingHorizontal: 8,
               borderRadius: 10,
               height: 35,
             }}
           >
-            <TouchableOpacity
-              onPress={() => navigation.push('SearchScreen')}
-              style={{ flexDirection: 'row' }}
-            >
-              <Text style={{ marginRight: 8, color: Colors.PLACEHOLDER }}>
-                بحث
-              </Text>
-              <SIcon />
-            </TouchableOpacity>
-          </View>
+            <Text style={{ marginRight: 8, color: Colors.PLACEHOLDER }}>
+              بحث
+            </Text>
+            <SIcon />
+          </TouchableOpacity>
           <TouchableOpacity
             style={{ marginLeft: 8, flex: 1 }}
             onPress={() => isAuth()}
@@ -155,7 +162,13 @@ export default function CategoriesScreen({ route, navigation }) {
         </View>
       </SafeAreaView>
 
-      <ScrollView style={{ maxHeight: 100, marginRight: 16 }} horizontal>
+      <ScrollView
+        ref={(ref) => {
+          myScroll = ref;
+        }}
+        style={{ maxHeight: 100, marginRight: 16 }}
+        horizontal
+      >
         {names &&
           names.map((name) => (
             <Card
@@ -169,6 +182,7 @@ export default function CategoriesScreen({ route, navigation }) {
               onPress={() => {
                 parseCategpry(name);
                 setActiveCategory(name);
+                // myScroll.scrollTo({ x: 1200, y: 0, animated: true })
               }}
             />
           ))}
