@@ -78,15 +78,15 @@ export default function CategoriesScreen({ route, navigation }) {
     names.push(categories[index].category_name);
   }
 
-  useEffect(() => {
-    for (let index in names) {
-      if (names[index] == activeCategory) {
-        let temp = names[0];
-        names[0] = activeCategory;
-        names[index] = temp;
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   for (let index in names) {
+  //     if (names[index] == activeCategory) {
+  //       let temp = names[0];
+  //       names[0] = activeCategory;
+  //       names[index] = temp;
+  //     }
+  //   }
+  // }, []);
   useEffect(() => {
     dispatch(fetchCategories());
     if (category) {
@@ -142,7 +142,7 @@ export default function CategoriesScreen({ route, navigation }) {
               alignItems: 'center',
               borderColor: Colors.BORDER_COLOR,
               borderWidth: 1,
-              width: 240,
+              width: 220,
               paddingHorizontal: 8,
               borderRadius: 10,
               height: 35,
@@ -169,23 +169,50 @@ export default function CategoriesScreen({ route, navigation }) {
         style={{ maxHeight: 100, marginRight: 16 }}
         horizontal
       >
-        {names &&
-          names.map((name) => (
-            <Card
-              key={name}
-              backgroundColor={
-                name === activeCategory
-                  ? Colors.LIGTH_GOLDEN
-                  : Colors.LIGTH_BACKGROUND_COLOR
-              }
-              name={name}
-              onPress={() => {
-                parseCategpry(name);
-                setActiveCategory(name);
-                // myScroll.scrollTo({ x: 1200, y: 0, animated: true })
-              }}
-            />
-          ))}
+        <>
+          {names &&
+            names.map((name) => {
+              return (
+                name === activeCategory && (
+                  <Card
+                    key={name}
+                    backgroundColor={
+                      name === activeCategory
+                        ? Colors.LIGTH_GOLDEN
+                        : Colors.LIGTH_BACKGROUND_COLOR
+                    }
+                    name={name}
+                    onPress={() => {
+                      parseCategpry(name);
+                      setActiveCategory(name);
+                      // myScroll.scrollTo({ x: 1200, y: 0, animated: true })
+                    }}
+                  />
+                )
+              );
+            })}
+          {names &&
+            names.map((name) => {
+              return (
+                name !== activeCategory && (
+                  <Card
+                    key={name}
+                    backgroundColor={
+                      name === activeCategory
+                        ? Colors.LIGTH_GOLDEN
+                        : Colors.LIGTH_BACKGROUND_COLOR
+                    }
+                    name={name}
+                    onPress={() => {
+                      parseCategpry(name);
+                      setActiveCategory(name);
+                      // myScroll.scrollTo({ x: 1200, y: 0, animated: true })
+                    }}
+                  />
+                )
+              );
+            })}
+        </>
       </ScrollView>
 
       <FlatList

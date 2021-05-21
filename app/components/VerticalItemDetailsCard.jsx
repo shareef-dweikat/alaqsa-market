@@ -145,7 +145,7 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
               setQuantity(sum + '');
             }}
           >
-            <Text style={{ color: 'black', fontSize: 15 }}>+</Text>
+            <Text style={{ color: 'black', fontSize: 18 }}>+</Text>
           </TouchableOpacity>
           <TextInput
             keyboardType='number-pad'
@@ -175,11 +175,11 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
              }}
             onPress={() => {
               const sum = parseInt(quantity) - 1;
-              if (sum < 0) setQuantity(0 + '');
+              if (sum < 1) setQuantity(1 + '');
               else setQuantity(sum + '');
             }}
           >
-            <Text style={{ color: 'black', fontSize: 15 }}>-</Text>
+            <Text style={{ color: 'black', fontSize: 18 }}>-</Text>
           </TouchableOpacity>
         </View>
 

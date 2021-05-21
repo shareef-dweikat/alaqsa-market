@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Text,
-  View,
-  Image,
-  TextInput,
-  TouchableOpacity,
-} from 'react-native';
+import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
 import { useDispatch } from 'react-redux';
 import firebase from '../../config/firebase';
 
@@ -22,7 +16,6 @@ export default function Card({
   firebaseId,
   quantity,
 }) {
-
   const [value, setValue] = useState();
   const dispatch = useDispatch();
   const handleQChanged = (txt) => {
@@ -63,7 +56,6 @@ export default function Card({
         >
           <X style={{ marginRight: 16 }} />
         </TouchableOpacity>
- 
       </View>
       <View
         style={{
@@ -78,7 +70,7 @@ export default function Card({
           style={{
             flexDirection: 'row',
             flex: 1,
-            paddingHorizontal: 16
+            paddingHorizontal: 16,
           }}
         >
           <Text style={{ fontSize: 15, fontFamily: 'Tajawal-Medium' }}>
@@ -98,7 +90,28 @@ export default function Card({
             >
               {name}
             </Text>
-            <View style={{ flexDirection: 'row', paddingHorizontal: 16, marginTop: 8 }}>
+            <View
+              style={{
+                flexDirection: 'row',
+                paddingHorizontal: 16,
+                marginTop: 8,
+              }}
+            >
+              <TouchableOpacity
+                style={{
+                  height: 20,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                onPress={() => {
+                  handleQChanged(parseInt(value) + 1 + '');
+                  // const sum = parseInt(quantity) + 1;
+                  // setQuantity(sum + '');
+                }}
+              >
+                <Text style={{ color: 'black', fontSize: 18 }}>+</Text>
+              </TouchableOpacity>
               <TextInput
                 keyboardType='number-pad'
                 value={value}
@@ -111,13 +124,30 @@ export default function Card({
                   borderWidth: 1,
                   height: 20,
                   width: 30,
+
                   borderRadius: 50,
                   justifyContent: 'center',
                   alignItems: 'center',
                 }}
                 placeholder='0'
               />
-              <Text style={{fontFamily: 'Tajawal-Regular'}}>الكمية: </Text>
+              <TouchableOpacity
+                style={{
+                  height: 20,
+                  width: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                }}
+                onPress={() => {
+                  if (value === '1') return;
+                  else handleQChanged(parseInt(value) - 1 + '');
+                  // const sum = parseInt(quantity) + 1;
+                  // setQuantity(sum + '');
+                }}
+              >
+                <Text style={{ color: 'black', fontSize: 18 }}>-</Text>
+              </TouchableOpacity>
+              <Text style={{ fontFamily: 'Tajawal-Regular' }}>الكمية: </Text>
             </View>
           </View>
           <Image
