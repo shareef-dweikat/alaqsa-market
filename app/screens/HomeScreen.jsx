@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
-  Image,
+  ActivityIndicator,
   ImageBackground,
   StyleSheet,
   Dimensions,
@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
   },
   image: {
     justifyContent: 'center',
-    height: Dimensions.get('window').height * 0.30,
+    height: Dimensions.get('window').height * 0.3,
     // marginTop: 32,
   },
   screenContentContainer: {
@@ -42,14 +42,12 @@ export default function HomeScreen({ navigation }) {
   const dispatch = useDispatch();
   const slide = useSelector((state) => state.homeSlider);
   const categories = useSelector((state) => state.category.categories);
- 
 
   const image = slide.uploadedSlideImageUri;
-  const registerForPushNotificationsAsync = async() => {
+  const registerForPushNotificationsAsync = async () => {
     let token;
-    const {
-      status: existingStatus,
-    } = await Notifications.getPermissionsAsync();
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
     let finalStatus = existingStatus;
     if (existingStatus !== 'granted') {
       const { status } = await Notifications.requestPermissionsAsync();
@@ -71,21 +69,30 @@ export default function HomeScreen({ navigation }) {
     }
 
     return token;
-  }
+  };
   useEffect(() => {
     dispatch(fetchSlideImage());
     dispatch(fetchCategories());
     const getToken = async () => {
-      const token = await registerForPushNotificationsAsync()
+      const token = await registerForPushNotificationsAsync();
       dispatch(pushToken(token));
     };
     getToken();
   }, []);
+
+  if (categories.length === 0) {
+    return (
+      <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
+        <ActivityIndicator color={Colors.GOLDEN} size='large' />
+      </View>
+    );
+  }
+
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
 
-      <ImageBackground style={styles.image}  source={{ uri: image }}>
+      <ImageBackground style={styles.image} source={{ uri: image }}>
         <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
           <View
             style={{

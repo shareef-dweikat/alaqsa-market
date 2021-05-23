@@ -145,7 +145,7 @@ export default function Card({
                   // setQuantity(sum + '');
                 }}
               >
-                <Text style={{ color: 'black', fontSize: 18 }}>-</Text>
+                <Text style={{ color: 'black', fontSize: 22 }}>-</Text>
               </TouchableOpacity>
               <Text style={{ fontFamily: 'Tajawal-Regular' }}>الكمية: </Text>
             </View>

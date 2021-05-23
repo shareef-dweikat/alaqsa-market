@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, StyleSheet, Modal, ActivityIndicator } from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Modal,
+  ActivityIndicator,
+  FlatList,
+  ScrollView,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DrawerIcon from '../../assets/drawer-icon.svg';
 import ListViewIcon from '../../assets/list-view.svg';
 import GridViewIcon from '../../assets/grid-view.svg';
 import SIcon from '../../assets/small-search-icon.svg';
 import VerticalItemCard from '../components/VerticalItemCard';
-import {
-  FlatList,
-  ScrollView,
-  TouchableOpacity,
-} from 'react-native-gesture-handler';
+
 import Colors from '../constants/colors';
 import HorizontalItemCard from '../components/HorizontalItemCard';
 import { fetchCategories } from '../store/action/category';
@@ -35,7 +41,10 @@ export default function CategoriesScreen({ route, navigation }) {
   const isLoading = useSelector((state) => state.cart.isLoading);
   const user = useSelector((state) => state.auth.userType);
   const [activeCategory, setActiveCategory] = useState(false);
+  const [isClicked, setIsClicked] = useState(false);
+
   let myScroll = null;
+  const width = Dimensions.get('window').width;
   const isAuth = () => {
     if (user == null) {
       navigation.push('AuthStackScreen');
@@ -142,7 +151,7 @@ export default function CategoriesScreen({ route, navigation }) {
               alignItems: 'center',
               borderColor: Colors.BORDER_COLOR,
               borderWidth: 1,
-              width: 220,
+              width: width / 1.8,
               paddingHorizontal: 8,
               borderRadius: 10,
               height: 35,
@@ -153,10 +162,7 @@ export default function CategoriesScreen({ route, navigation }) {
             </Text>
             <SIcon />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={{ marginLeft: 8, flex: 1 }}
-            onPress={() => isAuth()}
-          >
+          <TouchableOpacity style={{ marginLeft: 8 }} onPress={() => isAuth()}>
             <DrawerIcon />
           </TouchableOpacity>
         </View>
@@ -171,6 +177,7 @@ export default function CategoriesScreen({ route, navigation }) {
       >
         <>
           {names &&
+            !isClicked &&
             names.map((name) => {
               return (
                 name === activeCategory && (
@@ -185,6 +192,7 @@ export default function CategoriesScreen({ route, navigation }) {
                     onPress={() => {
                       parseCategpry(name);
                       setActiveCategory(name);
+                      setIsClicked(true)
                       // myScroll.scrollTo({ x: 1200, y: 0, animated: true })
                     }}
                   />
@@ -194,22 +202,21 @@ export default function CategoriesScreen({ route, navigation }) {
           {names &&
             names.map((name) => {
               return (
-                name !== activeCategory && (
-                  <Card
-                    key={name}
-                    backgroundColor={
-                      name === activeCategory
-                        ? Colors.LIGTH_GOLDEN
-                        : Colors.LIGTH_BACKGROUND_COLOR
-                    }
-                    name={name}
-                    onPress={() => {
-                      parseCategpry(name);
-                      setActiveCategory(name);
-                      // myScroll.scrollTo({ x: 1200, y: 0, animated: true })
-                    }}
-                  />
-                )
+                <Card
+                  key={name}
+                  backgroundColor={
+                    name === activeCategory
+                      ? Colors.LIGTH_GOLDEN
+                      : Colors.LIGTH_BACKGROUND_COLOR
+                  }
+                  name={name}
+                  onPress={() => {
+                    parseCategpry(name);
+                    setActiveCategory(name);
+                    setIsClicked(true)
+                    // myScroll.scrollTo({ x: 1200, y: 0, animated: true })
+                  }}
+                />
               );
             })}
         </>

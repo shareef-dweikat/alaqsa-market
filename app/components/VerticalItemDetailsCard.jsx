@@ -179,7 +179,7 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
               else setQuantity(sum + '');
             }}
           >
-            <Text style={{ color: 'black', fontSize: 18 }}>-</Text>
+            <Text style={{ color: 'black', fontSize: 22 }}>-</Text>
           </TouchableOpacity>
         </View>
 

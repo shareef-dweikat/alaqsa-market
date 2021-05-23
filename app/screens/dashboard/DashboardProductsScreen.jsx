@@ -10,6 +10,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
 } from 'react-native';
+import SIcon from '../../../assets/small-search-icon.svg';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import EditIcon from '../../../assets/edit.svg';
@@ -85,7 +87,25 @@ export default function DashboardHome({ navigation }) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
   const isLoading = useSelector((state) => state.product.isLoading);
+  const [searchProducts, setSearchProducts] = useState([]);
+  const width = Dimensions.get('window').width;
+
+  const handleSearch = (text) => {
+    let myProducts = [];
+    for (let i in products) {
+      if (products[i].product_name.search(text) == -1) {
+      } else {
+        myProducts.push(products[i]);
+      }
+    }
+
+    setSearchProducts(myProducts);
+  };
   let myRef = null;
+  let myProducts = searchProducts;
+  if (products.length >= 100 && searchProducts.length === 0) {
+    myProducts = products.slice(0, 98);
+  }
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
@@ -99,15 +119,20 @@ export default function DashboardHome({ navigation }) {
             padding: 16,
           }}
         >
-          <View
+          <TextInput
+            onChangeText={handleSearch}
             style={{
-              marginHorizontal: 8,
               flexDirection: 'row',
-              flex: 1,
+              justifyContent: 'flex-end',
               alignItems: 'center',
+              borderColor: Colors.BORDER_COLOR,
+              borderWidth: 1,
+              width: width / 1.8,
+              paddingHorizontal: 8,
+              borderRadius: 10,
+              height: 35,
             }}
-          ></View>
-
+          />
           {isLoading ? (
             <View
               style={{
@@ -162,7 +187,7 @@ export default function DashboardHome({ navigation }) {
       </SafeAreaView>
 
       <FlatList
-        data={products}
+        data={myProducts}
         ListFooterComponent={() => (
           <>
             <View style={{ height: 200 }} />
@@ -239,9 +264,9 @@ function VerticalItemCard({
       )
     );
   };
-  useEffect(()=> {
-    setAv(isVisible)
-  },[isVisible])
+  useEffect(() => {
+    setAv(isVisible);
+  }, [isVisible]);
   return (
     <TouchableOpacity
       onPress={() =>
