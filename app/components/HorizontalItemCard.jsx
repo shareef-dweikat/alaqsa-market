@@ -88,6 +88,7 @@ export default function HorizontalItemCard({
           </TouchableOpacity>
         )}
         <Text
+        numberOfLines={2}
           style={{
             textAlign: 'right',
             fontFamily: 'Tajawal-Medium',

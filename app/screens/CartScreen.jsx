@@ -55,7 +55,9 @@ const styles = StyleSheet.create({
 export default function CartScreen({ navigation }) {
 
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [orderSuccessModalVisible, setOrderConfirmationSuccessModalVisible] = useState(false);
   const [orderModalVisible, setOrderConfirmationModalVisible] = useState(false);
+
   const cartProducts = useSelector((state) => state.cart.products);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
   const phone = useSelector((state) => state.auth.phone);
@@ -74,7 +76,7 @@ export default function CartScreen({ navigation }) {
     dispatch(
       order(pickerValue, phone, totalPrice, parseInt(transPrice))
     );
-    setOrderConfirmationModalVisible(true);
+    setOrderConfirmationSuccessModalVisible(true);
   };
   useEffect(() => {
     dispatch(fetchProducts(phone));
@@ -128,6 +130,7 @@ export default function CartScreen({ navigation }) {
                   name={product.product_name}
                   price={product.price}
                   image={product.image}
+                  desc={product.product_desc}
                   setDeleteModalVisible={setDeleteModalVisible}
                   navigation={() => navigation.navigate('ChangeQuantityScreen')}
                 />
@@ -149,7 +152,7 @@ export default function CartScreen({ navigation }) {
           <Text style={styles.checkoutTxt}>{totalPrice + transPrice} شيكل</Text>
           <Text style={styles.checkoutTxt}>المبلغ الكلي</Text>
         </View>
-        <TouchableOpacity onPress={() => handleOrder()} style={styles.btn}>
+        <TouchableOpacity onPress={() => setOrderConfirmationModalVisible(true)} style={styles.btn}>
           <Text style={styles.btnText}>شراء الآن</Text>
         </TouchableOpacity>
       </View>
@@ -157,10 +160,15 @@ export default function CartScreen({ navigation }) {
         visible={deleteModalVisible}
         setVisible={setDeleteModalVisible}
       />
-      <OrderConfirmation
+      <OrderConfirmationSuccess
+        visible={orderSuccessModalVisible}
+        setVisible={setOrderConfirmationSuccessModalVisible}
+      />
+       <OrderConfirmation
         visible={orderModalVisible}
         setVisible={setOrderConfirmationModalVisible}
-      />
+        handleOrder={handleOrder}
+      /> 
       <BottomNav navigation={navigation} />
     </View>
   );
@@ -236,7 +244,7 @@ export function DeleteConfirmation({ visible, setVisible }) {
     </Modal>
   );
 }
-export function OrderConfirmation({ navigation, visible, setVisible }) {
+export function OrderConfirmationSuccess({ navigation, visible, setVisible }) {
 
   return (
     <Modal visible={visible}>
@@ -279,3 +287,61 @@ export function OrderConfirmation({ navigation, visible, setVisible }) {
     </Modal>
   );
 }
+
+export function OrderConfirmation({ handleOrder, visible, setVisible }) {
+  return (
+    <Modal visible={visible}>
+      <View
+        style={{
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          backgroundColor: 'rgba(0,0,0,0.5)',
+        }}
+      >
+        <View
+          style={{
+            backgroundColor: 'white',
+            width: '80%',
+            height: 360,
+            padding: 16,
+            borderRadius: 10,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Tick />
+          <Text
+            style={{ marginTop: 8, fontFamily: 'Tajawal-Bold', fontSize: 20, textAlign: 'center' }}
+          >
+             هل ترغب في التأكيد على طلبك؟
+          </Text>
+
+          <View style={{ width: '100%' }}>
+            <TouchableOpacity
+              onPress={() => {
+                setVisible(false);
+                handleOrder();
+              }}
+              style={styles.btn}
+            >
+              <Text style={styles.btnText}>موافق</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{ width: '100%' }}>
+            <TouchableOpacity
+              onPress={() => {
+                setVisible(false);
+              
+              }}
+              style={{...styles.btn, backgroundColor: 'white'}}
+            >
+              <Text style={{...styles.btnText, color: 'black'}}>لا</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+    </Modal>
+  );
+}
+

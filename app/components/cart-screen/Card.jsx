@@ -13,6 +13,7 @@ export default function Card({
   price,
   name,
   image,
+  desc,
   firebaseId,
   quantity,
 }) {
@@ -38,6 +39,7 @@ export default function Card({
   useEffect(() => {
     setValue(quantity);
   }, []);
+  
   return (
     <View style={{ marginBottom: 16 }}>
       <View
@@ -78,7 +80,7 @@ export default function Card({
           </Text>
         </View>
         <View
-          style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-end' }}
+          style={{ flexDirection: 'row', flex: 2, justifyContent: 'flex-end' }}
         >
           <View>
             <Text
@@ -90,6 +92,7 @@ export default function Card({
             >
               {name}
             </Text>
+            <Text style={{marginRight: 16, marginTop: 8}}>{desc}</Text>
             <View
               style={{
                 flexDirection: 'row',
@@ -112,6 +115,7 @@ export default function Card({
               >
                 <Text style={{ color: 'black', fontSize: 18 }}>+</Text>
               </TouchableOpacity>
+             
               <TextInput
                 keyboardType='number-pad'
                 value={value}

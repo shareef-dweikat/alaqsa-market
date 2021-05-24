@@ -136,18 +136,24 @@ export default function SignForm({
       </View>
 
       {inputs}
-     
+
       <TouchableOpacity onPress={onPress} style={styles.btn}>
         <Text style={styles.btnText}>{submitText}</Text>
       </TouchableOpacity>
     </View>
   );
 }
-export function MyInputText({ placeholder, onChangeText, keyboardType, secureTextEntry }) {
+export function MyInputText({
+  placeholder,
+  onChangeText,
+  keyboardType,
+  secureTextEntry,
+}) {
   return (
     <TextInput
       onChangeText={onChangeText}
       style={styles.input}
+      maxLength={keyboardType === 'number-pad' ? 10 : 100}
       keyboardType={keyboardType}
       placeholder={placeholder}
       secureTextEntry={secureTextEntry}

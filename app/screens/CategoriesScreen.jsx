@@ -192,7 +192,7 @@ export default function CategoriesScreen({ route, navigation }) {
                     onPress={() => {
                       parseCategpry(name);
                       setActiveCategory(name);
-                      setIsClicked(true)
+                      setIsClicked(true);
                       // myScroll.scrollTo({ x: 1200, y: 0, animated: true })
                     }}
                   />
@@ -202,21 +202,23 @@ export default function CategoriesScreen({ route, navigation }) {
           {names &&
             names.map((name) => {
               return (
-                <Card
-                  key={name}
-                  backgroundColor={
-                    name === activeCategory
-                      ? Colors.LIGTH_GOLDEN
-                      : Colors.LIGTH_BACKGROUND_COLOR
-                  }
-                  name={name}
-                  onPress={() => {
-                    parseCategpry(name);
-                    setActiveCategory(name);
-                    setIsClicked(true)
-                    // myScroll.scrollTo({ x: 1200, y: 0, animated: true })
-                  }}
-                />
+                !(name === activeCategory && !isClicked) && (
+                  <Card
+                    key={name}
+                    backgroundColor={
+                      name === activeCategory
+                        ? Colors.LIGTH_GOLDEN
+                        : Colors.LIGTH_BACKGROUND_COLOR
+                    }
+                    name={name}
+                    onPress={() => {
+                      parseCategpry(name);
+                      setActiveCategory(name);
+                      setIsClicked(true);
+                      // myScroll.scrollTo({ x: 1200, y: 0, animated: true })
+                    }}
+                  />
+                )
               );
             })}
         </>
