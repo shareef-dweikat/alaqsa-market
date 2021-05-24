@@ -161,7 +161,7 @@ export function OrderCardsContainer({
                     <Text style={styles.productName}>{product.quantity}</Text>
                     <Text style={styles.productName}>الكمية: </Text>
                   </View>
-                  <Text style={styles.productName}>{product.product_name}</Text>
+                  <Text style={{...styles.productName, width: 120}}>{product.product_name}</Text>
                 </View>
               ))}
 

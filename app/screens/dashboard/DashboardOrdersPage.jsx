@@ -182,7 +182,7 @@ export function OrderCardContainer({
                   <Text style={styles.productName}>
                     الكمية: {product.quantity}{' '}
                   </Text>
-                  <Text style={styles.productName}>{product.product_name}</Text>
+                  <Text style={{...styles.productName, width: 120}}>{product.product_name}</Text>
                 </View>
               ))}
 

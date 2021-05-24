@@ -102,10 +102,10 @@ export default function DashboardHome({ navigation }) {
     setSearchProducts(myProducts);
   };
   let myRef = null;
-  let myProducts = searchProducts;
-  if (products.length >= 100 && searchProducts.length === 0) {
-    myProducts = products.slice(0, 98);
-  }
+  let myProducts = searchProducts.length === 0 ? products : searchProducts;
+  // if (products.length >= 100 && searchProducts.length === 0) {
+  //   myProducts = products.slice(0, 98);
+  // }
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
