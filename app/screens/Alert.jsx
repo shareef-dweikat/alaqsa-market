@@ -1,4 +1,3 @@
-import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
 import React, { useState } from 'react';
 import { Text, View, Modal, TextInput, TouchableOpacity } from 'react-native';
 import Colors from '../constants/colors';

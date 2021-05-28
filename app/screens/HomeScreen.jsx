@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect} from 'react';
 import {
   Text,
   View,
@@ -12,13 +12,11 @@ import {
 
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
-import * as Permissions from 'expo-permissions';
 import BottomNav from '../components/BottomNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSlideImage } from '../store/action/homeSlider';
 import { fetchCategories } from '../store/action/category';
 import { pushToken } from '../store/action/notifications';
-import firebase from '../config/firebase';
 
 import HorizontalCategoryCard from '../components/HorizontalCategoryCard';
 import { StatusBar } from 'react-native';
@@ -31,7 +29,6 @@ const styles = StyleSheet.create({
   image: {
     justifyContent: 'center',
     height: Dimensions.get('window').height * 0.3,
-    // marginTop: 32,
   },
   screenContentContainer: {
     padding: 16,
@@ -54,7 +51,6 @@ export default function HomeScreen({ navigation }) {
       finalStatus = status;
     }
     if (finalStatus !== 'granted') {
-      // alert('Failed to get push token for push notification!');
       return;
     }
     token = (await Notifications.getExpoPushTokenAsync()).data;

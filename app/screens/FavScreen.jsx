@@ -1,7 +1,5 @@
-import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
 import React, { useEffect, useState } from 'react';
 
-import pImage from '../../assets/home/product.png';
 import HeartIcon from '../../assets/small-heart-icon.svg';
 import HeartEmptyIcon from '../../assets/small-heart-empty-icon.svg';
 import PlusIcon from '../../assets/plus-icon.svg';
@@ -22,31 +20,24 @@ import RightArrow from '../../assets/right-arrow.svg';
 
 import { StatusBar } from 'expo-status-bar';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchFav} from '../store/action/product';
+import { fetchFav } from '../store/action/product';
 
-import {
-  addProductToCart,
-} from '../store/action/cart';
+import { addProductToCart } from '../store/action/cart';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginTop: 32,
+
     backgroundColor: Colors.WHITE,
-    
   },
   image: {
-    // flex: 1,
-    // resizeMode: 'cover',
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'space-between',
     padding: 16,
     alignItems: 'flex-end',
     height: Dimensions.get('window').height * 0.15,
-    // width: Dimensions.get('window').width,
   },
 });
 export default function FavScreen({ navigation }) {
-  // const image = { uri: '../../assets/signin-screen/background.png' };
   const dispatch = useDispatch();
   const phone = useSelector((state) => state.auth.phone);
   const favProducts = useSelector((state) => state.product.favProducts);
@@ -58,22 +49,21 @@ export default function FavScreen({ navigation }) {
     else navigation.push('AuthStackScreen');
   };
   const isAuthFav = (product) => {
-    if (user) dispatch(setFav(product, phone))
+    if (user) dispatch(setFav(product, phone));
     else navigation.push('AuthStackScreen');
   };
   const isAuthDelete = (product) => {
-    if (user) dispatch(deleteFav(product, phone))
+    if (user) dispatch(deleteFav(product, phone));
     else navigation.push('AuthStackScreen');
   };
   useEffect(() => {
     dispatch(fetchFav(phone));
-    // dispatch(fetchProducts());
   }, []);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
       <View style={styles.image}>
-        <TouchableOpacity  onPress={() => navigation.pop()}>
+        <TouchableOpacity onPress={() => navigation.pop()}>
           <RightArrow />
         </TouchableOpacity>
         <View>
@@ -103,12 +93,9 @@ export default function FavScreen({ navigation }) {
     </SafeAreaView>
   );
 }
-export function VerticalItemCard({ product, addToFav, deleteFav, add }) {
+export function VerticalItemCard({ product, deleteFav, add }) {
   const [isFav, setIsFav] = useState(true);
-  const dispatch = useDispatch();
   const handleFav = async () => {
-    const x = await AsyncStorage.getItem(product.firebaseId);
-
     AsyncStorage.removeItem(product.firebaseId);
     setIsFav(false);
     deleteFav();
@@ -124,7 +111,6 @@ export function VerticalItemCard({ product, addToFav, deleteFav, add }) {
   }, []);
   return (
     <TouchableOpacity
-      // onPress={onPress}
       style={{
         flex: 1,
         height: 120,
@@ -142,8 +128,7 @@ export function VerticalItemCard({ product, addToFav, deleteFav, add }) {
         <View
           style={{
             flexDirection: 'row',
-            // justifyContent: 'space-between',
-            //  width: '100%',
+
             paddingHorizontal: 16,
             marginTop: 8,
             justifyContent: 'space-between',

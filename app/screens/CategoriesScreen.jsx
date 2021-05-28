@@ -193,7 +193,6 @@ export default function CategoriesScreen({ route, navigation }) {
                       parseCategpry(name);
                       setActiveCategory(name);
                       setIsClicked(true);
-                      // myScroll.scrollTo({ x: 1200, y: 0, animated: true })
                     }}
                   />
                 )
@@ -215,7 +214,6 @@ export default function CategoriesScreen({ route, navigation }) {
                       parseCategpry(name);
                       setActiveCategory(name);
                       setIsClicked(true);
-                      // myScroll.scrollTo({ x: 1200, y: 0, animated: true })
                     }}
                   />
                 )
@@ -277,20 +275,12 @@ export default function CategoriesScreen({ route, navigation }) {
   );
 }
 
-export function Card({
-  name,
-  backgroundColor,
-  isActive,
-  color = 'black',
-  onPress,
-}) {
-  // const image = { uri: '../../assets/signin-screen/background.png' };
+export function Card({ name, backgroundColor, color = 'black', onPress }) {
   return (
     <TouchableOpacity
       onPress={onPress}
       style={{
         backgroundColor: backgroundColor,
-        // width: 140,
         height: 35,
         borderRadius: 10,
         justifyContent: 'center',
@@ -310,7 +300,7 @@ export function Card({
   );
 }
 
-export function LoadingModal({ title, visible, setVisible, setImage }) {
+export function LoadingModal({ visible }) {
   return (
     <Modal visible={visible} transparent>
       <View

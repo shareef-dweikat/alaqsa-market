@@ -1,22 +1,10 @@
-import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
 import React, { useEffect, useState } from 'react';
-import {
-  Text,
-  View,
-  Modal,
-  KeyboardAvoidingView,
-  TextInput,
-  ImageBackground,
-  StyleSheet,
-  Dimensions,
-  Keyboard,
-} from 'react-native';
+import { Text, View, StyleSheet, Dimensions } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../constants/colors';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import RightArrow from '../../assets/right-arrow.svg';
-import SearchBox from '../components/SearchBox';
 import { StatusBar } from 'expo-status-bar';
 import { fetchOrders, fetchOrder } from '../store/action/orders';
 
@@ -26,14 +14,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
   },
   image: {
-    // flex: 1,
-    // resizeMode: 'cover',
+
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'space-between',
     padding: 16,
     alignItems: 'flex-end',
     height: Dimensions.get('window').height * 0.15,
-    // width: Dimensions.get('window').width,
+
   },
   lookForProductText: {
     fontSize: 30,
@@ -67,11 +54,10 @@ const styles = StyleSheet.create({
     marginTop: 16,
     fontFamily: 'Tajawal-Regular',
     color: '#515462',
-    textAlign: 'right'
+    textAlign: 'right',
   },
 });
 export default function OrdersPage({ navigation }) {
-  // const image = { uri: '../../assets/signin-screen/background.png' };
   const dispatch = useDispatch();
   const orders = useSelector((state) => state.orders.orders);
   const phone = useSelector((state) => state.auth.phone);
@@ -79,7 +65,6 @@ export default function OrdersPage({ navigation }) {
   const products = useSelector((state) => state.orders.products);
   const [orderId, setOrderId] = useState('');
   useEffect(() => {
-
     dispatch(fetchOrders(phone));
   }, []);
 
@@ -92,7 +77,6 @@ export default function OrdersPage({ navigation }) {
         </TouchableOpacity>
         <View style={{ width: '100%' }}>
           <Text style={styles.lookForProductText}>طلباتي</Text>
-          {/* <SearchBox /> */}
         </View>
       </View>
       <ScrollView>
@@ -117,7 +101,7 @@ export default function OrdersPage({ navigation }) {
 }
 
 export function OrderCardsContainer({
-  orders,
+
   products,
   order,
   orderHeader,
@@ -162,7 +146,9 @@ export function OrderCardsContainer({
                     <Text style={styles.productName}>{product.quantity}</Text>
                     <Text style={styles.productName}>الكمية: </Text>
                   </View>
-                  <Text style={{...styles.productName, width: 120}}>{product.product_name}</Text>
+                  <Text style={{ ...styles.productName, width: 120 }}>
+                    {product.product_name}
+                  </Text>
                 </View>
               ))}
 
@@ -198,7 +184,7 @@ export function OrderCardsContainer({
                 <View
                   style={{
                     height: 30,
-                   
+
                     borderRadius: 5,
                     marginTop: 8,
                   }}

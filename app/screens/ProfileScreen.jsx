@@ -1,16 +1,5 @@
-import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
 import React, { useEffect, useState } from 'react';
-import {
-  Text,
-  View,
-  Image,
-  KeyboardAvoidingView,
-  ScrollView,
-  TouchableOpacity,
-  StyleSheet,
-  Modal,
-  Platform,
-} from 'react-native';
+import { Text, View, ScrollView, TouchableOpacity, Modal } from 'react-native';
 import Colors from '../constants/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DrawerIcon from '../../assets/drawer-icon.svg';
@@ -32,34 +21,32 @@ export default function ProfileScreen({ navigation }) {
     dispatch(fetchProfile(phone));
   }, []);
 
- 
   return (
     <View style={{ flex: 1, backgroundColor: Colors.WHITE }}>
       <ScrollView
         style={{ padding: 16, backgroundColor: Colors.WHITE, height: '100%' }}
       >
-      <SafeAreaView forceInset={{ top: 'always' }}>
-
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'flex-end',
-            marginTop: 8,
-          }}
-        >
-          <Text
+        <SafeAreaView forceInset={{ top: 'always' }}>
+          <View
             style={{
-              fontFamily: 'Tajawal-Medium',
-              marginRight: 16,
-              fontSize: 20,
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+              marginTop: 8,
             }}
           >
-            الملف الشخصي
-          </Text>
-          <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
-            <DrawerIcon />
-          </TouchableOpacity>
-        </View>
+            <Text
+              style={{
+                fontFamily: 'Tajawal-Medium',
+                marginRight: 16,
+                fontSize: 20,
+              }}
+            >
+              الملف الشخصي
+            </Text>
+            <TouchableOpacity onPress={() => navigation.toggleDrawer()}>
+              <DrawerIcon />
+            </TouchableOpacity>
+          </View>
         </SafeAreaView>
         <View
           style={{
@@ -68,14 +55,12 @@ export default function ProfileScreen({ navigation }) {
             marginTop: 16,
           }}
         >
-       
           <Field
             title='اسم المستخدم'
             value={userProfile.name}
             onPress={() => setVisible(true)}
             inputName='name'
           />
-          {/* <Field title='الايميل' inputName='email' value={userProfile.email} /> */}
           <Field title='رقم الجوال' inputName='phone' value={phone} />
           <Field
             title='كلمة المرور'
@@ -102,7 +87,6 @@ export default function ProfileScreen({ navigation }) {
 }
 
 export function Field({ title, value, inputName }) {
-  // const image = { uri: '../../assets/signin-screen/background.png' };
   const [alertVisibility, setVisible] = useState(false);
 
   return (
@@ -153,13 +137,11 @@ export function Field({ title, value, inputName }) {
   );
 }
 
-export function ChooseImageModal({ title, visible, setVisible, setImage }) {
-  // const image = { uri: '../../assets/signin-screen/background.png' };
+export function ChooseImageModal({ visible, setVisible, setImage }) {
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
       allowsEditing: true,
-      // aspect: [4, 3],
       quality: 1,
     });
 
@@ -201,8 +183,7 @@ export function ChooseImageModal({ title, visible, setVisible, setImage }) {
             height: 200,
             padding: 16,
             borderRadius: 10,
-            // justifyContent: 'center',
-            // alignItems: 'center',
+            
           }}
         >
           <View

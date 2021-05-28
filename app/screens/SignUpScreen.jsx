@@ -114,10 +114,7 @@ export default function SignUpScreen({ navigation }) {
       alert('حقل الاسم اجباري');
       return;
     }
-    // if (email.search('@') === -1) {
-    //   alert('الايميل المدخل غير صحيح');
-    //   return;
-    // }
+    
     dispatch(
       signup(
         phone.trim(),
@@ -128,7 +125,6 @@ export default function SignUpScreen({ navigation }) {
       )
     );
   };
-  // const image = { uri: '../../assets/signin-screen/background.png' };
   const [logoVisible, setLogoVisible] = useState(true);
   let [bachgroundHeight, setBachgroundHeight] = useState(
     Dimensions.get('window').height * 0.5

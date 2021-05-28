@@ -1,12 +1,8 @@
-import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
-import React, { useEffect, useState } from 'react';
+import React, {  useState } from 'react';
 import {
   Text,
   View,
-  Image,
-  KeyboardAvoidingView,
   TextInput,
-  ImageBackground,
   StyleSheet,
   Dimensions,
   TouchableOpacity,
@@ -16,24 +12,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Tick from '../../assets/tick-confirmation.svg';
 import Colors from '../constants/colors';
 import RightArrow from '../../assets/right-arrow.svg';
-import SearchBox from '../components/SearchBox';
 import { StatusBar } from 'expo-status-bar';
-import VerticalItemDetailsCard from '../components/VerticalItemDetailsCard';
-import Alert from './Alert';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: Colors.WHITE,
   },
   image: {
-    // flex: 1,
-    // resizeMode: 'cover',
+  
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'space-between',
     padding: 16,
     alignItems: 'flex-end',
     height: Dimensions.get('window').height * 0.2,
-    // width: Dimensions.get('window').width,
   },
   input: {
     borderRadius: 10,
@@ -60,7 +51,6 @@ const styles = StyleSheet.create({
   },
 });
 export default function PasswordResetScreen({ navigation }) {
-  // const image = { uri: '../../assets/signin-screen/background.png' };
   const [visible, setVisible] = useState(false);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
@@ -103,8 +93,7 @@ export default function PasswordResetScreen({ navigation }) {
   );
 }
 
-export function PassChagnedConfirmation({ navigation, visible, setVisible }) {
-  // const image = { uri: '../../assets/signin-screen/background.png' };
+export function PassChagnedConfirmation({  visible, setVisible }) {
 
   return (
     <Modal visible={visible}>
