@@ -131,6 +131,7 @@ export default function SignInScreen({ navigation }) {
   }, []);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
+      
       <ImageBackground
         source={image}
         style={{ ...styles.image, height: bachgroundHeight }}

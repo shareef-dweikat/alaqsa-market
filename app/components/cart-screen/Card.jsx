@@ -88,6 +88,7 @@ export default function Card({
                 marginRight: 16,
                 fontFamily: 'Tajawal-Regular',
                 fontSize: 17,
+                textAlign: 'right'
               }}
             >
               {name}

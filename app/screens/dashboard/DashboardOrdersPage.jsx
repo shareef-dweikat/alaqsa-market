@@ -219,7 +219,6 @@ export function OrderCardContainer({
                 <View
                   style={{
                     height: 30,
-                    paddingHorizontal: 8,
                     borderRadius: 5,
                     marginTop: 8,
                   }}

@@ -1,4 +1,3 @@
-import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
 import React, { useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
@@ -7,12 +6,15 @@ import {
   StyleSheet,
   Dimensions,
   Keyboard,
+  TouchableOpacity
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SignForm, { MyInputText } from '../components/SignForm';
 import { signup } from '../store/action/auth';
 import image from '../../assets/signin-screen/background-overlay.png';
+import RightArrow from '../../assets/right-arrow.svg';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -148,6 +150,19 @@ export default function SignUpScreen({ navigation }) {
   }, []);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
+       <TouchableOpacity
+        style={{
+          position: 'absolute',
+          top: 0,
+          zIndex: 10,
+          alignSelf: 'flex-end',
+          paddingRight: 16,
+          paddingTop: 16,
+        }}
+        onPress={() => navigation.pop()}
+      >
+        <RightArrow />
+      </TouchableOpacity>
       <ImageBackground
         source={image}
         style={{ ...styles.image, height: bachgroundHeight }}

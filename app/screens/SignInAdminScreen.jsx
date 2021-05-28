@@ -11,13 +11,15 @@ import {
   Dimensions,
   Keyboard,
   AsyncStorage,
+  TouchableOpacity,
+  ScrollView,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import SignForm, { MyInputText } from '../components/SignForm';
 import image from '../../assets/signin-screen/background-overlay.png';
-import { ScrollView } from 'react-native-gesture-handler';
 import firebase from '../config/firebase';
 import * as Updates from 'expo-updates';
+import RightArrow from '../../assets/right-arrow.svg';
 
 const styles = StyleSheet.create({
   container: {
@@ -97,7 +99,7 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
 });
-export default function SignInAdminScreen({route, navigation, setUser }) {
+export default function SignInAdminScreen({ route, navigation, setUser }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
@@ -150,6 +152,19 @@ export default function SignInAdminScreen({route, navigation, setUser }) {
   }, []);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
+      <TouchableOpacity
+        style={{
+          position: 'absolute',
+          top: 0,
+          zIndex: 10,
+          alignSelf: 'flex-end',
+          paddingRight: 16,
+          paddingTop: 16,
+        }}
+        onPress={() => navigation.pop()}
+      >
+        <RightArrow />
+      </TouchableOpacity>
       <ImageBackground
         source={image}
         style={{ ...styles.image, height: bachgroundHeight }}

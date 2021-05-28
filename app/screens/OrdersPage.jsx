@@ -67,6 +67,7 @@ const styles = StyleSheet.create({
     marginTop: 16,
     fontFamily: 'Tajawal-Regular',
     color: '#515462',
+    textAlign: 'right'
   },
 });
 export default function OrdersPage({ navigation }) {
@@ -155,7 +156,7 @@ export function OrderCardsContainer({
                 <View style={styles.productRow}>
                   <Text style={styles.productPrice}>{product.price} شيكل</Text>
                   <Text style={styles.productName}>
-                    {product.product_desc.substring(0, 10)}
+                    {product.product_desc.substring(0, 8)}
                   </Text>
                   <View style={{ flexDirection: 'row' }}>
                     <Text style={styles.productName}>{product.quantity}</Text>
@@ -197,7 +198,7 @@ export function OrderCardsContainer({
                 <View
                   style={{
                     height: 30,
-                    paddingHorizontal: 8,
+                   
                     borderRadius: 5,
                     marginTop: 8,
                   }}

@@ -28,11 +28,10 @@ const styles = StyleSheet.create({
     width: 300,
     borderRadius: 10,
     marginRight: 8,
+    textAlign: 'right'
   },
 });
 export default function SearchBox({
-  value,
-  width = '100%',
   borderWidth = 1,
   borderColor = 'white',
   placeholder = 'بحث',

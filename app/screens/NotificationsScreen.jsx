@@ -30,7 +30,7 @@ export default function NotificationsScreen({ navigation }) {
   }, []);
   return (
     <View style={styles.container}>
-      <ScrollView style={{ padding: 8, paddingHorizontal: 16 }}>
+      <ScrollView style={{ padding: 8, paddingHorizontal: 16, }}>
         <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
           <View
             style={{
@@ -56,7 +56,7 @@ export default function NotificationsScreen({ navigation }) {
         <View>
           {notifications &&
             notifications.map((notification) => (
-              <View style={{ marginTop: 16 }}>
+              <View style={{ marginTop: 16, paddingBottom: 16 }}>
                 <View
                   style={{
                     flexDirection: 'row',
@@ -69,6 +69,7 @@ export default function NotificationsScreen({ navigation }) {
                       style={{
                         marginRight: 8,
                         width: 250,
+                        textAlign: 'right',
                         fontFamily: 'Tajawal-Regular',
                       }}
                     >

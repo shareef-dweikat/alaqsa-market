@@ -1,19 +1,14 @@
-import IntroductionSlider from '../components/introductionSlider/IntroductionSlider';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Text,
   View,
   Linking,
-  KeyboardAvoidingView,
-  TextInput,
-  ImageBackground,
   StyleSheet,
   Dimensions,
-  Keyboard,
+  TouchableOpacity,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../constants/colors';
-import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 import RightArrow from '../../assets/right-arrow.svg';
 
 import { StatusBar } from 'expo-status-bar';
@@ -23,16 +18,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.WHITE,
   },
-  txt: { fontFamily: 'Tajawal-Medium', textAlign: 'center' },
+  txt: { fontFamily: 'Tajawal-Medium', textAlign: 'right', fontSize: 18 },
+  title: { fontFamily: 'Tajawal-Medium', textAlign: 'right', color: 'orange', fontSize: 18 },
   image: {
-    // flex: 1,
-    // resizeMode: 'cover',
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'space-between',
     padding: 16,
     alignItems: 'flex-end',
     height: Dimensions.get('window').height * 0.1,
-    paddingBottom: 32,
   },
 });
 export default function CustomerService({ navigation }) {
@@ -54,33 +47,52 @@ export default function CustomerService({ navigation }) {
             خدمة العملاء
           </Text>
         </View>
-        <View style={{ width: '100%', height: 60 }}>
-          {/* <SearchBox search={search} /> */}
-        </View>
+        <View style={{ width: '100%', height: 60 }} />
       </View>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
-      <View style={{ justifyContent: 'center', marginTop: 64 }}>
-        <Text style={styles.txt}>شكرا لثقتك بنا</Text>
-        <Text style={styles.txt}>للتواصل</Text>
-        <Text style={{ ...styles.txt, marginTop: 32 }}>فرع نابلس</Text>
-        <Text style={styles.txt}>حسام ملحس </Text>
-        <TouchableOpacity onPress={() => Linking.openURL(`tel:0592369440`)}>
-          <Text style={styles.txt}>0592369440</Text>
-        </TouchableOpacity>
+      <View style={{ justifyContent: 'center', marginTop: 64, padding: 8 }}>
+        <Text style={styles.txt}>
+          يسعدنا تواصلكم معنا عبر أي الوسائل التالية:
+        </Text>
+
         <TouchableOpacity
-          onPress={() => Linking.openURL(`mailto:alaqsamart@gmail.com`)}
+          style={{ flexDirection: 'row', alignSelf: 'flex-end', marginTop:64 }}
+          onPress={() => Linking.openURL(`tel:0595205387`)}
         >
-          <Text style={styles.txt}>alaqsamart@gmail.com</Text>
+          <Text style={styles.txt}>0595205387</Text>
+          <Text style={styles.title}>الجوال: </Text>
         </TouchableOpacity>
-        <Text style={{ ...styles.txt, marginTop: 16 }}>فرع نابلس</Text>
-        <Text style={styles.txt}>حسام ملحس </Text>
-        <TouchableOpacity onPress={() => Linking.openURL(`tel:0592369440`)}>
-          <Text style={styles.txt}>0592369440</Text>
-        </TouchableOpacity>
+
         <TouchableOpacity
-          onPress={() => Linking.openURL(`mailto:alaqsamart@gmail.com`)}
+          style={{ flexDirection: 'row', alignSelf: 'flex-end', marginTop: 16 }}
+          onPress={() => Linking.openURL(`https://wa.me/+970595205387`)}
         >
-          <Text style={styles.txt}>alaqsamart@gmail.com</Text>
+          <Text style={styles.txt}>+970595205387</Text>
+          <Text style={styles.title}>واتساب: </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignSelf: 'flex-end', marginTop: 16 }}
+          onPress={() => Linking.openURL(`fb://page/109599771206362/`)}
+        >
+          <Text style={styles.txt}>الأقصى ماركت</Text>
+          <Text style={styles.title}>فيسبوك: </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignSelf: 'flex-end', marginTop: 16 }}
+          onPress={() => Linking.openURL(`https://www.instagram.com/al_aqsa_market`)}
+        >
+          <Text style={styles.txt}>al_aqsa_market</Text>
+          <Text style={styles.title}>انستغرام: </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{ flexDirection: 'row', alignSelf: 'flex-end', marginTop: 16 }}
+          onPress={() => Linking.openURL(`mailto:alaqsamarket.2021@gmail.com`)}
+        >
+          <Text style={styles.txt}>alaqsamarket.2021@gmail.com</Text>
+          <Text style={styles.title}>الإيميل: </Text>
         </TouchableOpacity>
       </View>
     </SafeAreaView>

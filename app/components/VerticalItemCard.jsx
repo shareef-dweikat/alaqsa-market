@@ -130,6 +130,7 @@ export default function VerticalItemCard({
           <Text
             style={{
               color: '#B8B8CD',
+              textAlign: 'right',
               fontFamily: 'Tajawal-Regular',
             }}
           >
