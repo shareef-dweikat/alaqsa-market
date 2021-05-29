@@ -72,6 +72,7 @@ export default function FavScreen({ navigation }) {
               fontSize: 30,
               fontFamily: 'Tajawal-Medium',
               color: 'white',
+              textAlign: 'right'
             }}
           >
             المفضلة

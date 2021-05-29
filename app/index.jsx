@@ -1,27 +1,14 @@
-/* eslint-disable react/style-prop-object */
-import { StatusBar } from 'expo-status-bar';
 import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
-import { StyleSheet, View, Text } from 'react-native';
 import { useFonts } from 'expo-font';
-import firebase from './config/firebase';
 import store from './store'
 import Navigation from './config/navigation';
 import { I18nManager } from 'react-native';
 import * as Updates from 'expo-updates';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
 export default function App() {
-  // firebase.database().ref('users/').set({
-  //   highscore: 2
-  // });
+  
   useEffect(()=> {
     if (I18nManager.isRTL) {
       I18nManager.forceRTL(false);

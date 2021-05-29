@@ -15,8 +15,10 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import SignForm, { MyInputText } from '../components/SignForm';
 import image from '../../assets/signin-screen/background-overlay.png';
 import firebase from '../config/firebase';
-import {useRoute} from '@react-navigation/native';
+import { useRoute } from '@react-navigation/native';
 import { login } from '../store/action/auth';
+import RightArrow from '../../assets/right-arrow.svg';
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -103,13 +105,12 @@ export default function SignInScreen({ navigation }) {
   const route = useRoute();
   const submit = async () => {
     firebase
-    .database()
-    .ref(`fav/${phone}`)
-    .remove()
-    .then(() => {
-      dispatch(login(phone, pass))
-    });
-   
+      .database()
+      .ref(`fav/${phone}`)
+      .remove()
+      .then(() => {
+        dispatch(login(phone, pass));
+      });
   };
   let [bachgroundHeight, setBachgroundHeight] = useState(
     Dimensions.get('window').height * 0.5
@@ -131,7 +132,19 @@ export default function SignInScreen({ navigation }) {
   }, []);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
-      
+      <TouchableOpacity
+        style={{
+          position: 'absolute',
+          top: 0,
+          zIndex: 10,
+          alignSelf: 'flex-end',
+          paddingRight: 16,
+          paddingTop: 16,
+        }}
+        onPress={() => navigation.pop()}
+      >
+        <RightArrow />
+      </TouchableOpacity>
       <ImageBackground
         source={image}
         style={{ ...styles.image, height: bachgroundHeight }}
@@ -164,7 +177,7 @@ export default function SignInScreen({ navigation }) {
                   <MyInputText
                     onChangeText={(phone) => setPhone(phone)}
                     placeholder='رقم الجوال'
-                    keyboardType= "number-pad"
+                    keyboardType='number-pad'
                     secureTextEntry={false}
                   />
                   <MyInputText

@@ -9,7 +9,7 @@ import {
   ScrollView,
   TouchableOpacity,
 } from 'react-native';
-
+import LeftArrow from '../../assets/home/left-arrow.svg'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Ionicons } from '@expo/vector-icons';
 import BottomNav from '../components/BottomNav';
@@ -87,7 +87,6 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
-
       <ImageBackground style={styles.image} source={{ uri: image }}>
         <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
           <View
@@ -105,11 +104,7 @@ export default function HomeScreen({ navigation }) {
       <ScrollView style={styles.screenContentContainer}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
           <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-            <Ionicons
-              style={{ marginRight: 8 }}
-              name='ios-arrow-back'
-              size={16}
-            />
+            <LeftArrow style={{width:15, height: 15, marginRight: 8 }} color="black"/>
             <TouchableOpacity
               onPress={() => navigation.push('CategoriesScreen')}
             >

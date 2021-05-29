@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontFamily: 'Tajawal-Medium',
     color: 'white',
+    textAlign: 'right'
   },
   orderCard: {
     borderRadius: 10,

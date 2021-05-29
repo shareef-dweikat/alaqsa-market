@@ -45,6 +45,8 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
   
   self.moduleRegistryAdapter = [[UMModuleRegistryAdapter alloc] initWithModuleRegistryProvider:[[UMModuleRegistryProvider alloc] init]];
+ [[RCTI18nUtil sharedInstance] allowRTL:YES];
+[[RCTI18nUtil sharedInstance] forceRTL:YES];
   self.launchOptions = launchOptions;
   self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
   #ifdef DEBUG

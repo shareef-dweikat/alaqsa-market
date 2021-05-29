@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native';
+import { 
+  Text, View, Image, TextInput,
+   TouchableOpacity, Dimensions
+  } from 'react-native';
 import { useDispatch } from 'react-redux';
 import firebase from '../../config/firebase';
 
@@ -19,6 +22,7 @@ export default function Card({
 }) {
   const [value, setValue] = useState();
   const dispatch = useDispatch();
+  const width = Dimensions.get('window').width
   const handleQChanged = (txt) => {
     if (txt == 0) {
       setValue(txt);
@@ -88,12 +92,14 @@ export default function Card({
                 marginRight: 16,
                 fontFamily: 'Tajawal-Regular',
                 fontSize: 17,
-                textAlign: 'right'
+                textAlign: 'right',
+                width: width * 0.30,
+                alignSelf: 'flex-end'
               }}
             >
               {name}
             </Text>
-            <Text style={{marginRight: 16, marginTop: 8}}>{desc}</Text>
+            <Text numberOfLines={1} style={{marginRight: 16, marginTop: 8}}>{desc}</Text>
             <View
               style={{
                 flexDirection: 'row',
