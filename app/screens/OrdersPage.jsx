@@ -83,7 +83,6 @@ export default function OrdersPage({ navigation }) {
       <ScrollView>
         {orders &&
           orders
-            .reverse()
             .map((orderHeader) => (
               <OrderCardsContainer
                 orders={orders}

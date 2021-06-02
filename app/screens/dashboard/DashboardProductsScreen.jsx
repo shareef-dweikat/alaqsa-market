@@ -109,6 +109,7 @@ export default function DashboardHome({ navigation }) {
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
+  console.log(searchProducts, "searchProducts")
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
       <SafeAreaView forceInset={{ top: 'always' }}>

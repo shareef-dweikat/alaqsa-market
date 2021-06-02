@@ -46,6 +46,7 @@ export default function VerticalItemCard({
 }) {
   const [isFav, setIsFav] = useState(false);
   const user = useSelector((state) => state.auth.userType);
+  console.log(image,name, "imageeeeeee")
   const handleFav = async () => {
     if (!user) return
     const x = await AsyncStorage.getItem(product.firebaseId);

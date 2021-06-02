@@ -30,7 +30,7 @@ export default (state = initialState, action: AnyAction) => {
         return {
           ...state,
           // isLoading: false,
-          orders: action.payload,
+          orders: action.payload?.reverse(),
         };
         case 'CHANGE_ORDER_STATUS':
         return {
