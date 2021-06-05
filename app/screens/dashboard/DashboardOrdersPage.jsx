@@ -212,7 +212,7 @@ export function OrderCardContainer({
               }}
             >
               <View>
-                <Text style={{ fontFamily: 'Tajawal-Regular' }}>
+                <Text style={{ fontFamily: 'Tajawal-Regular',  marginTop: 8 }}>
                   {order.totalPrice} شيكل
                 </Text>
                 {/* <Text
