@@ -81,7 +81,7 @@ export default function OrdersPage({ navigation }) {
       </View>
       <ScrollView>
         {orders && orders.length === 0 && (
-          <Text style={{ fontFamily: 'Tajawal-Regular',textAlign: 'right', margin: 16 }}>لا يوجد طلبات</Text>
+          <Text style={{ fontFamily: 'Tajawal-Regular',textAlign: 'right', margin: 16, fontSize: 18  }}>لا يوجد طلبات</Text>
         )}
         {orders &&
           orders.map((orderHeader) => (

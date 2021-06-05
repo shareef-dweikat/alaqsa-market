@@ -82,7 +82,7 @@ export default function FavScreen({ navigation }) {
 
       <ScrollView style={{ padding: 8 }}>
         {favProducts != undefined && favProducts.length === 0 && (
-          <Text style={{ fontFamily: 'Tajawal-Regular',textAlign: 'right', margin: 16 }}>المفضلة فارغة</Text>
+          <Text style={{ fontFamily: 'Tajawal-Regular',textAlign: 'right', margin: 16, fontSize: 18  }}>المفضلة فارغة</Text>
         )}
         {favProducts != undefined &&
           favProducts.map((product) => (
