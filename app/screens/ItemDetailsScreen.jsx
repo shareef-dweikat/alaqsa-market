@@ -28,7 +28,7 @@ export default function ItemDetailsScreen({ route, navigation }) {
   const product = route.params.item ? route.params.item : route.params.product;
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
-      <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
+      {/* <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' /> */}
       <View style={styles.image}>
         <TouchableOpacity onPress={() => navigation.pop()}>
           <RightArrow />

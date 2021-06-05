@@ -92,15 +92,42 @@ export default function DashboardHome({ navigation }) {
 
   const handleSearch = (text) => {
     let myProducts = [];
+    const regex = /[*\#]/;
+ 
+    if (text.search(regex) === 0) {
+      let tempText = text.substring(1);
+      for (let i in products) {
+        const productName = products[i].product_name.substring(1);
+        if (productName.search(tempText) == -1) {
+        } else {
+          myProducts.push(products[i]);
+        }
+      }
+      setSearchProducts(myProducts);
+
+      return;
+    }
+ 
     for (let i in products) {
-      if (products[i].product_name.search(text) == -1) {
+      if (products[i].product_name.search(text + '') == -1) {
       } else {
         myProducts.push(products[i]);
       }
     }
-
     setSearchProducts(myProducts);
   };
+
+  // const handleSearch = (text) => {
+  //   let myProducts = [];
+  //   for (let i in products) {
+  //     if (products[i].product_name.search(text) == -1) {
+  //     } else {
+  //       myProducts.push(products[i]);
+  //     }
+  //   }
+
+  //   setSearchProducts(myProducts);
+  // };
   let myRef = null;
   let myProducts = searchProducts.length === 0 ? products : searchProducts;
   // if (products.length >= 100 && searchProducts.length === 0) {

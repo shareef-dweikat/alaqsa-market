@@ -72,7 +72,7 @@ export default function FavScreen({ navigation }) {
               fontSize: 30,
               fontFamily: 'Tajawal-Medium',
               color: 'white',
-              textAlign: 'right'
+              textAlign: 'right',
             }}
           >
             المفضلة
@@ -81,6 +81,9 @@ export default function FavScreen({ navigation }) {
       </View>
 
       <ScrollView style={{ padding: 8 }}>
+        {favProducts != undefined && favProducts.length === 0 && (
+          <Text style={{ fontFamily: 'Tajawal-Regular',textAlign: 'right' }}>المفضلة فارغة</Text>
+        )}
         {favProducts != undefined &&
           favProducts.map((product) => (
             <VerticalItemCard

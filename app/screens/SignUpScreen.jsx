@@ -6,7 +6,7 @@ import {
   StyleSheet,
   Dimensions,
   Keyboard,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     marginVertical: 16,
     color: 'white',
     fontFamily: 'Tajawal-Regular',
-    textAlign: 'center'
+    textAlign: 'center',
   },
   formContainer: {
     backgroundColor: 'white',
@@ -114,7 +114,7 @@ export default function SignUpScreen({ navigation }) {
       alert('حقل الاسم اجباري');
       return;
     }
-    
+
     dispatch(
       signup(
         phone.trim(),
@@ -146,7 +146,7 @@ export default function SignUpScreen({ navigation }) {
   }, []);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
-       <TouchableOpacity
+      <TouchableOpacity
         style={{
           position: 'absolute',
           top: 0,
@@ -165,6 +165,7 @@ export default function SignUpScreen({ navigation }) {
       >
         <KeyboardAvoidingView keyboardVerticalOffset={-300} behavior='padding'>
           <ScrollView
+            keyboardShouldPersistTaps='handled'
             contentContainerStyle={{
               alignItems: 'center',
               justifyContent: 'flex-start',
@@ -185,7 +186,7 @@ export default function SignUpScreen({ navigation }) {
                   <MyInputText
                     onChangeText={(d) => setPhone(d)}
                     placeholder='رقم الجوال'
-                    keyboardType= "number-pad"
+                    keyboardType='number-pad'
                   />
                   <MyInputText
                     onChangeText={(d) => setPass(d)}
@@ -196,7 +197,6 @@ export default function SignUpScreen({ navigation }) {
                     onChangeText={(d) => setConfirmPass(d)}
                     placeholder='تأكيد كلمة المرور'
                     secureTextEntry={true}
-
                   />
                 </>
               }

@@ -59,7 +59,7 @@ export default function CategoriesScreen({ route, navigation }) {
       alert('هذا المنتج غير متوفر');
       return;
     }
-    dispatch(addProductToCart(product, navigation, phone, '1'));
+    dispatch(addProductToCart(product, navigation, phone, '1'))
   };
 
   const isAuthFav = (item) => {

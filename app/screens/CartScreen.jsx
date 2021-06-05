@@ -1,11 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Text,
-  View,
-  Modal,
-  TouchableOpacity,
-  StyleSheet,
-} from 'react-native';
+import { Text, View, Modal, TouchableOpacity, StyleSheet } from 'react-native';
 import Colors from '../constants/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DrawerIcon from '../../assets/drawer-icon.svg';
@@ -53,9 +47,9 @@ const styles = StyleSheet.create({
   },
 });
 export default function CartScreen({ navigation }) {
-
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
-  const [orderSuccessModalVisible, setOrderConfirmationSuccessModalVisible] = useState(false);
+  const [orderSuccessModalVisible, setOrderConfirmationSuccessModalVisible] =
+    useState(false);
   const [orderModalVisible, setOrderConfirmationModalVisible] = useState(false);
 
   const cartProducts = useSelector((state) => state.cart.products);
@@ -73,9 +67,7 @@ export default function CartScreen({ navigation }) {
       alert('اختر الفرع');
       return;
     }
-    dispatch(
-      order(pickerValue, phone, totalPrice, parseInt(transPrice))
-    );
+    dispatch(order(pickerValue, phone, totalPrice, parseInt(transPrice)));
     setOrderConfirmationSuccessModalVisible(true);
   };
   useEffect(() => {
@@ -119,6 +111,9 @@ export default function CartScreen({ navigation }) {
       <ScrollView>
         <View>
           <View style={{ paddingHorizontal: 16 }}>
+            {cartProducts && cartProducts.length === 0 && (
+              <Text style={{ fontFamily: 'Tajawal-Regular',textAlign: 'right' }}>السلة فارغة</Text>
+            )}
             {cartProducts &&
               cartProducts.map((product) => (
                 <Card
@@ -139,20 +134,27 @@ export default function CartScreen({ navigation }) {
         </View>
       </ScrollView>
 
-      <View style={{ marginTop: 16, padding: 16, marginBottom: 16 }}>
+      <View style={{ marginTop: 16, padding: 16,paddingTop: 0, marginBottom: 16 }}>
         <View style={styles.checkoutContainer}>
           <Text style={styles.checkoutTxt}>{totalPrice} شيكل</Text>
           <Text style={styles.checkoutTxt}>المجموع</Text>
         </View>
-        <View style={styles.checkoutContainer}>
+        {/* <View style={styles.checkoutContainer}>
           <Text style={styles.checkoutTxt}>{transPrice} شيكل</Text>
           <Text style={styles.checkoutTxt}>التوصيل</Text>
         </View>
         <View style={styles.checkoutContainer}>
           <Text style={styles.checkoutTxt}>{totalPrice + transPrice} شيكل</Text>
           <Text style={styles.checkoutTxt}>المبلغ الكلي</Text>
-        </View>
-        <TouchableOpacity onPress={() => setOrderConfirmationModalVisible(true)} style={styles.btn}>
+        </View> */}
+        <TouchableOpacity
+          onPress={() => {
+            if (cartProducts.length != 0) {
+              setOrderConfirmationModalVisible(true);
+            } else alert('السلة فارغة');
+          }}
+          style={styles.btn}
+        >
           <Text style={styles.btnText}>شراء الآن</Text>
         </TouchableOpacity>
       </View>
@@ -164,11 +166,11 @@ export default function CartScreen({ navigation }) {
         visible={orderSuccessModalVisible}
         setVisible={setOrderConfirmationSuccessModalVisible}
       />
-       <OrderConfirmation
+      <OrderConfirmation
         visible={orderModalVisible}
         setVisible={setOrderConfirmationModalVisible}
         handleOrder={handleOrder}
-      /> 
+      />
       <BottomNav navigation={navigation} />
     </View>
   );
@@ -231,7 +233,7 @@ export function DeleteConfirmation({ visible, setVisible }) {
             <TouchableOpacity
               onPress={() => {
                 dispatch(deleteCartItem(itemToDelete, phone));
-                dispatch(fetchProducts(phone))
+                dispatch(fetchProducts(phone));
                 setVisible(false);
               }}
               style={{ ...styles.btn, width: '45%' }}
@@ -245,7 +247,6 @@ export function DeleteConfirmation({ visible, setVisible }) {
   );
 }
 export function OrderConfirmationSuccess({ navigation, visible, setVisible }) {
-
   return (
     <Modal visible={visible}>
       <View
@@ -273,7 +274,7 @@ export function OrderConfirmationSuccess({ navigation, visible, setVisible }) {
           >
             تم ارسال طلب الشراء
           </Text>
-         
+
           <View style={{ width: '100%' }}>
             <TouchableOpacity
               onPress={() => setVisible(false)}
@@ -312,9 +313,14 @@ export function OrderConfirmation({ handleOrder, visible, setVisible }) {
         >
           <Tick />
           <Text
-            style={{ marginTop: 8, fontFamily: 'Tajawal-Bold', fontSize: 20, textAlign: 'center' }}
+            style={{
+              marginTop: 8,
+              fontFamily: 'Tajawal-Bold',
+              fontSize: 20,
+              textAlign: 'center',
+            }}
           >
-             هل ترغب في التأكيد على طلبك؟
+            هل ترغب في التأكيد على طلبك؟
           </Text>
 
           <View style={{ width: '100%' }}>
@@ -332,11 +338,10 @@ export function OrderConfirmation({ handleOrder, visible, setVisible }) {
             <TouchableOpacity
               onPress={() => {
                 setVisible(false);
-              
               }}
-              style={{...styles.btn, backgroundColor: 'white'}}
+              style={{ ...styles.btn, backgroundColor: 'white' }}
             >
-              <Text style={{...styles.btnText, color: 'black'}}>لا</Text>
+              <Text style={{ ...styles.btnText, color: 'black' }}>لا</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -344,4 +349,3 @@ export function OrderConfirmation({ handleOrder, visible, setVisible }) {
     </Modal>
   );
 }
-

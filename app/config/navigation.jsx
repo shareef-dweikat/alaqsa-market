@@ -72,13 +72,13 @@ const TabsStackScreen = ({ navigation }) => (
 const DrawerStack = createDrawerNavigator();
 const DrawerStackScreen = () => (
   <DrawerStack.Navigator
-    drawerType='slide'
+    // drawerType='slide'
     edgeWidth={0}
     drawerContent={({ navigation }) => (
       <DrawerContent navigation={navigation} />
     )}
     //  drawerPosition= "right"
-    // drawerType="back"
+     drawerType="back"
   >
     <DrawerStack.Screen
       name='ContactsList'

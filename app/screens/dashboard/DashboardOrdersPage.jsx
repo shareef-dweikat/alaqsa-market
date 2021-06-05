@@ -106,18 +106,16 @@ export default function DashboardOrdersPage({ navigation }) {
       </View>
       <ScrollView style={{ height: '100%', backgroundColor: '#F9F9FA' }}>
         {orders &&
-          orders
-           
-            .map((order) => (
-              <OrderCardContainer
-                key={order.date}
-                date={order.date}
-                order={order}
-                myStatus={order.status}
-                userType={userType}
-                products={order.productsObject}
-              />
-            ))}
+          orders.map((order) => (
+            <OrderCardContainer
+              key={order.date}
+              date={order.date}
+              order={order}
+              myStatus={order.status}
+              userType={userType}
+              products={order.productsObject}
+            />
+          ))}
       </ScrollView>
       {/* <ScrollView style={{ padding: 8 }}></ScrollView> */}
       <LoadingModal visible={isLoading} />
@@ -147,6 +145,23 @@ export function OrderCardContainer({
       dispatch(updateSalesStatistics(username, order.totalPrice));
   };
   const handleHeaderClicked = () => {};
+  const getColor = (status) => {
+    if (status === 'تم التوصيل')
+      return {
+        color: 'green',
+        fontFamily: 'Tajawal-Regular',
+      };
+      if (status === 'قبول')
+      return {
+        color:  'orange',
+        fontFamily: 'Tajawal-Regular',
+      };
+      if (status === 'رفض')
+      return {
+        color:  'red',
+        fontFamily: 'Tajawal-Regular',
+      };
+  };
   return (
     <>
       <View style={styles.orderCard}>
@@ -182,7 +197,9 @@ export function OrderCardContainer({
                   <Text style={styles.productName}>
                     الكمية: {product.quantity}{' '}
                   </Text>
-                  <Text style={{...styles.productName, width: 120}}>{product.product_name}</Text>
+                  <Text style={{ ...styles.productName, width: 120 }}>
+                    {product.product_name}
+                  </Text>
                 </View>
               ))}
 
@@ -223,19 +240,7 @@ export function OrderCardContainer({
                     marginTop: 8,
                   }}
                 >
-                  <Text
-                    style={{
-                      color:
-                        status == 'تم التوصيل'
-                          ? 'green'
-                          : status == ' قبول'
-                          ? 'orange'
-                          : 'red',
-                      fontFamily: 'Tajawal-Regular',
-                    }}
-                  >
-                    {status}
-                  </Text>
+                  <Text style={getColor(status)}>{status}</Text>
                 </View>
               </View>
               <View>

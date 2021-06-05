@@ -26,7 +26,7 @@ export function addProductToCart(product, navigation, phone, quantity) {
     });
     addProductToCartAPI(product, navigation, phone, quantity).then(() => {
       //   // dispatch(fetchProducts());
-      alert('تم إضافة منتج');
+       alert('تم إضافة منتج');
       dispatch({
         type: 'PRODUCT_ADD_TO_CART_SUCCESS',
       });
@@ -177,7 +177,7 @@ export function order(seller, phone, totalPrice, transPrice) {
           .push({
             productsObject,
             totalPrice,
-            transPrice,
+            transPrice:0,
             phone,
             status: 'جار التنفيذ',
             date: `${moment().format('dddd')} ${moment().format(

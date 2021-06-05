@@ -14,19 +14,17 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
   },
   image: {
-
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'space-between',
     padding: 16,
     alignItems: 'flex-end',
     height: Dimensions.get('window').height * 0.15,
-
   },
   lookForProductText: {
     fontSize: 30,
     fontFamily: 'Tajawal-Medium',
     color: 'white',
-    textAlign: 'right'
+    textAlign: 'right',
   },
   orderCard: {
     borderRadius: 10,
@@ -64,6 +62,7 @@ export default function OrdersPage({ navigation }) {
   const phone = useSelector((state) => state.auth.phone);
   const order = useSelector((state) => state.orders.order);
   const products = useSelector((state) => state.orders.products);
+
   const [orderId, setOrderId] = useState('');
   useEffect(() => {
     dispatch(fetchOrders(phone));
@@ -81,18 +80,20 @@ export default function OrdersPage({ navigation }) {
         </View>
       </View>
       <ScrollView>
+        {orders && orders.length === 0 && (
+          <Text style={{ fontFamily: 'Tajawal-Regular',textAlign: 'right' }}>لا يوجد طلبات</Text>
+        )}
         {orders &&
-          orders
-            .map((orderHeader) => (
-              <OrderCardsContainer
-                orders={orders}
-                products={products}
-                order={order}
-                orderHeader={orderHeader}
-                orderId={orderId}
-                setOrderId={setOrderId}
-              />
-            ))}
+          orders.map((orderHeader) => (
+            <OrderCardsContainer
+              orders={orders}
+              products={products}
+              order={order}
+              orderHeader={orderHeader}
+              orderId={orderId}
+              setOrderId={setOrderId}
+            />
+          ))}
       </ScrollView>
 
       <View style={{ padding: 8 }}></View>
@@ -101,7 +102,6 @@ export default function OrdersPage({ navigation }) {
 }
 
 export function OrderCardsContainer({
-
   products,
   order,
   orderHeader,
@@ -112,6 +112,23 @@ export function OrderCardsContainer({
   const handleHeaderClicked = () => {
     setOrderId(orderHeader.orderId);
     dispatch(fetchOrder(orderHeader.orderId, orderHeader.branch));
+  };
+  const getColor = (status) => {
+    if (status === 'تم التوصيل')
+      return {
+        color: 'green',
+        fontFamily: 'Tajawal-Regular',
+      };
+    if (status === 'قبول')
+      return {
+        color: 'orange',
+        fontFamily: 'Tajawal-Regular',
+      };
+    if (status === 'رفض')
+      return {
+        color: 'red',
+        fontFamily: 'Tajawal-Regular',
+      };
   };
   return (
     <>
@@ -189,17 +206,7 @@ export function OrderCardsContainer({
                     marginTop: 8,
                   }}
                 >
-                  <Text
-                    style={{
-                      color:
-                        orderHeader.status == 'تم التوصيل'
-                          ? 'green'
-                          : orderHeader.status == ' قبول'
-                          ? 'orange'
-                          : 'red',
-                      fontFamily: 'Tajawal-Regular',
-                    }}
-                  >
+                  <Text style={getColor(orderHeader.status)}>
                     {orderHeader.status}
                   </Text>
                 </View>
