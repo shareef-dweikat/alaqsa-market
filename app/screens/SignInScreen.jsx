@@ -151,6 +151,7 @@ export default function SignInScreen({ navigation }) {
       >
         <KeyboardAvoidingView keyboardVerticalOffset={-300} behavior='padding'>
           <ScrollView
+          keyboardShouldPersistTaps='handled'
             contentContainerStyle={{
               alignItems: 'center',
               justifyContent: 'flex-start',

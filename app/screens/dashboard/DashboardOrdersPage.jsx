@@ -172,7 +172,7 @@ export function OrderCardContainer({
           <Text
             style={{
               color: '#F8A912',
-              fontSize: 12,
+              fontSize: 10,
               fontFamily: 'Tajawal-Medium',
             }}
           >
@@ -192,7 +192,7 @@ export function OrderCardContainer({
                 <View style={styles.productRow}>
                   <Text style={styles.productPrice}>{product.price} شيكل</Text>
                   <Text style={styles.productName}>
-                    {product.product_desc.substring(0, 10)}
+                    {product.product_desc.substring(0, 9)}
                   </Text>
                   <Text style={styles.productName}>
                     الكمية: {product.quantity}{' '}
@@ -215,7 +215,7 @@ export function OrderCardContainer({
                 <Text style={{ fontFamily: 'Tajawal-Regular' }}>
                   {order.totalPrice} شيكل
                 </Text>
-                <Text
+                {/* <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
                     color: 'black',
@@ -232,7 +232,7 @@ export function OrderCardContainer({
                   }}
                 >
                   {order.totalPrice + order.transPrice} شيكل
-                </Text>
+                </Text> */}
                 <View
                   style={{
                     height: 30,
@@ -244,7 +244,7 @@ export function OrderCardContainer({
                 </View>
               </View>
               <View>
-                <Text
+                {/* <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
                     color: 'black',
@@ -260,7 +260,7 @@ export function OrderCardContainer({
                   }}
                 >
                   التوصيل
-                </Text>
+                </Text> */}
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',

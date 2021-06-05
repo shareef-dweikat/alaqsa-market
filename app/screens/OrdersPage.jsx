@@ -81,7 +81,7 @@ export default function OrdersPage({ navigation }) {
       </View>
       <ScrollView>
         {orders && orders.length === 0 && (
-          <Text style={{ fontFamily: 'Tajawal-Regular',textAlign: 'right' }}>لا يوجد طلبات</Text>
+          <Text style={{ fontFamily: 'Tajawal-Regular',textAlign: 'right', margin: 16 }}>لا يوجد طلبات</Text>
         )}
         {orders &&
           orders.map((orderHeader) => (
@@ -181,7 +181,7 @@ export function OrderCardsContainer({
                 <Text style={{ fontFamily: 'Tajawal-Regular' }}>
                   {order.totalPrice} شيكل
                 </Text>
-                <Text
+                {/* <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
                     color: 'black',
@@ -197,7 +197,7 @@ export function OrderCardsContainer({
                   }}
                 >
                   {order.totalPrice + order.transPrice} شيكل
-                </Text>
+                </Text> */}
                 <View
                   style={{
                     height: 30,
@@ -220,7 +220,7 @@ export function OrderCardsContainer({
                 >
                   المجموع
                 </Text>
-                <Text
+                {/* <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
                     color: 'black',
@@ -236,7 +236,7 @@ export function OrderCardsContainer({
                   }}
                 >
                   الاجمالي
-                </Text>
+                </Text> */}
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',

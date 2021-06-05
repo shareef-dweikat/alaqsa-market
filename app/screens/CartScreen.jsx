@@ -112,7 +112,7 @@ export default function CartScreen({ navigation }) {
         <View>
           <View style={{ paddingHorizontal: 16 }}>
             {cartProducts && cartProducts.length === 0 && (
-              <Text style={{ fontFamily: 'Tajawal-Regular',textAlign: 'right' }}>السلة فارغة</Text>
+              <Text style={{ fontFamily: 'Tajawal-Regular',textAlign: 'right', margin: 16 }}>السلة فارغة</Text>
             )}
             {cartProducts &&
               cartProducts.map((product) => (

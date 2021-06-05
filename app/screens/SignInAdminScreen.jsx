@@ -171,6 +171,7 @@ export default function SignInAdminScreen({ route, navigation, setUser }) {
       >
         <KeyboardAvoidingView keyboardVerticalOffset={-300} behavior='padding'>
           <ScrollView
+            keyboardShouldPersistTaps='handled'
             contentContainerStyle={{
               alignItems: 'center',
               justifyContent: 'flex-start',
