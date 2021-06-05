@@ -39,7 +39,7 @@ const fetchProductsAPI = async () => {
     .database()
     .ref('category')
     .once('value', function (snapshot) {
-      console.log('adasdd', snapshot.val());
+      
     })
 
     .catch((e) => console.log('addProductAPI', e));

@@ -26,13 +26,13 @@ export const setAdminType = (USERTYPE_FROM_ASYNC, USER_USERNAME_FROM_ASYNC) => {
 };
 
 export function login(phone, pass, navigation) {
-  console.log(phone, pass, "NEwUSer")
+ 
   return (dispatch) => {
     firebase
       .database()
       .ref(`users/${phone}`)
       .once('value', (user) => {
-        console.log(user, "MYUsssss")
+        
         if (user.val() != null && pass == user.val().pass) {
           AsyncStorage.setItem('userType', 'customer');
           AsyncStorage.setItem('phone', phone + '');

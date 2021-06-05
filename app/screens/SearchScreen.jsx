@@ -1,10 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import { Text, View, StyleSheet, Dimensions } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../constants/colors';
 import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
@@ -15,6 +10,7 @@ import { StatusBar } from 'expo-status-bar';
 import VerticalItemCard from '../components/VerticalItemCard';
 import { fetchSearchProducts } from '../store/action/product';
 import { addProductToCart } from '../store/action/cart';
+import Alert from './Alert';
 
 const styles = StyleSheet.create({
   container: {
@@ -44,13 +40,29 @@ export default function SearchScreen({ navigation }) {
   const user = useSelector((state) => state.auth.userType);
 
   const isAuth = (product) => {
-    if (user) dispatch(addProductToCart(product, navigation, phone))
+    if (user) dispatch(addProductToCart(product, navigation, phone));
     else navigation.push('AuthStackScreen');
   };
   const search = (text) => {
     let myProducts = [];
+    const regex = /[*\#]/;
+ 
+    if (text.search(regex) === 0) {
+      let tempText = text.substring(1);
+      for (let i in products) {
+        const productName = products[i].product_name.substring(1);
+        if (productName.search(tempText) == -1) {
+        } else {
+          myProducts.push(products[i]);
+        }
+      }
+      setFilterdProducts(myProducts);
+
+      return;
+    }
+ 
     for (let i in products) {
-      if (products[i].product_name.search(text) == -1) {
+      if (products[i].product_name.search(text + '') == -1) {
       } else {
         myProducts.push(products[i]);
       }
@@ -95,7 +107,7 @@ export default function SearchScreen({ navigation }) {
           {filterdProducts.map((product) => (
             <VerticalItemCard
               isFavHeartAvailable={false}
-              add={() => isAuth(product)} 
+              add={() => isAuth(product)}
               name={product.product_name}
               price={product.price}
               image={product.image}

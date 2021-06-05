@@ -80,8 +80,7 @@ public class MainApplication extends Application implements ReactApplication {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     I18nUtil sharedI18nUtilInstance = I18nUtil.getInstance();
-        sharedI18nUtilInstance.forceRTL(this,true);
-        sharedI18nUtilInstance.allowRTL(this, true);
+      sharedI18nUtilInstance.forceRTL(this,true);
     if (!BuildConfig.DEBUG) {
       UpdatesController.initialize(this);
     }
