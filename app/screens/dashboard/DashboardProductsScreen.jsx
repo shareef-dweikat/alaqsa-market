@@ -9,7 +9,7 @@ import {
   Dimensions,
   TouchableOpacity,
   ActivityIndicator,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -92,7 +92,7 @@ export default function DashboardHome({ navigation }) {
   const stores = useSelector((state) => state.store.stores);
   const [activeStore, setActiveStore] = useState('');
   const [searchProducts, setSearchProducts] = useState([]);
-  console.log(categories, "categoriessss")
+  console.log(categories, 'categoriessss');
   const width = Dimensions.get('window').width;
 
   const handleSearch = (text) => {
@@ -121,6 +121,7 @@ export default function DashboardHome({ navigation }) {
     }
     setSearchProducts(myProducts);
   };
+
   const handleSetStore = (id) => {
     dispatch(fetchProducts(id));
     setActiveStore(id);
@@ -223,6 +224,20 @@ export default function DashboardHome({ navigation }) {
             />
           ))}
       </ScrollView>
+      {/* <ScrollView horizontal>
+        {categories.length != 0 &&
+          categories.map((cat) => (
+            <Card
+              name={cat.category_name}
+              backgroundColor={
+                cat.firebaseId === activeStore
+                  ? Colors.LIGTH_GOLDEN
+                  : Colors.LIGTH_BACKGROUND_COLOR
+              }
+              onPress={() => fetchCategories(cat.firebaseId)}
+            />
+          ))}
+      </ScrollView> */}
       <FlatList
         data={myProducts}
         ListFooterComponent={() => (
@@ -233,6 +248,7 @@ export default function DashboardHome({ navigation }) {
         )}
         renderItem={({ item }) => (
           <VerticalItemCard
+            activeStore={activeStore}
             key={item.productFirebaseId}
             products={products}
             productFirebaseId={item.productFirebaseId}
@@ -249,7 +265,7 @@ export default function DashboardHome({ navigation }) {
         )}
       />
       <TouchableOpacity
-        onPress={() => navigation.push('AddProductScreen')}
+        onPress={() => navigation.push('AddProductScreen', {activeStore})}
         style={styles.fab}
       >
         <FloatingICon />
@@ -270,6 +286,7 @@ function VerticalItemCard({
   navigation,
   isVisible,
   products,
+  activeStore
 }) {
   const [editModalVisible, setEditModalVisible] = useState(false);
   const dispatch = useDispatch();
@@ -281,10 +298,10 @@ function VerticalItemCard({
   };
   const handleDelete = () => {
     setDeleteDialogVisible(false);
-    dispatch(deleteProduct(catId, productFirebaseId));
+    dispatch(deleteProduct(catId, productFirebaseId, activeStore));
   };
   const handleVisibleChange = () => {
-    dispatch(editProductVisibility(productFirebaseId, catId, !av));
+    dispatch(editProductVisibility(productFirebaseId, catId, !av, activeStore));
     setAv(!av);
   };
   const handleEdit = (catName, catDesc, image, productVisible, price) => {
@@ -297,7 +314,8 @@ function VerticalItemCard({
         catDesc,
         image,
         productVisible,
-        price
+        price,
+        activeStore
       )
     );
   };
@@ -342,13 +360,6 @@ function VerticalItemCard({
               style={{ marginRight: 8 }}
               onPress={() => {
                 setEditModalVisible(true);
-                // products.map((item, id) => {
-                //   if (item.categoryFirebaseId == catId) {
-                //     if (id >= products.length - 3) {
-                //       // myRef.scrollTo()
-                //     }
-                //   }
-                // });
               }}
             >
               <EditIcon />

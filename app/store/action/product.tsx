@@ -1,9 +1,9 @@
 import firebase from '../../config/firebase';
 
-const addProductAPI = async (product, url, catFirebaseId) => {
+const addProductAPI = async (product, url, catFirebaseId, activeStore) => {
   return firebase
     .database()
-    .ref(`category/${catFirebaseId}/products`)
+    .ref(`category/${activeStore}/${catFirebaseId}/products`)
     .push({
       product_name: product.productName,
       product_desc: product.productDesc,
@@ -27,8 +27,8 @@ export function addProduct(product, navigation, categories) {
     uploadProductImageAPI(product.productName, product.image).then(
       async (snapshot) => {
         let url = await snapshot.ref.getDownloadURL();
-        addProductAPI(product, url, catFirebaseId).then(() => {
-          dispatch(fetchProducts());
+        addProductAPI(product, url, catFirebaseId, product.activeStore).then(() => {
+          dispatch(fetchProducts(product.activeStore));
           // navigation.goBack();
           alert('تم الإضافة بنجاح');
           dispatch({
@@ -37,14 +37,6 @@ export function addProduct(product, navigation, categories) {
         });
       }
     );
-    // dispatch({
-    //   type: 'IMAGE_UPLOAD_SUCCESS',
-    //   payload: x,
-    // });
-    // dispatch({
-    //   type: 'SIGNUP_SUCCESS',
-    //   // payload: TOKEN,
-    // });
   };
 }
 
@@ -205,12 +197,13 @@ const editProductAPI = async (
   desc,
   uri,
   productVisible,
-  price
+  price,
+  activeStore
 ) => {
   if (uri)
     return firebase
       .database()
-      .ref(`category/${categoryFirebaseId}/products/${productFirebaseId}`)
+      .ref(`category/${activeStore}/${categoryFirebaseId}/products/${productFirebaseId}`)
       .update({
         product_desc: desc,
         product_name: name,
@@ -221,7 +214,7 @@ const editProductAPI = async (
   else
     return firebase
       .database()
-      .ref(`category/${categoryFirebaseId}/products/${productFirebaseId}`)
+      .ref(`category/${activeStore}/${categoryFirebaseId}/products/${productFirebaseId}`)
       .update({
         product_desc: desc,
         product_name: name,
@@ -236,7 +229,8 @@ export function editProduct(
   desc,
   image,
   productVisible,
-  price
+  price,
+  activeStore
 ) {
   return (dispatch) => {
     dispatch({
@@ -254,7 +248,8 @@ export function editProduct(
           desc,
           url,
           productVisible,
-          price
+          price,
+          activeStore
         ).then(() => {
           // dispatch(fetchCategories());
           alert('تم التعديل');
@@ -271,7 +266,8 @@ export function editProduct(
           desc,
           url,
           productVisible,
-          price
+          price,
+          activeStore
         ).then(() => {
           // dispatch(fetchCategories());
           alert('تم التعديل');
@@ -285,17 +281,17 @@ export function editProduct(
   };
 }
 
-const deleteProductAPI = async (catFirebaseId, firebaseId) => {
+const deleteProductAPI = async (catFirebaseId, firebaseId, activeStore) => {
   return firebase
     .database()
-    .ref(`category/${catFirebaseId}/products/${firebaseId}`)
+    .ref(`category/${activeStore}/${catFirebaseId}/products/${firebaseId}`)
     .remove()
-    .catch((e) => console.log('createCategoryAPI', e));
+    .catch((e) => console.log('deleteProductAPI', e));
 };
-export function deleteProduct(catFirebaseId, firebaseId) {
+export function deleteProduct(catFirebaseId, firebaseId, activeStore) {
   return (dispatch) => {
-    deleteProductAPI(catFirebaseId, firebaseId).then(() => {
-      dispatch(fetchProducts());
+    deleteProductAPI(catFirebaseId, firebaseId, activeStore).then(() => {
+      dispatch(fetchProducts(activeStore));
       dispatch({
         type: 'PRODUCT_DELETED_SUCCESS',
         // payload: arrayElementId,
@@ -308,7 +304,7 @@ export function editProductVisibility(
   productFirebaseId,
   categoryFirebaseId,
   productVisible,
-  
+  activeStore
 ) {
   return (dispatch) => {
     dispatch({
@@ -316,7 +312,7 @@ export function editProductVisibility(
     });
     firebase
       .database()
-      .ref(`category/${categoryFirebaseId}/products/${productFirebaseId}`)
+      .ref(`category/${activeStore}/${categoryFirebaseId}/products/${productFirebaseId}`)
       .update({
         isVisible: productVisible,
       }).then(()=>alert('تم التعديل'))

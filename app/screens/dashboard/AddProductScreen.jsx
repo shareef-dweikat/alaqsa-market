@@ -67,13 +67,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 });
-export default function AddProductScreen({ navigation }) {
+export default function AddProductScreen({ navigation, route }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const categories = useSelector((state) => state.category.categories);
- 
+  const activeStore = route.params.activeStore
   const options = ['داخل نابلس', 'خارج نابلس'];
   let picker;
-
+  console.log(activeStore, "activeStoreseeee")
   const [productAvailability, setProductAvailability] = useState(true);
   const [image, setImage] = useState('');
   const [productName, setProductName] = useState('');
@@ -113,6 +113,7 @@ export default function AddProductScreen({ navigation }) {
             productAvailability,
             price,
             image,
+            activeStore
           },
           navigation,
           categories
@@ -123,7 +124,7 @@ export default function AddProductScreen({ navigation }) {
   };
 
   useEffect(() => {
-    dispatch(fetchCategories());
+    dispatch(fetchCategories(activeStore));
   }, []);
   return (
     <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
