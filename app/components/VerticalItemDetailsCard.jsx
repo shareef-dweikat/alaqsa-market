@@ -8,19 +8,12 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import pImage from '../../assets/meat.png';
-import HeartIcon from '../../assets/small-heart-icon.svg';
-import PlusIcon from '../../assets/plus-icon.svg';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Picker } from '@react-native-community/picker';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   addProductToCart,
-  // searchAction
 } from '../store/action/cart';
-import { Colors } from 'react-native/Libraries/NewAppScreen';
 import colors from '../constants/colors';
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -65,7 +58,6 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
       contentContainerStyle={{
         marginTop: 16,
         paddingHorizontal: 24,
-        // flexDirection: 'row',
       }}
     >
       <Image
@@ -116,7 +108,6 @@ export default function VerticalItemDetailsCard({ product, navigation }) {
           flexDirection: 'row',
           justifyContent: 'flex-end',
           alignItems: 'center',
-          // paddingHorizontal: 32,
           marginTop: 8,
         }}
       >

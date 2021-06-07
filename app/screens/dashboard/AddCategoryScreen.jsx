@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Text,
   View,
@@ -8,7 +8,6 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  Switch,
   ActivityIndicator,
 } from 'react-native';
 import { CustomPicker } from 'react-native-custom-picker';
@@ -28,14 +27,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
   },
   image: {
-    // flex: 1,
-    // resizeMode: 'cover',
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'space-between',
     padding: 16,
     alignItems: 'flex-end',
     height: Dimensions.get('window').height * 0.15,
-    // width: Dimensions.get('window').width,
   },
 
   inputDesc: {
@@ -56,11 +52,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Tajawal-Regular',
   },
 });
-export default function AddCategoryScreen({ navigation }) {
+export default function AddCategoryScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
   const [image, setImage] = useState('https://via.placeholder.com/125');
+  const activeStore = route.params.activeStore;
 
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -76,7 +73,7 @@ export default function AddCategoryScreen({ navigation }) {
   };
 
   const handleSubmit = () => {
-    if (name != '') dispatch(createCategory(name, desc, image,navigation));
+    if (name != '') dispatch(createCategory(name, desc, image, navigation, activeStore));
     else alert('حقل الاسم إجباري');
   };
   const isLoading = useSelector((state) => state.category.isLoading);
@@ -130,7 +127,7 @@ export default function AddCategoryScreen({ navigation }) {
           style={styles.inputDesc}
           placeholder='الوصف'
         />
-        <TouchableOpacity style={{flex: 1}} onPress={() => pickImage()}>
+        <TouchableOpacity style={{ flex: 1 }} onPress={() => pickImage()}>
           <Image
             source={{ uri: image }}
             style={{ flex: 1, height: 200, marginTop: 16 }}

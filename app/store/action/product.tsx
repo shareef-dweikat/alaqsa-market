@@ -59,11 +59,11 @@ const fetchProductsAPI = async () => {
     .catch((e) => console.log('addProductAPI', e));
 };
 
-export function fetchProducts() {
+export function fetchProducts(storeId) {
   return (dispatch) => {
     firebase
       .database()
-      .ref('category')
+      .ref(`category/${storeId}`)
       .once('value', function (snapshot) {
         let products = [];
         let categories = snapshot.val();

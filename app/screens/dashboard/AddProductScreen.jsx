@@ -3,7 +3,6 @@ import {
   Text,
   View,
   Image,
-  KeyboardAvoidingView,
   TextInput,
   Modal,
   StyleSheet,
@@ -16,13 +15,11 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Colors from '../../constants/colors';
 import RightArrow from '../../../assets/right-arrow.svg';
 import TickIcon from '../../../assets/tick-big.svg';
-import SearchBox from '../../components/SearchBox';
 import { StatusBar } from 'expo-status-bar';
 import DownArrow from '../../../assets/Shape.png';
 import * as ImagePicker from 'expo-image-picker';
-import { addProduct, uploadProductImage } from '../../store/action/product';
+import { addProduct } from '../../store/action/product';
 import { fetchCategories } from '../../store/action/category';
-import VerticalItemDetailsCard from '../../components/VerticalItemDetailsCard';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useDispatch, useSelector } from 'react-redux';
 import { ActivityIndicator } from 'react-native-paper';
@@ -32,14 +29,11 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.WHITE,
   },
   image: {
-    // flex: 1,
-    // resizeMode: 'cover',
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'space-between',
     padding: 16,
     alignItems: 'flex-end',
     height: Dimensions.get('window').height * 0.15,
-    // width: Dimensions.get('window').width,
   },
   checkboxsContainer: {
     flexDirection: 'row',
@@ -76,10 +70,10 @@ const styles = StyleSheet.create({
 export default function AddProductScreen({ navigation }) {
   // const image = { uri: '../../assets/signin-screen/background.png' };
   const categories = useSelector((state) => state.category.categories);
-
+ 
   const options = ['داخل نابلس', 'خارج نابلس'];
   let picker;
-  const [checked, setChecked] = useState('unchecked');
+
   const [productAvailability, setProductAvailability] = useState(true);
   const [image, setImage] = useState('');
   const [productName, setProductName] = useState('');
@@ -87,9 +81,7 @@ export default function AddProductScreen({ navigation }) {
 
   const [productDesc, setProductDesc] = useState('');
   const [productCat, setProductCat] = useState('لحوم بقر');
-  const [unit, setUnit] = useState('');
   const [price, setPrice] = useState('');
-  const isLoading = useSelector((state) => state.product.isLoading);
 
   const dispatch = useDispatch();
   const pickImage = async () => {

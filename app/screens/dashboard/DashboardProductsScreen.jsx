@@ -9,9 +9,8 @@ import {
   Dimensions,
   TouchableOpacity,
   ActivityIndicator,
+  ScrollView
 } from 'react-native';
-import SIcon from '../../../assets/small-search-icon.svg';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import EditIcon from '../../../assets/edit.svg';
@@ -27,6 +26,8 @@ import {
   editProductVisibility,
 } from '../../store/action/product';
 import { FlatList } from 'react-native-gesture-handler';
+import { fetchStores } from '../../store/action/store';
+import { fetchCategories } from '../../store/action/category';
 const styles = StyleSheet.create({
   container: {
     padding: 16,
@@ -86,14 +87,18 @@ const styles = StyleSheet.create({
 export default function DashboardHome({ navigation }) {
   const dispatch = useDispatch();
   const products = useSelector((state) => state.product.products);
+  const categories = useSelector((state) => state.category.categories);
   const isLoading = useSelector((state) => state.product.isLoading);
+  const stores = useSelector((state) => state.store.stores);
+  const [activeStore, setActiveStore] = useState('');
   const [searchProducts, setSearchProducts] = useState([]);
+  console.log(categories, "categoriessss")
   const width = Dimensions.get('window').width;
 
   const handleSearch = (text) => {
     let myProducts = [];
     const regex = /[*\#]/;
- 
+
     if (text.search(regex) === 0) {
       let tempText = text.substring(1);
       for (let i in products) {
@@ -107,7 +112,7 @@ export default function DashboardHome({ navigation }) {
 
       return;
     }
- 
+
     for (let i in products) {
       if (products[i].product_name.search(text + '') == -1) {
       } else {
@@ -116,27 +121,18 @@ export default function DashboardHome({ navigation }) {
     }
     setSearchProducts(myProducts);
   };
-
-  // const handleSearch = (text) => {
-  //   let myProducts = [];
-  //   for (let i in products) {
-  //     if (products[i].product_name.search(text) == -1) {
-  //     } else {
-  //       myProducts.push(products[i]);
-  //     }
-  //   }
-
-  //   setSearchProducts(myProducts);
-  // };
+  const handleSetStore = (id) => {
+    dispatch(fetchProducts(id));
+    setActiveStore(id);
+  };
   let myRef = null;
   let myProducts = searchProducts.length === 0 ? products : searchProducts;
-  // if (products.length >= 100 && searchProducts.length === 0) {
-  //   myProducts = products.slice(0, 98);
-  // }
+
   useEffect(() => {
-    dispatch(fetchProducts());
+    dispatch(fetchStores());
+    dispatch(fetchCategories(activeStore));
   }, []);
-  console.log(searchProducts, "searchProducts")
+
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
       <SafeAreaView forceInset={{ top: 'always' }}>
@@ -213,7 +209,20 @@ export default function DashboardHome({ navigation }) {
           )}
         </View>
       </SafeAreaView>
-
+      <ScrollView horizontal>
+        {stores.length != 0 &&
+          stores.map((cat) => (
+            <Card
+              name={cat.store}
+              backgroundColor={
+                cat.firebaseId === activeStore
+                  ? Colors.LIGTH_GOLDEN
+                  : Colors.LIGTH_BACKGROUND_COLOR
+              }
+              onPress={() => handleSetStore(cat.firebaseId)}
+            />
+          ))}
+      </ScrollView>
       <FlatList
         data={myProducts}
         ListFooterComponent={() => (
@@ -632,5 +641,30 @@ export function DeleteConfirmation({
         </View>
       </TouchableOpacity>
     </Modal>
+  );
+}
+
+export function Card({ name, backgroundColor, color = 'black', onPress }) {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={{
+        backgroundColor: backgroundColor,
+        height: 35,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 16,
+        marginHorizontal: 4,
+        paddingHorizontal: 4,
+        marginBottom: 32,
+      }}
+    >
+      <Text
+        style={{ color: color, fontFamily: 'Tajawal-Medium', fontSize: 12 }}
+      >
+        {name}
+      </Text>
+    </TouchableOpacity>
   );
 }

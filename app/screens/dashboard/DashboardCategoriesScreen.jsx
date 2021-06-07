@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import {
   Text,
   View,
-  ActivityIndicator,
   Modal,
   TextInput,
   ScrollView,
@@ -15,18 +14,11 @@ import EditIcon from '../../../assets/edit.svg';
 import DeleteIcon from '../../../assets/delete-icon-dashboard.svg';
 import { ExpandableListView } from 'react-native-expandable-listview';
 import * as ImagePicker from 'expo-image-picker';
-
 import { SafeAreaView } from 'react-native-safe-area-context';
-import pImage from '../../../assets/home/product.png';
-import HeartIcon from '../../../assets/small-heart-icon.svg';
 import DownArrow from '../../../assets/down-arrow-categories-dashboard.svg';
-import UpArrow from '../../../assets/up-arrow-categories-dashboard.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import Tick from '../../../assets/tick-confirmation.svg';
-
-import DrawerIcon from '../../../assets/drawer-icon.svg';
 import FloatingICon from '../../../assets/floating-button-icon.svg';
-import BellIcon from '../../../assets/dashboard-drawer/bell.svg';
+
 import Colors from '../../constants/colors';
 import {
   fetchCategories,
@@ -34,18 +26,15 @@ import {
   deleteCategory,
   editCategory,
 } from '../../store/action/category';
+import { fetchStores } from '../../store/action/store';
 
 const styles = StyleSheet.create({
   container: {
-    // flex: 1,
     padding: 16,
   },
   image: {
-    // flex: 1,
-    // resizeMode: 'cover',
     justifyContent: 'center',
     height: Dimensions.get('window').height * 0.3,
-    // width: Dimensions.get('window').width,
   },
   screenContentContainer: {
     padding: 16,
@@ -90,26 +79,32 @@ const styles = StyleSheet.create({
     height: 40,
     fontFamily: 'Tajawal-Regular',
   },
+  title: {
+    fontFamily: 'Tajawal-Medium',
+    fontSize: 20,
+    marginRight: 8,
+    marginTop: 16,
+    textAlign: 'right',
+  },
 });
-const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId }) => {
+const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId, activeStore }) => {
   const [productAvailability, setProductAvailability] = useState(isVisible);
   const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
   const isLoading = useSelector((state) => state.category.isLoading);
-
   const dispatch = useDispatch();
 
   const handleVisibilityChanged = (isVisible) => {
     setProductAvailability(isVisible);
-    dispatch(updateCategory(name, desc, isVisible, firebaseId));
+    dispatch(updateCategory(name, desc, isVisible, firebaseId, activeStore));
   };
   const handleDelete = () => {
     setDeleteDialogVisible(false);
-    dispatch(deleteCategory(firebaseId, arrayElementId));
+    dispatch(deleteCategory(firebaseId,  activeStore));
   };
   const handleEdit = (catName, catDesc, image) => {
     setEditModalVisible(false);
-    dispatch(editCategory(firebaseId, catName, catDesc, image));
+    dispatch(editCategory(firebaseId, catName, catDesc, image, activeStore));
   };
   const showDeleteDialog = () => {
     setDeleteDialogVisible(!deleteDialogVisible);
@@ -159,19 +154,44 @@ const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId }) => {
         name={name}
         setDeleteDialogVisible={setEditModalVisible}
       />
-      <LoadingModal
+      {/* <LoadingModal
         visible={isLoading}
         // handleEdit={handleEdit}
         // name={name}
         // setDeleteDialogVisible={setEditModalVisible}
-      />
+      /> */}
     </View>
   );
 };
 
+export function Card({ name, backgroundColor, color = 'black', onPress }) {
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={{
+        backgroundColor: backgroundColor,
+        height: 35,
+        borderRadius: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 16,
+        marginHorizontal: 4,
+        paddingHorizontal: 4,
+        marginBottom: 32,
+      }}
+    >
+      <Text
+        style={{ color: color, fontFamily: 'Tajawal-Medium', fontSize: 12 }}
+      >
+        {name}
+      </Text>
+    </TouchableOpacity>
+  );
+}
 export default function DashboardCategoriesScreen({ navigation }) {
   const categories = useSelector((state) => state.category.categories);
-
+  const stores = useSelector((state) => state.store.stores);
+  const [activeStore, setActiveStore] = useState('');
   const dispatch = useDispatch();
   const CONTENT = [];
   categories.map((cat, id) =>
@@ -187,6 +207,7 @@ export default function DashboardCategoriesScreen({ navigation }) {
           name={cat.category_name}
           desc={cat.category_desc}
           firebaseId={cat.firebaseId}
+          activeStore={activeStore}
         />
       ),
       subCategory: [
@@ -197,68 +218,34 @@ export default function DashboardCategoriesScreen({ navigation }) {
       ],
     })
   );
+
+  const handleSetStore = (id) => {
+    dispatch(fetchCategories(id));
+    setActiveStore(id);
+  };
+
   useEffect(() => {
-    dispatch(fetchCategories());
+    dispatch(fetchStores());
   }, []);
   return (
     <View style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <SafeAreaView forceInset={{ top: 'always' }}>
-        <View
-          style={{
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            padding: 16,
-          }}
-        >
-          <View
-            style={{
-              marginHorizontal: 8,
-              flexDirection: 'row',
-              flex: 1,
-              alignItems: 'center',
-            }}
-          >
-            <View
-              style={{
-                position: 'relative',
-                bottom: 10,
-                right: 10,
-                // backgroundColor: Colors.GOLDEN,
-                width: 25,
-                height: 25,
-                borderRadius: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderColor: Colors.WHITE,
-                borderWidth: 2,
-              }}
-            >
-              {/* <Text
-                style={{
-                  color: 'white',
-                  fontFamily: 'Tajawal-Medium',
-                  fontSize: 15,
-                }}
-              >
-                2
-              </Text> */}
-            </View>
-          </View>
-
-          <View style={{ flexDirection: 'row' }}>
-            <Text
-              style={{
-                fontFamily: 'Tajawal-Medium',
-                fontSize: 20,
-                marginRight: 8,
-              }}
-            >
-              التصنيفات
-            </Text>
-          </View>
-        </View>
+        <Text style={styles.title}>التصنيفات</Text>
       </SafeAreaView>
-
+      <ScrollView horizontal>
+        {stores.length != 0 &&
+          stores.map((cat) => (
+            <Card
+              name={cat.store}
+              backgroundColor={
+                cat.firebaseId === activeStore
+                  ? Colors.LIGTH_GOLDEN
+                  : Colors.LIGTH_BACKGROUND_COLOR
+              }
+              onPress={() => handleSetStore(cat.firebaseId)}
+            />
+          ))}
+      </ScrollView>
       <ScrollView style={styles.container}>
         <ExpandableListView
           data={CONTENT} // required
@@ -276,7 +263,6 @@ export default function DashboardCategoriesScreen({ navigation }) {
       >
         <FloatingICon />
       </TouchableOpacity>
-      {/* <Button title="Alert" onPress={()=>navigation.push('Alert')}/> */}
     </View>
   );
 }
@@ -415,34 +401,4 @@ export function EditModal({
     </Modal>
   );
 }
-export function LoadingModal({ visible }) {
-  return (
-    <Modal visible={visible}>
-      <View
-        // style={{
-        //   height: '100%',
-        //   justifyContent: 'center',
-        //   alignItems: 'center',
-        //   backgroundColor: 'rgba(0,0,0,0.5)',
-        // }}
-      >
-        {/* <View
-          style={{
-            backgroundColor: 'white',
-            width: '80%',
-            height: 200,
-            padding: 16,
-            borderRadius: 10,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <ActivityIndicator color={Colors.GOLDEN} size='large' />
-          <Text style={{ marginTop: 32, fontFamily: 'Tajawal-Medium' }}>
-            جار تعديل التصنيف
-          </Text>
-        </View> */}
-      </View>
-    </Modal>
-  );
-}
+
