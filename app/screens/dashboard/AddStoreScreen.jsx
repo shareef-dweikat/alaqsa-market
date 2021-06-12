@@ -18,8 +18,8 @@ import TickIcon from '../../../assets/tick-big.svg';
 import { StatusBar } from 'expo-status-bar';
 import DownArrow from '../../../assets/Shape.png';
 import { useDispatch, useSelector } from 'react-redux';
-import { createCategory } from '../../store/action/category';
 import * as ImagePicker from 'expo-image-picker';
+import { createStore } from '../../store/action/store';
 
 const styles = StyleSheet.create({
   container: {
@@ -52,13 +52,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Tajawal-Regular',
   },
 });
-export default function AddCategoryScreen({ navigation, route }) {
+export default function AddStoreScreen({ navigation, route }) {
   const dispatch = useDispatch();
   const [name, setName] = useState('');
   const [desc, setDesc] = useState('');
   const [image, setImage] = useState('https://via.placeholder.com/125');
   const activeStore = route.params.activeStore;
-
+  
   const pickImage = async () => {
     let result = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.All,
@@ -73,7 +73,7 @@ export default function AddCategoryScreen({ navigation, route }) {
   };
 
   const handleSubmit = () => {
-    if (name != '') dispatch(createCategory(name, desc, image, navigation, activeStore));
+    if (name != '') dispatch(createStore(name, image, navigation, activeStore));
     else alert('حقل الاسم إجباري');
   };
   const isLoading = useSelector((state) => state.category.isLoading);
@@ -106,7 +106,7 @@ export default function AddCategoryScreen({ navigation, route }) {
               color: 'white',
             }}
           >
-            إضافة تصنيف
+            إضافة متجر
           </Text>
         </View>
       </View>
@@ -120,13 +120,9 @@ export default function AddCategoryScreen({ navigation, route }) {
         <TextInput
           onChangeText={(v) => setName(v)}
           style={styles.input}
-          placeholder='اسم التصنيف الجديد'
+          placeholder='اسم المتجر الجديد'
         />
-        <TextInput
-          onChangeText={(v) => setDesc(v)}
-          style={styles.inputDesc}
-          placeholder='الوصف'
-        />
+      
         <TouchableOpacity style={{ flex: 1 }} onPress={() => pickImage()}>
           <Image
             source={{ uri: image }}
@@ -245,7 +241,7 @@ export function LoadingModal({ visible }) {
         >
           <ActivityIndicator color={Colors.GOLDEN} size='large' />
           <Text style={{ marginTop: 32, fontFamily: 'Tajawal-Medium' }}>
-            جار إضافة التصنيف
+            جار إضافة متجر
           </Text>
         </View>
       </View>

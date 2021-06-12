@@ -15,11 +15,11 @@ export default (state = initialState, action: AnyAction) => {
     //     ...state,
     //     isLoading: false,
     //   };
-    // case 'CATEGORY_CREATE':
-    //   return {
-    //     ...state,
-    //     isLoading: true,
-    //   };
+    case 'STORE_UPDATED_SUCCESS':
+      return {
+        ...state,
+        isLoading: true,
+      };
     case 'STORES_FETCH_SUCCESS':
       return {
         ...state,

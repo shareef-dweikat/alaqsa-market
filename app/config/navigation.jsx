@@ -2,34 +2,17 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Text,
-  View,
-  ActivityIndicator,
-  Dimensions,
-  Image,
-  AsyncStorage,
-} from 'react-native';
+import { ActivityIndicator, AsyncStorage } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { AntDesign } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import NotificationsScreen from '../screens/NotificationsScreen';
-import Bill from '../../assets/bill.svg';
 import Modal from '../screens/Modal';
-import HomeIcon from '../../assets/home-icon.svg';
-import CartIcon from '../../assets/cart.svg';
 import ProfileScreen from '../screens/ProfileScreen';
-// import IntroductionScreen from '../screens/IntroductionScreen';
-// import ContactDetails from '../screens/ContactDetails';
 import HomeScreen from '../screens/HomeScreen';
-import Alert from '../screens/Alert';
 import CartScreen from '../screens/CartScreen';
-import ProfileIcon from '../../assets/profile-icon.svg';
 import CategoriesScreen from '../screens/CategoriesScreen';
-import CategoriesIcon from '../../assets/categories-icon.svg';
-import Colors from '../constants/colors';
 import SearchScreen from '../screens/SearchScreen';
 import ItemDetailsScreen from '../screens/ItemDetailsScreen';
 import DrawerContent from '../components/drawer/DrawerContent';
@@ -52,7 +35,8 @@ import DashboardHomeSlider from '../screens/dashboard/DashboardHomeSlider';
 import CustomerService from '../screens/CustomerService';
 import CategoriesPerStore from '../screens/CategoriesPerStore';
 import DashboardNotifications from '../screens/dashboard/DashboardNotifications';
-
+import DashboardStoresScreen from '../screens/dashboard/DashboardStoresScreen';
+import AddStoreScreen from '../screens/dashboard/AddStoreScreen';
 const ContactsStack = createStackNavigator();
 const TabStack = createStackNavigator();
 const TabsStackScreen = ({ navigation }) => (
@@ -67,7 +51,10 @@ const TabsStackScreen = ({ navigation }) => (
     />
     <RootStack.Screen name='CartScreen' component={CartScreen} />
     <RootStack.Screen name='CategoriesScreen' component={CategoriesScreen} />
-    <RootStack.Screen name='CategoriesPerStore' component={CategoriesPerStore} />
+    <RootStack.Screen
+      name='CategoriesPerStore'
+      component={CategoriesPerStore}
+    />
     <RootStack.Screen name='OrdersPage' component={OrdersPage} />
   </TabStack.Navigator>
 );
@@ -81,7 +68,7 @@ const DrawerStackScreen = () => (
       <DrawerContent navigation={navigation} />
     )}
     //  drawerPosition= "right"
-     drawerType="back"
+    drawerType='back'
   >
     <DrawerStack.Screen
       name='ContactsList'
@@ -237,6 +224,14 @@ const RootStackScreen = () => {
       <DashboardDrawerStack.Screen
         name='DashboardAccounts'
         component={DashboardAccounts}
+      />
+      <DashboardDrawerStack.Screen
+        name='DashboardStoresScreen'
+        component={DashboardStoresScreen}
+      />
+      <DashboardDrawerStack.Screen
+        name='AddStoreScreen'
+        component={AddStoreScreen}
       />
       <DashboardDrawerStack.Screen
         name='AddProductScreen'

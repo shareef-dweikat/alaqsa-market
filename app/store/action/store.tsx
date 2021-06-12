@@ -20,7 +20,6 @@ export const fetchStoresAPI = async () => {
   // // .then(data => console.log(data));
   return s;
 };
-
 export function fetchStores() {
   return (dispatch) => {
     fetchStoresAPI().then((stores) => {
@@ -31,7 +30,6 @@ export function fetchStores() {
     });
   };
 }
-
 const uploadCategoryImageAPI = async (categoryName, uri) => {
   try {
     const response = await fetch(uri);
@@ -44,20 +42,19 @@ const uploadCategoryImageAPI = async (categoryName, uri) => {
   }
 };
 
-const createCategoryAPI = async (name, desc, url) => {
+const createStoreAPI = async (name,  url) => {
   return firebase
     .database()
-    .ref('category/')
+    .ref('stores/')
     .push({
-      category_name: name,
-      category_desc: desc,
+      store: name,
       isVisible: true,
-      image: url,
+      img: url,
     })
     .catch((e) => console.log('createCategoryAPI', e));
 };
 
-export function createCategory(name, desc, image, navigation) {
+export function createStore(name, image, navigation) {
   return (dispatch) => {
     dispatch({
       type: 'CATEGORY_CREATE',
@@ -65,8 +62,8 @@ export function createCategory(name, desc, image, navigation) {
     });
     uploadCategoryImageAPI(name, image).then(async (snapshot) => {
       let url = await snapshot.ref.getDownloadURL();
-      createCategoryAPI(name, desc, url).then(() => {
-        dispatch(fetchCategories());
+      createStoreAPI(name, url).then(() => {
+        dispatch(fetchStores());
         navigation.goBack();
         dispatch({
           type: 'CATEGORY_CREATE_SUCCESS',
@@ -76,87 +73,80 @@ export function createCategory(name, desc, image, navigation) {
     });
   };
 }
-
-
-
-const updateCategoryAPI = async (name, desc, isVisible, firebaseId) => {
+const updateStoreAPI = async (name, isVisible, firebaseId) => {
   return firebase
     .database()
-    .ref(`category/${firebaseId}`)
+    .ref(`stores/${firebaseId}`)
     .update({
-      category_name: name,
-      category_desc: desc,
+      store: name,
       isVisible: isVisible,
     })
-    .catch((e) => console.log('createCategoryAPI', e));
+    .catch((e) => console.log('updateStoreAPI', e));
 };
-export function updateCategory(name, desc, isVisible, firebaseId) {
+export function updateStore(name, isVisible, firebaseId) {
   return (dispatch) => {
-    updateCategoryAPI(name, desc, isVisible, firebaseId).then((TOKEN) => {
+    updateStoreAPI(name, isVisible, firebaseId).then((TOKEN) => {
       dispatch({
-        type: 'CATEGORY_UPDATED_SUCCESS',
-        // payload: TOKEN,
+        type: 'STORE_UPDATED_SUCCESS',
       });
     });
   };
 }
-
-const deleteCategoryAPI = async (firebaseId) => {
+const deleteStoreAPI = async (firebaseId) => {
   return firebase
     .database()
-    .ref(`category/${firebaseId}`)
+    .ref(`stores/${firebaseId}`)
     .remove()
 
-    .catch((e) => console.log('createCategoryAPI', e));
+    .catch((e) => console.log('deleteStoreAPI', e));
 };
-
-export function deleteCategory(firebaseId, arrayElementId) {
+export function deleteStore(firebaseId) {
   return (dispatch) => {
-    deleteCategoryAPI(firebaseId).then(() => {
-      dispatch(fetchCategories());
+    deleteStoreAPI(firebaseId).then(() => {
+      dispatch(fetchStores());
       dispatch({
-        type: 'CATEGORY_DELETED_SUCCESS',
+        type: 'STORE_DELETED_SUCCESS',
         // payload: arrayElementId,
       });
     });
   };
 }
-const editCategoryAPI = async (firebaseId, name, desc, uri) => {
+const editStoreAPI = async (firebaseId, name, uri) => {
   if (uri)
     return firebase
       .database()
-      .ref(`category/${firebaseId}`)
-      .update({ category_desc: desc, category_name: name, image: uri });
+      .ref(`stores/${firebaseId}`)
+      .update({  store: name, img: uri });
   else
     return firebase
       .database()
-      .ref(`category/${firebaseId}`)
-      .update({ category_desc: desc, category_name: name });
+      .ref(`stores/${firebaseId}`)
+      .update({  store: name });
 };
-export function editCategory(firebaseId, name, desc, image) {
+export function editStore(firebaseId, name, image) {
   return (dispatch) => {
     dispatch({
-      type: 'CATEGORY_EDITED',
+      type: 'STORE_EDITED',
     });
     uploadCategoryImageAPI(name, image).then(async (snapshot) => {
       let url = snapshot;
       if (url) {
         url = await snapshot.ref.getDownloadURL();
-        editCategoryAPI(firebaseId, name, desc, url).then(() => {
+        editStoreAPI(firebaseId, name,  url).then(() => {
           // dispatch(fetchCategories());
           alert('تم التعديل');
           dispatch({
-            type: 'CATEGORY_EDITED_SUCCESS',
-            payload: { name, desc },
+            type: 'STORE_EDITED_SUCCESS',
+            payload: { name },
           });
         });
       } else {
-        editCategoryAPI(firebaseId, name, desc, url).then(() => {
+        editStoreAPI(firebaseId, name, url).then(() => {
           // dispatch(fetchCategories());
           alert('تم التعديل');
           dispatch({
             type: 'CATEGORY_EDITED_SUCCESS',
-            payload: { name, desc },
+            payload: { name },
           });
         });
       }

@@ -118,19 +118,25 @@ export default function HomeScreen({ navigation }) {
             }}
           >
             {stores &&
-              stores.map((store) => (
-                <HorizontalCategoryCard
-                  key={store.store}
-                  name={store.store}
-                  category={store}
-                  image={store.img}
-                  onPress={() =>
-                    navigation.push('CategoriesPerStore', {
-                      store: store.firebaseId,
-                    })
-                  }
-                />
-              ))}
+              stores.map((store) => {
+                if (store.isVisible)
+                  return (
+                    <HorizontalCategoryCard
+                      key={store.store}
+                      name={store.store}
+                      category={store}
+                      image={store.img}
+                      onPress={() =>
+                        navigation.push('CategoriesPerStore', {
+                          store: store.firebaseId,
+                        })
+                      }
+                    />
+                  );
+                else {
+                  return;
+                }
+              })}
           </View>
           <View style={{ height: 20 }} />
         </ScrollView>
