@@ -42,6 +42,7 @@ export default function CategoriesScreen({ route, navigation }) {
   const user = useSelector((state) => state.auth.userType);
   const [activeCategory, setActiveCategory] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const store = route.params.store;
 
   let myScroll = null;
   const width = Dimensions.get('window').width;
@@ -97,7 +98,7 @@ export default function CategoriesScreen({ route, navigation }) {
   //   }
   // }, []);
   useEffect(() => {
-    dispatch(fetchCategories());
+    dispatch(fetchCategories(store));
     if (category) {
       parseCategpry(category.category_name);
       setActiveCategory(category.category_name);

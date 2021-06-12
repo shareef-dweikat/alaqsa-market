@@ -133,7 +133,12 @@ export default function DashboardHome({ navigation }) {
     dispatch(fetchStores());
     dispatch(fetchCategories(activeStore));
   }, []);
-
+  useEffect(() => {
+    if (stores.length != 0) {
+      dispatch(fetchProducts(stores[0].firebaseId));
+      setActiveStore(stores[0].firebaseId);
+    }
+  }, [stores]);
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
       <SafeAreaView forceInset={{ top: 'always' }}>

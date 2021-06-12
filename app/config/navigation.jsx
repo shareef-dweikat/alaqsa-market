@@ -50,7 +50,9 @@ import { setUserType } from '../store/action/auth';
 import DashboardAccounts from '../screens/dashboard/DashboardAccounts';
 import DashboardHomeSlider from '../screens/dashboard/DashboardHomeSlider';
 import CustomerService from '../screens/CustomerService';
+import CategoriesPerStore from '../screens/CategoriesPerStore';
 import DashboardNotifications from '../screens/dashboard/DashboardNotifications';
+
 const ContactsStack = createStackNavigator();
 const TabStack = createStackNavigator();
 const TabsStackScreen = ({ navigation }) => (
@@ -65,6 +67,7 @@ const TabsStackScreen = ({ navigation }) => (
     />
     <RootStack.Screen name='CartScreen' component={CartScreen} />
     <RootStack.Screen name='CategoriesScreen' component={CategoriesScreen} />
+    <RootStack.Screen name='CategoriesPerStore' component={CategoriesPerStore} />
     <RootStack.Screen name='OrdersPage' component={OrdersPage} />
   </TabStack.Navigator>
 );

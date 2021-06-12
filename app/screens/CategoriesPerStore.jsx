@@ -7,18 +7,20 @@ import {
   StyleSheet,
   Dimensions,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
-
+import LeftArrow from '../../assets/home/left-arrow.svg';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import BottomNav from '../components/BottomNav';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchSlideImage } from '../store/action/homeSlider';
+import { fetchCategories } from '../store/action/category';
 import { pushToken } from '../store/action/notifications';
+
 import HorizontalCategoryCard from '../components/HorizontalCategoryCard';
 import { StatusBar } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import Colors from '../constants/colors';
-import { fetchStores } from '../store/action/store';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -32,59 +34,26 @@ const styles = StyleSheet.create({
   },
   seeMoreLabel: { fontFamily: 'Tajawal-Regular', fontSize: 14 },
 });
-export default function HomeScreen({ navigation }) {
+export default function CategoriesPerStore({ navigation, route }) {
   const dispatch = useDispatch();
-  const slide = useSelector((state) => state.homeSlider);
-  const stores = useSelector((state) => state.store.stores);
-
-  const image = slide.uploadedSlideImageUri;
-  const registerForPushNotificationsAsync = async () => {
-    let token;
-    const { status: existingStatus } =
-      await Notifications.getPermissionsAsync();
-    let finalStatus = existingStatus;
-    if (existingStatus !== 'granted') {
-      const { status } = await Notifications.requestPermissionsAsync();
-      finalStatus = status;
-    }
-    if (finalStatus !== 'granted') {
-      return;
-    }
-    token = (await Notifications.getExpoPushTokenAsync()).data;
-
-    if (Platform.OS === 'android') {
-      Notifications.setNotificationChannelAsync('default', {
-        name: 'default',
-        importance: Notifications.AndroidImportance.MAX,
-        vibrationPattern: [0, 250, 250, 250],
-        lightColor: '#FF231F7C',
-      });
-    }
-
-    return token;
-  };
+  const categories = useSelector((state) => state.category.categories);
+  const store = route.params.store;
   useEffect(() => {
-    dispatch(fetchSlideImage());
-    dispatch(fetchStores());
-    const getToken = async () => {
-      const token = await registerForPushNotificationsAsync();
-      dispatch(pushToken(token));
-    };
-    getToken();
+    dispatch(fetchCategories(store));
   }, []);
 
-  if (stores.length === 0) {
+  if (categories.length === 0) {
     return (
       <View style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}>
         <ActivityIndicator color={Colors.GOLDEN} size='large' />
       </View>
     );
   }
-
+  console.log(categories, 'ddddddd');
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
-      <ImageBackground style={styles.image} source={{ uri: image }}>
+      {/* <ImageBackground style={styles.image} source={{ uri: image }}>
         <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
           <View
             style={{
@@ -97,38 +66,36 @@ export default function HomeScreen({ navigation }) {
             <View style={{ justifyContent: 'center', flex: 1 }}></View>
           </View>
         </SafeAreaView>
-      </ImageBackground>
+      </ImageBackground> */}
       <ScrollView style={styles.screenContentContainer}>
-        <Text
-          style={{
-            fontFamily: 'Tajawal-Bold',
-            fontSize: 17,
-            color: '#E49500',
-            textAlign: 'right',
-          }}
-        >
-          المتاجر
-        </Text>
+          <Text
+            style={{
+              fontFamily: 'Tajawal-Bold',
+              fontSize: 17,
+              color: '#E49500',
+              textAlign: 'right',
+              marginTop: 16
+            }}
+          >
+            التصنيفات
+          </Text>
         <ScrollView>
           <View
             style={{
               flexWrap: 'wrap',
               flexDirection: 'row',
               justifyContent: 'space-around',
+              marginTop: 8
             }}
           >
-            {stores &&
-              stores.map((store) => (
+            {categories &&
+              categories.map((category) => (
                 <HorizontalCategoryCard
-                  key={store.store}
-                  name={store.store}
-                  category={store}
-                  image={store.img}
-                  onPress={() =>
-                    navigation.push('CategoriesPerStore', {
-                      store: store.firebaseId,
-                    })
-                  }
+                  key={category.category_name}
+                  name={category.category_name}
+                  category={category}
+                  image={category.image}
+                  onPress={() => navigation.push('CategoriesScreen', { category, store })}
                 />
               ))}
           </View>

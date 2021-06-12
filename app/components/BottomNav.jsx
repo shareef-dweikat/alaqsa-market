@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Image, TouchableOpacity } from 'react-native';
 import { useSelector } from 'react-redux';
 import { AntDesign } from '@expo/vector-icons';
 import HomeIcon from '../../assets/home-icon.svg';
@@ -8,6 +8,8 @@ import ProfileIcon from '../../assets/profile-icon.svg';
 import Colors from '../constants/colors';
 import CategoriesIcon from '../../assets/categories-icon.svg';
 import Cart from '../../assets/cart-t.svg';
+import Support from '../../assets/headphones.png';
+
 
 export default function BottomNav({ navigation }) {
   const currentScreen = navigation.dangerouslyGetState().routes[
@@ -58,11 +60,8 @@ export default function BottomNav({ navigation }) {
         /> 
       
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('CategoriesScreen')}>
-        <CategoriesIcon
-          size={25}
-          color={currentScreen === 'CategoriesScreen' ? Colors.GOLDEN : 'black'}
-        />
+      <TouchableOpacity onPress={() => navigation.push('CustomerService')}>
+        <Image style={{width: 25, height: 25}} source={Support} />
       </TouchableOpacity>
     </View>
   );

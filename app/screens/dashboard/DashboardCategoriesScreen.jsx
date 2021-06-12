@@ -27,6 +27,7 @@ import {
   editCategory,
 } from '../../store/action/category';
 import { fetchStores } from '../../store/action/store';
+import Alert from '../Alert';
 
 const styles = StyleSheet.create({
   container: {
@@ -87,7 +88,14 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
-const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId, activeStore }) => {
+const MySwitch = ({
+  name,
+  desc,
+  isVisible,
+  firebaseId,
+  arrayElementId,
+  activeStore,
+}) => {
   const [productAvailability, setProductAvailability] = useState(isVisible);
   const [deleteDialogVisible, setDeleteDialogVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
@@ -100,7 +108,7 @@ const MySwitch = ({ name, desc, isVisible, firebaseId, arrayElementId, activeSto
   };
   const handleDelete = () => {
     setDeleteDialogVisible(false);
-    dispatch(deleteCategory(firebaseId,  activeStore));
+    dispatch(deleteCategory(firebaseId, activeStore));
   };
   const handleEdit = (catName, catDesc, image) => {
     setEditModalVisible(false);
@@ -223,10 +231,20 @@ export default function DashboardCategoriesScreen({ navigation }) {
     dispatch(fetchCategories(id));
     setActiveStore(id);
   };
-
+  const handleAddCat = () => {
+    if (activeStore.length != 0)
+      navigation.push('AddCategoryScreen', { activeStore });
+    else alert('اختر متجر');
+  };
   useEffect(() => {
     dispatch(fetchStores());
   }, []);
+  useEffect(() => {
+    if (stores.length != 0) {
+      dispatch(fetchCategories(stores[0].firebaseId));
+      setActiveStore(stores[0].firebaseId);
+    }
+  }, [stores]);
   return (
     <View style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
       <SafeAreaView forceInset={{ top: 'always' }}>
@@ -257,10 +275,7 @@ export default function DashboardCategoriesScreen({ navigation }) {
         />
         <View style={{ height: 120 }}></View>
       </ScrollView>
-      <TouchableOpacity
-        onPress={() => navigation.push('AddCategoryScreen')}
-        style={styles.fab}
-      >
+      <TouchableOpacity onPress={handleAddCat} style={styles.fab}>
         <FloatingICon />
       </TouchableOpacity>
     </View>
@@ -401,4 +416,3 @@ export function EditModal({
     </Modal>
   );
 }
-
