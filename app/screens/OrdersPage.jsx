@@ -81,7 +81,16 @@ export default function OrdersPage({ navigation }) {
       </View>
       <ScrollView>
         {orders && orders.length === 0 && (
-          <Text style={{ fontFamily: 'Tajawal-Regular',textAlign: 'right', margin: 16, fontSize: 18  }}>لا يوجد طلبات</Text>
+          <Text
+            style={{
+              fontFamily: 'Tajawal-Regular',
+              textAlign: 'right',
+              margin: 16,
+              fontSize: 18,
+            }}
+          >
+            لا يوجد طلبات
+          </Text>
         )}
         {orders &&
           orders.map((orderHeader) => (
@@ -168,7 +177,6 @@ export function OrderCardsContainer({
                   </Text>
                 </View>
               ))}
-
             <View
               style={{
                 justifyContent: 'space-between',
@@ -179,29 +187,24 @@ export function OrderCardsContainer({
             >
               <View>
                 <Text style={{ fontFamily: 'Tajawal-Regular' }}>
-                  {order.totalPrice} شيكل
+                  {parseInt(orderHeader.totalPrice)}
+                  شيكل
                 </Text>
-                {/* <Text
-                  style={{
-                    fontFamily: 'Tajawal-Regular',
-                    color: 'black',
-                  }}
+                <Text
+                  style={{ fontFamily: 'Tajawal-Regular', textAlign: 'right' }}
                 >
-                  {order.transPrice} شيكل
+                  {parseInt(orderHeader.discount)}%
                 </Text>
 
-                <Text
-                  style={{
-                    fontFamily: 'Tajawal-Regular',
-                    color: '#F8A912',
-                  }}
-                >
-                  {order.totalPrice + order.transPrice} شيكل
-                </Text> */}
+                <Text style={{ fontFamily: 'Tajawal-Regular' }}>
+                  {(orderHeader.totalPrice -
+                    (parseInt(orderHeader.discount) / 100) *
+                      parseInt(orderHeader.totalPrice)).toFixed(2)}
+                  شيكل
+                </Text>
                 <View
                   style={{
                     height: 30,
-
                     borderRadius: 5,
                     marginTop: 8,
                   }}
@@ -220,23 +223,23 @@ export function OrderCardsContainer({
                 >
                   المجموع
                 </Text>
-                {/* <Text
+                <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
                     color: 'black',
                   }}
                 >
-                  التوصيل
+                  الخصم
                 </Text>
-
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
-                    color: '#F8A912',
+                    color: 'black',
                   }}
                 >
                   الاجمالي
-                </Text> */}
+                </Text>
+
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',

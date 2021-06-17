@@ -49,53 +49,41 @@ export default function CategoriesPerStore({ navigation, route }) {
       </View>
     );
   }
-  console.log(categories, 'ddddddd');
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
-      {/* <ImageBackground style={styles.image} source={{ uri: image }}>
-        <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
-          <View
-            style={{
-              width: '100%',
-              paddingHorizontal: 24,
-              flex: 1,
-              marginTop: 16,
-            }}
-          >
-            <View style={{ justifyContent: 'center', flex: 1 }}></View>
-          </View>
-        </SafeAreaView>
-      </ImageBackground> */}
       <ScrollView style={styles.screenContentContainer}>
-          <Text
-            style={{
-              fontFamily: 'Tajawal-Bold',
-              fontSize: 17,
-              color: '#E49500',
-              textAlign: 'right',
-              marginTop: 16
-            }}
-          >
-            التصنيفات
-          </Text>
+        <Text
+          style={{
+            fontFamily: 'Tajawal-Bold',
+            fontSize: 17,
+            color: '#E49500',
+            textAlign: 'right',
+            marginTop: 16,
+          }}
+        >
+          التصنيفات
+        </Text>
         <ScrollView>
           <View
             style={{
               flexWrap: 'wrap',
               flexDirection: 'row',
               justifyContent: 'space-around',
-              marginTop: 8
+              marginTop: 8,
             }}
           >
             {categories &&
               categories.map((category) => (
                 <HorizontalCategoryCard
+                  isVisible={category.isVisible}
                   key={category.category_name}
                   name={category.category_name}
                   category={category}
                   image={category.image}
-                  onPress={() => navigation.push('CategoriesScreen', { category, store })}
+                  onPress={() =>
+                    navigation.push('CategoriesScreen', { category, store })
+                  }
                 />
               ))}
           </View>

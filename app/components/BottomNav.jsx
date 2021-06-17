@@ -61,7 +61,7 @@ export default function BottomNav({ navigation }) {
       
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.push('CustomerService')}>
-        <Image style={{width: 25, height: 25}} source={Support} />
+        <Image style={{width: 26, height: 26}} source={Support} />
       </TouchableOpacity>
     </View>
   );

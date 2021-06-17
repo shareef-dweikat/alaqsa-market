@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default function DashboardAccounts({ navigation }) {
+export default function DashboardDisacount({ navigation }) {
   const [accounts, setAccounts] = useState([]);
   const dispatch = useDispatch();
 
@@ -65,126 +65,12 @@ export default function DashboardAccounts({ navigation }) {
         </View>
       </View>
       <ScrollView style={{ paddingHorizontal: 8, paddingTop: 8 }}>
-        {accounts.map((account) => (
-          <AccountCard account={account} />
-        ))}
         <Discount  />
       </ScrollView>
     </View>
   );
 }
 
-export function DeleteConfirmation({
-  name,
-  visible,
-  handleDelete,
-  setDeleteDialogVisible,
-}) {
-  return (
-    <Modal visible={visible}>
-      <TouchableOpacity
-        onPress={() => setDeleteDialogVisible(false)}
-        style={{
-          height: '100%',
-          justifyContent: 'center',
-          alignItems: 'center',
-          backgroundColor: 'rgba(0,0,0,0.5)',
-        }}
-      >
-        <View
-          style={{
-            backgroundColor: 'white',
-            width: '80%',
-            height: 300,
-            padding: 16,
-            borderRadius: 10,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-        >
-          <DeleteIcon />
-          <Text
-            style={{
-              marginTop: 8,
-              fontFamily: 'Tajawal-Bold',
-              fontSize: 20,
-              textAlign: 'center',
-            }}
-          >
-            هل انت متأكد من حذف تصنيف {name}؟ كل منتجات التصنيف ستضيع
-          </Text>
-
-          <View style={{ width: '100%' }}>
-            <TouchableOpacity onPress={() => handleDelete()} style={styles.btn}>
-              <Text style={styles.btnTxt}>تأكيد الحذف</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </TouchableOpacity>
-    </Modal>
-  );
-}
-
-export function AccountCard({ account }) {
-  const [value, setValue] = useState('');
-  const handleChangePassword = () => {
-    firebase
-      .database()
-      .ref(`admins/${account}/password`)
-      .set(value.trim())
-      .then(() => {
-        setValue('');
-        alert(`تم تغيير كلمة مرور ${account} بنجاح`);
-      })
-      .catch((e) => console.log('AccountCard', e));
-  };
-  return (
-    <>
-      <View
-        style={{
-          width: '100%',
-          backgroundColor: '#e0e0e0',
-          height: 60,
-          borderRadius: 5,
-          marginVertical: 8,
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          padding: 8,
-        }}
-      >
-        <Text style={{ fontFamily: 'Tajawal-Regular' }}>{account}</Text>
-        <View style={{ flexDirection: 'row-reverse' }}>
-          <TouchableOpacity
-            onPress={() => handleChangePassword(value)}
-            style={{
-              backgroundColor: Colors.GOLDEN,
-              justifyContent: 'center',
-              alignItems: 'center',
-              paddingHorizontal: 8,
-              borderRadius: 10,
-              marginHorizontal: 9,
-            }}
-          >
-            <Text style={{ color: 'white', fontFamily: 'Tajawal-Regular' }}>
-              حفظ
-            </Text>
-          </TouchableOpacity>
-          <TextInput
-            onChangeText={(txt) => setValue(txt)}
-            value={value}
-            style={{
-              height: 40,
-              backgroundColor: 'white',
-              paddingHorizontal: 8,
-              borderRadius: 10,
-            }}
-            placeholder='ادخل كلمة مرور جديدة'
-          />
-        </View>
-      </View>
-    </>
-  );
-}
 
 export function Discount() {
   const [value, setValue] = useState('');

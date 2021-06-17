@@ -135,7 +135,7 @@ export default function SignInScreen({ navigation }) {
       <TouchableOpacity
         style={{
           position: 'absolute',
-          top: 0,
+          top: 16,
           zIndex: 10,
           alignSelf: 'flex-end',
           paddingRight: 16,

@@ -73,7 +73,6 @@ export default function AddProductScreen({ navigation, route }) {
   const activeStore = route.params.activeStore
   const options = ['داخل نابلس', 'خارج نابلس'];
   let picker;
-  console.log(activeStore, "activeStoreseeee")
   const [productAvailability, setProductAvailability] = useState(true);
   const [image, setImage] = useState('');
   const [productName, setProductName] = useState('');

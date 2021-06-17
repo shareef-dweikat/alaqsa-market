@@ -111,6 +111,7 @@ export default function DashboardOrdersPage({ navigation }) {
               key={order.date}
               date={order.date}
               order={order}
+              addr={orders.addr}
               myStatus={order.status}
               userType={userType}
               products={order.productsObject}
@@ -129,6 +130,7 @@ export function OrderCardContainer({
   order,
   myStatus,
   userType,
+  addr,
 }) {
   const dispatch = useDispatch();
   const [status, setStatus] = useState(myStatus);
@@ -151,14 +153,14 @@ export function OrderCardContainer({
         color: 'green',
         fontFamily: 'Tajawal-Regular',
       };
-      if (status === 'قبول')
+    if (status === 'قبول')
       return {
-        color:  'orange',
+        color: 'orange',
         fontFamily: 'Tajawal-Regular',
       };
-      if (status === 'رفض')
+    if (status === 'رفض')
       return {
-        color:  'red',
+        color: 'red',
         fontFamily: 'Tajawal-Regular',
       };
   };
@@ -212,27 +214,25 @@ export function OrderCardContainer({
               }}
             >
               <View>
-                <Text style={{ fontFamily: 'Tajawal-Regular',  marginTop: 8 }}>
+                <Text style={{ fontFamily: 'Tajawal-Regular', marginTop: 8 }}>
                   {order.totalPrice} شيكل
-                </Text>
-                {/* <Text
-                  style={{
-                    fontFamily: 'Tajawal-Regular',
-                    color: 'black',
-                    marginTop: 8,
-                  }}
-                >
-                  {order.transPrice} شيكل
                 </Text>
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
                     marginTop: 8,
-                    color: '#F8A912',
+                    textAlign: 'right',
                   }}
                 >
-                  {order.totalPrice + order.transPrice} شيكل
-                </Text> */}
+                  {order.discount}%
+                </Text>
+                <Text style={{ fontFamily: 'Tajawal-Regular', marginTop: 8 }}>
+                  {(order.totalPrice -
+                    (parseInt(order.discount) / 100) *
+                      parseInt(order.totalPrice)).toFixed(2)}
+                  شيكل
+                </Text>
+
                 <View
                   style={{
                     height: 30,
@@ -244,23 +244,27 @@ export function OrderCardContainer({
                 </View>
               </View>
               <View>
-                {/* <Text
+               
+
+                <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
-                    color: 'black',
+                    color: '#F8A912',
+                    marginTop: 8,
                   }}
                 >
                   المجموع
                 </Text>
+
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
+                    color: '#F8A912',
                     marginTop: 8,
-                    color: 'black',
                   }}
                 >
-                  التوصيل
-                </Text> */}
+                  الخصم
+                </Text>
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
@@ -290,6 +294,14 @@ export function OrderCardContainer({
             order={order}
           />
         )}
+        <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+          <Text style={{ fontFamily: 'Tajawal-Regular', marginTop: 8 }}>
+            {order.addr}
+          </Text>
+          <Text style={{ fontFamily: 'Tajawal-Regular', marginTop: 8 }}>
+            العنوان:
+          </Text>
+        </View>
       </View>
     </>
   );

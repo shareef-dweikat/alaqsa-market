@@ -30,10 +30,7 @@ export const fetchStoresAPI = async () => {
       s = storesList;
     })
     .catch((e) => console.log('fetchStoresAPI', e));
-  // let data = await fetch('https://alaqsa-a64da-default-rtdb.firebaseio.com/category/.json?shallow=true')
-  // data = await data.json()
-  // console.log(data, "sssss")
-  // // .then(data => console.log(data));
+;
   return s;
 };
 const uploadCategoryImageAPI = async (categoryName, uri) => {

@@ -60,7 +60,7 @@ export default function CategoriesScreen({ route, navigation }) {
       alert('هذا المنتج غير متوفر');
       return;
     }
-    dispatch(addProductToCart(product, navigation, phone, '1'))
+    dispatch(addProductToCart(product, navigation, phone, '1'));
   };
 
   const isAuthFav = (item) => {
@@ -73,7 +73,10 @@ export default function CategoriesScreen({ route, navigation }) {
   };
   const parseCategpry = (name) => {
     for (let index in categories) {
-      if (categories[index].category_name === name) {
+      if (
+        categories[index].category_name === name &&
+        categories[index].isVisible != false
+      ) {
         let products = [];
         for (let p in categories[index]['products']) {
           categories[index]['products'][p].firebaseId = p;
@@ -85,7 +88,9 @@ export default function CategoriesScreen({ route, navigation }) {
   };
   let names = [];
   for (let index in categories) {
-    names.push(categories[index].category_name);
+    if (categories[index].isVisible) {
+      names.push(categories[index].category_name);
+    }
   }
 
   // useEffect(() => {

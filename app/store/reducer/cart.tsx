@@ -56,7 +56,11 @@ export default (state = initialState, action: AnyAction) => {
         ...state,
         branches: action.payload,
       };
-    
+      case 'FETCH_DISCOUNT_SUCCESS':
+        return {
+          ...state,
+          discount: action.payload.discount,
+        };
     default:
       return state;
   }

@@ -37,6 +37,7 @@ import CategoriesPerStore from '../screens/CategoriesPerStore';
 import DashboardNotifications from '../screens/dashboard/DashboardNotifications';
 import DashboardStoresScreen from '../screens/dashboard/DashboardStoresScreen';
 import AddStoreScreen from '../screens/dashboard/AddStoreScreen';
+import DashboardDisacount from '../screens/dashboard/DashboardDisacount';
 const ContactsStack = createStackNavigator();
 const TabStack = createStackNavigator();
 const TabsStackScreen = ({ navigation }) => (
@@ -233,6 +234,11 @@ const RootStackScreen = () => {
         name='AddStoreScreen'
         component={AddStoreScreen}
       />
+      <DashboardDrawerStack.Screen
+        name='DashboardDisacount'
+        component={DashboardDisacount}
+      />
+      
       <DashboardDrawerStack.Screen
         name='AddProductScreen'
         component={AddProductScreen}

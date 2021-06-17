@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View, Modal, TouchableOpacity, StyleSheet } from 'react-native';
+import {
+  Text,
+  View,
+  Modal,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+} from 'react-native';
 import Colors from '../constants/colors';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import DrawerIcon from '../../assets/drawer-icon.svg';
@@ -12,6 +19,7 @@ import {
   fetchProducts,
   deleteCartItem,
   fetchBranches,
+  fetchDiscount,
   order,
 } from '../store/action/cart';
 
@@ -54,12 +62,13 @@ export default function CartScreen({ navigation }) {
 
   const cartProducts = useSelector((state) => state.cart.products);
   const totalPrice = useSelector((state) => state.cart.totalPrice);
+  const discount = useSelector((state) => state.cart.discount);
   const phone = useSelector((state) => state.auth.phone);
   const [pickerValue, setPickerValue] = useState('Nablus');
   const isDeleted = useSelector((state) => state.cart.isDeleted);
   const transPrice = 10;
   const dispatch = useDispatch();
-  const handleOrder = () => {
+  const handleOrder = (addr) => {
     if (cartProducts.length <= 0) {
       return;
     }
@@ -67,12 +76,15 @@ export default function CartScreen({ navigation }) {
       alert('اختر الفرع');
       return;
     }
-    dispatch(order(pickerValue, phone, totalPrice, parseInt(transPrice)));
+    dispatch(
+      order(pickerValue, phone, totalPrice, parseInt(transPrice), discount,addr)
+    );
     setOrderConfirmationSuccessModalVisible(true);
   };
   useEffect(() => {
     dispatch(fetchProducts(phone));
     dispatch(fetchBranches());
+    dispatch(fetchDiscount());
   }, [isDeleted]);
   return (
     <View style={{ backgroundColor: Colors.WHITE, flex: 1 }}>
@@ -112,7 +124,16 @@ export default function CartScreen({ navigation }) {
         <View>
           <View style={{ paddingHorizontal: 16 }}>
             {cartProducts && cartProducts.length === 0 && (
-              <Text style={{ fontFamily: 'Tajawal-Regular',textAlign: 'right', margin: 16, fontSize: 18 }}>السلة فارغة</Text>
+              <Text
+                style={{
+                  fontFamily: 'Tajawal-Regular',
+                  textAlign: 'right',
+                  margin: 16,
+                  fontSize: 18,
+                }}
+              >
+                السلة فارغة
+              </Text>
             )}
             {cartProducts &&
               cartProducts.map((product) => (
@@ -134,19 +155,25 @@ export default function CartScreen({ navigation }) {
         </View>
       </ScrollView>
 
-      <View style={{ marginTop: 16, padding: 16,paddingTop: 0, marginBottom: 16 }}>
+      <View
+        style={{ marginTop: 16, padding: 16, paddingTop: 0, marginBottom: 16 }}
+      >
         <View style={styles.checkoutContainer}>
           <Text style={styles.checkoutTxt}>{totalPrice} شيكل</Text>
           <Text style={styles.checkoutTxt}>المجموع</Text>
         </View>
-        {/* <View style={styles.checkoutContainer}>
-          <Text style={styles.checkoutTxt}>{transPrice} شيكل</Text>
-          <Text style={styles.checkoutTxt}>التوصيل</Text>
+        <View style={styles.checkoutContainer}>
+          <Text style={styles.checkoutTxt}>{((parseInt(discount) / 100) * parseInt(totalPrice)).toFixed(2)} شيكل</Text>
+          <Text style={styles.checkoutTxt}>الخصم {discount}%</Text>
         </View>
         <View style={styles.checkoutContainer}>
-          <Text style={styles.checkoutTxt}>{totalPrice + transPrice} شيكل</Text>
-          <Text style={styles.checkoutTxt}>المبلغ الكلي</Text>
-        </View> */}
+          <Text style={styles.checkoutTxt}>
+            {(totalPrice - (parseInt(discount) / 100) * parseInt(totalPrice)).toFixed(2)}{' '}
+            شيكل
+          </Text>
+          <Text style={styles.checkoutTxt}>المبلغ الإجمالي</Text>
+        </View>
+      
         <TouchableOpacity
           onPress={() => {
             if (cartProducts.length != 0) {
@@ -290,6 +317,7 @@ export function OrderConfirmationSuccess({ navigation, visible, setVisible }) {
 }
 
 export function OrderConfirmation({ handleOrder, visible, setVisible }) {
+  const [value, setValue] = useState('');
   return (
     <Modal visible={visible}>
       <View
@@ -304,7 +332,7 @@ export function OrderConfirmation({ handleOrder, visible, setVisible }) {
           style={{
             backgroundColor: 'white',
             width: '80%',
-            height: 360,
+            height: 450,
             padding: 16,
             borderRadius: 10,
             justifyContent: 'center',
@@ -314,7 +342,7 @@ export function OrderConfirmation({ handleOrder, visible, setVisible }) {
           <Tick />
           <Text
             style={{
-              marginTop: 8,
+              marginTop: 16,
               fontFamily: 'Tajawal-Bold',
               fontSize: 20,
               textAlign: 'center',
@@ -322,14 +350,30 @@ export function OrderConfirmation({ handleOrder, visible, setVisible }) {
           >
             هل ترغب في التأكيد على طلبك؟
           </Text>
-
-          <View style={{ width: '100%' }}>
+          <TextInput
+            onChangeText={(txt) => setValue(txt)}
+            style={{
+              borderWidth: 1,
+              borderStyle: 'solid',
+              height: 40,
+              marginTop: 16,
+              width: 150,
+              padding: 8,
+              borderRadius: 10,
+            }}
+            placeholder='عنوانك المختصر'
+          />
+          <View style={{ width: '100%', marginTop: 16, }}>
             <TouchableOpacity
               onPress={() => {
+                if (value.length < 4) {
+                  alert('الرجاء إدخال عنوانك')
+                  return;
+                }
                 setVisible(false);
-                handleOrder();
+                handleOrder(value);
               }}
-              style={styles.btn}
+              style={{ ...styles.btn, marginTop: 8 }}
             >
               <Text style={styles.btnText}>موافق</Text>
             </TouchableOpacity>

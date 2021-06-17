@@ -149,7 +149,7 @@ export default function SignUpScreen({ navigation }) {
       <TouchableOpacity
         style={{
           position: 'absolute',
-          top: 0,
+          top: 16,
           zIndex: 10,
           alignSelf: 'flex-end',
           paddingRight: 16,

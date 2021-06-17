@@ -18,7 +18,15 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 });
-export default function HorizontalCategoryCard({ name, desc, onPress, image }) {
+export default function HorizontalCategoryCard({
+  name,
+  onPress,
+  image,
+  isVisible = true,
+}) {
+  if (!isVisible) {
+    return <View />;
+  }
   return (
     <TouchableOpacity
       onPress={onPress}

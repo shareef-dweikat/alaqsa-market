@@ -26,7 +26,7 @@ export function addProductToCart(product, navigation, phone, quantity) {
     });
     addProductToCartAPI(product, navigation, phone, quantity).then(() => {
       //   // dispatch(fetchProducts());
-       alert('تم إضافة منتج');
+      alert('تم إضافة منتج');
       dispatch({
         type: 'PRODUCT_ADD_TO_CART_SUCCESS',
       });
@@ -38,9 +38,7 @@ const fetchProductsAPI = async () => {
   return firebase
     .database()
     .ref('category')
-    .once('value', function (snapshot) {
-      
-    })
+    .once('value', function (snapshot) {})
 
     .catch((e) => console.log('addProductAPI', e));
 };
@@ -66,6 +64,20 @@ export function fetchProducts(phone) {
         dispatch({
           type: 'FETCH_CART_PRODUCTS_SUCCESS',
           payload: { productsList, totalPrice },
+        });
+      });
+  };
+}
+export function fetchDiscount() {
+  return (dispatch) => {
+    firebase
+      .database()
+      .ref(`discount/`)
+      .once('value', async (data) => {
+        const discount = data.val();
+        dispatch({
+          type: 'FETCH_DISCOUNT_SUCCESS',
+          payload: { discount },
         });
       });
   };
@@ -163,7 +175,8 @@ export function pushOrderNotification() {
       .catch((e) => console.log('pushOrderNotification', e));
   };
 }
-export function order(seller, phone, totalPrice, transPrice) {
+export function order(seller, phone, totalPrice, transPrice, discount, addr) {
+  console.log(discount, "discounttttt")
   return (dispatch) => {
     dispatch(pushOrderNotification());
     firebase
@@ -177,8 +190,10 @@ export function order(seller, phone, totalPrice, transPrice) {
           .push({
             productsObject,
             totalPrice,
-            transPrice:0,
+            discount,
+            transPrice: 0,
             phone,
+            addr,
             status: 'جار التنفيذ',
             date: `${moment().format('dddd')} ${moment().format(
               'DD-MM-YYYY'
@@ -193,6 +208,7 @@ export function order(seller, phone, totalPrice, transPrice) {
                 branch: seller,
                 totalPrice,
                 transPrice,
+                discount,
                 status: 'جار التنفيذ',
                 date: `${moment().format('dddd')} ${moment().format(
                   'DD-MM-YYYY'

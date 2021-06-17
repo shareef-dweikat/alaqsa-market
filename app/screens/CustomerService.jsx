@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.WHITE,
   },
-  txt: { fontFamily: 'Tajawal-Medium', textAlign: 'right', fontSize: 18 },
-  title: { fontFamily: 'Tajawal-Medium', textAlign: 'right', color: 'orange', fontSize: 18 },
+  txt: { fontFamily: 'Tajawal-Medium', textAlign: 'right', fontSize: 18, borderBottomColor: 'black', borderBottomWidth: 1 },
+  title: { fontFamily: 'Tajawal-Medium', textAlign: 'right', color: 'orange', fontSize: 18  },
   image: {
     backgroundColor: Colors.BACKGROUND,
     justifyContent: 'space-between',
@@ -51,7 +51,7 @@ export default function CustomerService({ navigation }) {
       </View>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
       <View style={{ justifyContent: 'center', marginTop: 64, padding: 8 }}>
-        <Text style={styles.txt}>
+        <Text style={{...styles.txt,  borderBottomWidth: 0}}>
           يسعدنا تواصلكم معنا عبر أي الوسائل التالية:
         </Text>
 
@@ -75,7 +75,7 @@ export default function CustomerService({ navigation }) {
           style={{ flexDirection: 'row', alignSelf: 'flex-end', marginTop: 16 }}
           onPress={() => Linking.openURL(`fb://page/109599771206362/`)}
         >
-          <Text style={styles.txt}>الأقصى ماركت</Text>
+          <Text style={styles.txt}>الأقصى ماركت "Al Aqsa Market"</Text>
           <Text style={styles.title}>فيسبوك: </Text>
         </TouchableOpacity>
 
@@ -88,7 +88,7 @@ export default function CustomerService({ navigation }) {
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={{ flexDirection: 'row', alignSelf: 'flex-end', marginTop: 16 }}
+          style={{ flexDirection: 'row', alignSelf: 'flex-end', marginTop: 16, }}
           onPress={() => Linking.openURL(`mailto:alaqsamarket.2021@gmail.com`)}
         >
           <Text style={styles.txt}>alaqsamarket.2021@gmail.com</Text>

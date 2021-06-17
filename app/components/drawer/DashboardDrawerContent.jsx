@@ -129,6 +129,11 @@ export default function DashboardDrawerContent({ value, navigation }) {
         }
       />
       <Tap
+        title='الخصم'
+        onPress={() => navigation.push('DashboardDisacount')}
+        tapIcon={<Text style={{ color: 'white', fontSize: 22 }}>$</Text>}
+      />
+      <Tap
         title='المتاجر'
         onPress={() => navigation.push('DashboardStoresScreen')}
         tapIcon={
