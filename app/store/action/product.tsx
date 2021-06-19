@@ -27,14 +27,16 @@ export function addProduct(product, navigation, categories) {
     uploadProductImageAPI(product.productName, product.image).then(
       async (snapshot) => {
         let url = await snapshot.ref.getDownloadURL();
-        addProductAPI(product, url, catFirebaseId, product.activeStore).then(() => {
-          dispatch(fetchProducts(product.activeStore));
-          // navigation.goBack();
-          alert('تم الإضافة بنجاح');
-          dispatch({
-            type: 'PRODUCT_ADD_SUCCESS',
-          });
-        });
+        addProductAPI(product, url, catFirebaseId, product.activeStore).then(
+          () => {
+            dispatch(fetchProducts(product.activeStore));
+            // navigation.goBack();
+            alert('تم الإضافة بنجاح');
+            dispatch({
+              type: 'PRODUCT_ADD_SUCCESS',
+            });
+          }
+        );
       }
     );
   };
@@ -103,7 +105,6 @@ export function uploadProductImage(productName, uri) {
     dispatch({
       type: 'IMAGE_UPLOAD',
     });
-    
   };
 }
 
@@ -115,10 +116,13 @@ export function fetchSearchProducts(text) {
       .once('value', function (snapshot) {
         let products = [];
         let categories = snapshot.val();
-        for (let index in categories) {
-          for (let i in categories[index]['products']) {
-            //  if(categories[index]['products'][i].product_name.search(text) != -1)
-            products.push(categories[index]['products'][i]);
+        for (let indexStore in categories) {
+          const stores = categories[indexStore];
+          for (let index in stores) {
+            for (let i in stores[index]['products']) {
+              //  if(categories[index]['products'][i].product_name.search(text) != -1)
+              products.push(stores[index]['products'][i]);
+            }
           }
         }
         dispatch({
@@ -203,7 +207,9 @@ const editProductAPI = async (
   if (uri)
     return firebase
       .database()
-      .ref(`category/${activeStore}/${categoryFirebaseId}/products/${productFirebaseId}`)
+      .ref(
+        `category/${activeStore}/${categoryFirebaseId}/products/${productFirebaseId}`
+      )
       .update({
         product_desc: desc,
         product_name: name,
@@ -214,7 +220,9 @@ const editProductAPI = async (
   else
     return firebase
       .database()
-      .ref(`category/${activeStore}/${categoryFirebaseId}/products/${productFirebaseId}`)
+      .ref(
+        `category/${activeStore}/${categoryFirebaseId}/products/${productFirebaseId}`
+      )
       .update({
         product_desc: desc,
         product_name: name,
@@ -236,7 +244,7 @@ export function editProduct(
     dispatch({
       type: 'PRODUCT_EDITED',
     });
- 
+
     uploadProductImageAPI(name, image).then(async (snapshot) => {
       let url = snapshot;
       if (url) {
@@ -312,10 +320,13 @@ export function editProductVisibility(
     });
     firebase
       .database()
-      .ref(`category/${activeStore}/${categoryFirebaseId}/products/${productFirebaseId}`)
+      .ref(
+        `category/${activeStore}/${categoryFirebaseId}/products/${productFirebaseId}`
+      )
       .update({
         isVisible: productVisible,
-      }).then(()=>alert('تم التعديل'))
-      .catch((e)=>console.log(e, "error"))
+      })
+      .then(() => alert('تم التعديل'))
+      .catch((e) => console.log(e, 'error'));
   };
 }
