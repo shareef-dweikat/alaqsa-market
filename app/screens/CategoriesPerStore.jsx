@@ -40,6 +40,13 @@ export default function CategoriesPerStore({ navigation, route }) {
   const store = route.params.store;
   useEffect(() => {
     dispatch(fetchCategories(store));
+
+    return function cleanupScreen() {
+      dispatch({
+        type: 'CATEGORY_FETCH_SUCCESS',
+        payload: [],
+      });
+    };
   }, []);
 
   if (categories.length === 0) {
