@@ -19,6 +19,7 @@ import { StatusBar } from 'react-native';
 import * as Notifications from 'expo-notifications';
 import Colors from '../constants/colors';
 import { fetchStores } from '../store/action/store';
+import { useState } from 'react';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -33,11 +34,12 @@ const styles = StyleSheet.create({
   seeMoreLabel: { fontFamily: 'Tajawal-Regular', fontSize: 14 },
 });
 export default function HomeScreen({ navigation }) {
+  let myInterval = null;
   const dispatch = useDispatch();
-  const slide = useSelector((state) => state.homeSlider);
+  const slides = useSelector((state) => state.homeSlider);
   const stores = useSelector((state) => state.store.stores);
-
-  const image = slide.uploadedSlideImageUri;
+  const [slide, setSlide]= useState('')
+  // const image = slide.uploadedSlideImageUri;
   const registerForPushNotificationsAsync = async () => {
     let token;
     const { status: existingStatus } =
@@ -70,8 +72,24 @@ export default function HomeScreen({ navigation }) {
       const token = await registerForPushNotificationsAsync();
       dispatch(pushToken(token));
     };
+    const setSliderTimeInterval = () => {
+          let count = -1;
+         myInterval = setInterval(() =>{
+           count = count + 1;
+           if(count < slides.uploadedSlideImageUri.length && slides.uploadedSlideImageUri[count].image.length !== 0){
+            setSlide(slides.uploadedSlideImageUri[count].image)
+           } else {
+             count = -1
+           }
+          
+         }, 5000);
+    }
     getToken();
-  }, []);
+    setSliderTimeInterval();
+    return clearFun = () => {
+       clearInterval(myInterval);
+    };
+  }, [slides.uploadedSlideImageUri.length]);
 
   if (stores.length === 0) {
     return (
@@ -84,7 +102,7 @@ export default function HomeScreen({ navigation }) {
   return (
     <View style={{ backgroundColor: 'white', flex: 1 }}>
       <StatusBar backgroundColor={Colors.BACKGROUND} barStyle='light-conten' />
-      <ImageBackground style={styles.image} source={{ uri: image }}>
+      <ImageBackground style={styles.image} source={{ uri: slide }}>
         <SafeAreaView style={styles.container} forceInset={{ top: 'always' }}>
           <View
             style={{
@@ -97,7 +115,7 @@ export default function HomeScreen({ navigation }) {
             <View style={{ justifyContent: 'center', flex: 1 }}></View>
           </View>
         </SafeAreaView>
-      </ImageBackground>
+      </ImageBackground> 
       <ScrollView style={styles.screenContentContainer}>
         <Text
           style={{

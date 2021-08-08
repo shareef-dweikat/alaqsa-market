@@ -98,9 +98,7 @@ export default function SignUpScreen({ navigation }) {
   const [pass, setPass] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
   const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
   const [name, setName] = useState('');
-  const dispatch = useDispatch();
   const submit = async () => {
     if (pass != confirmPass) {
       alert('كلمات المرور غير متطابقة');
@@ -110,20 +108,24 @@ export default function SignUpScreen({ navigation }) {
       alert('رقم الجوال اجباري');
       return;
     }
+    if (phone.toString().length < 10) {
+      alert('رقم الجوال قصير');
+      return;
+    }
     if (name == '') {
       alert('حقل الاسم اجباري');
       return;
     }
 
-    dispatch(
-      signup(
-        phone.trim(),
-        pass.trim(),
-        email.trim().toLowerCase(),
-        name.trim(),
-        navigation
-      )
-    );
+    // dispatch(
+    //   signup(
+    //     phone.trim(),
+    //     pass.trim(),
+    //     email.trim().toLowerCase(),
+    //     name.trim(),
+    //     navigation
+    //   )
+    // );
   };
   const [logoVisible, setLogoVisible] = useState(true);
   let [bachgroundHeight, setBachgroundHeight] = useState(

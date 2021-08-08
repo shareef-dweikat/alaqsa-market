@@ -93,15 +93,6 @@ export default function CategoriesScreen({ route, navigation }) {
     }
   }
 
-  // useEffect(() => {
-  //   for (let index in names) {
-  //     if (names[index] == activeCategory) {
-  //       let temp = names[0];
-  //       names[0] = activeCategory;
-  //       names[index] = temp;
-  //     }
-  //   }
-  // }, []);
   useEffect(() => {
     dispatch(fetchCategories(store));
     if (category) {

@@ -4,7 +4,7 @@ import { AnyAction } from 'redux';
 const initialState = {
   // user: {},
   // existingNumber: null,
-  uploadedSlideImageUri: '',
+  uploadedSlideImageUri: [],
    isLoading: false,
 };
 
@@ -19,16 +19,23 @@ export default (state = initialState, action: AnyAction) => {
       return {
         ...state,
          isLoading: false,
-         uploadedSlideImageUri: action.payload
+        //  uploadedSlideImageUri: action.payload
       };
-      case 'FETCH_SLIDE_IMAGE':
+      case 'FETCH_SLIDE_IMAGES':
       return {
         ...state,
          isLoading: false,
-         uploadedSlideImageUri: action.payload.myImage,
+         uploadedSlideImageUri: action.payload,
          desc: action.payload.desc
-
       };
+      case 'UPDATE_SLIDES':
+        console.log('UPDATE_SLIDEssss',  action.payload)
+        return {
+          ...state,
+           isLoading: false,
+           uploadedSlideImageUri: action.payload,
+  
+        };
     default: 
       return state;
   }

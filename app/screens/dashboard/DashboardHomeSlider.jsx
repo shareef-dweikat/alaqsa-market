@@ -12,17 +12,10 @@ import {
 } from 'react-native';
 import EditIcon from '../../../assets/edit.svg';
 import * as ImagePicker from 'expo-image-picker';
-
-import DeleteIcon from '../../../assets/delete-icon-dashboard.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import firebase from '../../config/firebase';
-
 import RightArrow from '../../../assets/right-arrow.svg';
-
 import Colors from '../../constants/colors';
-import { fetchSellerAccounts } from '../../store/action/accounts';
-import { uploadSlide, fetchSlideImage } from '../../store/action/homeSlider';
-import { TextInput } from 'react-native-gesture-handler';
+import { uploadSlide, fetchSlideImage, changeImage } from '../../store/action/homeSlider';
 const styles = StyleSheet.create({
   image: {
     backgroundColor: Colors.BACKGROUND,
@@ -42,18 +35,15 @@ const styles = StyleSheet.create({
 });
 
 export default function DashboardHomeSlider({ navigation }) {
-  const [slides, setSlides] = useState([]);
+  // const [slides, setSlides] = useState([]);
+  const slides = useSelector((state) => state.homeSlider);
   const dispatch = useDispatch();
 
+  const changeImageFun = (image, uri) => {
+      dispatch(changeImage(slides,image,uri))
+  }
   useEffect(() => {
-    // firebase
-    //   .database()
-    //   .ref(`admins/`)
-    //   .once('value', async (sellers) => {
-    //     const sellersList = Object.keys(sellers.val());
-    //     setAccounts(sellersList);
-    //   })
-    //   .catch((e) => console.log('fetchSellerAccounts', e));
+    dispatch(fetchSlideImage());
   }, []);
   return (
     <View style={{ backgroundColor: '#F5F5F5', flex: 1 }}>
@@ -71,18 +61,18 @@ export default function DashboardHomeSlider({ navigation }) {
         </View>
       </View>
       <ScrollView style={{ paddingHorizontal: 8, paddingTop: 8 }}>
-        {[1].map((slide) => (
-          <SlideCard slide={slide} />
-        ))}
+        {slides?.uploadedSlideImageUri?.map((slide) => (
+           <SlideCard key={slide.slide_name} slide={slide} changeImageFun={changeImageFun} />
+        ))} 
       </ScrollView>
     </View>
   );
 }
 
-export function SlideCard({ slide }) {
-  const uploadeImageUri = useSelector(
-    (state) => state.homeSlider.uploadedSlideImageUri
-  );
+export function SlideCard({ slide, changeImageFun }) {
+  // const uploadeImageUri = useSelector(
+  //   (state) => state.homeSlider.uploadedSlideImageUri
+  // );
   const [value, setValue] = useState('');
   const [image, setImage] = useState('');
   const isLoading = useSelector((state) => state.homeSlider.isLoading);
@@ -96,16 +86,17 @@ export function SlideCard({ slide }) {
     });
 
     if (!result.cancelled) {
-      setImage(result.uri);
+      changeImageFun(slide, result.uri)
+      // setImage(result.uri);
     }
   };
   const handleUpdate = () => {
     dispatch(uploadSlide('homeSlider1', value, image));
   };
-  useEffect(() => {
-    dispatch(fetchSlideImage());
-    // setImage(uploadeImageUri);
-  }, [uploadeImageUri]);
+  // useEffect(() => {
+  //   dispatch(fetchSlideImage());
+  //   // setImage(uploadeImageUri);
+  // }, [slide]);
   return (
     <>
       <View
@@ -142,23 +133,10 @@ export function SlideCard({ slide }) {
         <Image
           style={{ height: 180, borderRadius: 5 }}
           resizeMode='contain'
-          source={{ uri: uploadeImageUri }}
-        />
-        {/* <TextInput
-          style={{
-            backgroundColor: '#515462',
-            borderRadius: 10,
-            height: 40,
-            paddingHorizontal: 8,
-            color: 'white',
-            fontFamily: 'Tajawal-Regular',
-          }}
-          onChangeText={(txt) => setValue(txt)}
-          value={value}
-          placeholderTextColor='white'
-          placeholder='اكتب نصا هنا'
-        /> */}
-        <TouchableOpacity
+          source={{ uri: slide.image }}
+        /> 
+       
+        {/* <TouchableOpacity
           onPress={() => handleUpdate()}
           style={{
             backgroundColor: Colors.GOLDEN,
@@ -173,7 +151,7 @@ export function SlideCard({ slide }) {
           <Text style={{ color: 'white', fontFamily: 'Tajawal-Regular' }}>
             حفظ
           </Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       <LoadingModal visible={isLoading} />
     </>

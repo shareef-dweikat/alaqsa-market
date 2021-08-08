@@ -42,7 +42,7 @@ export default function HorizontalCategoryCard({
         marginHorizontal: 4,
       }}
     >
-      <Image style={{ height: 80, width: 80 }} source={{ uri: image }} />
+      <Image style={{ height: 80, width: 80, borderRadius: 10 }} source={{ uri: image }} />
       <View
         style={{
           flexDirection: 'row',

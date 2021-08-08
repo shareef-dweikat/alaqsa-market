@@ -24,6 +24,7 @@ import {
   changeStatus,
   updateSalesStatistics,
 } from '../../store/action/orders';
+import { TouchableHighlight, TouchableNativeFeedback } from 'react-native-gesture-handler';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -83,7 +84,8 @@ export default function DashboardOrdersPage({ navigation }) {
   const userType = useSelector((state) => state.auth.userType);
   const order = useSelector((state) => state.orders.order);
   const products = useSelector((state) => state.orders.products);
-
+  const [image, setImage] = useState('');
+  const [imageModal, setImageModal] = useState(false);
   const [orderId, setOrderId] = useState('');
   useEffect(() => {
     if (userType == 'admin') {
@@ -115,11 +117,20 @@ export default function DashboardOrdersPage({ navigation }) {
               myStatus={order.status}
               userType={userType}
               products={order.productsObject}
+              showImage={(img) => {
+                setImageModal(true);
+                setImage(img);
+              }}
             />
           ))}
       </ScrollView>
       {/* <ScrollView style={{ padding: 8 }}></ScrollView> */}
       <LoadingModal visible={isLoading} />
+      <ImageModal
+        visible={imageModal}
+        hideModal={() => setImageModal(false)}
+        image={image}
+      />
     </SafeAreaView>
   );
 }
@@ -131,6 +142,7 @@ export function OrderCardContainer({
   myStatus,
   userType,
   addr,
+  showImage,
 }) {
   const dispatch = useDispatch();
   const [status, setStatus] = useState(myStatus);
@@ -191,7 +203,10 @@ export function OrderCardContainer({
           <>
             {myProducts &&
               myProducts.map((product) => (
-                <View style={styles.productRow}>
+                <TouchableNativeFeedback
+                  style={styles.productRow}
+                  onPress={() => showImage(product.image)}
+                >
                   <Text style={styles.productPrice}>{product.price} شيكل</Text>
                   <Text style={styles.productName}>
                     {product.product_desc.substring(0, 9)}
@@ -202,7 +217,7 @@ export function OrderCardContainer({
                   <Text style={{ ...styles.productName, width: 120 }}>
                     {product.product_name}
                   </Text>
-                </View>
+                </TouchableNativeFeedback>
               ))}
 
             <View
@@ -227,9 +242,11 @@ export function OrderCardContainer({
                   {order.discount}%
                 </Text>
                 <Text style={{ fontFamily: 'Tajawal-Regular', marginTop: 8 }}>
-                  {(order.totalPrice -
+                  {(
+                    order.totalPrice -
                     (parseInt(order.discount) / 100) *
-                      parseInt(order.totalPrice)).toFixed(2)}
+                      parseInt(order.totalPrice)
+                  ).toFixed(2)}
                   شيكل
                 </Text>
 
@@ -244,8 +261,6 @@ export function OrderCardContainer({
                 </View>
               </View>
               <View>
-               
-
                 <Text
                   style={{
                     fontFamily: 'Tajawal-Regular',
@@ -393,6 +408,25 @@ export function LoadingModal({ title, visible, setVisible, setImage }) {
           </Text>
         </View>
       </View>
+    </Modal>
+  );
+}
+
+export function ImageModal({ visible, image, hideModal }) {
+  return (
+    <Modal visible={visible} transparent>
+      <TouchableOpacity
+        onPress={() => hideModal()}
+        style={{
+          
+          justifyContent: 'center',
+          alignContent: 'center',
+          alignItems: 'center',
+          height: '100%',
+        }}
+      >
+        <Image source={{ uri: image }} style={{ height: 180, width: 180 }} />
+      </TouchableOpacity>
     </Modal>
   );
 }
