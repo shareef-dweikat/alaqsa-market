@@ -95,9 +95,12 @@ const styles = StyleSheet.create({
   },
 });
 export default function SignUpScreen({ navigation }) {
+  const dispatch = useDispatch()
   const [pass, setPass] = useState('');
   const [confirmPass, setConfirmPass] = useState('');
   const [phone, setPhone] = useState('');
+  const [email, setEmail] = useState('');
+
   const [name, setName] = useState('');
   const submit = async () => {
     if (pass != confirmPass) {
@@ -117,15 +120,15 @@ export default function SignUpScreen({ navigation }) {
       return;
     }
 
-    // dispatch(
-    //   signup(
-    //     phone.trim(),
-    //     pass.trim(),
-    //     email.trim().toLowerCase(),
-    //     name.trim(),
-    //     navigation
-    //   )
-    // );
+    dispatch(
+      signup(
+        phone.trim(),
+        pass.trim(),
+        email.trim().toLowerCase(),
+        name.trim(),
+        navigation
+      )
+    );
   };
   const [logoVisible, setLogoVisible] = useState(true);
   let [bachgroundHeight, setBachgroundHeight] = useState(

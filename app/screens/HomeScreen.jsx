@@ -84,7 +84,12 @@ export default function HomeScreen({ navigation }) {
           
          }, 5000);
     }
+    const initialSlide = ()=> {
+      if(slides.uploadedSlideImageUri.length > 0 && slides.uploadedSlideImageUri[0].image.length !== 0)
+        setSlide(slides.uploadedSlideImageUri[0].image)
+    }
     getToken();
+    initialSlide();
     setSliderTimeInterval();
     return clearFun = () => {
        clearInterval(myInterval);
