@@ -21,7 +21,7 @@ export function fetchNotifications() {
         let notifications = notificationsSnap.val();
         dispatch({
           type: 'FETCH_NOTIFICATIONS',
-          payload: notifications,
+          payload: Object.values(notifications)?.reverse(),
         });
       })
       .catch((e) => console.log(e, 'errrrrr'));

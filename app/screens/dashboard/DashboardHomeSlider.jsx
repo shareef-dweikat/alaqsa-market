@@ -15,7 +15,7 @@ import * as ImagePicker from 'expo-image-picker';
 import { useDispatch, useSelector } from 'react-redux';
 import RightArrow from '../../../assets/right-arrow.svg';
 import Colors from '../../constants/colors';
-import { uploadSlide, fetchSlideImage, changeImage } from '../../store/action/homeSlider';
+import { deleteSlide, fetchSlideImage, changeImage } from '../../store/action/homeSlider';
 const styles = StyleSheet.create({
   image: {
     backgroundColor: Colors.BACKGROUND,
@@ -73,8 +73,6 @@ export function SlideCard({ slide, changeImageFun }) {
   // const uploadeImageUri = useSelector(
   //   (state) => state.homeSlider.uploadedSlideImageUri
   // );
-  const [value, setValue] = useState('');
-  const [image, setImage] = useState('');
   const isLoading = useSelector((state) => state.homeSlider.isLoading);
   const dispatch = useDispatch();
   const pickImage = async () => {
@@ -90,13 +88,10 @@ export function SlideCard({ slide, changeImageFun }) {
       // setImage(result.uri);
     }
   };
-  const handleUpdate = () => {
-    dispatch(uploadSlide('homeSlider1', value, image));
+  const handleDelete = () => {
+    dispatch(deleteSlide(slide.imageId));
   };
-  // useEffect(() => {
-  //   dispatch(fetchSlideImage());
-  //   // setImage(uploadeImageUri);
-  // }, [slide]);
+
   return (
     <>
       <View
@@ -136,8 +131,8 @@ export function SlideCard({ slide, changeImageFun }) {
           source={{ uri: slide.image }}
         /> 
        
-        {/* <TouchableOpacity
-          onPress={() => handleUpdate()}
+         <TouchableOpacity
+          onPress={() => handleDelete()}
           style={{
             backgroundColor: Colors.GOLDEN,
             marginTop: 8,
@@ -149,9 +144,9 @@ export function SlideCard({ slide, changeImageFun }) {
           }}
         >
           <Text style={{ color: 'white', fontFamily: 'Tajawal-Regular' }}>
-            حفظ
+            حذف
           </Text>
-        </TouchableOpacity> */}
+        </TouchableOpacity> 
       </View>
       <LoadingModal visible={isLoading} />
     </>

@@ -10,7 +10,6 @@ const uploadSlideAPI = async (categoryName, uri) => {
 };
 
 const changeSlide = async (name, desc, url,imageId) => {
-  console.log(imageId, "changeSlidesss")
   return firebase
     .database()
     .ref(`slider/home-slide/${imageId}`)
@@ -24,19 +23,11 @@ const changeSlide = async (name, desc, url,imageId) => {
 
 export function uploadSlide(name, desc, image, imageId) {
   return (dispatch) => {
-    // dispatch({
-    //   type: 'SLIDE_ADDED1',
-    //   // payload: TOKEN,
-    // });
     uploadSlideAPI(name, image).then(async (snapshot) => {
       let url = await snapshot.ref.getDownloadURL();
       changeSlide(name, desc, url,imageId).then(() => {
         alert('تم')
-        // dispatch({
-        //   type: 'SLIDE_ADDED_SUCCESS',
-        //   payload: url,
-        // });
-        // dispatch(fetchSlideImage())
+
       });
     });
   };
@@ -44,18 +35,6 @@ export function uploadSlide(name, desc, image, imageId) {
 export function changeImage(slides,image, uri) {
   return (dispatch) => {
     dispatch(uploadSlide(image.slide_name, image.slide_desc, uri, image.imageId))
-    // const newSlides = slides.uploadedSlideImageUri.map((slide)=>{
-    //   if(slide.image === image.image){
-    //     return {image: uri, slide_desc:image.slide_desc ,slide_name:image.slide_name}
-    //   } else {
-    //     return slide
-    //   }
-    // })
-    // dispatch({
-    //   type: 'UPDATE_SLIDES',
-    //   payload: newSlides,
-    // });
-
   };
 }
 export function fetchSlideImage() {
@@ -78,5 +57,28 @@ export function fetchSlideImage() {
         });
       })
       .catch((e) => console.log(e, 'errrrrr'));
+  };
+}
+
+export const deleteAPI = async (imageId) => {
+  return firebase
+    .database()
+    .ref(`slider/home-slide/${imageId}`)
+    .set({
+      slide_desc: '',
+      image: '',
+      slide_name: 'homeSlider1',
+    })
+    .catch((e) => console.log('createCategoryAPI', e));
+};
+
+export function deleteSlide(imageId) {
+  return (dispatch) => {
+    deleteAPI(imageId).then(()=> {
+      alert('تم الحذف')
+      dispatch({
+        type: 'SLIDE_DELETED',
+      });
+    })
   };
 }
